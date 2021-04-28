@@ -49,6 +49,8 @@
 		2C2EFC182639E82E00C05BE9 /* Tests macOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Tests macOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C2EFC1C2639E82E00C05BE9 /* Tests_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests_macOS.swift; sourceTree = "<group>"; };
 		2C2EFC1E2639E82E00C05BE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2C45B7D32639F55B00D2075B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		2C45B7D42639F56700D2075B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,6 +88,8 @@
 		2C2EFBF02639E82B00C05BE9 = {
 			isa = PBXGroup;
 			children = (
+				2C45B7D32639F55B00D2075B /* LICENSE */,
+				2C45B7D42639F56700D2075B /* README.md */,
 				2C2EFBFE2639E82E00C05BE9 /* Products */,
 				2C2EFBF52639E82C00C05BE9 /* Shared */,
 				2C45B7B92639F30A00D2075B /* Targets */,
