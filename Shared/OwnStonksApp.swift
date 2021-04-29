@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct OwnStonksApp: App {
+    @StateObject private var navigator = Navigator()
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environmentObject(navigator)
         }
     }
 }
