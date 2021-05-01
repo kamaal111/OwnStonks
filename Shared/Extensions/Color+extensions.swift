@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
 extension Color {
-    #if canImport(UIKit)
     static let MainBackground = Color(.systemBackground)
-    #else
-    static let MainBackground = Color(.controlBackgroundColor)
-    #endif
 }
+#else
+extension Color {
+    static let MainBackground = Color(.controlBackgroundColor)
+}
+#endif

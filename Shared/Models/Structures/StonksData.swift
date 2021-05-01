@@ -9,6 +9,6 @@ import Foundation
 
 struct StonksData: Hashable {
     let name: String
-    let shares: Int
+    let shares: Double
     let currentPrice: Double
 }

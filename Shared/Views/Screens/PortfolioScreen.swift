@@ -45,7 +45,7 @@ struct PortfolioScreen: View {
                                         .map({
                                             StonksData(
                                                 name: "Share \($0 + 1)",
-                                                shares: (0..<100).randomElement()!,
+                                                shares: Double((0..<100).randomElement()!),
                                                 currentPrice: Double((0..<100).randomElement()!))
                                         }), viewWidth: geometry.size.width)
                 }

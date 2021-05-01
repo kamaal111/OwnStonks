@@ -39,8 +39,9 @@ struct AppSidebar: View {
                 NavigationLink(
                     destination: AddTransactionScreen(),
                     tag: Navigator.ScreenNames.addTransaction.rawValue,
-                    selection: $navigator.screenSelection) { EmptyView() }
-                    .disabled(true)
+                    selection: $navigator.screenSelection) {
+                    Label("Add Transaction", systemImage: "plus")
+                }
                 #endif
             }
         }
