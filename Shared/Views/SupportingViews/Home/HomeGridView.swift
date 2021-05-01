@@ -8,9 +8,11 @@
 import SwiftUI
 
 struct HomeGridView: View {
+    let data: [StonksData]
     let viewWidth: CGFloat
 
-    init(viewWidth: CGFloat) {
+    init(data: [StonksData], viewWidth: CGFloat) {
+        self.data = data
         self.viewWidth = viewWidth
     }
 
@@ -21,8 +23,10 @@ struct HomeGridView: View {
             spacing: 8,
             pinnedViews: []) {
             Section(header: HomeHeaderView(viewWidth: viewWidth, columns: columns.count)) {
-                ForEach(0..<100, id: \.self) { num in
-                    Text("\(num)")
+                ForEach(data, id: \.self) { stonk in
+                    Text(stonk.name)
+                    Text("\(stonk.shares)")
+                    Text(String(format: "€%.2f", stonk.currentPrice))
                 }
             }
         }
@@ -37,6 +41,6 @@ struct HomeGridView: View {
 
 struct HomeGridView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeGridView(viewWidth: 240)
+        HomeGridView(data: [], viewWidth: 240)
     }
 }

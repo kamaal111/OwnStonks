@@ -28,6 +28,8 @@
 		6057942D263D4F2E00EE2275 /* HomeGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* HomeGridView.swift */; };
 		6057942F263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */; };
 		60579430263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */; };
+		60579433263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
+		60579434263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +73,7 @@
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		6057942B263D4F2E00EE2275 /* HomeGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGridView.swift; sourceTree = "<group>"; };
 		6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		60579432263D516000EE2275 /* StonksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StonksData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +235,7 @@
 		60141505263A8CBE0083D485 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				60579431263D515200EE2275 /* Structures */,
 				60141506263A8CD40083D485 /* ViewModels */,
 			);
 			path = Models;
@@ -260,6 +264,14 @@
 				6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */,
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		60579431263D515200EE2275 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				60579432263D516000EE2275 /* StonksData.swift */,
+			);
+			path = Structures;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -342,7 +354,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					2C2EFBFC2639E82E00C05BE9 = {
 						CreatedOnToolsVersion = 12.4;
@@ -428,6 +440,7 @@
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
 				6057942C263D4F2E00EE2275 /* HomeGridView.swift in Sources */,
+				60579433263D516000EE2275 /* StonksData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,6 +456,7 @@
 				60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* HomeGridView.swift in Sources */,
+				60579434263D516000EE2275 /* StonksData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +543,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -582,6 +598,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.1;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -640,6 +658,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Targets/macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DXUKH9VF73;
@@ -664,6 +683,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Targets/macOS/macOS.entitlements;
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = DXUKH9VF73;

@@ -20,7 +20,13 @@ struct HomeScreen: View {
     func view() -> some View {
         ScrollView {
             GeometryReader { (geometry: GeometryProxy) in
-                HomeGridView(viewWidth: geometry.size.width)
+                HomeGridView(data: (0..<10)
+                                .map({
+                                    StonksData(
+                                        name: "Share \($0 + 1)",
+                                        shares: (0..<100).randomElement()!,
+                                        currentPrice: Double((0..<100).randomElement()!))
+                                }), viewWidth: geometry.size.width)
             }
         }
     }
