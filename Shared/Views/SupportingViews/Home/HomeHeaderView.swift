@@ -33,9 +33,8 @@ struct HomeHeaderView: View {
     }
 
     private var headerWidth: CGFloat {
-        let width = (viewWidth / CGFloat(columns)) - (horizontalPadding * 2)
-        guard width > 0 else { return 0 }
-        return width
+        guard viewWidth > 0 else { return 0 }
+        return (viewWidth / CGFloat(columns)) - (horizontalPadding * 2)
     }
 }
 
