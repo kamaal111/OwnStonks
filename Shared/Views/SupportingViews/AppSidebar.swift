@@ -35,6 +35,13 @@ struct AppSidebar: View {
                         Label(screen.name, systemImage: screen.imageSystemName)
                     }
                 }
+                #if canImport(AppKit)
+                NavigationLink(
+                    destination: AddTransactionScreen(),
+                    tag: Navigator.ScreenNames.addTransaction.rawValue,
+                    selection: $navigator.screenSelection) { EmptyView() }
+                    .disabled(true)
+                #endif
             }
         }
     }

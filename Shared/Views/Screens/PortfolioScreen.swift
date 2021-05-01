@@ -8,6 +8,13 @@
 import SwiftUI
 
 struct PortfolioScreen: View {
+    #if canImport(AppKit)
+    @EnvironmentObject
+    private var navigator: Navigator
+    #else
+    @State private var showAddTransactionScreen = false
+    #endif
+
     var body: some View {
         #if canImport(UIKit)
         view()
@@ -25,21 +32,33 @@ struct PortfolioScreen: View {
     }
 
     private func view() -> some View {
-        GeometryReader { (geometry: GeometryProxy) in
-            ScrollView {
-                PortfolioGridView(data: (0..<10)
-                                    .map({
-                                        StonksData(
-                                            name: "Share \($0 + 1)",
-                                            shares: (0..<100).randomElement()!,
-                                            currentPrice: Double((0..<100).randomElement()!))
-                                    }), viewWidth: geometry.size.width)
+        ZStack {
+            #if canImport(UIKit)
+            NavigationLink(destination: AddTransactionScreen(), isActive: $showAddTransactionScreen) {
+                EmptyView()
+            }
+            #endif
+            Color.MainBackground
+            GeometryReader { (geometry: GeometryProxy) in
+                ScrollView {
+                    PortfolioGridView(data: (0..<10)
+                                        .map({
+                                            StonksData(
+                                                name: "Share \($0 + 1)",
+                                                shares: (0..<100).randomElement()!,
+                                                currentPrice: Double((0..<100).randomElement()!))
+                                        }), viewWidth: geometry.size.width)
+                }
             }
         }
     }
 
     private func addTransaction() {
-        
+        #if canImport(UIKit)
+        showAddTransactionScreen = true
+        #else
+        navigator.navigateToAddTransactionScreen()
+        #endif
     }
 }
 

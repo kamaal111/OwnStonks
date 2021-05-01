@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppTabView: View {
-    @State private var tabSelection = Navigator.screens.first?.tag ?? 0
+    @State private var tabSelection = Navigator.ScreenNames.portfolio.rawValue
 
     var body: some View {
         TabView(selection: $tabSelection) {

@@ -11,6 +11,6 @@ extension Color {
     #if canImport(UIKit)
     static let MainBackground = Color(.systemBackground)
     #else
-    static let MainBackground = Color(.textBackgroundColor)
+    static let MainBackground = Color(.controlBackgroundColor)
     #endif
 }
