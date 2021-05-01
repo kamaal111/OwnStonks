@@ -23,13 +23,19 @@ struct HomeHeaderView: View {
             ForEach(0..<columns) { colIdx in
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.gray.opacity(0.7))
-                    .frame(width: (viewWidth / CGFloat(columns)) - (horizontalPadding * 2))
+                    .frame(width: headerWidth)
                     .overlay(Text("Column \(colIdx + 1)"))
                     .padding(.horizontal, horizontalPadding)
             }
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .frame(height: 40)
+    }
+
+    private var headerWidth: CGFloat {
+        let width = (viewWidth / CGFloat(columns)) - (horizontalPadding * 2)
+        guard width > 0 else { return 0 }
+        return width
     }
 }
 
