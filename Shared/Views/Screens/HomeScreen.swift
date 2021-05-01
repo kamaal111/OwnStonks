@@ -18,9 +18,9 @@ struct HomeScreen: View {
     }
 
     func view() -> some View {
-        ScrollView {
-            GeometryReader { (geometry: GeometryProxy) in
-                HomeGridView(data: (0..<10)
+        GeometryReader { (geometry: GeometryProxy) in
+            ScrollView {
+                HomeGridView(data: (0..<100)
                                 .map({
                                     StonksData(
                                         name: "Share \($0 + 1)",

@@ -30,6 +30,7 @@ struct HomeHeaderView: View {
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
         .frame(height: 40)
+        .padding(.top, 8)
     }
 
     private var headerWidth: CGFloat {

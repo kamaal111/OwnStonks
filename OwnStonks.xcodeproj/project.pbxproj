@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,8 @@
 		2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF72639E82C00C05BE9 /* ContentView.swift */; };
 		2C2EFC232639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
 		2C2EFC242639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
+		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
+		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
 		601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414D6263A88C10083D485 /* UIDevice+extensions.swift */; };
 		601414E8263A8A980083D485 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* HomeScreen.swift */; };
 		601414E9263A8A980083D485 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* HomeScreen.swift */; };
@@ -81,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,6 +121,7 @@
 				2C2EFBF52639E82C00C05BE9 /* Shared */,
 				2C45B7B92639F30A00D2075B /* Targets */,
 				2C45B7C22639F35900D2075B /* Tests */,
+				2CE62CB6263D71630032E86B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -195,6 +200,13 @@
 				2C2EFC102639E82E00C05BE9 /* iOS */,
 			);
 			path = Tests;
+			sourceTree = "<group>";
+		};
+		2CE62CB6263D71630032E86B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		601414D5263A88A40083D485 /* Extensions */ = {
@@ -290,6 +302,9 @@
 			dependencies = (
 			);
 			name = "OwnStonks (iOS)";
+			packageProductDependencies = (
+				2CE62CB0263D71560032E86B /* ShrimpExtensions */,
+			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
 			productType = "com.apple.product-type.application";
@@ -307,6 +322,9 @@
 			dependencies = (
 			);
 			name = "OwnStonks (macOS)";
+			packageProductDependencies = (
+				2CE62CB7263D71630032E86B /* ShrimpExtensions */,
+			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
 			productType = "com.apple.product-type.application";
@@ -381,6 +399,9 @@
 				Base,
 			);
 			mainGroup = 2C2EFBF02639E82B00C05BE9;
+			packageReferences = (
+				2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
+			);
 			productRefGroup = 2C2EFBFE2639E82E00C05BE9 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -840,6 +861,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.12.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2CE62CB0263D71560032E86B /* ShrimpExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
+			productName = ShrimpExtensions;
+		};
+		2CE62CB7263D71630032E86B /* ShrimpExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
+			productName = ShrimpExtensions;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2C2EFBF12639E82B00C05BE9 /* Project object */;
 }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ShrimpExtensions
 
 struct HomeGridView: View {
     let data: [StonksData]
@@ -21,12 +22,12 @@ struct HomeGridView: View {
             columns: columns,
             alignment: .center,
             spacing: 8,
-            pinnedViews: []) {
+            pinnedViews: [.sectionHeaders]) {
             Section(header: HomeHeaderView(viewWidth: viewWidth, columns: columns.count)) {
                 ForEach(data, id: \.self) { stonk in
-                    Text(stonk.name)
-                    Text("\(stonk.shares)")
-                    Text(String(format: "€%.2f", stonk.currentPrice))
+                    HomeGridItem(text: stonk.name)
+                    HomeGridItem(text: "\(stonk.shares)")
+                    HomeGridItem(text: stonk.currentPrice.toFixed(2))
                 }
             }
         }
@@ -37,6 +38,22 @@ struct HomeGridView: View {
         GridItem(.flexible()),
         GridItem(.flexible())
     ]
+}
+
+struct HomeGridItem: View {
+    let text: String
+    let horizontalPadding: CGFloat
+
+    init(text: String, horizontalPadding: CGFloat = 16) {
+        self.text = text
+        self.horizontalPadding = horizontalPadding
+    }
+    var body: some View {
+        Text(text)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .multilineTextAlignment(.leading)
+            .padding(.horizontal, horizontalPadding)
+    }
 }
 
 struct HomeGridView_Previews: PreviewProvider {
