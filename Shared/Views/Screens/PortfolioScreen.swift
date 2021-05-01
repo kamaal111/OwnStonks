@@ -27,7 +27,7 @@ struct PortfolioScreen: View {
                     Label("Add transaction", systemImage: "plus")
                 }
             })
-            .frame(minWidth: 305)
+            .frame(minWidth: Constants.minimumContentWidth)
         #endif
     }
 
