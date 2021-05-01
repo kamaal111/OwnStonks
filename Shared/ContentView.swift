@@ -24,7 +24,7 @@ struct IOSContentView: View {
             if UIDevice.current.isIpad {
                 NavigationView {
                     AppSidebar()
-                    HomeScreen()
+                    PortfolioScreen()
                 }
             } else {
                 AppTabView()

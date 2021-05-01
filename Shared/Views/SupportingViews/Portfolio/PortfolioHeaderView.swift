@@ -26,7 +26,7 @@ struct PortfolioHeaderView: View {
                     .padding(.horizontal, 4)
                     .padding(.vertical, 8)
                     .frame(width: headerWidth, alignment: .leading)
-                    .background(Color(.textBackgroundColor))
+                    .background(Color.MainBackground)
                     .padding(.horizontal, horizontalPadding)
             }
         }

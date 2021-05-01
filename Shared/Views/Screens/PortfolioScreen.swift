@@ -12,15 +12,22 @@ struct PortfolioScreen: View {
         #if canImport(UIKit)
         view()
             .navigationBarTitle(Text("Portfolio"), displayMode: .large)
+            .navigationBarItems(trailing: Button(action: addTransaction) { Image(systemName: "plus") } )
         #else
         view()
+            .toolbar(content: {
+                Button(action: addTransaction) {
+                    Label("Add transaction", systemImage: "plus")
+                }
+            })
+            .frame(minWidth: 305)
         #endif
     }
 
-    func view() -> some View {
+    private func view() -> some View {
         GeometryReader { (geometry: GeometryProxy) in
             ScrollView {
-                PortfolioGridView(data: (0..<100)
+                PortfolioGridView(data: (0..<10)
                                     .map({
                                         StonksData(
                                             name: "Share \($0 + 1)",
@@ -29,6 +36,10 @@ struct PortfolioScreen: View {
                                     }), viewWidth: geometry.size.width)
             }
         }
+    }
+
+    private func addTransaction() {
+        
     }
 }
 
