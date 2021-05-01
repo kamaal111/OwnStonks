@@ -37,7 +37,7 @@ struct MacContentView: View {
     var body: some View {
         NavigationView {
             AppSidebar()
-            HomeScreen()
+            PortfolioScreen()
         }
     }
 }

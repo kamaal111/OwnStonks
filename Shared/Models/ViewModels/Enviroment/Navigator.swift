@@ -13,11 +13,11 @@ final class Navigator: ObservableObject {
     @Published var screenSelection: Int?
 
     enum ScreenNames {
-        case home
+        case portfolio
     }
 
     static let screens: [ScreenModel] = [
-        .init(tag: 0, name: "Home", imageSystemName: "house.fill", screen: .home)
+        .init(tag: 0, name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio)
     ]
 
 }
@@ -31,7 +31,7 @@ struct ScreenModel: Hashable {
     var view: some View {
         ZStack {
             switch screen {
-            case .home: HomeScreen()
+            case .portfolio: PortfolioScreen()
             }
         }
     }

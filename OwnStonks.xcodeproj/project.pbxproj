@@ -18,18 +18,18 @@
 		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
 		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
 		601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414D6263A88C10083D485 /* UIDevice+extensions.swift */; };
-		601414E8263A8A980083D485 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* HomeScreen.swift */; };
-		601414E9263A8A980083D485 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* HomeScreen.swift */; };
+		601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* PortfolioScreen.swift */; };
+		601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* PortfolioScreen.swift */; };
 		601414F4263A8AC20083D485 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414F3263A8AC20083D485 /* AppTabView.swift */; };
 		601414F5263A8AC20083D485 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414F3263A8AC20083D485 /* AppTabView.swift */; };
 		601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414FE263A8AEE0083D485 /* AppSidebar.swift */; };
 		60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414FE263A8AEE0083D485 /* AppSidebar.swift */; };
 		60141509263A8CFB0083D485 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60141508263A8CFB0083D485 /* Navigator.swift */; };
 		6014150A263A8CFB0083D485 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60141508263A8CFB0083D485 /* Navigator.swift */; };
-		6057942C263D4F2E00EE2275 /* HomeGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* HomeGridView.swift */; };
-		6057942D263D4F2E00EE2275 /* HomeGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* HomeGridView.swift */; };
-		6057942F263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */; };
-		60579430263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */; };
+		6057942C263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */; };
+		6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */; };
+		6057942F263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */; };
+		60579430263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */; };
 		60579433263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
 		60579434263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
 /* End PBXBuildFile section */
@@ -69,12 +69,12 @@
 		2C45B7D32639F55B00D2075B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2C45B7D42639F56700D2075B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		601414D6263A88C10083D485 /* UIDevice+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+extensions.swift"; sourceTree = "<group>"; };
-		601414E7263A8A980083D485 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		601414E7263A8A980083D485 /* PortfolioScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioScreen.swift; sourceTree = "<group>"; };
 		601414F3263A8AC20083D485 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		601414FE263A8AEE0083D485 /* AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebar.swift; sourceTree = "<group>"; };
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
-		6057942B263D4F2E00EE2275 /* HomeGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeGridView.swift; sourceTree = "<group>"; };
-		6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeaderView.swift; sourceTree = "<group>"; };
+		6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioGridView.swift; sourceTree = "<group>"; };
+		6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioHeaderView.swift; sourceTree = "<group>"; };
 		60579432263D516000EE2275 /* StonksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StonksData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -229,7 +229,7 @@
 		601414E6263A8A850083D485 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				601414E7263A8A980083D485 /* HomeScreen.swift */,
+				601414E7263A8A980083D485 /* PortfolioScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -239,7 +239,7 @@
 			children = (
 				601414FE263A8AEE0083D485 /* AppSidebar.swift */,
 				601414F3263A8AC20083D485 /* AppTabView.swift */,
-				6057942A263D4F1700EE2275 /* Home */,
+				6057942A263D4F1700EE2275 /* Portfolio */,
 			);
 			path = SupportingViews;
 			sourceTree = "<group>";
@@ -269,13 +269,13 @@
 			path = Enviroment;
 			sourceTree = "<group>";
 		};
-		6057942A263D4F1700EE2275 /* Home */ = {
+		6057942A263D4F1700EE2275 /* Portfolio */ = {
 			isa = PBXGroup;
 			children = (
-				6057942B263D4F2E00EE2275 /* HomeGridView.swift */,
-				6057942E263D4F5F00EE2275 /* HomeHeaderView.swift */,
+				6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */,
+				6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */,
 			);
-			path = Home;
+			path = Portfolio;
 			sourceTree = "<group>";
 		};
 		60579431263D515200EE2275 /* Structures */ = {
@@ -453,14 +453,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				60141509263A8CFB0083D485 /* Navigator.swift in Sources */,
-				601414E8263A8A980083D485 /* HomeScreen.swift in Sources */,
+				601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
-				6057942F263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */,
+				6057942F263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */,
 				601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
-				6057942C263D4F2E00EE2275 /* HomeGridView.swift in Sources */,
+				6057942C263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				60579433263D516000EE2275 /* StonksData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -472,11 +472,11 @@
 				2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */,
 				2C2EFC202639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414F5263A8AC20083D485 /* AppTabView.swift in Sources */,
-				601414E9263A8A980083D485 /* HomeScreen.swift in Sources */,
-				60579430263D4F5F00EE2275 /* HomeHeaderView.swift in Sources */,
+				601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */,
+				60579430263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */,
 				60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
-				6057942D263D4F2E00EE2275 /* HomeGridView.swift in Sources */,
+				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				60579434263D516000EE2275 /* StonksData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

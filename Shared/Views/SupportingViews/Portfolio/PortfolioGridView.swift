@@ -1,5 +1,5 @@
 //
-//  HomeGridView.swift
+//  PortfolioGridView.swift
 //  OwnStonks
 //
 //  Created by Kamaal Farah on 01/05/2021.
@@ -8,7 +8,7 @@
 import SwiftUI
 import ShrimpExtensions
 
-struct HomeGridView: View {
+struct PortfolioGridView: View {
     let data: [StonksData]
     let viewWidth: CGFloat
 
@@ -23,11 +23,15 @@ struct HomeGridView: View {
             alignment: .center,
             spacing: 8,
             pinnedViews: [.sectionHeaders]) {
-            Section(header: HomeHeaderView(viewWidth: viewWidth, columns: columns.count)) {
+            Section(header: PortfolioHeaderView(viewWidth: viewWidth, headerTitles: [
+                "Name",
+                "Shares",
+                "Price"
+            ])) {
                 ForEach(data, id: \.self) { stonk in
-                    HomeGridItem(text: stonk.name)
-                    HomeGridItem(text: "\(stonk.shares)")
-                    HomeGridItem(text: stonk.currentPrice.toFixed(2))
+                    PortfolioGridItem(text: stonk.name)
+                    PortfolioGridItem(text: "\(stonk.shares)")
+                    PortfolioGridItem(text: stonk.currentPrice.toFixed(2))
                 }
             }
         }
@@ -40,7 +44,7 @@ struct HomeGridView: View {
     ]
 }
 
-struct HomeGridItem: View {
+struct PortfolioGridItem: View {
     let text: String
     let horizontalPadding: CGFloat
 
@@ -56,8 +60,8 @@ struct HomeGridItem: View {
     }
 }
 
-struct HomeGridView_Previews: PreviewProvider {
+struct PortfolioGridView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeGridView(data: [], viewWidth: 240)
+        PortfolioGridView(data: [], viewWidth: 240)
     }
 }
