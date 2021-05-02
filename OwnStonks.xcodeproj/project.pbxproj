@@ -19,6 +19,8 @@
 		2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF72639E82C00C05BE9 /* ContentView.swift */; };
 		2C2EFC232639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
 		2C2EFC242639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
+		2C2FBD56263F4981001FC779 /* CloudDocs in Frameworks */ = {isa = PBXBuildFile; productRef = 2C2FBD55263F4981001FC779 /* CloudDocs */; };
+		2C2FBD58263F498A001FC779 /* CloudDocs in Frameworks */ = {isa = PBXBuildFile; productRef = 2C2FBD57263F498A001FC779 /* CloudDocs */; };
 		2C7497BE263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
@@ -92,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */,
+				2C2FBD56263F4981001FC779 /* CloudDocs in Frameworks */,
 				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
 			);
@@ -102,6 +105,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */,
+				2C2FBD58263F498A001FC779 /* CloudDocs in Frameworks */,
 				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
 			);
@@ -328,6 +332,7 @@
 				2CE62CB0263D71560032E86B /* ShrimpExtensions */,
 				2C1486E7263EAFF9006EEB6B /* SalmonUI */,
 				2C1486EF263EB1F9006EEB6B /* StonksUI */,
+				2C2FBD55263F4981001FC779 /* CloudDocs */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -350,6 +355,7 @@
 				2CE62CB7263D71630032E86B /* ShrimpExtensions */,
 				2C1486E9263EB03B006EEB6B /* SalmonUI */,
 				2C1486ED263EB1F2006EEB6B /* StonksUI */,
+				2C2FBD57263F498A001FC779 /* CloudDocs */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -428,6 +434,7 @@
 			packageReferences = (
 				2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */,
+				2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */,
 			);
 			productRefGroup = 2C2EFBFE2639E82E00C05BE9 /* Products */;
 			projectDirPath = "";
@@ -900,6 +907,14 @@
 				minimumVersion = 4.0.0;
 			};
 		};
+		2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/CloudDocs.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 		2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
@@ -928,6 +943,16 @@
 		2C1486EF263EB1F9006EEB6B /* StonksUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StonksUI;
+		};
+		2C2FBD55263F4981001FC779 /* CloudDocs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */;
+			productName = CloudDocs;
+		};
+		2C2FBD57263F498A001FC779 /* CloudDocs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */;
+			productName = CloudDocs;
 		};
 		2CE62CB0263D71560032E86B /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
