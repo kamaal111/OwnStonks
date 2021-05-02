@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StonksUI
 
 struct AddTransactionScreen: View {
     @State private var investment = ""
@@ -22,7 +23,7 @@ struct AddTransactionScreen: View {
                     Label("Save", systemImage: "square.and.arrow.down")
                 }
             })
-            .navigationBarTitle(Text("Add Transaction"), displayMode: .inline)
+            .navigationTitle(Text("Add Transaction"))
         #endif
     }
 

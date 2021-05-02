@@ -1,24 +1,24 @@
 //
-//  PortfolioHeaderView.swift
-//  OwnStonks
+//  GridHeaderView.swift
+//  
 //
-//  Created by Kamaal Farah on 01/05/2021.
+//  Created by Kamaal M Farah on 02/05/2021.
 //
 
 import SwiftUI
 
-struct PortfolioHeaderView: View {
-    let viewWidth: CGFloat
-    let horizontalPadding: CGFloat
-    let headerTitles: [String]
+public struct GridHeaderView: View {
+    public let viewWidth: CGFloat
+    public let horizontalPadding: CGFloat
+    public let headerTitles: [String]
 
-    init(viewWidth: CGFloat, headerTitles: [String], horizontalPadding: CGFloat = 8) {
+    public init(viewWidth: CGFloat, headerTitles: [String], horizontalPadding: CGFloat = 8) {
         self.viewWidth = viewWidth
         self.headerTitles = headerTitles
         self.horizontalPadding = horizontalPadding
     }
 
-    var body: some View {
+    public var body: some View {
         HStack(spacing: 0) {
             ForEach(0..<headerTitles.count) { colIdx in
                 Text(headerTitles[colIdx])
@@ -26,7 +26,7 @@ struct PortfolioHeaderView: View {
                     .padding(.horizontal, 4)
                     .padding(.vertical, 8)
                     .frame(width: headerWidth, alignment: .leading)
-                    .background(Color.MainBackground)
+                    .background(Color.StonkBackground)
                     .padding(.horizontal, horizontalPadding)
             }
         }
@@ -38,9 +38,9 @@ struct PortfolioHeaderView: View {
     }
 }
 
-struct PortfolioHeaderView_Previews: PreviewProvider {
+struct GridHeaderView_Previews: PreviewProvider {
     static var previews: some View {
-        PortfolioHeaderView(viewWidth: 80, headerTitles: [
+        GridHeaderView(viewWidth: 300, headerTitles: [
             "Name",
             "Shares",
             "Price"

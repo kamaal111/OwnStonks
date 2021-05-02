@@ -7,6 +7,7 @@
 
 import SwiftUI
 import ShrimpExtensions
+import StonksUI
 
 struct PortfolioGridView: View {
     let data: [StonksData]
@@ -23,7 +24,7 @@ struct PortfolioGridView: View {
             alignment: .center,
             spacing: 8,
             pinnedViews: [.sectionHeaders]) {
-            Section(header: PortfolioHeaderView(viewWidth: viewWidth, headerTitles: [
+            Section(header: GridHeaderView(viewWidth: viewWidth, headerTitles: [
                 "Name",
                 "Shares",
                 "Price"

@@ -1,8 +1,8 @@
 //
 //  FloatingTextField.swift
-//  OwnStonks
+//  
 //
-//  Created by Kamaal M Farah on 01/05/2021.
+//  Created by Kamaal M Farah on 02/05/2021.
 //
 
 import SwiftUI
@@ -41,21 +41,37 @@ public struct FloatingTextField: View {
                 .foregroundColor($text.wrappedValue.isEmpty ? .secondary : .accentColor)
                 .offset(y: $text.wrappedValue.isEmpty ? 0 : -25)
                 .scaleEffect($text.wrappedValue.isEmpty ? 1 : 0.75, anchor: .leading)
-                .padding(.horizontal, $text.wrappedValue.isEmpty ? 4 : 0)
+                .padding(.horizontal, titleHorizontalPadding)
             #if canImport(UIKit)
             TextField("", text: $text)
                 .keyboardType(textFieldType.keyboardType)
             #else
-            TextField("", text: $text)
+            TextField(title, text: $text)
             #endif
         }
         .padding(.top, 12)
         .animation(.spring(response: 0.5))
     }
+
+    private var titleHorizontalPadding: CGFloat {
+        if $text.wrappedValue.isEmpty {
+            return 4
+        }
+        return 0
+    }
 }
 
 struct FloatingTextField_Previews: PreviewProvider {
     static var previews: some View {
-        FloatingTextField(text: .constant(""), title: "Tile")
+        Group {
+            FloatingTextField(text: .constant(""), title: "Tile")
+                .previewLayout(.sizeThatFits)
+                .padding(.vertical, 20)
+            FloatingTextField(text: .constant(""), title: "Tile")
+                .previewLayout(.sizeThatFits)
+                .padding(.vertical, 20)
+                .colorScheme(.dark)
+                .background(Color.black)
+        }
     }
 }

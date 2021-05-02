@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SalmonUI
+import StonksUI
 
 struct PortfolioScreen: View {
     #if canImport(AppKit)
@@ -19,7 +21,7 @@ struct PortfolioScreen: View {
         #if canImport(UIKit)
         view()
             .navigationBarTitle(Text("Portfolio"), displayMode: .large)
-            .navigationBarItems(trailing: Button(action: addTransaction) { Image(systemName: "plus") } )
+            .navigationBarItems(trailing: Button(action: addTransaction) { Image(systemName: "plus").size(.squared(20)) } )
         #else
         view()
             .toolbar(content: {
@@ -38,7 +40,7 @@ struct PortfolioScreen: View {
                 EmptyView()
             }
             #endif
-            Color.MainBackground
+            Color.StonkBackground
             GeometryReader { (geometry: GeometryProxy) in
                 ScrollView {
                     PortfolioGridView(data: (0..<10)

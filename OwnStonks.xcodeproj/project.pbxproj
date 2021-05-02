@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486E7263EAFF9006EEB6B /* SalmonUI */; };
+		2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486E9263EB03B006EEB6B /* SalmonUI */; };
+		2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486ED263EB1F2006EEB6B /* StonksUI */; };
+		2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486EF263EB1F9006EEB6B /* StonksUI */; };
 		2C2EFC122639E82E00C05BE9 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC112639E82E00C05BE9 /* Tests_iOS.swift */; };
 		2C2EFC1D2639E82E00C05BE9 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC1C2639E82E00C05BE9 /* Tests_macOS.swift */; };
 		2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */; };
@@ -15,16 +19,12 @@
 		2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF72639E82C00C05BE9 /* ContentView.swift */; };
 		2C2EFC232639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
 		2C2EFC242639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
-		2C7497BB263DB6E7001205EA /* Color+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BA263DB6E7001205EA /* Color+extensions.swift */; };
-		2C7497BC263DB6E7001205EA /* Color+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BA263DB6E7001205EA /* Color+extensions.swift */; };
 		2C7497BE263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
 		2C7497C2263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
 		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
 		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
-		2CE7BAAD263DD83400501FA4 /* FloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7BAAC263DD83400501FA4 /* FloatingTextField.swift */; };
-		2CE7BAAE263DD83400501FA4 /* FloatingTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE7BAAC263DD83400501FA4 /* FloatingTextField.swift */; };
 		601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414D6263A88C10083D485 /* UIDevice+extensions.swift */; };
 		601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* PortfolioScreen.swift */; };
 		601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414E7263A8A980083D485 /* PortfolioScreen.swift */; };
@@ -36,8 +36,6 @@
 		6014150A263A8CFB0083D485 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60141508263A8CFB0083D485 /* Navigator.swift */; };
 		6057942C263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */; };
 		6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */; };
-		6057942F263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */; };
-		60579430263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */; };
 		60579433263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
 		60579434263D516000EE2275 /* StonksData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60579432263D516000EE2275 /* StonksData.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2C1486EC263EB17D006EEB6B /* StonksUI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksUI; sourceTree = "<group>"; };
 		2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C2EFBF72639E82C00C05BE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -76,17 +75,14 @@
 		2C2EFC1E2639E82E00C05BE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C45B7D32639F55B00D2075B /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		2C45B7D42639F56700D2075B /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2C7497BA263DB6E7001205EA /* Color+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+extensions.swift"; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		2CE7BAAC263DD83400501FA4 /* FloatingTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingTextField.swift; sourceTree = "<group>"; };
 		601414D6263A88C10083D485 /* UIDevice+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+extensions.swift"; sourceTree = "<group>"; };
 		601414E7263A8A980083D485 /* PortfolioScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioScreen.swift; sourceTree = "<group>"; };
 		601414F3263A8AC20083D485 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		601414FE263A8AEE0083D485 /* AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebar.swift; sourceTree = "<group>"; };
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioGridView.swift; sourceTree = "<group>"; };
-		6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioHeaderView.swift; sourceTree = "<group>"; };
 		60579432263D516000EE2275 /* StonksData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StonksData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +91,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */,
+				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -103,6 +101,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */,
+				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -124,16 +124,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1486EB263EB142006EEB6B /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2C1486EC263EB17D006EEB6B /* StonksUI */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
 		2C2EFBF02639E82B00C05BE9 = {
 			isa = PBXGroup;
 			children = (
 				2C45B7D32639F55B00D2075B /* LICENSE */,
 				2C45B7D42639F56700D2075B /* README.md */,
+				2CE62CB6263D71630032E86B /* Frameworks */,
+				2C1486EB263EB142006EEB6B /* Packages */,
 				2C2EFBFE2639E82E00C05BE9 /* Products */,
 				2C2EFBF52639E82C00C05BE9 /* Shared */,
 				2C45B7B92639F30A00D2075B /* Targets */,
 				2C45B7C22639F35900D2075B /* Tests */,
-				2CE62CB6263D71630032E86B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -226,7 +235,6 @@
 			isa = PBXGroup;
 			children = (
 				601414D6263A88C10083D485 /* UIDevice+extensions.swift */,
-				2C7497BA263DB6E7001205EA /* Color+extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,7 +262,6 @@
 			children = (
 				601414FE263A8AEE0083D485 /* AppSidebar.swift */,
 				601414F3263A8AC20083D485 /* AppTabView.swift */,
-				2CE7BAAC263DD83400501FA4 /* FloatingTextField.swift */,
 				6057942A263D4F1700EE2275 /* Portfolio */,
 			);
 			path = SupportingViews;
@@ -289,7 +296,6 @@
 			isa = PBXGroup;
 			children = (
 				6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */,
-				6057942E263D4F5F00EE2275 /* PortfolioHeaderView.swift */,
 			);
 			path = Portfolio;
 			sourceTree = "<group>";
@@ -320,6 +326,8 @@
 			name = "OwnStonks (iOS)";
 			packageProductDependencies = (
 				2CE62CB0263D71560032E86B /* ShrimpExtensions */,
+				2C1486E7263EAFF9006EEB6B /* SalmonUI */,
+				2C1486EF263EB1F9006EEB6B /* StonksUI */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -340,6 +348,8 @@
 			name = "OwnStonks (macOS)";
 			packageProductDependencies = (
 				2CE62CB7263D71630032E86B /* ShrimpExtensions */,
+				2C1486E9263EB03B006EEB6B /* SalmonUI */,
+				2C1486ED263EB1F2006EEB6B /* StonksUI */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -417,6 +427,7 @@
 			mainGroup = 2C2EFBF02639E82B00C05BE9;
 			packageReferences = (
 				2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
+				2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */,
 			);
 			productRefGroup = 2C2EFBFE2639E82E00C05BE9 /* Products */;
 			projectDirPath = "";
@@ -471,15 +482,12 @@
 				2C7497BE263DBDE0001205EA /* AddTransactionScreen.swift in Sources */,
 				60141509263A8CFB0083D485 /* Navigator.swift in Sources */,
 				601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */,
-				2C7497BB263DB6E7001205EA /* Color+extensions.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
-				6057942F263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */,
 				601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				2C7497C1263DC75B001205EA /* Constants.swift in Sources */,
 				601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
-				2CE7BAAD263DD83400501FA4 /* FloatingTextField.swift in Sources */,
 				6057942C263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				60579433263D516000EE2275 /* StonksData.swift in Sources */,
 			);
@@ -492,16 +500,13 @@
 				2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */,
 				2C2EFC202639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414F5263A8AC20083D485 /* AppTabView.swift in Sources */,
-				2C7497BC263DB6E7001205EA /* Color+extensions.swift in Sources */,
 				601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */,
-				60579430263D4F5F00EE2275 /* PortfolioHeaderView.swift in Sources */,
 				60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */,
 				60579434263D516000EE2275 /* StonksData.swift in Sources */,
 				2C7497C2263DC75B001205EA /* Constants.swift in Sources */,
-				2CE7BAAE263DD83400501FA4 /* FloatingTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,6 +892,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/SalmonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
@@ -898,6 +911,24 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C1486E7263EAFF9006EEB6B /* SalmonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */;
+			productName = SalmonUI;
+		};
+		2C1486E9263EB03B006EEB6B /* SalmonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */;
+			productName = SalmonUI;
+		};
+		2C1486ED263EB1F2006EEB6B /* StonksUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksUI;
+		};
+		2C1486EF263EB1F9006EEB6B /* StonksUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksUI;
+		};
 		2CE62CB0263D71560032E86B /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
