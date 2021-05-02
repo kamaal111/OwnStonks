@@ -21,7 +21,7 @@ struct AddTransactionScreen: View {
         view()
             .toolbar(content: {
                 Button(action: { }) {
-                    Label("Save", systemImage: "square.and.arrow.down")
+                    Text("Save")
                 }
             })
             .navigationTitle(Text("Add Transaction"))

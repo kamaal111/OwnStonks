@@ -12,11 +12,20 @@ public struct FloatingTextField: View {
 
     public let title: String
     public let textFieldType: TextFieldType
+    public let onEditingChanged: (_ changed: Bool) -> Void
+    public let onCommit: () -> Void
 
-    public init(text: Binding<String>, title: String, textFieldType: TextFieldType = .text) {
+    public init(
+        text: Binding<String>,
+        title: String,
+        textFieldType: TextFieldType = .text,
+        onEditingChanged: @escaping (_ changed: Bool) -> Void = { _ in },
+        onCommit: @escaping () -> Void = { }) {
         self._text = text
         self.title = title
         self.textFieldType = textFieldType
+        self.onEditingChanged = onEditingChanged
+        self.onCommit = onCommit
     }
 
     public enum TextFieldType {
@@ -43,10 +52,10 @@ public struct FloatingTextField: View {
                 .scaleEffect($text.wrappedValue.isEmpty ? 1 : 0.75, anchor: .leading)
                 .padding(.horizontal, titleHorizontalPadding)
             #if canImport(UIKit)
-            TextField("", text: $text)
+            TextField("", text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
                 .keyboardType(textFieldType.keyboardType)
             #else
-            TextField(title, text: $text)
+            TextField(title, text: $text, onEditingChanged: onEditingChanged, onCommit: onCommit)
             #endif
         }
         .padding(.top, 12)
