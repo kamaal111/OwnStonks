@@ -10,7 +10,8 @@ import StonksUI
 
 struct AddTransactionScreen: View {
     @State private var investment = ""
-    @State private var costs = ""
+    @State private var costs = 0.0
+    @State private var shares = 0.0
 
     var body: some View {
         #if canImport(UIKit)
@@ -30,7 +31,8 @@ struct AddTransactionScreen: View {
     private func view() -> some View {
         VStack {
             FloatingTextField(text: $investment, title: "Investment")
-            FloatingTextField(text: $costs, title: "Costs", textFieldType: .decimals)
+            EnforcedFloatingDecimalField(value: $costs, title: "Costs")
+            EnforcedFloatingDecimalField(value: $shares, title: "Shares")
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.vertical, 12)
