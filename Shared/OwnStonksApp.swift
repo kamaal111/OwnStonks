@@ -11,9 +11,12 @@ import SwiftUI
 struct OwnStonksApp: App {
     @StateObject private var navigator = Navigator()
 
+    private let persistenceController = PersistenceController.shared
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.managedObjectContext, persistenceController.container!.viewContext)
                 .environmentObject(navigator)
         }
     }

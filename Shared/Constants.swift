@@ -9,4 +9,5 @@ import CoreGraphics
 
 struct Constants {
     static let minimumContentWidth: CGFloat = 305
+    static let persistentContainerName = "OwnStonks"
 }
