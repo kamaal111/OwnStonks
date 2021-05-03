@@ -8,6 +8,10 @@
 import CoreData
 
 extension CoreStonk {
+    var stonksData: StonksData {
+        StonksData(name: name, shares: shares, costs: costs, symbol: symbol)
+    }
+
     static func setStonk(args: Args, managedObjectContext: NSManagedObjectContext, save: Bool = true) -> Result<CoreStonk, Error> {
         let stonk = CoreStonk(context: managedObjectContext)
         stonk.name = args.name

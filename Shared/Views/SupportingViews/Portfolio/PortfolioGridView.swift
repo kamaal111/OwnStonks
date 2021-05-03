@@ -32,7 +32,7 @@ struct PortfolioGridView: View {
                 ForEach(data, id: \.self) { stonk in
                     PortfolioGridItem(text: stonk.name)
                     PortfolioGridItem(text: "\(stonk.shares)")
-                    PortfolioGridItem(text: stonk.currentPrice.toFixed(2))
+                    PortfolioGridItem(text: stonk.costs.toFixed(2))
                 }
             }
         }

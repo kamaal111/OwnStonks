@@ -17,6 +17,9 @@ struct PortfolioScreen: View {
     @State private var showAddTransactionScreen = false
     #endif
 
+    @EnvironmentObject
+    private var stonksManager: StonksManager
+
     var body: some View {
         #if canImport(UIKit)
         view()
@@ -43,13 +46,7 @@ struct PortfolioScreen: View {
             Color.StonkBackground
             GeometryReader { (geometry: GeometryProxy) in
                 ScrollView {
-                    PortfolioGridView(data: (0..<10)
-                                        .map({
-                                            StonksData(
-                                                name: "Share \($0 + 1)",
-                                                shares: Double((0..<100).randomElement()!),
-                                                currentPrice: Double((0..<100).randomElement()!))
-                                        }), viewWidth: geometry.size.width)
+                    PortfolioGridView(data: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
                 }
             }
         }
@@ -68,5 +65,6 @@ struct PortfolioScreen_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(Navigator())
+            .environmentObject(StonksManager())
     }
 }
