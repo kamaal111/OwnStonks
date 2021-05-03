@@ -8,6 +8,7 @@
 import Combine
 import ConsoleSwift
 import Foundation
+import ShrimpExtensions
 
 final class StonksManager: ObservableObject {
 
@@ -16,43 +17,28 @@ final class StonksManager: ObservableObject {
     private let persistenceController = PersistenceController.shared
 
     var portfolioStonks: [StonksData] {
-        var groupedStonks: [String: [StonksData]] = [:]
+        var combinedStonks: [String: StonksData] = [:]
         for stonk in stonks {
             if let symbol = stonk.symbol {
-                if groupedStonks[symbol] != nil {
-                    groupedStonks[symbol]?.append(stonk.stonksData)
+                if let stonkInCombinedStonks = combinedStonks[symbol] {
+                    combinedStonks[symbol] = StonksData(name: stonk.name,
+                                                        shares: stonk.shares + stonkInCombinedStonks.shares,
+                                                        costs: stonk.costs + stonkInCombinedStonks.costs,
+                                                        symbol: symbol)
                 } else {
-                    groupedStonks[symbol] = [stonk.stonksData]
+                    combinedStonks[symbol] = stonk.stonksData
                 }
             } else {
-                if groupedStonks[stonk.name] != nil {
-                    groupedStonks[stonk.name]?.append(stonk.stonksData)
+                if let stonkInCombinedStonks = combinedStonks[stonk.name] {
+                    combinedStonks[stonk.name] = StonksData(name: stonk.name,
+                                                            shares: stonk.shares + stonkInCombinedStonks.shares,
+                                                            costs: stonk.costs + stonkInCombinedStonks.costs)
                 } else {
-                    groupedStonks[stonk.name] = [stonk.stonksData]
+                    combinedStonks[stonk.name] = stonk.stonksData
                 }
             }
         }
-        var combinedStonks: [StonksData] = []
-        for stonkObject in groupedStonks {
-            var costs = 0.0
-            var shares = 0.0
-            var name: String?
-            var symbol: String?
-            for stonk in stonkObject.value {
-                costs += stonk.costs
-                shares += stonk.shares
-                if name == nil {
-                    name = stonk.name
-                }
-                if symbol == nil {
-                    symbol = stonk.symbol
-                }
-            }
-            if let name = name {
-                combinedStonks.append(StonksData(name: name, shares: shares, costs: costs, symbol: symbol))
-            }
-        }
-        return combinedStonks
+        return combinedStonks.map(\.value)
     }
 
     init() {
