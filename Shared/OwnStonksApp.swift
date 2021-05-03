@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct OwnStonksApp: App {
     @StateObject private var navigator = Navigator()
+    @StateObject private var stonksManager = StonksManager()
 
     private let persistenceController = PersistenceController.shared
 
@@ -18,6 +19,7 @@ struct OwnStonksApp: App {
             ContentView()
                 .environment(\.managedObjectContext, persistenceController.container!.viewContext)
                 .environmentObject(navigator)
+                .environmentObject(stonksManager)
         }
     }
 }
