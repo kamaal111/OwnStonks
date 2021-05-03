@@ -16,6 +16,36 @@ final class StonksManager: ObservableObject {
 
     private let persistenceController = PersistenceController.shared
 
+    init() {
+        let fetchResult = persistenceController.fetch(CoreStonk.self)
+        switch fetchResult {
+        case .failure(let failure):
+            console.error(Date(), failure.localizedDescription, failure)
+            return
+        case .success(let success):
+            if let success = success {
+                self.stonks = success
+            }
+        }
+    }
+
+    enum Errors: Error {
+        case invalidStonkName
+        case invalidAmountOfShares
+        case generalError(error: Error)
+
+        var localizedDescription: String {
+            switch self {
+            case .invalidStonkName:
+                return "Invalid stonk name provided"
+            case .invalidAmountOfShares:
+                return "Invalid amount of shares"
+            case .generalError(let error):
+                return "Something went wrong \(error)"
+            }
+        }
+    }
+
     var portfolioStonks: [StonksData] {
         var combinedStonks: [String: StonksData] = [:]
         for stonk in stonks {
@@ -41,30 +71,21 @@ final class StonksManager: ObservableObject {
         return combinedStonks.map(\.value)
     }
 
-    init() {
-        let fetchResult = persistenceController.fetch(CoreStonk.self)
-        switch fetchResult {
-        case .failure(let failure):
-            console.error(Date(), failure.localizedDescription, failure)
-            return
-        case .success(let success):
-            if let success = success {
-                self.stonks = success
-            }
+    func setStonk(with args: CoreStonk.Args) -> Result<CoreStonk, Errors> {
+        if args.name.trimmingByWhitespacesAndNewLines.isEmpty {
+            return .failure(.invalidStonkName)
         }
-    }
-
-    func setStonk(with args: CoreStonk.Args) {
+        if args.shares.isZero {
+            return .failure(.invalidAmountOfShares)
+        }
         let stonkResult = CoreStonk.setStonk(args: args, managedObjectContext: persistenceController.context!)
         let stonk: CoreStonk
         switch stonkResult {
-        case .failure(let failure):
-            console.error(Date(), failure.localizedDescription, failure)
-            return
-        case .success(let success):
-            stonk = success
+        case .failure(let failure): return .failure(.generalError(error: failure))
+        case .success(let success): stonk = success
         }
         stonks.append(stonk)
+        return .success(stonk)
     }
 
 }
