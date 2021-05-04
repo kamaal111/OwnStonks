@@ -18,10 +18,12 @@ final class Navigator: ObservableObject {
     enum ScreenNames: String {
         case portfolio
         case addTransaction
+        case transactions
     }
 
     static let screens: [ScreenModel] = [
-        .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio)
+        .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio),
+        .init(name: "Transactions", imageSystemName: "arrow.up.arrow.down", screen: .transactions)
     ]
 
     func navigateToAddTransactionScreen() {
@@ -39,7 +41,7 @@ final class Navigator: ObservableObject {
             guard let self = self else { return }
             #if canImport(UIKit)
             if self.showAddTransactionScreen {
-                showAddTransactionScreen = false
+                self.showAddTransactionScreen = false
             }
             #endif
             self.screenSelection = nil
@@ -65,6 +67,7 @@ struct ScreenModel: Hashable {
         ZStack {
             switch screen {
             case .portfolio: PortfolioScreen()
+            case .transactions: TransactionsScreen()
             default: EmptyView()
             }
         }
