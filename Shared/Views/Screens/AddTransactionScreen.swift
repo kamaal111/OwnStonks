@@ -32,7 +32,7 @@ struct AddTransactionScreen: View {
     private func view() -> some View {
         VStack {
             FloatingTextField(text: $viewModel.investment, title: "Investment")
-            EnforcedFloatingDecimalField(value: $viewModel.costs, title: "Costs")
+            EnforcedFloatingDecimalField(value: $viewModel.costPerShare, title: "Cost/Share")
             EnforcedFloatingDecimalField(value: $viewModel.shares, title: "Shares")
             FloatingDatePicker(value: $viewModel.transactionDate, title: "Transaction date")
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -54,7 +54,7 @@ struct AddTransactionScreen: View {
     }
 
     private func saveAction() {
-        let stonkResult = stonksManager.setStonk(with: viewModel.stonkArgs)
+        let stonkResult = stonksManager.setTransaction(with: viewModel.transactionArgs)
         guard viewModel.saveAction(stonkResult: stonkResult) else { return }
         navigator.navigateToPortfolio()
     }

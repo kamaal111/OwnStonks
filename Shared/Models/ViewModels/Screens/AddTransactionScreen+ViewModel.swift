@@ -13,7 +13,7 @@ extension AddTransactionScreen {
     final class ViewModel: ObservableObject {
 
         @Published var investment = ""
-        @Published var costs = 0.0
+        @Published var costPerShare = 0.0
         @Published var shares = 0.0
         @Published var transactionDate = Date()
         @Published var showAlert = false
@@ -24,11 +24,11 @@ extension AddTransactionScreen {
             }
         }
 
-        var stonkArgs: CoreStonk.Args {
-            CoreStonk.Args(name: investment, costs: costs, shares: shares, transactionDate: transactionDate)
+        var transactionArgs: CoreTransaction.Args {
+            .init(name: investment, costPerShare: costPerShare, shares: shares, transactionDate: transactionDate)
         }
 
-        func saveAction(stonkResult: Result<CoreStonk, StonksManager.Errors>) -> Bool {
+        func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {
             switch stonkResult {
             case .failure(let failure):
                 switch failure {

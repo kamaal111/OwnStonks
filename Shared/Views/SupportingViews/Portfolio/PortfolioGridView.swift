@@ -10,10 +10,10 @@ import ShrimpExtensions
 import StonksUI
 
 struct PortfolioGridView: View {
-    let data: [StonksData]
+    let data: [CoreTransaction.Hasher]
     let viewWidth: CGFloat
 
-    init(data: [StonksData], viewWidth: CGFloat) {
+    init(data: [CoreTransaction.Hasher], viewWidth: CGFloat) {
         self.data = data
         self.viewWidth = viewWidth
     }
@@ -27,12 +27,12 @@ struct PortfolioGridView: View {
             Section(header: GridHeaderView(viewWidth: viewWidth, headerTitles: [
                 "Name",
                 "Shares",
-                "Price"
+                "Cost/Share"
             ])) {
-                ForEach(data, id: \.self) { stonk in
-                    PortfolioGridItem(text: stonk.name)
-                    PortfolioGridItem(text: "\(stonk.shares)")
-                    PortfolioGridItem(text: stonk.costs.toFixed(2))
+                ForEach(data, id: \.self) { transaction in
+                    PortfolioGridItem(text: transaction.name)
+                    PortfolioGridItem(text: "\(transaction.shares)")
+                    PortfolioGridItem(text: transaction.costPerShare.toFixed(2))
                 }
             }
         }

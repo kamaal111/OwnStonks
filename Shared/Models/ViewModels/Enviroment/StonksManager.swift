@@ -12,19 +12,19 @@ import ShrimpExtensions
 
 final class StonksManager: ObservableObject {
 
-    @Published private(set) var stonks: [CoreStonk] = []
+    @Published private(set) var transactions: [CoreTransaction] = []
 
     private let persistenceController = PersistenceController.shared
 
     init() {
-        let fetchResult = persistenceController.fetch(CoreStonk.self)
+        let fetchResult = persistenceController.fetch(CoreTransaction.self)
         switch fetchResult {
         case .failure(let failure):
             console.error(Date(), failure.localizedDescription, failure)
             return
         case .success(let success):
             if let success = success {
-                self.stonks = success
+                self.transactions = success
             }
         }
     }
@@ -46,43 +46,34 @@ final class StonksManager: ObservableObject {
         }
     }
 
-    var portfolioStonks: [StonksData] {
-        var combinedStonks: [String: StonksData] = [:]
-        for stonk in stonks {
-            if let symbol = stonk.symbol {
-                if let stonkInCombinedStonks = combinedStonks[symbol] {
-                    combinedStonks[symbol] = StonksData(name: stonk.name,
-                                                        shares: stonk.shares + stonkInCombinedStonks.shares,
-                                                        costs: stonk.costs + stonkInCombinedStonks.costs,
-                                                        transactionDate: stonk.transactionDate,
-                                                        symbol: symbol)
+    var portfolioStonks: [CoreTransaction.Hasher] {
+        var combinedTranactions: [String: CoreTransaction.Hasher] = [:]
+        for transaction in transactions {
+            if let symbol = transaction.symbol {
+                if let transactionInCombinedTransactions = combinedTranactions[symbol] {
                 } else {
-                    combinedStonks[symbol] = stonk.stonksData
                 }
             } else {
-                if let stonkInCombinedStonks = combinedStonks[stonk.name] {
-                    combinedStonks[stonk.name] = StonksData(name: stonk.name,
-                                                            shares: stonk.shares + stonkInCombinedStonks.shares,
-                                                            costs: stonk.costs + stonkInCombinedStonks.costs,
-                                                            transactionDate: stonk.transactionDate)
+                if let transactionInCombinedTransactions = combinedTranactions[transaction.name] {
                 } else {
-                    combinedStonks[stonk.name] = stonk.stonksData
                 }
             }
         }
-        return combinedStonks.map(\.value)
+        return combinedTranactions.map(\.value)
     }
 
-    func setStonk(with args: CoreStonk.Args) -> Result<CoreStonk, Errors> {
+    func setTransaction(with args: CoreTransaction.Args) -> Result<CoreTransaction, Errors> {
         guard !args.name.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidStonkName) }
         guard !args.shares.isZero else { return .failure(.invalidAmountOfShares) }
-        let stonkResult = CoreStonk.setStonk(args: args, managedObjectContext: persistenceController.context!)
-        let stonk: CoreStonk
+        let stonkResult = CoreTransaction.setTransaction(
+            args: args,
+            managedObjectContext: persistenceController.context!)
+        let stonk: CoreTransaction
         switch stonkResult {
         case .failure(let failure): return .failure(.generalError(error: failure))
         case .success(let success): stonk = success
         }
-        stonks.append(stonk)
+        transactions.append(stonk)
         return .success(stonk)
     }
 
