@@ -42,9 +42,16 @@ struct PortfolioScreen: View {
             }
             #endif
             Color.StonkBackground
-            GeometryReader { (geometry: GeometryProxy) in
-                ScrollView {
-                    PortfolioGridView(data: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
+            if stonksManager.portfolioStonks.isEmpty {
+                Button(action: navigator.navigateToAddTransactionScreen) {
+                    Text("Add your first transaction")
+                        .font(.headline)
+                }
+            } else {
+                GeometryReader { (geometry: GeometryProxy) in
+                    ScrollView {
+                        PortfolioGridView(data: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
+                    }
                 }
             }
         }
