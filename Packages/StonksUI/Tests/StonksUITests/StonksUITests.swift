@@ -1,8 +1,8 @@
-    import XCTest
-    @testable import StonksUI
+import XCTest
+@testable import StonksUI
 
-    final class StonksUITests: XCTestCase {
-        func testExample() {
-            XCTAssert(true)
-        }
+final class StonksUITests: XCTestCase {
+    func testExample() {
+        XCTAssert(true)
     }
+}

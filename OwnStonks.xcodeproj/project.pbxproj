@@ -106,6 +106,7 @@
 		601414FE263A8AEE0083D485 /* AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebar.swift; sourceTree = "<group>"; };
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
 		603EE1C42641231600756FE1 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
+		603EE1C5264125BF00756FE1 /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
 		6050FE14263FCDD700819D92 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6050FE1E263FCE9500819D92 /* OwnStocks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OwnStocks.xcdatamodel; sourceTree = "<group>"; };
 		6050FE22263FD05200819D92 /* CoreStonk+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreStonk+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -352,6 +353,7 @@
 			isa = PBXGroup;
 			children = (
 				603EE1C42641231600756FE1 /* clear_mac_data.sh */,
+				603EE1C5264125BF00756FE1 /* pre_compile.sh */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -405,6 +407,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C2EFC272639E82E00C05BE9 /* Build configuration list for PBXNativeTarget "OwnStonks (iOS)" */;
 			buildPhases = (
+				603EE1C72641260300756FE1 /* Pre Compile */,
 				2C2EFBF92639E82E00C05BE9 /* Sources */,
 				2C2EFBFA2639E82E00C05BE9 /* Frameworks */,
 				2C2EFBFB2639E82E00C05BE9 /* Resources */,
@@ -430,6 +433,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2C2EFC2A2639E82E00C05BE9 /* Build configuration list for PBXNativeTarget "OwnStonks (macOS)" */;
 			buildPhases = (
+				603EE1C6264125DD00756FE1 /* Pre Compile */,
 				2C2EFC012639E82E00C05BE9 /* Sources */,
 				2C2EFC022639E82E00C05BE9 /* Frameworks */,
 				2C2EFC032639E82E00C05BE9 /* Resources */,
@@ -572,6 +576,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		603EE1C6264125DD00756FE1 /* Pre Compile */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Compile";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nsh Scripts/pre_compile.sh\n";
+		};
+		603EE1C72641260300756FE1 /* Pre Compile */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Compile";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\nsh Scripts/pre_compile.sh\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		2C2EFBF92639E82E00C05BE9 /* Sources */ = {

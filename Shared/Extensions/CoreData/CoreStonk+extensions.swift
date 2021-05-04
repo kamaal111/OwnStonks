@@ -12,7 +12,10 @@ extension CoreStonk {
         StonksData(name: name, shares: shares, costs: costs, transactionDate: transactionDate, symbol: symbol)
     }
 
-    static func setStonk(args: Args, managedObjectContext: NSManagedObjectContext, save: Bool = true) -> Result<CoreStonk, Error> {
+    static func setStonk(
+        args: Args,
+        managedObjectContext: NSManagedObjectContext,
+        save: Bool = true) -> Result<CoreStonk, Error> {
         let stonk = CoreStonk(context: managedObjectContext)
         stonk.name = args.name
         stonk.costs = args.costs

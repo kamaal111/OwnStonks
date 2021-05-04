@@ -19,7 +19,9 @@ struct PortfolioScreen: View {
         #if canImport(UIKit)
         view()
             .navigationBarTitle(Text("Portfolio"), displayMode: .large)
-            .navigationBarItems(trailing: Button(action: addTransaction) { Image(systemName: "plus").size(.squared(20)) } )
+            .navigationBarItems(trailing: Button(action: addTransaction) {
+                Image(systemName: "plus").size(.squared(20))
+            })
         #else
         view()
             .toolbar(content: {

@@ -21,7 +21,7 @@ final class Navigator: ObservableObject {
     }
 
     static let screens: [ScreenModel] = [
-        .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio),
+        .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio)
     ]
 
     func navigateToAddTransactionScreen() {

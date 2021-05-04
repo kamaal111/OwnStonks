@@ -1,0 +1,11 @@
+disabled_rules:
+  - multiple_closures_with_trailing_closure
+  - orphaned_doc_comment
+excluded:
+  - Packages/*/Package.swift
+  - Shared/Models/CoreData/*/*.swift
+  - Tests
+identifier_name:
+  min_length:
+    warning: 2
+  allowed_symbols: "_"
