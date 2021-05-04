@@ -8,10 +8,11 @@
 import SwiftUI
 
 struct AppTabView: View {
-    @State private var tabSelection = Navigator.ScreenNames.portfolio.rawValue
+    @EnvironmentObject
+    private var navigator: Navigator
 
     var body: some View {
-        TabView(selection: $tabSelection) {
+        TabView(selection: $navigator.tabSelection) {
             ForEach(Navigator.screens, id: \.self) { (screen: ScreenModel) in
                 NavigationView { screen.view }
                     .tabItem({
@@ -27,5 +28,6 @@ struct AppTabView: View {
 struct AppTabView_Previews: PreviewProvider {
     static var previews: some View {
         AppTabView()
+            .environmentObject(Navigator())
     }
 }

@@ -12,6 +12,13 @@ final class Navigator: ObservableObject {
 
     #if canImport(UIKit)
     @Published var showAddTransactionScreen = false
+    @Published var tabSelection = ScreenNames.portfolio.rawValue {
+        didSet {
+            if showAddTransactionScreen {
+                showAddTransactionScreen = false
+            }
+        }
+    }
     #endif
     @Published var screenSelection: String?
 
