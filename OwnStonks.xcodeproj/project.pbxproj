@@ -308,8 +308,8 @@
 		601414E6263A8A850083D485 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				601414E7263A8A980083D485 /* PortfolioScreen.swift */,
 				2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */,
+				601414E7263A8A980083D485 /* PortfolioScreen.swift */,
 				60236BA42641AC4200A80B80 /* TransactionsScreen.swift */,
 			);
 			path = Screens;

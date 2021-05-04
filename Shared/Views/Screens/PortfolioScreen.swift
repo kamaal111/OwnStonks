@@ -19,14 +19,14 @@ struct PortfolioScreen: View {
         #if canImport(UIKit)
         view()
             .navigationBarTitle(Text("Portfolio"), displayMode: .large)
-            .navigationBarItems(trailing: Button(action: addTransaction) {
+            .navigationBarItems(trailing: Button(action: navigator.navigateToAddTransactionScreen) {
                 Image(systemName: "plus").size(.squared(20))
             })
         #else
         view()
             .navigationTitle(Text("Portfolio"))
             .toolbar(content: {
-                Button(action: addTransaction) {
+                Button(action: navigator.navigateToAddTransactionScreen) {
                     Label("Add transaction", systemImage: "plus")
                 }
             })
@@ -55,10 +55,6 @@ struct PortfolioScreen: View {
                 }
             }
         }
-    }
-
-    private func addTransaction() {
-        navigator.navigateToAddTransactionScreen()
     }
 }
 
