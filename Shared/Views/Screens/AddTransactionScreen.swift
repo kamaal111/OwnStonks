@@ -11,6 +11,8 @@ import StonksUI
 struct AddTransactionScreen: View {
     @EnvironmentObject
     private var stonksManager: StonksManager
+    @EnvironmentObject
+    private var navigator: Navigator
 
     @ObservedObject
     private var viewModel = ViewModel()
@@ -28,8 +30,7 @@ struct AddTransactionScreen: View {
     }
 
     private func view() -> some View {
-        #warning("Set error if viewModel.showAlert is true")
-        return VStack {
+        VStack {
             FloatingTextField(text: $viewModel.investment, title: "Investment")
             EnforcedFloatingDecimalField(value: $viewModel.costs, title: "Costs")
             EnforcedFloatingDecimalField(value: $viewModel.shares, title: "Shares")
@@ -37,6 +38,11 @@ struct AddTransactionScreen: View {
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.vertical, 12)
         .padding(.horizontal, 24)
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(title: Text(viewModel.alertMessage?.title ?? ""),
+                  message: Text(viewModel.alertMessage?.message ?? ""),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 
     private func saveButton() -> some View {
@@ -48,7 +54,7 @@ struct AddTransactionScreen: View {
     private func saveAction() {
         let stonkResult = stonksManager.setStonk(with: viewModel.stonkArgs)
         guard viewModel.saveAction(stonkResult: stonkResult) else { return }
-        #warning("Navigate back")
+        navigator.navigateToPortfolio()
     }
 }
 
@@ -56,5 +62,6 @@ struct AddTransactionScreen_Previews: PreviewProvider {
     static var previews: some View {
         AddTransactionScreen()
             .environmentObject(StonksManager())
+            .environmentObject(Navigator())
     }
 }

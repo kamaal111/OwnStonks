@@ -11,10 +11,9 @@ import SwiftUI
 final class Navigator: ObservableObject {
 
     #if canImport(UIKit)
-    @Published var screenSelection: String?
-    #else
-    @Published var screenSelection: String? = ScreenNames.portfolio.rawValue
+    @Published var showAddTransactionScreen = false
     #endif
+    @Published var screenSelection: String?
 
     enum ScreenNames: String {
         case portfolio
@@ -25,13 +24,27 @@ final class Navigator: ObservableObject {
         .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio),
     ]
 
-    #if canImport(AppKit)
     func navigateToAddTransactionScreen() {
         DispatchQueue.main.async { [weak self] in
+            #if canImport(AppKit)
             self?.screenSelection = ScreenNames.addTransaction.rawValue
+            #else
+            self?.showAddTransactionScreen = true
+            #endif
         }
     }
-    #endif
+
+    func navigateToPortfolio() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
+            #if canImport(UIKit)
+            if self.showAddTransactionScreen {
+                showAddTransactionScreen = false
+            }
+            #endif
+            self.screenSelection = nil
+        }
+    }
 
 }
 

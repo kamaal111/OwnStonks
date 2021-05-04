@@ -10,13 +10,8 @@ import SalmonUI
 import StonksUI
 
 struct PortfolioScreen: View {
-    #if canImport(AppKit)
     @EnvironmentObject
     private var navigator: Navigator
-    #else
-    @State private var showAddTransactionScreen = false
-    #endif
-
     @EnvironmentObject
     private var stonksManager: StonksManager
 
@@ -39,7 +34,7 @@ struct PortfolioScreen: View {
     private func view() -> some View {
         ZStack {
             #if canImport(UIKit)
-            NavigationLink(destination: AddTransactionScreen(), isActive: $showAddTransactionScreen) {
+            NavigationLink(destination: AddTransactionScreen(), isActive: $navigator.showAddTransactionScreen) {
                 EmptyView()
             }
             #endif
@@ -53,11 +48,7 @@ struct PortfolioScreen: View {
     }
 
     private func addTransaction() {
-        #if canImport(UIKit)
-        showAddTransactionScreen = true
-        #else
         navigator.navigateToAddTransactionScreen()
-        #endif
     }
 }
 

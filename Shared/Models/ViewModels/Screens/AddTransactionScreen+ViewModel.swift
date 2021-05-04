@@ -15,7 +15,7 @@ extension AddTransactionScreen {
         @Published var investment = ""
         @Published var costs = 0.0
         @Published var shares = 0.0
-        @Published private(set) var showAlert = false
+        @Published var showAlert = false
         @Published private(set) var alertMessage: (title: String, message: String)? {
             didSet {
                 guard alertMessage != nil else { return }

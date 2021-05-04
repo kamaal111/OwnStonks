@@ -72,12 +72,8 @@ final class StonksManager: ObservableObject {
     }
 
     func setStonk(with args: CoreStonk.Args) -> Result<CoreStonk, Errors> {
-        if args.name.trimmingByWhitespacesAndNewLines.isEmpty {
-            return .failure(.invalidStonkName)
-        }
-        if args.shares.isZero {
-            return .failure(.invalidAmountOfShares)
-        }
+        guard !args.name.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidStonkName) }
+        guard !args.shares.isZero else { return .failure(.invalidAmountOfShares) }
         let stonkResult = CoreStonk.setStonk(args: args, managedObjectContext: persistenceController.context!)
         let stonk: CoreStonk
         switch stonkResult {
