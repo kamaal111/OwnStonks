@@ -24,6 +24,7 @@ struct PortfolioScreen: View {
             })
         #else
         view()
+            .navigationTitle(Text("Portfolio"))
             .toolbar(content: {
                 Button(action: addTransaction) {
                     Label("Add transaction", systemImage: "plus")
