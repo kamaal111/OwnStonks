@@ -34,6 +34,7 @@ struct AddTransactionScreen: View {
             FloatingTextField(text: $viewModel.investment, title: "Investment")
             EnforcedFloatingDecimalField(value: $viewModel.costs, title: "Costs")
             EnforcedFloatingDecimalField(value: $viewModel.shares, title: "Shares")
+            FloatingDatePicker(value: $viewModel.transactionDate, title: "Transaction date")
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.vertical, 12)

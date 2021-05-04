@@ -105,6 +105,7 @@
 		601414F3263A8AC20083D485 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		601414FE263A8AEE0083D485 /* AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebar.swift; sourceTree = "<group>"; };
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		603EE1C42641231600756FE1 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		6050FE14263FCDD700819D92 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6050FE1E263FCE9500819D92 /* OwnStocks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OwnStocks.xcdatamodel; sourceTree = "<group>"; };
 		6050FE22263FD05200819D92 /* CoreStonk+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreStonk+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -173,6 +174,7 @@
 				2CE62CB6263D71630032E86B /* Frameworks */,
 				2C1486EB263EB142006EEB6B /* Packages */,
 				2C2EFBFE2639E82E00C05BE9 /* Products */,
+				603EE1C3264122EE00756FE1 /* Scripts */,
 				2C2EFBF52639E82C00C05BE9 /* Shared */,
 				2C45B7B92639F30A00D2075B /* Targets */,
 				2C45B7C22639F35900D2075B /* Tests */,
@@ -344,6 +346,14 @@
 				60027D6C2640588E007B1EE9 /* StonksManager.swift */,
 			);
 			path = Enviroment;
+			sourceTree = "<group>";
+		};
+		603EE1C3264122EE00756FE1 /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				603EE1C42641231600756FE1 /* clear_mac_data.sh */,
+			);
+			path = Scripts;
 			sourceTree = "<group>";
 		};
 		6050FE0E263FCD6700819D92 /* Utilities */ = {

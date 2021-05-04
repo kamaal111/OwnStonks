@@ -54,6 +54,7 @@ final class StonksManager: ObservableObject {
                     combinedStonks[symbol] = StonksData(name: stonk.name,
                                                         shares: stonk.shares + stonkInCombinedStonks.shares,
                                                         costs: stonk.costs + stonkInCombinedStonks.costs,
+                                                        transactionDate: stonk.transactionDate,
                                                         symbol: symbol)
                 } else {
                     combinedStonks[symbol] = stonk.stonksData
@@ -62,7 +63,8 @@ final class StonksManager: ObservableObject {
                 if let stonkInCombinedStonks = combinedStonks[stonk.name] {
                     combinedStonks[stonk.name] = StonksData(name: stonk.name,
                                                             shares: stonk.shares + stonkInCombinedStonks.shares,
-                                                            costs: stonk.costs + stonkInCombinedStonks.costs)
+                                                            costs: stonk.costs + stonkInCombinedStonks.costs,
+                                                            transactionDate: stonk.transactionDate)
                 } else {
                     combinedStonks[stonk.name] = stonk.stonksData
                 }

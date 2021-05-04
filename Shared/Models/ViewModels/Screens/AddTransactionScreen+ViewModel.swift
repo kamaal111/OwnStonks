@@ -15,6 +15,7 @@ extension AddTransactionScreen {
         @Published var investment = ""
         @Published var costs = 0.0
         @Published var shares = 0.0
+        @Published var transactionDate = Date()
         @Published var showAlert = false
         @Published private(set) var alertMessage: (title: String, message: String)? {
             didSet {
@@ -24,7 +25,7 @@ extension AddTransactionScreen {
         }
 
         var stonkArgs: CoreStonk.Args {
-            CoreStonk.Args(name: investment, costs: costs, shares: shares)
+            CoreStonk.Args(name: investment, costs: costs, shares: shares, transactionDate: transactionDate)
         }
 
         func saveAction(stonkResult: Result<CoreStonk, StonksManager.Errors>) -> Bool {
