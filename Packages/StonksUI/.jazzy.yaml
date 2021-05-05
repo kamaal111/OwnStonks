@@ -1,0 +1,7 @@
+module: StonksUI
+author: Kamaal Farah
+github_url: https://github.com/kamaal111/OwnStonks/Packages/StonksUI
+exclude:
+  - Tests
+copyright: "© 2021 Kamaal Farah under [open source license](https://github.com/kamaal111/OwnStonks/blob/main/LICENSE)."
+output: docs

@@ -100,6 +100,7 @@
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2CF2F2042642F75700F8AF9E /* IDETemplteMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IDETemplteMacros.plist; sourceTree = "<group>"; };
+		2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_docs.sh; sourceTree = "<group>"; };
 		60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+extensions.swift"; sourceTree = "<group>"; };
 		60027D6C2640588E007B1EE9 /* StonksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StonksManager.swift; sourceTree = "<group>"; };
 		601414D6263A88C10083D485 /* UIDevice+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+extensions.swift"; sourceTree = "<group>"; };
@@ -355,6 +356,7 @@
 			children = (
 				603EE1C42641231600756FE1 /* clear_mac_data.sh */,
 				603EE1C5264125BF00756FE1 /* pre_compile.sh */,
+				2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
