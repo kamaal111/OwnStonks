@@ -3,6 +3,7 @@
 //  OwnStonks
 //
 //  Created by Kamaal Farah on 03/05/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
 //
 
 import CoreData
@@ -16,10 +17,11 @@ struct PersistenceController {
         let persistanceContainer: NSPersistentContainer = {
             let container = NSPersistentContainer(name: Constants.persistentContainerName)
             if inMemory {
-                container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+                container.persistentStoreDescriptions.first?.url = URL(fileURLWithPath: "/dev/null")
             } else {
-                let defaultUrl = container.persistentStoreDescriptions.first!.url
-                let defaultStore = NSPersistentStoreDescription(url: defaultUrl!)
+                guard let defaultUrl = container.persistentStoreDescriptions.first?.url
+                else { fatalError("Default url not found") }
+                let defaultStore = NSPersistentStoreDescription(url: defaultUrl)
                 defaultStore.configuration = "Default"
                 defaultStore.shouldMigrateStoreAutomatically = true
                 defaultStore.shouldInferMappingModelAutomatically = true

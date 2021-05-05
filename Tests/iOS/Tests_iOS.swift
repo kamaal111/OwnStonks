@@ -3,6 +3,7 @@
 //  Tests iOS
 //
 //  Created by Kamaal M Farah on 28/04/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
 //
 
 import XCTest

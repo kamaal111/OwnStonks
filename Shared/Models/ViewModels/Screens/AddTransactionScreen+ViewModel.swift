@@ -3,6 +3,7 @@
 //  OwnStonks
 //
 //  Created by Kamaal M Farah on 03/05/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
 //
 
 import Combine

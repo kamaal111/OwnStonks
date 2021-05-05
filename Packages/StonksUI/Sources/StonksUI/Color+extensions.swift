@@ -8,11 +8,11 @@
 import SwiftUI
 
 #if canImport(UIKit)
-public extension Color {
-    static let StonkBackground = Color(.systemBackground)
+extension Color {
+    public static let StonkBackground = Color(.systemBackground)
 }
 #else
-public extension Color {
-    static let StonkBackground = Color(.controlBackgroundColor)
+extension Color {
+    public static let StonkBackground = Color(.controlBackgroundColor)
 }
 #endif

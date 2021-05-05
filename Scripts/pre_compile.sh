@@ -4,7 +4,8 @@
 #  OwnStonks
 #
 #  Created by Kamaal Farah on 04/05/2021.
-#  
+#  Copyright © 2021 Kamaal Farah. All rights reserved.
+#
 
 if which swiftlint >/dev/null; then
   swiftlint

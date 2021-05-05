@@ -3,6 +3,7 @@
 //  OwnStonks
 //
 //  Created by Kamaal M Farah on 01/05/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
 //
 
 import SwiftUI

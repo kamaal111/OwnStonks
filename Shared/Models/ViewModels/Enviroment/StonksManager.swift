@@ -3,6 +3,7 @@
 //  OwnStonks
 //
 //  Created by Kamaal Farah on 03/05/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
 //
 
 import Combine
@@ -10,6 +11,7 @@ import ConsoleSwift
 import Foundation
 import ShrimpExtensions
 
+/// This class manages all core data objects
 final class StonksManager: ObservableObject {
 
     @Published private(set) var transactions: [CoreTransaction] = []
@@ -63,11 +65,10 @@ final class StonksManager: ObservableObject {
     }
 
     func setTransaction(with args: CoreTransaction.Args) -> Result<CoreTransaction, Errors> {
+        guard let context = persistenceController.context else { fatalError("No context") }
         guard !args.name.trimmingByWhitespacesAndNewLines.isEmpty else { return .failure(.invalidStonkName) }
         guard !args.shares.isZero else { return .failure(.invalidAmountOfShares) }
-        let stonkResult = CoreTransaction.setTransaction(
-            args: args,
-            managedObjectContext: persistenceController.context!)
+        let stonkResult = CoreTransaction.setTransaction( args: args, managedObjectContext: context)
         let stonk: CoreTransaction
         switch stonkResult {
         case .failure(let failure): return .failure(.generalError(error: failure))
