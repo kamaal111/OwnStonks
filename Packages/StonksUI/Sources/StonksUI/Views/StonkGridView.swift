@@ -42,16 +42,6 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
     }
 }
 
-public protocol StonkGridCellRenderable: Hashable, Identifiable {
-    var content: String { get }
-}
-
-extension StonkGridCellRenderable {
-    var renderID: String {
-        "\(content)-\(id)"
-    }
-}
-
 private struct StonksGridItem<Content: StonkGridCellRenderable>: View {
     let text: Content
     let horizontalPadding: CGFloat

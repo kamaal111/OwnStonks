@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-public struct GridHeaderView: View {
-    public let viewWidth: CGFloat
-    public let horizontalPadding: CGFloat
-    public let headerTitles: [String]
+struct GridHeaderView: View {
+    let viewWidth: CGFloat
+    let horizontalPadding: CGFloat
+    let headerTitles: [String]
 
-    public init(viewWidth: CGFloat, headerTitles: [String], horizontalPadding: CGFloat = 8) {
+    init(viewWidth: CGFloat, headerTitles: [String], horizontalPadding: CGFloat = 8) {
         self.viewWidth = viewWidth
         self.headerTitles = headerTitles
         self.horizontalPadding = horizontalPadding
     }
 
-    public var body: some View {
+    var body: some View {
         HStack(spacing: 0) {
             ForEach(0..<headerTitles.count) { colIdx in
                 Text(headerTitles[colIdx])
