@@ -51,7 +51,7 @@ struct PortfolioScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        PortfolioGridView(data: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
+                        PortfolioGridView(tranactions: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
                     }
                 }
             }

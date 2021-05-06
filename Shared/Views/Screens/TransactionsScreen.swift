@@ -46,7 +46,11 @@ struct TransactionsScreen: View {
                         .font(.headline)
                 }
             } else {
-                Text("Hello, World!")
+                GeometryReader { (geometry: GeometryProxy) in
+                    ScrollView {
+                        Text("Hello, World!")
+                    }
+                }
             }
         }
     }

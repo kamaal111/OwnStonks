@@ -11,59 +11,39 @@ import ShrimpExtensions
 import StonksUI
 
 struct PortfolioGridView: View {
-    let data: [PortfolioItem]
+    let data: [[String]]
     let viewWidth: CGFloat
 
-    init(data: [PortfolioItem], viewWidth: CGFloat) {
-        self.data = data
+    init(tranactions: [PortfolioItem], viewWidth: CGFloat) {
+        var multiDimensionedData: [[String]] = []
+        for transaction in tranactions {
+            let row = [
+                transaction.name,
+                "\(transaction.shares)",
+                transaction.totalPrice.toFixed(2)
+            ]
+            multiDimensionedData.append(row)
+        }
+        self.data = multiDimensionedData
+        self.viewWidth = viewWidth
+    }
+
+    init(multiDimensionedData: [[String]], viewWidth: CGFloat) {
+        self.data = multiDimensionedData
         self.viewWidth = viewWidth
     }
 
     var body: some View {
-        LazyVGrid(
-            columns: columns,
-            alignment: .center,
-            spacing: 8,
-            pinnedViews: [.sectionHeaders]) {
-            Section(header: GridHeaderView(viewWidth: viewWidth, headerTitles: [
-                "Name",
-                "Shares",
-                "Cost/Share"
-            ])) {
-                ForEach(data, id: \.self) { transaction in
-                    PortfolioGridItem(text: transaction.name)
-                    PortfolioGridItem(text: "\(transaction.shares)")
-                    PortfolioGridItem(text: transaction.totalPrice.toFixed(2))
-                }
-            }
-        }
-    }
-
-    private var columns: [GridItem] = [
-        GridItem(.flexible()),
-        GridItem(.flexible()),
-        GridItem(.flexible())
-    ]
-}
-
-struct PortfolioGridItem: View {
-    let text: String
-    let horizontalPadding: CGFloat
-
-    init(text: String, horizontalPadding: CGFloat = 16) {
-        self.text = text
-        self.horizontalPadding = horizontalPadding
-    }
-    var body: some View {
-        Text(text)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .multilineTextAlignment(.leading)
-            .padding(.horizontal, horizontalPadding)
+        StonkGridView(headerTitles: [
+            "Name",
+            "Shares",
+            "Cost/Share"
+        ], data: data, viewWidth: viewWidth)
     }
 }
 
 struct PortfolioGridView_Previews: PreviewProvider {
     static var previews: some View {
-        PortfolioGridView(data: [], viewWidth: 240)
+        PortfolioGridView(multiDimensionedData: [], viewWidth: 240)
     }
 }
