@@ -11,10 +11,10 @@ import ShrimpExtensions
 import StonksUI
 
 struct PortfolioGridView: View {
-    let data: [CoreTransaction.Hasher]
+    let data: [PortfolioItem]
     let viewWidth: CGFloat
 
-    init(data: [CoreTransaction.Hasher], viewWidth: CGFloat) {
+    init(data: [PortfolioItem], viewWidth: CGFloat) {
         self.data = data
         self.viewWidth = viewWidth
     }
@@ -33,7 +33,7 @@ struct PortfolioGridView: View {
                 ForEach(data, id: \.self) { transaction in
                     PortfolioGridItem(text: transaction.name)
                     PortfolioGridItem(text: "\(transaction.shares)")
-                    PortfolioGridItem(text: transaction.costPerShare.toFixed(2))
+                    PortfolioGridItem(text: transaction.totalPrice.toFixed(2))
                 }
             }
         }

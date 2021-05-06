@@ -48,17 +48,26 @@ final class StonksManager: ObservableObject {
         }
     }
 
-    var portfolioStonks: [CoreTransaction.Hasher] {
-        var combinedTranactions: [String: CoreTransaction.Hasher] = [:]
+    var portfolioStonks: [PortfolioItem] {
+        var combinedTranactions: [String: PortfolioItem] = [:]
         for transaction in transactions {
+            let key: String
             if let symbol = transaction.symbol {
-                if let transactionInCombinedTransactions = combinedTranactions[symbol] {
-                } else {
-                }
+                key = symbol.lowercased()
             } else {
-                if let transactionInCombinedTransactions = combinedTranactions[transaction.name] {
-                } else {
-                }
+                key = transaction.name.lowercased()
+            }
+            if let transactionInCombinedTransactions = combinedTranactions[key] {
+                let shares = transactionInCombinedTransactions.shares + transaction.shares
+                let totalPrice = transactionInCombinedTransactions.totalPrice + transaction.totalPrice
+                let transactionToAdd = PortfolioItem(
+                    name: transactionInCombinedTransactions.name,
+                    shares: shares,
+                    totalPrice: totalPrice,
+                    symbol: transactionInCombinedTransactions.symbol)
+                combinedTranactions[key] = transactionToAdd
+            } else {
+                combinedTranactions[key] = transaction.initialPortfolioItem
             }
         }
         return combinedTranactions.map(\.value)

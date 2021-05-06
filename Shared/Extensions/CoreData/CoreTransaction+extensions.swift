@@ -9,14 +9,12 @@
 import CoreData
 
 extension CoreTransaction {
-    var hasher: Hasher {
-        Hasher(
-            name: name,
-            shares: shares,
-            costPerShare: costPerShare,
-            transactionDate: transactionDate,
-            coreObject: self,
-            symbol: symbol)
+    var initialPortfolioItem: PortfolioItem {
+        PortfolioItem(coreObject: self)
+    }
+
+    var totalPrice: Double {
+        shares * costPerShare
     }
 
     static func setTransaction(
@@ -38,30 +36,6 @@ extension CoreTransaction {
             }
         }
         return .success(stonk)
-    }
-
-    struct Hasher: Hashable {
-        let name: String
-        let shares: Double
-        let costPerShare: Double
-        let transactionDate: Date
-        let symbol: String?
-        let coreObject: CoreTransaction
-
-        init(
-            name: String,
-            shares: Double,
-            costPerShare: Double,
-            transactionDate: Date,
-            coreObject: CoreTransaction,
-            symbol: String? = nil) {
-            self.name = name
-            self.shares = shares
-            self.costPerShare = costPerShare
-            self.transactionDate = transactionDate
-            self.symbol = symbol
-            self.coreObject = coreObject
-        }
     }
 
     struct Args {
