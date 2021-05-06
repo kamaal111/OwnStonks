@@ -20,7 +20,7 @@ struct PortfolioGridView: View {
             let row = [
                 transaction.name,
                 "\(transaction.shares)",
-                transaction.totalPrice.toFixed(2)
+                "€\(transaction.totalPrice.toFixed(2))"
             ]
             multiDimensionedData.append(row)
         }
@@ -37,7 +37,7 @@ struct PortfolioGridView: View {
         StonkGridView(headerTitles: [
             "Name",
             "Shares",
-            "Cost/Share"
+            "Total Price"
         ], data: data, viewWidth: viewWidth)
     }
 }

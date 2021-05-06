@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import StonksUI
 
 struct TransactionsScreen: View {
     @EnvironmentObject
@@ -48,11 +49,43 @@ struct TransactionsScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        Text("Hello, World!")
+                        TransactionsGridView(tranactions: stonksManager.transactions, viewWidth: geometry.size.width)
                     }
                 }
             }
         }
+    }
+}
+
+struct TransactionsGridView: View {
+    let data: [[String]]
+    let viewWidth: CGFloat
+
+    init(tranactions: [CoreTransaction], viewWidth: CGFloat) {
+        var multiDimensionedData: [[String]] = []
+        for transaction in tranactions {
+            let row = [
+                transaction.name,
+                "\(transaction.shares)",
+                "€\(transaction.costPerShare.toFixed(2))"
+            ]
+            multiDimensionedData.append(row)
+        }
+        self.data = multiDimensionedData
+        self.viewWidth = viewWidth
+    }
+
+    init(multiDimensionedData: [[String]], viewWidth: CGFloat) {
+        self.data = multiDimensionedData
+        self.viewWidth = viewWidth
+    }
+
+    var body: some View {
+        StonkGridView(headerTitles: [
+            "Name",
+            "Shares",
+            "Cost/Share"
+        ], data: data, viewWidth: viewWidth)
     }
 }
 
