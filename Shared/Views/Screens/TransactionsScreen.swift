@@ -58,24 +58,26 @@ struct TransactionsScreen: View {
 }
 
 struct TransactionsGridView: View {
-    let data: [[String]]
+    let data: [[StonkGridCellData]]
     let viewWidth: CGFloat
 
     init(tranactions: [CoreTransaction], viewWidth: CGFloat) {
-        var multiDimensionedData: [[String]] = []
+        var multiDimensionedData: [[StonkGridCellData]] = []
+        var counter = 0
         for transaction in tranactions {
             let row = [
-                transaction.name,
-                "\(transaction.shares)",
-                "€\(transaction.costPerShare.toFixed(2))"
+                StonkGridCellData(id: counter, content: transaction.name),
+                StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
+                StonkGridCellData(id: counter + 2, content: "€\(transaction.costPerShare.toFixed(2))")
             ]
             multiDimensionedData.append(row)
+            counter += 3
         }
         self.data = multiDimensionedData
         self.viewWidth = viewWidth
     }
 
-    init(multiDimensionedData: [[String]], viewWidth: CGFloat) {
+    init(multiDimensionedData: [[StonkGridCellData]], viewWidth: CGFloat) {
         self.data = multiDimensionedData
         self.viewWidth = viewWidth
     }
