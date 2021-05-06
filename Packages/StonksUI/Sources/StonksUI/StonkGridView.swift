@@ -27,7 +27,7 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
             pinnedViews: [.sectionHeaders]) {
             Section(header: GridHeaderView(viewWidth: viewWidth, headerTitles: headerTitles)) {
                 ForEach(data, id: \.self) { row in
-                    ForEach(row) { item in
+                    ForEach(row, id: \.renderID) { item in
                         StonksGridItem(text: item)
                     }
                 }
@@ -44,6 +44,12 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
 
 public protocol StonkGridCellRenderable: Hashable, Identifiable {
     var content: String { get }
+}
+
+extension StonkGridCellRenderable {
+    var renderID: String {
+        "\(content)-\(id)"
+    }
 }
 
 private struct StonksGridItem<Content: StonkGridCellRenderable>: View {

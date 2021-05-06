@@ -1084,7 +1084,7 @@
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.0;
+				minimumVersion = 1.12.1;
 			};
 		};
 		6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */ = {
