@@ -10,6 +10,7 @@ import Combine
 import ConsoleSwift
 import Foundation
 import ShrimpExtensions
+import StonksLocale
 
 /// This class manages all core data objects
 final class StonksManager: ObservableObject {
@@ -39,11 +40,11 @@ final class StonksManager: ObservableObject {
         var localizedDescription: String {
             switch self {
             case .invalidStonkName:
-                return "Invalid stonk name provided"
+                return StonksLocale.Keys.INVALID_NAME_ALERT_TITLE.localized
             case .invalidAmountOfShares:
-                return "Invalid amount of shares"
+                return StonksLocale.Keys.INVALID_AMOUNT_OF_SHARES_ALERT_TITLE.localized
             case .generalError(let error):
-                return "Something went wrong \(error)"
+                return StonksLocale.Keys.GENERAL_ALERT_TITLE.localized(with: error.localizedDescription)
             }
         }
     }

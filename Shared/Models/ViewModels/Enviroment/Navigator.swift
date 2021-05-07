@@ -8,6 +8,7 @@
 
 import Combine
 import SwiftUI
+import StonksLocale
 
 final class Navigator: ObservableObject {
 
@@ -30,8 +31,8 @@ final class Navigator: ObservableObject {
     }
 
     static let screens: [ScreenModel] = [
-        .init(name: "Portfolio", imageSystemName: "chart.pie.fill", screen: .portfolio),
-        .init(name: "Transactions", imageSystemName: "arrow.up.arrow.down", screen: .transactions)
+        .init(key: .PORTFOLIO_SCREEN_TITLE, imageSystemName: "chart.pie.fill", screen: .portfolio),
+        .init(key: .TRANSACTIONS_SCREEN_TITLE, imageSystemName: "arrow.up.arrow.down", screen: .transactions)
     ]
 
     func navigateToAddTransactionScreen() {
@@ -66,6 +67,13 @@ struct ScreenModel: Hashable {
 
     init(name: String, imageSystemName: String, screen: Navigator.ScreenNames) {
         self.name = name
+        self.imageSystemName = imageSystemName
+        self.screen = screen
+        self.tag = screen.rawValue
+    }
+
+    init(key: StonksLocale.Keys, imageSystemName: String, screen: Navigator.ScreenNames) {
+        self.name = key.localized
         self.imageSystemName = imageSystemName
         self.screen = screen
         self.tag = screen.rawValue

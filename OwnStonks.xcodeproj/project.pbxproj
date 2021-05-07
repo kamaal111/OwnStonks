@@ -660,7 +660,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export PATH=$PATH\nsh Scripts/pre_compile.sh\n";
+			shellScript = "\nsh Scripts/pre_compile.sh\n";
 		};
 		603EE1C72641260300756FE1 /* Pre Compile */ = {
 			isa = PBXShellScriptBuildPhase;

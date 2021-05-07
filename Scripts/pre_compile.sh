@@ -7,6 +7,9 @@
 #  Copyright © 2021 Kamaal Farah. All rights reserved.
 #
 
+. ~/.zshrc
+sh Scripts/generate_locales/run.sh
+
 if which swiftlint >/dev/null; then
   swiftlint
 else
