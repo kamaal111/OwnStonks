@@ -10,7 +10,8 @@ const localize = new Localize(
   "Packages/StonksLocale/Sources/StonksLocale/Resources",
   "Packages/StonksLocale/Sources/StonksLocale/Keys.swift",
   locales,
-  defaultLocale
+  defaultLocale,
+  2
 );
 localize.setKeysTemplate(keysFileTemplate);
 localize.setLocaleFileTemplate(localizableFileTemplate);

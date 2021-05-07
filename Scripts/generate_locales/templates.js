@@ -8,7 +8,7 @@ const keysFileTemplate = (input) => {
 
 extension StonksLocale {
     public enum Keys: String {
-        ${input}
+${input}
     }
 }
 `;
