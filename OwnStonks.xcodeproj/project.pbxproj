@@ -109,6 +109,11 @@
 		2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTransactionScreen+ViewModel.swift"; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C8DC1052645765000A55FFD /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
+		2C8DC1062645765000A55FFD /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
+		2C8DC1072645765000A55FFD /* templates.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = templates.js; sourceTree = "<group>"; };
+		2C8DC1082645765000A55FFD /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
+		2C8DC10A2645765000A55FFD /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2CF2F2042642F75700F8AF9E /* IDETemplteMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IDETemplteMacros.plist; sourceTree = "<group>"; };
 		2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_docs.sh; sourceTree = "<group>"; };
 		60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+extensions.swift"; sourceTree = "<group>"; };
@@ -294,6 +299,34 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		2C8DC1032645765000A55FFD /* generate_locales */ = {
+			isa = PBXGroup;
+			children = (
+				2C8DC1082645765000A55FFD /* locale.js */,
+				2C8DC1072645765000A55FFD /* templates.js */,
+				2C8DC1062645765000A55FFD /* run.sh */,
+				2C8DC1042645765000A55FFD /* locales */,
+				2C8DC1092645765000A55FFD /* Localize.js */,
+			);
+			path = generate_locales;
+			sourceTree = "<group>";
+		};
+		2C8DC1042645765000A55FFD /* locales */ = {
+			isa = PBXGroup;
+			children = (
+				2C8DC1052645765000A55FFD /* en.js */,
+			);
+			path = locales;
+			sourceTree = "<group>";
+		};
+		2C8DC1092645765000A55FFD /* Localize.js */ = {
+			isa = PBXGroup;
+			children = (
+				2C8DC10A2645765000A55FFD /* Localize.js */,
+			);
+			path = Localize.js;
+			sourceTree = "<group>";
+		};
 		2CE62CB6263D71630032E86B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,8 +413,9 @@
 			isa = PBXGroup;
 			children = (
 				603EE1C42641231600756FE1 /* clear_mac_data.sh */,
-				603EE1C5264125BF00756FE1 /* pre_compile.sh */,
 				2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */,
+				603EE1C5264125BF00756FE1 /* pre_compile.sh */,
+				2C8DC1032645765000A55FFD /* generate_locales */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -626,7 +660,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\nsh Scripts/pre_compile.sh\n";
+			shellScript = "export PATH=$PATH\nsh Scripts/pre_compile.sh\n";
 		};
 		603EE1C72641260300756FE1 /* Pre Compile */ = {
 			isa = PBXShellScriptBuildPhase;

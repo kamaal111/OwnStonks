@@ -9,6 +9,7 @@
 import Combine
 import Foundation
 import ConsoleSwift
+import StonksLocale
 
 extension AddTransactionScreen {
     final class ViewModel: ObservableObject {
@@ -37,10 +38,12 @@ extension AddTransactionScreen {
                     console.error(Date(), error.localizedDescription)
                     return false
                 case .invalidStonkName:
-                    alertMessage = (failure.localizedDescription, "Please provide a valid name")
+                    alertMessage = (failure.localizedDescription,
+                                    StonksLocale.Keys.INVALID_NAME_ALERT_MESSAGE.localized)
                     return false
                 case .invalidAmountOfShares:
-                    alertMessage = (failure.localizedDescription, "Please add atleast some shares")
+                    alertMessage = (failure.localizedDescription,
+                                    StonksLocale.Keys.INVALID_AMOUNT_OF_SHARES_ALERT_MESSAGE.localized)
                     return false
                 }
             case .success(_):
