@@ -13,6 +13,8 @@
 		2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486EF263EB1F9006EEB6B /* StonksUI */; };
 		2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C237FB52645442F00E59144 /* TransactionsGridView.swift */; };
 		2C237FB72645442F00E59144 /* TransactionsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C237FB52645442F00E59144 /* TransactionsGridView.swift */; };
+		2C237FBA264544A200E59144 /* StonksLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C237FB9264544A200E59144 /* StonksLocale */; };
+		2C237FBC264544A800E59144 /* StonksLocale in Frameworks */ = {isa = PBXBuildFile; productRef = 2C237FBB264544A800E59144 /* StonksLocale */; };
 		2C2EFC122639E82E00C05BE9 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC112639E82E00C05BE9 /* Tests_iOS.swift */; };
 		2C2EFC1D2639E82E00C05BE9 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC1C2639E82E00C05BE9 /* Tests_macOS.swift */; };
 		2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */; };
@@ -85,6 +87,7 @@
 /* Begin PBXFileReference section */
 		2C1486EC263EB17D006EEB6B /* StonksUI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksUI; sourceTree = "<group>"; };
 		2C237FB52645442F00E59144 /* TransactionsGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsGridView.swift; sourceTree = "<group>"; };
+		2C237FB82645449100E59144 /* StonksLocale */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksLocale; sourceTree = "<group>"; };
 		2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C2EFBF72639E82C00C05BE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -131,6 +134,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */,
+				2C237FBC264544A800E59144 /* StonksLocale in Frameworks */,
 				6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */,
 				6050FE19263FCE0D00819D92 /* ConsoleSwift in Frameworks */,
 				2C2FBD56263F4981001FC779 /* CloudDocs in Frameworks */,
@@ -144,6 +148,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */,
+				2C237FBA264544A200E59144 /* StonksLocale in Frameworks */,
 				6050FE13263FCDB700819D92 /* PersistanceManager in Frameworks */,
 				6050FE1B263FCE1C00819D92 /* ConsoleSwift in Frameworks */,
 				2C2FBD58263F498A001FC779 /* CloudDocs in Frameworks */,
@@ -172,6 +177,7 @@
 		2C1486EB263EB142006EEB6B /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				2C237FB82645449100E59144 /* StonksLocale */,
 				2C1486EC263EB17D006EEB6B /* StonksUI */,
 			);
 			path = Packages;
@@ -447,6 +453,7 @@
 				2C2FBD55263F4981001FC779 /* CloudDocs */,
 				6050FE10263FCDAC00819D92 /* PersistanceManager */,
 				6050FE18263FCE0D00819D92 /* ConsoleSwift */,
+				2C237FBB264544A800E59144 /* StonksLocale */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -473,6 +480,7 @@
 				2C2FBD57263F498A001FC779 /* CloudDocs */,
 				6050FE12263FCDB700819D92 /* PersistanceManager */,
 				6050FE1A263FCE1C00819D92 /* ConsoleSwift */,
+				2C237FB9264544A200E59144 /* StonksLocale */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -1137,6 +1145,14 @@
 		2C1486EF263EB1F9006EEB6B /* StonksUI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StonksUI;
+		};
+		2C237FB9264544A200E59144 /* StonksLocale */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksLocale;
+		};
+		2C237FBB264544A800E59144 /* StonksLocale */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksLocale;
 		};
 		2C2FBD55263F4981001FC779 /* CloudDocs */ = {
 			isa = XCSwiftPackageProductDependency;
