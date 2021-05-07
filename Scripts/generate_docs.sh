@@ -6,6 +6,8 @@
 #  Created by Kamaal M Farah on 05/05/2021.
 #  Copyright © 2021 Kamaal Farah. All rights reserved.
 
-jazzy --build-tool-arguments -scheme,"OwnStonks (macOS)" --min-acl internal
+jazzy --build-tool-arguments -scheme,"OwnStonks (macOS)"
 cd Packages/StonksUI
+jazzy
+cd ../StonksLocale
 jazzy

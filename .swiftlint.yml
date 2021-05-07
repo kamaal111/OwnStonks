@@ -29,7 +29,6 @@ opt_in_rules:
   - multiline_parameters
   - nimble_operator
   - no_extension_access_modifier
-  - nslocalizedstring_key
   - override_in_extension
   - pattern_matching_keywords
   - prohibited_super_call

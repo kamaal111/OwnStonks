@@ -9,6 +9,8 @@
 import SwiftUI
 import SalmonUI
 import StonksUI
+import StonksLocale
+import ShrimpExtensions
 
 struct PortfolioScreen: View {
     @EnvironmentObject
@@ -19,13 +21,13 @@ struct PortfolioScreen: View {
     var body: some View {
         #if canImport(UIKit)
         view()
-            .navigationBarTitle(Text("Portfolio"), displayMode: .large)
+            .navigationBarTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE), displayMode: .large)
             .navigationBarItems(trailing: Button(action: navigator.navigateToAddTransactionScreen) {
                 Image(systemName: "plus").size(.squared(20))
             })
         #else
         view()
-            .navigationTitle(Text("Portfolio"))
+            .navigationTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE))
             .toolbar(content: {
                 Button(action: navigator.navigateToAddTransactionScreen) {
                     Label("Add transaction", systemImage: "plus")
