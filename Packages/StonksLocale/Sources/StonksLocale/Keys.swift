@@ -8,9 +8,5 @@
 extension StonksLocale {
     public enum Keys: String {
         case PORTFOLIO_SCREEN_TITLE
-
-        public var localized: String {
-            StonksLocale.getLocalizableString(of: self)
-        }
     }
 }

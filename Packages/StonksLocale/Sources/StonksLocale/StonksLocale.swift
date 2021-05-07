@@ -18,6 +18,12 @@ public struct StonksLocale {
     }
 }
 
+extension StonksLocale.Keys {
+    public var localized: String {
+        StonksLocale.getLocalizableString(of: self)
+    }
+}
+
 extension Text {
     public init(localized: StonksLocale.Keys) {
         self.init(StonksLocale.getLocalizableString(of: localized))
