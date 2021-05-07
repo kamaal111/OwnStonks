@@ -2,85 +2,89 @@ const fs = require("fs");
 
 const { promises: asyncFS } = fs;
 
-const defaultLocale = "en";
+class Localize {
+  localeDirectory = "";
+  keysFilePath;
+  locales;
+  defaultLocale;
+  keysTemplate = null;
+  localeFileTemplate = null;
 
-const en = {
-  PORTFOLIO_SCREEN_TITLE: "Portfolio",
-};
-
-const locales = { en };
-
-function generateFileInput(locale, returnKeysInput = false) {
-  const localeEntries = Object.entries(locale);
-  let fileInput = "";
-  let keysTemplateInput = "";
-  for (let index = 0; index < localeEntries.length; index++) {
-    const [key, translation] = localeEntries[index];
-    fileInput += `"${key}" = "${translation}";`;
-    if (returnKeysInput) {
-      keysTemplateInput += `case ${key}${
-        index < localeEntries.length - 1 ? "\n" : ""
-      }`;
+  constructor(localeDirectory, keysFilePath, locales = {}, defaultLocale) {
+    this.localeDirectory = localeDirectory;
+    this.locales = locales;
+    this.keysFilePath = keysFilePath;
+    if (defaultLocale != null) {
+      this.defaultLocale = defaultLocale;
+    } else {
+      const localesKeys = Object.keys(locales);
+      if (localesKeys.length > 0) {
+        this.defaultLocale = localesKeys[0];
+      }
     }
   }
-  return { fileInput, keysTemplateInput };
-}
 
-function keysFileTemplate(input) {
-  return `//
-//  Keys.swift
-//  
-//
-//  Created by Kamaal M Farah on 07/05/2021.
-//
+  setKeysTemplate = (template) => {
+    this.keysTemplate = template;
+  };
 
-extension StonksLocale {
-    public enum Keys: String {
-        ${input}
+  setLocaleFileTemplate = (template) => {
+    this.localeFileTemplate = template;
+  };
+
+  #generateFileInput = (locale, returnKeysInput = false) => {
+    const localeEntries = Object.entries(locale);
+    let fileInput = "";
+    let keysTemplateInput = "";
+    for (let index = 0; index < localeEntries.length; index++) {
+      const [key, translation] = localeEntries[index];
+      fileInput += `"${key}" = "${translation}";`;
+      if (returnKeysInput) {
+        keysTemplateInput += `case ${key}${
+          index < localeEntries.length - 1 ? "\n" : ""
+        }`;
+      }
     }
-}
-`;
-}
+    return { fileInput, keysTemplateInput };
+  };
 
-function localizableFileTemplate(input) {
-  return `/*
-  Localizable.strings
+  #appendPath = (original, pathExtension) => {
+    if (original[original.length - 1] === "/") {
+      return `${original}${pathExtension}`;
+    }
+    return `${original}/${pathExtension}`;
+  };
 
-  Created by Kamaal M Farah on 04/04/2021.
+  #createLocaleFiles = async (key) => {
+    const locale = this.locales[key];
+    const generateKeysInput = key === this.defaultLocale;
+    let {
+      fileInput: localizableFileInput,
+      keysTemplateInput,
+    } = this.#generateFileInput(locale, generateKeysInput);
+    if (generateKeysInput) {
+      if (this.keysTemplate != null) {
+        keysTemplateInput = this.keysTemplate(keysTemplateInput);
+      }
+      await asyncFS.writeFile(this.keysFilePath, keysTemplateInput);
+    }
+    const pathToLocalizableDirectory = this.#appendPath(
+      this.localeDirectory,
+      `${key}.lproj`
+    );
+    if (!fs.existsSync(pathToLocalizableDirectory)) {
+      await asyncFS.mkdir(pathToLocalizableDirectory);
+    }
+    const pathToLocalizableFile = `${pathToLocalizableDirectory}/Localizable.strings`;
+    if (this.localeFileTemplate != null) {
+      localizableFileInput = this.localeFileTemplate(localizableFileInput);
+    }
+    await asyncFS.writeFile(pathToLocalizableFile, localizableFileInput);
+  };
 
-*/
-
-${input}
-`;
-}
-
-async function createLocaleFiles(localesKey) {
-  const locale = locales[localesKey];
-  const generateKeysInput = localesKey === defaultLocale;
-  const {
-    fileInput: localizableFileInput,
-    keysTemplateInput,
-  } = generateFileInput(locale, generateKeysInput);
-  if (generateKeysInput) {
-    const keysFilePath = `Packages/StonksLocale/Sources/StonksLocale/Keys.swift`;
-    await asyncFS.writeFile(keysFilePath, keysFileTemplate(keysTemplateInput));
+  generateFiles() {
+    Promise.all(Object.keys(this.locales).map(this.#createLocaleFiles));
   }
-  const pathToLocalizableDirectory = `Packages/StonksLocale/Sources/StonksLocale/Resources/${localesKey}.lproj`;
-  if (!fs.existsSync(pathToLocalizableDirectory)) {
-    await asyncFS.mkdir(pathToLocalizableDirectory);
-  }
-  const pathToLocalizableFile = `${pathToLocalizableDirectory}/Localizable.strings`;
-  await asyncFS.writeFile(
-    pathToLocalizableFile,
-    localizableFileTemplate(localizableFileInput)
-  );
 }
 
-async function main() {
-  console.time("Done in");
-  Promise.all(Object.keys(locales).map(createLocaleFiles))
-    .catch(console.error)
-    .finally(() => console.timeEnd("Done in"));
-}
-
-main();
+module.exports = Localize;

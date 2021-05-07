@@ -7,4 +7,4 @@
 #  Copyright © 2021 Kamaal Farah. All rights reserved.
 #
 
-node Scripts/localize/localize.js
+node Scripts/localize/locale.js
