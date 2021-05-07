@@ -11,6 +11,8 @@
 		2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486E9263EB03B006EEB6B /* SalmonUI */; };
 		2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486ED263EB1F2006EEB6B /* StonksUI */; };
 		2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1486EF263EB1F9006EEB6B /* StonksUI */; };
+		2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C237FB52645442F00E59144 /* TransactionsGridView.swift */; };
+		2C237FB72645442F00E59144 /* TransactionsGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C237FB52645442F00E59144 /* TransactionsGridView.swift */; };
 		2C2EFC122639E82E00C05BE9 /* Tests_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC112639E82E00C05BE9 /* Tests_iOS.swift */; };
 		2C2EFC1D2639E82E00C05BE9 /* Tests_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFC1C2639E82E00C05BE9 /* Tests_macOS.swift */; };
 		2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */; };
@@ -82,6 +84,7 @@
 
 /* Begin PBXFileReference section */
 		2C1486EC263EB17D006EEB6B /* StonksUI */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksUI; sourceTree = "<group>"; };
+		2C237FB52645442F00E59144 /* TransactionsGridView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsGridView.swift; sourceTree = "<group>"; };
 		2C2EFBF62639E82C00C05BE9 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C2EFBF72639E82C00C05BE9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -172,6 +175,14 @@
 				2C1486EC263EB17D006EEB6B /* StonksUI */,
 			);
 			path = Packages;
+			sourceTree = "<group>";
+		};
+		2C237FB42645442F00E59144 /* Transactions */ = {
+			isa = PBXGroup;
+			children = (
+				2C237FB52645442F00E59144 /* TransactionsGridView.swift */,
+			);
+			path = Transactions;
 			sourceTree = "<group>";
 		};
 		2C2EFBF02639E82B00C05BE9 = {
@@ -326,6 +337,7 @@
 				601414FE263A8AEE0083D485 /* AppSidebar.swift */,
 				601414F3263A8AC20083D485 /* AppTabView.swift */,
 				6057942A263D4F1700EE2275 /* Portfolio */,
+				2C237FB42645442F00E59144 /* Transactions */,
 			);
 			path = SupportingViews;
 			sourceTree = "<group>";
@@ -648,6 +660,7 @@
 				60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
+				2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */,
 				60CAC7152643C356008CD190 /* PortfolioItem.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
 				6050FE15263FCDD700819D92 /* Persistence.swift in Sources */,
@@ -665,6 +678,7 @@
 				2C2EFC202639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				6050FE20263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
+				2C237FB72645442F00E59144 /* TransactionsGridView.swift in Sources */,
 				60027D6E2640588E007B1EE9 /* StonksManager.swift in Sources */,
 				60027D6B2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */,
