@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StonksLocale
 
 public struct FloatingTextField: View {
     @Binding public var text: String
@@ -23,6 +24,19 @@ public struct FloatingTextField: View {
         onCommit: @escaping () -> Void = { }) {
         self._text = text
         self.title = title
+        self.textFieldType = textFieldType
+        self.onEditingChanged = onEditingChanged
+        self.onCommit = onCommit
+    }
+
+    public init(
+        text: Binding<String>,
+        title: StonksLocale.Keys,
+        textFieldType: TextFieldType = .text,
+        onEditingChanged: @escaping (_ changed: Bool) -> Void = { _ in },
+        onCommit: @escaping () -> Void = { }) {
+        self._text = text
+        self.title = title.localized
         self.textFieldType = textFieldType
         self.onEditingChanged = onEditingChanged
         self.onCommit = onCommit

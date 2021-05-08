@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StonksLocale
 
 public struct FloatingDatePicker: View {
     @Binding public var value: Date
@@ -15,6 +16,11 @@ public struct FloatingDatePicker: View {
     public init(value: Binding<Date>, title: String) {
         self._value = value
         self.title = title
+    }
+
+    public init(value: Binding<Date>, title: StonksLocale.Keys) {
+        self._value = value
+        self.title = title.localized
     }
 
     public var body: some View {

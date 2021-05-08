@@ -30,7 +30,7 @@ struct PortfolioScreen: View {
             .navigationTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE))
             .toolbar(content: {
                 Button(action: navigator.navigateToAddTransactionScreen) {
-                    Label("Add transaction", systemImage: "plus")
+                    Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
             })
             .frame(minWidth: Constants.minimumContentWidth)
@@ -47,7 +47,7 @@ struct PortfolioScreen: View {
             Color.StonkBackground
             if stonksManager.portfolioStonks.isEmpty {
                 Button(action: navigator.navigateToAddTransactionScreen) {
-                    Text("Add your first transaction")
+                    Text(localized: .ADD_FIRST_TRANSACTION_Label)
                         .font(.headline)
                 }
             } else {

@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import StonksLocale
 
 struct AppSidebar: View {
     @EnvironmentObject
@@ -19,7 +20,7 @@ struct AppSidebar: View {
         view()
             .toolbar(content: {
                 Button(action: toggleSidebar) {
-                    Label("Toggle Sidebar", systemImage: "sidebar.left")
+                    Label(StonksLocale.Keys.TOGGLE_SIDEBAR_LABEL.localized, systemImage: "sidebar.left")
                 }
             })
         #endif
@@ -27,7 +28,7 @@ struct AppSidebar: View {
 
     private func view() -> some View {
         List {
-            Section(header: Text("Screens")) {
+            Section(header: Text(localized: .SCREENS)) {
                 ForEach(Navigator.screens, id: \.self) { (screen: ScreenModel) in
                     NavigationLink(
                         destination: screen.view,
@@ -41,7 +42,7 @@ struct AppSidebar: View {
                     destination: AddTransactionScreen(),
                     tag: Navigator.ScreenNames.addTransaction.rawValue,
                     selection: $navigator.screenSelection) {
-                    Label("Add Transaction", systemImage: "plus")
+                    Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
                 #endif
             }

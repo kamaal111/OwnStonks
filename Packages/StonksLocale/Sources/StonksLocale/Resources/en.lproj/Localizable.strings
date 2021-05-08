@@ -12,4 +12,19 @@
 "INVALID_AMOUNT_OF_SHARES_ALERT_TITLE" = "Invalid amount of shares";
 "TRANSACTIONS_SCREEN_TITLE" = "Transactions";
 "GENERAL_ALERT_TITLE" = "Something went wrong %@";
+"ADD_TRANSACTION_SCREEN_TITLE" = "Add Transaction";
+"INVESTMENT_LABEL" = "Investment";
+"COST_SHARE_LABEL" = "Cost/Share";
+"SHARES_LABEL" = "Shares";
+"TRANSACTION_DATE_LABEL" = "Transaction Date";
+"OK" = "OK";
+"SAVE" = "Save";
+"ADD_TRANSACTION_LABEL" = "Add Transaction";
+"ADD_FIRST_TRANSACTION_Label" = "Add your first transaction";
+"TOGGLE_SIDEBAR_LABEL" = "Toggle Sidebar";
+"SCREENS" = "Screens";
+"NAME_HEADER_TITLE" = "Name";
+"SHARES_HEADER_TITLE" = "Shares";
+"TOTAL_PRICE_HEADER_TITLE" = "Total Price";
+"COST_SHARE_HEADER_TITLE" = "Cost/Share";
 

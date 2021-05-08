@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StonksLocale
 
 @available(macOS 11.0, iOS 14.0, *)
 public struct EnforcedFloatingDecimalField: View {
@@ -18,6 +19,11 @@ public struct EnforcedFloatingDecimalField: View {
     public init(value: Binding<Double>, title: String) {
         self._value = value
         self.title = title
+    }
+
+    public init(value: Binding<Double>, title: StonksLocale.Keys) {
+        self._value = value
+        self.title = title.localized
     }
 
     public var body: some View {

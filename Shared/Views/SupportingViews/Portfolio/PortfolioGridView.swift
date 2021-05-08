@@ -9,6 +9,7 @@
 import SwiftUI
 import ShrimpExtensions
 import StonksUI
+import StonksLocale
 
 struct PortfolioGridView: View {
     let data: [[StonkGridCellData]]
@@ -21,6 +22,7 @@ struct PortfolioGridView: View {
             let row = [
                 StonkGridCellData(id: counter, content: transaction.name),
                 StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
+                /// - TODO: Put euro sign in some kind of helper method to make it easier to switch to different valutas
                 StonkGridCellData(id: counter + 2, content: "€\(transaction.totalPrice.toFixed(2))")
             ]
             multiDimensionedData.append(row)
@@ -36,12 +38,17 @@ struct PortfolioGridView: View {
     }
 
     var body: some View {
-        StonkGridView(headerTitles: [
-            "Name",
-            "Shares",
-            "Total Price"
-        ], data: data, viewWidth: viewWidth)
+        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth)
     }
+
+    static let headerTitles: [String] = {
+        let keys: [StonksLocale.Keys] = [
+            .NAME_HEADER_TITLE,
+            .SHARES_HEADER_TITLE,
+            .TOTAL_PRICE_HEADER_TITLE
+        ]
+        return keys.map(\.localized)
+    }()
 }
 
 struct PortfolioGridView_Previews: PreviewProvider {

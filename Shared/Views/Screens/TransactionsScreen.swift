@@ -8,6 +8,7 @@
 
 import SwiftUI
 import StonksUI
+import StonksLocale
 
 struct TransactionsScreen: View {
     @EnvironmentObject
@@ -18,16 +19,16 @@ struct TransactionsScreen: View {
     var body: some View {
         #if canImport(UIKit)
         view()
-            .navigationBarTitle(Text("Transactions"))
+            .navigationBarTitle(Text(localized: .TRANSACTIONS_SCREEN_TITLE))
             .navigationBarItems(trailing: Button(action: navigator.navigateToAddTransactionScreen) {
                 Image(systemName: "plus").size(.squared(20))
             })
         #else
         view()
-            .navigationTitle(Text("Transactions"))
+            .navigationTitle(Text(localized: .TRANSACTIONS_SCREEN_TITLE))
             .toolbar(content: {
                 Button(action: navigator.navigateToAddTransactionScreen) {
-                    Label("Add transaction", systemImage: "plus")
+                    Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
             })
         #endif
@@ -43,7 +44,7 @@ struct TransactionsScreen: View {
             Color.StonkBackground
             if stonksManager.portfolioStonks.isEmpty {
                 Button(action: navigator.navigateToAddTransactionScreen) {
-                    Text("Add your first transaction")
+                    Text(localized: .ADD_FIRST_TRANSACTION_Label)
                         .font(.headline)
                 }
             } else {

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import StonksUI
+import StonksLocale
 
 struct AddTransactionScreen: View {
     @EnvironmentObject
@@ -21,21 +22,21 @@ struct AddTransactionScreen: View {
     var body: some View {
         #if canImport(UIKit)
         view()
-            .navigationBarTitle(Text("Add Transaction"), displayMode: .inline)
+            .navigationBarTitle(Text(localized: .ADD_TRANSACTION_SCREEN_TITLE), displayMode: .inline)
             .navigationBarItems(trailing: saveButton())
         #else
         view()
             .toolbar(content: saveButton)
-            .navigationTitle(Text("Add Transaction"))
+            .navigationTitle(Text(localized: .ADD_TRANSACTION_SCREEN_TITLE))
         #endif
     }
 
     private func view() -> some View {
         VStack {
-            FloatingTextField(text: $viewModel.investment, title: "Investment")
-            EnforcedFloatingDecimalField(value: $viewModel.costPerShare, title: "Cost/Share")
-            EnforcedFloatingDecimalField(value: $viewModel.shares, title: "Shares")
-            FloatingDatePicker(value: $viewModel.transactionDate, title: "Transaction date")
+            FloatingTextField(text: $viewModel.investment, title: .INVESTMENT_LABEL)
+            EnforcedFloatingDecimalField(value: $viewModel.costPerShare, title: .COST_SHARE_LABEL)
+            EnforcedFloatingDecimalField(value: $viewModel.shares, title: .SHARES_LABEL)
+            FloatingDatePicker(value: $viewModel.transactionDate, title: .TRANSACTION_DATE_LABEL)
                 .frame(maxWidth: .infinity, alignment: .leading)
         }
         .frame(maxHeight: .infinity, alignment: .top)
@@ -44,13 +45,13 @@ struct AddTransactionScreen: View {
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text(viewModel.alertMessage?.title ?? ""),
                   message: Text(viewModel.alertMessage?.message ?? ""),
-                  dismissButton: .default(Text("OK")))
+                  dismissButton: .default(Text(localized: .OK)))
         }
     }
 
     private func saveButton() -> some View {
         Button(action: saveAction) {
-            Text("Save")
+            Text(localized: .SAVE)
         }
     }
 

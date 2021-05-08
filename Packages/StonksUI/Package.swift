@@ -11,11 +11,15 @@ let package = Package(
             name: "StonksUI",
             targets: ["StonksUI"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(path: "../StonksLocale"),
+    ],
     targets: [
         .target(
             name: "StonksUI",
-            dependencies: []),
+            dependencies: [
+                "StonksLocale"
+            ]),
         .testTarget(
             name: "StonksUITests",
             dependencies: ["StonksUI"]),
