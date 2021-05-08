@@ -14,26 +14,9 @@ struct TransactionsGridView: View {
     let data: [[StonkGridCellData]]
     let viewWidth: CGFloat
 
-    init(tranactions: [CoreTransaction], viewWidth: CGFloat) {
-        var multiDimensionedData: [[StonkGridCellData]] = []
-        var counter = 0
-        for transaction in tranactions {
-            let row = [
-                StonkGridCellData(id: counter, content: transaction.name),
-                StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
-                /// - TODO: Put euro sign in some kind of helper method to make it easier to switch to different valutas
-                StonkGridCellData(id: counter + 2, content: "€\(transaction.costPerShare.toFixed(2))")
-            ]
-            multiDimensionedData.append(row)
-            counter += 3
-        }
-        self.data = multiDimensionedData
-        self.viewWidth = viewWidth
-    }
-
     init(multiDimensionedData: [[StonkGridCellData]], viewWidth: CGFloat) {
-        self.data = multiDimensionedData
         self.viewWidth = viewWidth
+        self.data = multiDimensionedData
     }
 
     var body: some View {
@@ -52,6 +35,7 @@ struct TransactionsGridView: View {
 
 struct TransactionsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionsGridView(tranactions: [], viewWidth: 320)
+        TransactionsGridView(multiDimensionedData: [], viewWidth: 320)
+            .environmentObject(UserData())
     }
 }

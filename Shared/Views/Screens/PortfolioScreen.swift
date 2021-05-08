@@ -17,6 +17,8 @@ struct PortfolioScreen: View {
     private var navigator: Navigator
     @EnvironmentObject
     private var stonksManager: StonksManager
+    @EnvironmentObject
+    private var userData: UserData
 
     var body: some View {
         #if canImport(UIKit)
@@ -53,11 +55,28 @@ struct PortfolioScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        PortfolioGridView(tranactions: stonksManager.portfolioStonks, viewWidth: geometry.size.width)
+                        PortfolioGridView(multiDimensionedData: portfolioRows, viewWidth: geometry.size.width)
                     }
                 }
             }
         }
+    }
+
+    private var portfolioRows: [[StonkGridCellData]] {
+        var multiDimensionedData: [[StonkGridCellData]] = []
+        var counter = 0
+        for portfolioItems in stonksManager.portfolioStonks {
+            let row = [
+                StonkGridCellData(id: counter, content: portfolioItems.name),
+                StonkGridCellData(id: counter + 1, content: "\(portfolioItems.shares)"),
+                StonkGridCellData(
+                    id: counter + 2,
+                    content: "\(userData.currency)\(portfolioItems.totalPrice.toFixed(2))")
+            ]
+            multiDimensionedData.append(row)
+            counter += 3
+        }
+        return multiDimensionedData
     }
 }
 

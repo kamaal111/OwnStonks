@@ -35,6 +35,12 @@
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
 		2C7497C2263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
+		2C88FF0C2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
+		2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
+		2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
+		2C88FF102646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
+		2C88FF122646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
+		2C88FF132646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
 		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
 		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
 		60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */; };
@@ -109,6 +115,9 @@
 		2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTransactionScreen+ViewModel.swift"; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultValues.swift; sourceTree = "<group>"; };
+		2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyMoney.swift; sourceTree = "<group>"; };
+		2C88FF112646DFC4008057DE /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2C8DC1052645765000A55FFD /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
 		2C8DC1062645765000A55FFD /* run.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run.sh; sourceTree = "<group>"; };
 		2C8DC1072645765000A55FFD /* templates.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = templates.js; sourceTree = "<group>"; };
@@ -405,6 +414,7 @@
 			children = (
 				60141508263A8CFB0083D485 /* Navigator.swift */,
 				60027D6C2640588E007B1EE9 /* StonksManager.swift */,
+				2C88FF112646DFC4008057DE /* UserData.swift */,
 			);
 			path = Enviroment;
 			sourceTree = "<group>";
@@ -424,6 +434,8 @@
 			isa = PBXGroup;
 			children = (
 				6050FE14263FCDD700819D92 /* Persistence.swift */,
+				2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */,
+				2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -695,14 +707,17 @@
 				60599EBE264462C0008C06EF /* StonkGridCellData.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
 				601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */,
+				2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */,
 				2C47EF632641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
 				2C7497C1263DC75B001205EA /* Constants.swift in Sources */,
 				601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */,
 				6050FE1F263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
 				60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
+				2C88FF0C2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */,
+				2C88FF122646DFC4008057DE /* UserData.swift in Sources */,
 				60CAC7152643C356008CD190 /* PortfolioItem.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
 				6050FE15263FCDD700819D92 /* Persistence.swift in Sources */,
@@ -727,11 +742,14 @@
 				60236BA62641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
 				2C47EF622641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
+				2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
 				60599EBF264462C0008C06EF /* StonkGridCellData.swift in Sources */,
+				2C88FF132646DFC4008057DE /* UserData.swift in Sources */,
 				60CAC7162643C356008CD190 /* PortfolioItem.swift in Sources */,
 				2C47EF642641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
+				2C88FF102646DFA2008057DE /* MoneyMoney.swift in Sources */,
 				2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */,
 				2C7497C2263DC75B001205EA /* Constants.swift in Sources */,
 			);

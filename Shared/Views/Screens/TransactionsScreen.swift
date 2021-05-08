@@ -15,6 +15,8 @@ struct TransactionsScreen: View {
     private var navigator: Navigator
     @EnvironmentObject
     private var stonksManager: StonksManager
+    @EnvironmentObject
+    private var userData: UserData
 
     var body: some View {
         #if canImport(UIKit)
@@ -50,11 +52,28 @@ struct TransactionsScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        TransactionsGridView(tranactions: stonksManager.transactions, viewWidth: geometry.size.width)
+                        TransactionsGridView(multiDimensionedData: transactionRows, viewWidth: geometry.size.width)
                     }
                 }
             }
         }
+    }
+
+    private var transactionRows: [[StonkGridCellData]] {
+        var multiDimensionedData: [[StonkGridCellData]] = []
+        var counter = 0
+        for transaction in stonksManager.transactions {
+            let row = [
+                StonkGridCellData(id: counter, content: transaction.name),
+                StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
+                StonkGridCellData(
+                    id: counter + 2,
+                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))")
+            ]
+            multiDimensionedData.append(row)
+            counter += 3
+        }
+        return multiDimensionedData
     }
 }
 
@@ -63,5 +82,6 @@ struct TransactionsScreen_Previews: PreviewProvider {
         TransactionsScreen()
             .environmentObject(Navigator())
             .environmentObject(StonksManager())
+            .environmentObject(UserData())
     }
 }
