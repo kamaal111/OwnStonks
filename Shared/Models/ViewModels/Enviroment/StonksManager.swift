@@ -69,6 +69,7 @@ final class StonksManager: ObservableObject {
                     name: transactionInCombinedTransactions.name,
                     shares: shares,
                     totalPrice: totalPrice,
+                    id: transaction.id,
                     symbol: transactionInCombinedTransactions.symbol)
                 combinedTranactions[key] = transactionToAdd
             } else {

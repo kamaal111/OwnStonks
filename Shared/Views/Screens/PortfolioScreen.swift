@@ -67,7 +67,10 @@ struct PortfolioScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        PortfolioGridView(multiDimensionedData: portfolioRows, viewWidth: geometry.size.width)
+                        PortfolioGridView(
+                            multiDimensionedData: portfolioRows,
+                            viewWidth: geometry.size.width,
+                            onCellPress: onCellPress(_:))
                     }
                 }
             }
@@ -77,18 +80,23 @@ struct PortfolioScreen: View {
     private var portfolioRows: [[StonkGridCellData]] {
         var multiDimensionedData: [[StonkGridCellData]] = []
         var counter = 0
-        for portfolioItems in stonksManager.portfolioStonks {
+        for portfolioItem in stonksManager.portfolioStonks {
             let row = [
-                StonkGridCellData(id: counter, content: portfolioItems.name),
-                StonkGridCellData(id: counter + 1, content: "\(portfolioItems.shares)"),
+                StonkGridCellData(id: counter, content: portfolioItem.name, transactionID: portfolioItem.id),
+                StonkGridCellData(id: counter + 1, content: "\(portfolioItem.shares)", transactionID: portfolioItem.id),
                 StonkGridCellData(
                     id: counter + 2,
-                    content: "\(userData.currency)\(portfolioItems.totalPrice.toFixed(2))")
+                    content: "\(userData.currency)\(portfolioItem.totalPrice.toFixed(2))",
+                    transactionID: portfolioItem.id)
             ]
             multiDimensionedData.append(row)
-            counter += 3
+            counter += row.count
         }
         return multiDimensionedData
+    }
+
+    private func onCellPress(_ cell: StonkGridCellData) {
+        print(cell)
     }
 }
 

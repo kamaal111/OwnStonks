@@ -65,7 +65,10 @@ struct TransactionsScreen: View {
             } else {
                 GeometryReader { (geometry: GeometryProxy) in
                     ScrollView {
-                        TransactionsGridView(multiDimensionedData: transactionRows, viewWidth: geometry.size.width)
+                        TransactionsGridView(
+                            multiDimensionedData: transactionRows,
+                            viewWidth: geometry.size.width,
+                            onCellPress: onCellPress(_:))
                     }
                 }
             }
@@ -77,19 +80,25 @@ struct TransactionsScreen: View {
         var counter = 0
         for transaction in stonksManager.sortedTransactions {
             let row = [
-                StonkGridCellData(id: counter, content: transaction.name),
-                StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
+                StonkGridCellData(id: counter, content: transaction.name, transactionID: transaction.id),
+                StonkGridCellData(id: counter + 1, content: "\(transaction.shares)", transactionID: transaction.id),
                 StonkGridCellData(
                     id: counter + 2,
-                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))"),
+                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))",
+                    transactionID: transaction.id),
                 StonkGridCellData(
                     id: counter + 3,
-                    content: "\(userData.currency)\(transaction.totalPrice.toFixed(2))")
+                    content: "\(userData.currency)\(transaction.totalPrice.toFixed(2))",
+                    transactionID: transaction.id)
             ]
             multiDimensionedData.append(row)
-            counter += 4
+            counter += row.count
         }
         return multiDimensionedData
+    }
+
+    private func onCellPress(_ cell: StonkGridCellData) {
+        print(cell)
     }
 }
 

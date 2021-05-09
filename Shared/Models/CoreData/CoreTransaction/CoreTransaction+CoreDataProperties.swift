@@ -16,6 +16,7 @@ extension CoreTransaction {
         return NSFetchRequest<CoreTransaction>(entityName: "CoreTransaction")
     }
 
+    @NSManaged public var id: UUID
     @NSManaged public var costPerShare: Double
     @NSManaged public var createdDate: Date
     @NSManaged public var name: String

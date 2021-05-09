@@ -13,17 +13,20 @@ struct PortfolioItem: Hashable {
     let shares: Double
     let totalPrice: Double
     let symbol: String?
+    let id: UUID
     private let coreObject: CoreTransaction?
 
     init(
         name: String,
         shares: Double,
         totalPrice: Double,
+        id: UUID,
         symbol: String? = nil) {
         self.name = name
         self.shares = shares
         self.totalPrice = totalPrice
         self.symbol = symbol
+        self.id = id
         self.coreObject = nil
     }
 
@@ -32,6 +35,7 @@ struct PortfolioItem: Hashable {
         self.shares = coreObject.shares
         self.totalPrice = coreObject.costPerShare * coreObject.shares
         self.symbol = coreObject.symbol
+        self.id = coreObject.id
         self.coreObject = coreObject
     }
 }

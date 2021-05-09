@@ -9,6 +9,8 @@ import Foundation
 
 public protocol StonkGridCellRenderable: Hashable, Identifiable {
     var content: String { get }
+    var id: Int { get }
+    var transactionID: UUID { get }
 }
 
 extension StonkGridCellRenderable {

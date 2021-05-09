@@ -7,8 +7,16 @@
 //
 
 import StonksUI
+import Foundation
 
 struct StonkGridCellData: StonkGridCellRenderable {
     let id: Int
     let content: String
+    let transactionID: UUID
+
+    internal init(id: Int, content: String, transactionID: UUID) {
+        self.id = id
+        self.content = content
+        self.transactionID = transactionID
+    }
 }

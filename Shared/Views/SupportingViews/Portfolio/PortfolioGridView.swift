@@ -14,14 +14,19 @@ import StonksLocale
 struct PortfolioGridView: View {
     let data: [[StonkGridCellData]]
     let viewWidth: CGFloat
+    let onCellPress: (_ cell: StonkGridCellData) -> Void
 
-    init(multiDimensionedData: [[StonkGridCellData]], viewWidth: CGFloat) {
+    init(
+        multiDimensionedData: [[StonkGridCellData]],
+        viewWidth: CGFloat,
+        onCellPress: @escaping (_ cell: StonkGridCellData) -> Void) {
         self.data = multiDimensionedData
         self.viewWidth = viewWidth
+        self.onCellPress = onCellPress
     }
 
     var body: some View {
-        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth)
+        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth, onCellPress: onCellPress)
     }
 
     static let headerTitles: [String] = {
@@ -36,6 +41,6 @@ struct PortfolioGridView: View {
 
 struct PortfolioGridView_Previews: PreviewProvider {
     static var previews: some View {
-        PortfolioGridView(multiDimensionedData: [], viewWidth: 240)
+        PortfolioGridView(multiDimensionedData: [], viewWidth: 240, onCellPress: { _ in })
     }
 }

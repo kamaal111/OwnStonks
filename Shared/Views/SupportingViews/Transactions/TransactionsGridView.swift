@@ -13,14 +13,19 @@ import StonksLocale
 struct TransactionsGridView: View {
     let data: [[StonkGridCellData]]
     let viewWidth: CGFloat
+    let onCellPress: (_ cell: StonkGridCellData) -> Void
 
-    init(multiDimensionedData: [[StonkGridCellData]], viewWidth: CGFloat) {
+    init(
+        multiDimensionedData: [[StonkGridCellData]],
+        viewWidth: CGFloat,
+        onCellPress: @escaping (_ cell: StonkGridCellData) -> Void) {
         self.viewWidth = viewWidth
         self.data = multiDimensionedData
+        self.onCellPress = onCellPress
     }
 
     var body: some View {
-        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth)
+        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth, onCellPress: onCellPress)
     }
 
     static let headerTitles: [String] = {
@@ -36,7 +41,7 @@ struct TransactionsGridView: View {
 
 struct TransactionsGridView_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionsGridView(multiDimensionedData: [], viewWidth: 320)
+        TransactionsGridView(multiDimensionedData: [], viewWidth: 320, onCellPress: { _ in })
             .environmentObject(UserData())
     }
 }

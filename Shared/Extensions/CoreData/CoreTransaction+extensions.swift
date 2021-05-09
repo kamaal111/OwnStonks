@@ -21,13 +21,14 @@ extension CoreTransaction {
         args: Args,
         managedObjectContext: NSManagedObjectContext,
         save: Bool = true) -> Result<CoreTransaction, Error> {
-        let stonk = CoreTransaction(context: managedObjectContext)
-        stonk.name = args.name
-        stonk.costPerShare = args.costPerShare
-        stonk.shares = args.shares
-        stonk.symbol = args.symbol
-        stonk.transactionDate = args.transactionDate
-        stonk.createdDate = Date()
+        let transaction = CoreTransaction(context: managedObjectContext)
+        transaction.id = UUID()
+        transaction.name = args.name
+        transaction.costPerShare = args.costPerShare
+        transaction.shares = args.shares
+        transaction.symbol = args.symbol
+        transaction.transactionDate = args.transactionDate
+        transaction.createdDate = Date()
         if save {
             do {
                 try managedObjectContext.save()
@@ -35,7 +36,7 @@ extension CoreTransaction {
                 return .failure(error)
             }
         }
-        return .success(stonk)
+        return .success(transaction)
     }
 
     struct Args {
