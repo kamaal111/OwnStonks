@@ -37,7 +37,7 @@ struct PortfolioScreen: View {
         view()
             .navigationTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE))
             .toolbar(content: {
-                Button(action: navigator.navigateToAddTransactionScreen) {
+                Button(action: { navigator.navigate(to: .addTransaction) }) {
                     Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
             })
@@ -58,7 +58,7 @@ struct PortfolioScreen: View {
                     #if canImport(UIKit)
                     showAddTransactionScreen = true
                     #else
-                    navigator.navigateToAddTransactionScreen()
+                    navigator.navigate(to: .addTransaction)
                     #endif
                 }) {
                     Text(localized: .ADD_FIRST_TRANSACTION_Label)

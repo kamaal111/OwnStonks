@@ -66,7 +66,7 @@ struct AddTransactionScreen: View {
         #if canImport(UIKit)
         presentationMode.wrappedValue.dismiss()
         #else
-        navigator.navigateBackFromAddTransactionScreen()
+        navigator.navigate(to: nil)
         #endif
     }
 }

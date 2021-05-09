@@ -29,19 +29,10 @@ final class Navigator: ObservableObject {
     ]
 
     #if canImport(AppKit)
-    func navigateToAddTransactionScreen() {
+    func navigate(to screen: ScreenNames?) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            self.screenSelection = ScreenNames.addTransaction.rawValue
-        }
-    }
-    #endif
-
-    #if canImport(AppKit)
-    func navigateBackFromAddTransactionScreen() {
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            self.screenSelection = nil
+            self.screenSelection = screen?.rawValue
         }
     }
     #endif
