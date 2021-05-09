@@ -25,7 +25,12 @@ struct TransactionsGridView: View {
     }
 
     var body: some View {
-        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth, onCellPress: onCellPress)
+        StonkGridView(
+            headerTitles: Self.headerTitles,
+            data: data,
+            viewWidth: viewWidth,
+            isPressable: true,
+            onCellPress: onCellPress)
     }
 
     static let headerTitles: [String] = {

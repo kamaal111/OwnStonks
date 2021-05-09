@@ -12,16 +12,19 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
     public let headerTitles: [String]
     public let data: [[Content]]
     public let viewWidth: CGFloat
+    public let isPressable: Bool
     public let onCellPress: (_ content: Content) -> Void
 
     public init(
         headerTitles: [String],
         data: [[Content]],
         viewWidth: CGFloat,
+        isPressable: Bool,
         onCellPress: @escaping (_ content: Content) -> Void) {
         self.headerTitles = headerTitles
         self.data = data
         self.viewWidth = viewWidth
+        self.isPressable = isPressable
         self.onCellPress = onCellPress
     }
 
@@ -34,7 +37,7 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
             Section(header: GridHeaderView(viewWidth: viewWidth, headerTitles: headerTitles)) {
                 ForEach(data, id: \.self) { row in
                     ForEach(row, id: \.renderID) { item in
-                        StonksGridItem(data: item, action: { onCellPress(item) })
+                        StonksGridItem(data: item, isPressable: isPressable, action: { onCellPress(item) })
                     }
                 }
             }
@@ -51,24 +54,31 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
 private struct StonksGridItem<Content: StonkGridCellRenderable>: View {
     let data: Content
     let horizontalPadding: CGFloat
+    let isPressable: Bool
     let action: () -> Void
 
-    init(data: Content, horizontalPadding: CGFloat = 16, action: @escaping () -> Void) {
+    init(data: Content, horizontalPadding: CGFloat = 16, isPressable: Bool, action: @escaping () -> Void) {
         self.data = data
         self.horizontalPadding = horizontalPadding
+        self.isPressable = isPressable
         self.action = action
     }
     var body: some View {
-        Button(action: action) {
-            HStack {
+        ZStack {
+            if isPressable {
+                Button(action: action) {
+                    Text(data.content)
+                        .foregroundColor(.accentColor)
+                        .multilineTextAlignment(.leading)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .buttonStyle(PlainButtonStyle())
+            } else {
                 Text(data.content)
-                    .foregroundColor(.accentColor)
                     .multilineTextAlignment(.leading)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Color.StonkBackground)
         }
-        .buttonStyle(PlainButtonStyle())
         .padding(.horizontal, horizontalPadding)
     }
 }
@@ -83,7 +93,12 @@ private struct StonkGridRenderItem: StonkGridCellRenderable {
 @available(macOS 11.0, iOS 14.0, *)
 struct StonkGridView_Previews: PreviewProvider {
     static var previews: some View {
-        StonkGridView(headerTitles: [], data: [] as [[StonkGridRenderItem]], viewWidth: 360, onCellPress: { _ in })
+        StonkGridView(
+            headerTitles: [],
+            data: [] as [[StonkGridRenderItem]],
+            viewWidth: 360,
+            isPressable: false,
+            onCellPress: { _ in })
     }
 }
 #endif

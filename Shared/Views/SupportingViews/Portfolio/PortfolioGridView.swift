@@ -26,7 +26,12 @@ struct PortfolioGridView: View {
     }
 
     var body: some View {
-        StonkGridView(headerTitles: Self.headerTitles, data: data, viewWidth: viewWidth, onCellPress: onCellPress)
+        StonkGridView(
+            headerTitles: Self.headerTitles,
+            data: data,
+            viewWidth: viewWidth,
+            isPressable: false,
+            onCellPress: onCellPress)
     }
 
     static let headerTitles: [String] = {
