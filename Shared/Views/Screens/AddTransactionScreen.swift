@@ -16,6 +16,8 @@ struct AddTransactionScreen: View {
 
     @EnvironmentObject
     private var stonksManager: StonksManager
+    @EnvironmentObject
+    private var userData: UserData
     #if canImport(AppKit)
     @EnvironmentObject
     private var navigator: Navigator
@@ -39,7 +41,9 @@ struct AddTransactionScreen: View {
     private func view() -> some View {
         VStack {
             FloatingTextField(text: $viewModel.investment, title: .INVESTMENT_LABEL)
-            EnforcedFloatingDecimalField(value: $viewModel.costPerShare, title: .COST_SHARE_LABEL)
+            EnforcedFloatingDecimalField(
+                value: $viewModel.costPerShare,
+                title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: userData.currency))
             EnforcedFloatingDecimalField(value: $viewModel.shares, title: .SHARES_LABEL)
             FloatingDatePicker(value: $viewModel.transactionDate, title: .TRANSACTION_DATE_LABEL)
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -76,5 +80,6 @@ struct AddTransactionScreen_Previews: PreviewProvider {
         AddTransactionScreen()
             .environmentObject(StonksManager())
             .environmentObject(Navigator())
+            .environmentObject(UserData())
     }
 }

@@ -14,7 +14,7 @@
 "GENERAL_ALERT_TITLE" = "Something went wrong %@";
 "ADD_TRANSACTION_SCREEN_TITLE" = "Add Transaction";
 "INVESTMENT_LABEL" = "Investment";
-"COST_SHARE_LABEL" = "Cost/Share";
+"COST_SHARE_LABEL" = "Cost/Share %@";
 "SHARES_LABEL" = "Shares";
 "TRANSACTION_DATE_LABEL" = "Transaction Date";
 "OK" = "OK";
