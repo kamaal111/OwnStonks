@@ -354,8 +354,8 @@
 		601414D5263A88A40083D485 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				60027D68264056E7007B1EE9 /* CoreData */,
 				601414D6263A88C10083D485 /* UIDevice+extensions.swift */,
+				60027D68264056E7007B1EE9 /* CoreData */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";

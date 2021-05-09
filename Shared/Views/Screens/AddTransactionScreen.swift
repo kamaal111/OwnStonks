@@ -11,10 +11,15 @@ import StonksUI
 import StonksLocale
 
 struct AddTransactionScreen: View {
+    @Environment(\.presentationMode)
+    private var presentationMode: Binding<PresentationMode>
+
     @EnvironmentObject
     private var stonksManager: StonksManager
+    #if canImport(AppKit)
     @EnvironmentObject
     private var navigator: Navigator
+    #endif
 
     @ObservedObject
     private var viewModel = ViewModel()
@@ -58,7 +63,11 @@ struct AddTransactionScreen: View {
     private func saveAction() {
         let stonkResult = stonksManager.setTransaction(with: viewModel.transactionArgs)
         guard viewModel.saveAction(stonkResult: stonkResult) else { return }
-        navigator.navigateToPortfolio()
+        #if canImport(UIKit)
+        presentationMode.wrappedValue.dismiss()
+        #else
+        navigator.navigateBackFromAddTransactionScreen()
+        #endif
     }
 }
 

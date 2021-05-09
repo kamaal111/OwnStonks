@@ -13,14 +13,7 @@ import StonksLocale
 final class Navigator: ObservableObject {
 
     #if canImport(UIKit)
-    @Published var showAddTransactionScreen = false
-    @Published var tabSelection = ScreenNames.portfolio.rawValue {
-        didSet {
-            if showAddTransactionScreen {
-                showAddTransactionScreen = false
-            }
-        }
-    }
+    @Published var tabSelection = ScreenNames.portfolio.rawValue
     #endif
     @Published var screenSelection: String?
 
@@ -35,27 +28,23 @@ final class Navigator: ObservableObject {
         .init(key: .TRANSACTIONS_SCREEN_TITLE, imageSystemName: "arrow.up.arrow.down", screen: .transactions)
     ]
 
+    #if canImport(AppKit)
     func navigateToAddTransactionScreen() {
         DispatchQueue.main.async { [weak self] in
-            #if canImport(AppKit)
-            self?.screenSelection = ScreenNames.addTransaction.rawValue
-            #else
-            self?.showAddTransactionScreen = true
-            #endif
+            guard let self = self else { return }
+            self.screenSelection = ScreenNames.addTransaction.rawValue
         }
     }
+    #endif
 
-    func navigateToPortfolio() {
+    #if canImport(AppKit)
+    func navigateBackFromAddTransactionScreen() {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else { return }
-            #if canImport(UIKit)
-            if self.showAddTransactionScreen {
-                self.showAddTransactionScreen = false
-            }
-            #endif
             self.screenSelection = nil
         }
     }
+    #endif
 
 }
 

@@ -11,18 +11,24 @@ import StonksUI
 import StonksLocale
 
 struct TransactionsScreen: View {
+    #if canImport(AppKit)
     @EnvironmentObject
     private var navigator: Navigator
+    #endif
     @EnvironmentObject
     private var stonksManager: StonksManager
     @EnvironmentObject
     private var userData: UserData
 
+    @State private var showAddTransactionScreen = false
+
     var body: some View {
         #if canImport(UIKit)
         view()
             .navigationBarTitle(Text(localized: .TRANSACTIONS_SCREEN_TITLE))
-            .navigationBarItems(trailing: Button(action: navigator.navigateToAddTransactionScreen) {
+            .navigationBarItems(trailing: Button(action: {
+                showAddTransactionScreen = true
+            }) {
                 Image(systemName: "plus").size(.squared(20))
             })
         #else
@@ -39,13 +45,19 @@ struct TransactionsScreen: View {
     private func view() -> some View {
         ZStack {
             #if canImport(UIKit)
-            NavigationLink(destination: AddTransactionScreen(), isActive: $navigator.showAddTransactionScreen) {
+            NavigationLink(destination: AddTransactionScreen(), isActive: $showAddTransactionScreen) {
                 EmptyView()
             }
             #endif
             Color.StonkBackground
             if stonksManager.portfolioStonks.isEmpty {
-                Button(action: navigator.navigateToAddTransactionScreen) {
+                Button(action: {
+                    #if canImport(UIKit)
+                    showAddTransactionScreen = true
+                    #else
+                    navigator.navigateToAddTransactionScreen()
+                    #endif
+                }) {
                     Text(localized: .ADD_FIRST_TRANSACTION_Label)
                         .font(.headline)
                 }

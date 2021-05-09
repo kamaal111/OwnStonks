@@ -12,4 +12,12 @@ extension UIDevice {
     var isIpad: Bool {
         self.userInterfaceIdiom == .pad
     }
+
+    var isMac: Bool {
+        self.userInterfaceIdiom == .mac
+    }
+
+    var isPhone: Bool {
+        self.userInterfaceIdiom == .phone
+    }
 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(macOS 11.0, *)
+@available(macOS 11.0, iOS 14.0, *)
 public struct StonkGridView<Content: StonkGridCellRenderable>: View {
     public let headerTitles: [String]
     public let data: [[Content]]
@@ -64,7 +64,7 @@ private struct StonkGridRenderItem: StonkGridCellRenderable {
     let content: String
 }
 
-@available(macOS 11.0, *)
+@available(macOS 11.0, iOS 14.0, *)
 struct StonkGridView_Previews: PreviewProvider {
     static var previews: some View {
         StonkGridView(headerTitles: [], data: [] as [[StonkGridRenderItem]], viewWidth: 360)
