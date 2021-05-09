@@ -20,8 +20,8 @@ struct GridHeaderView: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            ForEach(0..<headerTitles.count) { colIdx in
-                Text(headerTitles[colIdx])
+            ForEach(headerTitles, id: \.self) { headerTitle in
+                Text(headerTitle)
                     .font(.headline)
                     .padding(.horizontal, 4)
                     .padding(.vertical, 8)
@@ -34,7 +34,9 @@ struct GridHeaderView: View {
 
     private var headerWidth: CGFloat {
         guard viewWidth > 0 else { return 0 }
-        return (viewWidth / CGFloat(headerTitles.count)) - (horizontalPadding * 2)
+        let calculation = (viewWidth / CGFloat(headerTitles.count)) - (horizontalPadding * 2)
+        guard calculation > 0 else { return 0 }
+        return calculation
     }
 }
 

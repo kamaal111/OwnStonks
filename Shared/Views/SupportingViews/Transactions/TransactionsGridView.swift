@@ -27,7 +27,8 @@ struct TransactionsGridView: View {
         let keys: [StonksLocale.Keys] = [
             .NAME_HEADER_TITLE,
             .SHARES_HEADER_TITLE,
-            .COST_SHARE_HEADER_TITLE
+            .COST_SHARE_HEADER_TITLE,
+            .TOTAL_PRICE_HEADER_TITLE
         ]
         return keys.map(\.localized)
     }()

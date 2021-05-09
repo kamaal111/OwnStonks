@@ -39,6 +39,7 @@ struct TransactionsScreen: View {
                     Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
             })
+            .frame(minWidth: 416)
         #endif
     }
 
@@ -80,10 +81,13 @@ struct TransactionsScreen: View {
                 StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),
                 StonkGridCellData(
                     id: counter + 2,
-                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))")
+                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))"),
+                StonkGridCellData(
+                    id: counter + 3,
+                    content: "\(userData.currency)\(transaction.totalPrice.toFixed(2))")
             ]
             multiDimensionedData.append(row)
-            counter += 3
+            counter += 4
         }
         return multiDimensionedData
     }

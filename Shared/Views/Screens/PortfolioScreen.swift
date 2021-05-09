@@ -41,7 +41,7 @@ struct PortfolioScreen: View {
                     Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
                 }
             })
-            .frame(minWidth: Constants.minimumContentWidth)
+            .frame(minWidth: 305)
         #endif
     }
 

@@ -11,7 +11,6 @@ import CoreGraphics
 struct Constants {
     private init() { }
 
-    static let minimumContentWidth: CGFloat = 305
     static let persistentContainerName = "OwnStonks"
     static let appBundleIdentifier = "io.kamaal.OwnStonks"
 }
