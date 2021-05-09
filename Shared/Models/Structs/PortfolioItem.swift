@@ -30,7 +30,7 @@ struct PortfolioItem: Hashable {
     init(coreObject: CoreTransaction) {
         self.name = coreObject.name
         self.shares = coreObject.shares
-        self.totalPrice = coreObject.costPerShare
+        self.totalPrice = coreObject.costPerShare * coreObject.shares
         self.symbol = coreObject.symbol
         self.coreObject = coreObject
     }
