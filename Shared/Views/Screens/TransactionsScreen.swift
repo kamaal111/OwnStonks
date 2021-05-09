@@ -75,7 +75,7 @@ struct TransactionsScreen: View {
     private var transactionRows: [[StonkGridCellData]] {
         var multiDimensionedData: [[StonkGridCellData]] = []
         var counter = 0
-        for transaction in stonksManager.transactions {
+        for transaction in stonksManager.sortedTransactions {
             let row = [
                 StonkGridCellData(id: counter, content: transaction.name),
                 StonkGridCellData(id: counter + 1, content: "\(transaction.shares)"),

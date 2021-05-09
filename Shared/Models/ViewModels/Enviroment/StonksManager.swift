@@ -15,7 +15,7 @@ import StonksLocale
 /// This class manages all core data objects
 final class StonksManager: ObservableObject {
 
-    @Published private(set) var transactions: [CoreTransaction] = []
+    @Published private var transactions: [CoreTransaction] = []
 
     private let persistenceController = PersistenceController.shared
 
@@ -49,6 +49,10 @@ final class StonksManager: ObservableObject {
         }
     }
 
+    var sortedTransactions: [CoreTransaction] {
+        transactions.sorted(by: { $0.transactionDate.compare($1.transactionDate) == .orderedDescending })
+    }
+
     var portfolioStonks: [PortfolioItem] {
         var combinedTranactions: [String: PortfolioItem] = [:]
         for transaction in transactions {
@@ -71,7 +75,9 @@ final class StonksManager: ObservableObject {
                 combinedTranactions[key] = transaction.initialPortfolioItem
             }
         }
-        return combinedTranactions.map(\.value)
+        return combinedTranactions
+            .sorted(by: { $0.value.totalPrice > $1.value.totalPrice })
+            .map(\.value)
     }
 
     func setTransaction(with args: CoreTransaction.Args) -> Result<CoreTransaction, Errors> {
