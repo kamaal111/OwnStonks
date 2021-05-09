@@ -11,16 +11,19 @@ import StonksUI
 import StonksLocale
 
 struct TransactionsScreen: View {
-    #if canImport(AppKit)
-    @EnvironmentObject
-    private var navigator: Navigator
-    #endif
     @EnvironmentObject
     private var stonksManager: StonksManager
     @EnvironmentObject
     private var userData: UserData
-
+    #if canImport(AppKit)
+    @EnvironmentObject
+    private var navigator: Navigator
+    #else
     @State private var showAddTransactionScreen = false
+    #endif
+
+    @ObservedObject
+    private var viewModel = ViewModel()
 
     var body: some View {
         #if canImport(UIKit)
@@ -68,10 +71,21 @@ struct TransactionsScreen: View {
                         TransactionsGridView(
                             multiDimensionedData: transactionRows,
                             viewWidth: geometry.size.width,
-                            onCellPress: onCellPress(_:))
+                            onCellPress: viewModel.selectCell(_:))
                     }
                 }
             }
+        }
+        .sheet(isPresented: $viewModel.showTransactionModal) {
+            SheetStack(
+                title: "Stack Yeah",
+                leadingNavigationButton: { Text("") },
+                trailingNavigationButton: { Button(action: {
+                    viewModel.showTransactionModal = false
+                }) { Text("Close") } }) {
+                Text(viewModel.selectedCell?.content ?? "")
+            }
+            .frame(minWidth: 360)
         }
     }
 
@@ -95,10 +109,6 @@ struct TransactionsScreen: View {
             counter += row.count
         }
         return multiDimensionedData
-    }
-
-    private func onCellPress(_ cell: StonkGridCellData) {
-        print(cell)
     }
 }
 

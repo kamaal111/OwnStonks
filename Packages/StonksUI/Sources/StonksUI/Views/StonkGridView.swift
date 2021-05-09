@@ -71,6 +71,7 @@ private struct StonksGridItem<Content: StonkGridCellRenderable>: View {
                         .foregroundColor(.accentColor)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.StonkBackground)
                 }
                 .buttonStyle(PlainButtonStyle())
             } else {

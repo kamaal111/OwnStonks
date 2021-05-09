@@ -41,6 +41,8 @@
 		2C88FF102646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
 		2C88FF122646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
 		2C88FF132646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
+		2CD9E96E26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */; };
+		2CD9E96F26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */; };
 		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
 		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
 		60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */; };
@@ -123,6 +125,7 @@
 		2C8DC1072645765000A55FFD /* templates.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = templates.js; sourceTree = "<group>"; };
 		2C8DC1082645765000A55FFD /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 		2C8DC10A2645765000A55FFD /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
+		2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionsScreen+ViewModel.swift"; sourceTree = "<group>"; };
 		2CF2F2042642F75700F8AF9E /* IDETemplteMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IDETemplteMacros.plist; sourceTree = "<group>"; };
 		2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_docs.sh; sourceTree = "<group>"; };
 		60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+extensions.swift"; sourceTree = "<group>"; };
@@ -304,6 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */,
+				2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -711,6 +715,7 @@
 				2C47EF632641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
 				2C7497C1263DC75B001205EA /* Constants.swift in Sources */,
 				601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */,
+				2CD9E96E26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */,
 				6050FE1F263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
 				60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
@@ -733,6 +738,7 @@
 				6050FE16263FCDD700819D92 /* Persistence.swift in Sources */,
 				2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */,
 				2C2EFC202639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
+				2CD9E96F26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */,
 				601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				6050FE20263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
 				2C237FB72645442F00E59144 /* TransactionsGridView.swift in Sources */,
