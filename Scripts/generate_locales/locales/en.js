@@ -25,6 +25,7 @@ const en = {
   SHARES_HEADER_TITLE,
   TOTAL_PRICE_HEADER_TITLE: "Total Price",
   COST_SHARE_HEADER_TITLE,
+  CLOSE: "Close",
 };
 
 module.exports = en;

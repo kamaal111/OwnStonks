@@ -11,16 +11,17 @@ import Combine
 extension TransactionsScreen {
     final class ViewModel: ObservableObject {
 
-        @Published var showTransactionModal = false
-        @Published private(set) var selectedCell: StonkGridCellData? {
+        @Published var showTransactionSheet = false
+        @Published private(set) var selectedTranaction: CoreTransaction? {
             didSet {
-                guard selectedCell != nil else { return }
-                showTransactionModal = true
+                guard selectedTranaction != nil else { return }
+                showTransactionSheet = true
             }
         }
 
-        func selectCell(_ cell: StonkGridCellData) {
-            self.selectedCell = cell
+        func selectCell(_ cell: StonkGridCellData, from transactions: [CoreTransaction]) {
+            let selectedTransaction = transactions.first(where: { $0.id == cell.transactionID })
+            self.selectedTranaction = selectedTransaction
         }
 
     }

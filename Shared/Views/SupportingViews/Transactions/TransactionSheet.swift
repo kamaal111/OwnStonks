@@ -1,0 +1,102 @@
+//
+//  TransactionSheet.swift
+//  OwnStonks
+//
+//  Created by Kamaal Farah on 10/05/2021.
+//  Copyright © 2021 Kamaal Farah. All rights reserved.
+//
+
+import SwiftUI
+import StonksUI
+import StonksLocale
+
+struct TransactionSheet: View {
+    let transaction: CoreTransaction?
+    let currency: String
+    let close: () -> Void
+
+    var body: some View {
+        SheetStack(
+            /// - TODO: Localize this
+            title: "Tranaction",
+            leadingNavigationButton: { NavigationButton(
+                title: "Edit",
+                action: { print("edit") }) },
+            trailingNavigationButton: { NavigationButton(
+                title: .CLOSE,
+                action: close) }) {
+            VStack {
+                HStack {
+                    /// - TODO: Localize this
+                    Text("Created: \(Self.creationDateFormatter.string(from: Date()))")
+                        .foregroundColor(.secondary)
+                        .font(.callout)
+                    Spacer()
+                }
+                if let transaction = self.transaction {
+                    TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
+                    TransactionSheetRow(
+                        title: .COST_SHARE_HEADER_TITLE,
+                        value: "\(currency)\(transaction.costPerShare.toFixed(2))")
+                    TransactionSheetRow(title: .SHARES_LABEL, value: "\(transaction.shares)")
+                    TransactionSheetRow(
+                        title: .TRANSACTION_DATE_LABEL,
+                        value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
+                }
+            }
+            .padding(.vertical, 16)
+        }
+        .frame(minWidth: 360, minHeight: 248)
+    }
+
+    static let tranactionDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        return formatter
+    }()
+
+    static let creationDateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        return formatter
+    }()
+
+}
+
+private struct TransactionSheetRow: View {
+    let title: String
+    let value: String
+
+    init(title: String, value: String) {
+        self.title = title
+        self.value = value
+    }
+
+    init(title: StonksLocale.Keys, value: String) {
+        self.title = title.localized
+        self.value = value
+    }
+
+    var body: some View {
+        HStack {
+            Text(title)
+                .bold()
+                .frame(width: 100, alignment: .leading)
+            Text(value)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.vertical, 4)
+    }
+}
+
+/// - TODO: Get this to work with mocked core data objects
+// struct TransactionSheet_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Text("Hallo")
+//            .sheet(isPresented: .constant(true), content: {
+//                TransactionSheet(
+//                    cellData: .init(id: 1, content: "Apple", transactionID: UUID()),
+//                    close: { })
+//        })
+//    }
+// }

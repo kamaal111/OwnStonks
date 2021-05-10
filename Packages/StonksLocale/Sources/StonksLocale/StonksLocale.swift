@@ -43,8 +43,10 @@ extension StonksLocale.Keys {
 
 extension Text {
     /// An alternative init to use Text with `StonksLocale Keys`
-    /// - Parameter localized: An localized key to get a localized `Text` view
-    public init(localized: StonksLocale.Keys) {
-        self.init(StonksLocale.getLocalizableString(of: localized))
+    /// - Parameters:
+    ///   - localized: An localized key to get a localized `Text` view
+    ///   - variables: The variables that get injected in to the localized string
+    public init(localized: StonksLocale.Keys, with variables: CVarArg...) {
+        self.init(StonksLocale.getLocalizableString(of: localized, with: variables))
     }
 }

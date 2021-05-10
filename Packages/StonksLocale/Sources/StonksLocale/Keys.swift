@@ -29,5 +29,6 @@ extension StonksLocale {
         case SHARES_HEADER_TITLE
         case TOTAL_PRICE_HEADER_TITLE
         case COST_SHARE_HEADER_TITLE
+        case CLOSE
     }
 }

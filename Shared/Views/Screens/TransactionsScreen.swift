@@ -71,25 +71,21 @@ struct TransactionsScreen: View {
                         TransactionsGridView(
                             multiDimensionedData: transactionRows,
                             viewWidth: geometry.size.width,
-                            onCellPress: viewModel.selectCell(_:))
+                            onCellPress: { viewModel.selectCell($0, from: stonksManager.sortedTransactions) })
                     }
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showTransactionModal) {
-            SheetStack(
-                title: "Stack Yeah",
-                leadingNavigationButton: { Text("") },
-                trailingNavigationButton: { Button(action: {
-                    viewModel.showTransactionModal = false
-                }) { Text("Close") } }) {
-                Text(viewModel.selectedCell?.content ?? "")
-            }
-            .frame(minWidth: 360)
+        .sheet(isPresented: $viewModel.showTransactionSheet) {
+            TransactionSheet(
+                transaction: viewModel.selectedTranaction,
+                currency: userData.currency,
+                close: { viewModel.showTransactionSheet = false })
         }
     }
 
     private var transactionRows: [[StonkGridCellData]] {
+        /// - TODO: Add transaction date
         var multiDimensionedData: [[StonkGridCellData]] = []
         var counter = 0
         for transaction in stonksManager.sortedTransactions {

@@ -57,6 +57,8 @@
 		60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601414FE263A8AEE0083D485 /* AppSidebar.swift */; };
 		60141509263A8CFB0083D485 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60141508263A8CFB0083D485 /* Navigator.swift */; };
 		6014150A263A8CFB0083D485 /* Navigator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60141508263A8CFB0083D485 /* Navigator.swift */; };
+		601AD6F32649072500A2F717 /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AD6F22649072500A2F717 /* TransactionSheet.swift */; };
+		601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AD6F22649072500A2F717 /* TransactionSheet.swift */; };
 		60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60236BA42641AC4200A80B80 /* TransactionsScreen.swift */; };
 		60236BA62641AC4200A80B80 /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60236BA42641AC4200A80B80 /* TransactionsScreen.swift */; };
 		6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */ = {isa = PBXBuildFile; productRef = 6050FE10263FCDAC00819D92 /* PersistanceManager */; };
@@ -135,6 +137,7 @@
 		601414F3263A8AC20083D485 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
 		601414FE263A8AEE0083D485 /* AppSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSidebar.swift; sourceTree = "<group>"; };
 		60141508263A8CFB0083D485 /* Navigator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Navigator.swift; sourceTree = "<group>"; };
+		601AD6F22649072500A2F717 /* TransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSheet.swift; sourceTree = "<group>"; };
 		60236BA42641AC4200A80B80 /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
 		603EE1C42641231600756FE1 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		603EE1C5264125BF00756FE1 /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
@@ -204,6 +207,7 @@
 			isa = PBXGroup;
 			children = (
 				2C237FB52645442F00E59144 /* TransactionsGridView.swift */,
+				601AD6F22649072500A2F717 /* TransactionSheet.swift */,
 			);
 			path = Transactions;
 			sourceTree = "<group>";
@@ -727,6 +731,7 @@
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
 				6050FE15263FCDD700819D92 /* Persistence.swift in Sources */,
 				6057942C263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
+				601AD6F32649072500A2F717 /* TransactionSheet.swift in Sources */,
 				2C590B1F264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -751,6 +756,7 @@
 				2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
+				601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */,
 				60599EBF264462C0008C06EF /* StonkGridCellData.swift in Sources */,
 				2C88FF132646DFC4008057DE /* UserData.swift in Sources */,
 				60CAC7162643C356008CD190 /* PortfolioItem.swift in Sources */,
