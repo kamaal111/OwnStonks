@@ -23,6 +23,7 @@ struct GridHeaderView: View {
             ForEach(headerTitles, id: \.self) { headerTitle in
                 Text(headerTitle)
                     .font(.headline)
+                    .multilineTextAlignment(.center)
                     .padding(.horizontal, 4)
                     .padding(.vertical, 8)
                     .frame(width: headerWidth, alignment: .leading)

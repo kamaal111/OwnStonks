@@ -85,7 +85,6 @@ struct TransactionsScreen: View {
     }
 
     private var transactionRows: [[StonkGridCellData]] {
-        /// - TODO: Add transaction date
         var multiDimensionedData: [[StonkGridCellData]] = []
         var counter = 0
         for transaction in stonksManager.sortedTransactions {
