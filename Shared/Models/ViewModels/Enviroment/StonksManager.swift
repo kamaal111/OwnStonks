@@ -8,11 +8,10 @@
 
 import Combine
 import ConsoleSwift
-import Foundation
+import SwiftUI
 import ShrimpExtensions
 import StonksLocale
 
-/// This class manages all core data objects
 final class StonksManager: ObservableObject {
 
     @Published private var transactions: [CoreTransaction] = []
@@ -93,6 +92,17 @@ final class StonksManager: ObservableObject {
         }
         transactions.append(stonk)
         return .success(stonk)
+    }
+
+    func deleteTransaction(_ transaction: CoreTransaction) {
+        guard let index = transactions.firstIndex(of: transaction) else { return }
+        do {
+            try persistenceController.delete(transactions[index])
+        } catch {
+            console.error(Date(), error.localizedDescription, error)
+            return
+        }
+        withAnimation { _ = transactions.remove(at: index) }
     }
 
 }

@@ -76,12 +76,23 @@ struct TransactionsScreen: View {
                 }
             }
         }
-        .sheet(isPresented: $viewModel.showTransactionSheet) {
+        .sheet(isPresented: $viewModel.showTransactionSheet, content: {
             TransactionSheet(
                 transaction: viewModel.selectedTranaction,
                 currency: userData.currency,
-                close: { viewModel.showTransactionSheet = false })
-        }
+                close: { viewModel.showTransactionSheet = false },
+                delete: viewModel.onDelete)
+        })
+        .alert(isPresented: $viewModel.showDeleteWarning, content: {
+            Alert(
+                /// - TODO: Localize this
+                title: Text("Are you sure you want to delete this item?"),
+                primaryButton: .destructive(Text("Yeah!"), action: {
+                    guard let transaction = viewModel.selectedTranaction else { return }
+                    viewModel.showTransactionSheet = false
+                    stonksManager.deleteTransaction(transaction)
+                }), secondaryButton: .cancel())
+        })
     }
 
     private var transactionRows: [[StonkGridCellData]] {

@@ -11,17 +11,21 @@ import StonksUI
 import StonksLocale
 
 struct TransactionSheet: View {
+    @State private var editMode = false
+
     let transaction: CoreTransaction?
     let currency: String
     let close: () -> Void
+    let delete: () -> Void
 
     var body: some View {
         SheetStack(
             /// - TODO: Localize this
             title: "Tranaction",
             leadingNavigationButton: { NavigationButton(
-                title: "Edit",
-                action: { print("edit") }) },
+                /// - TODO: Localize this
+                title: editMode ? "Done" : "Edit",
+                action: onEditPress) },
             trailingNavigationButton: { NavigationButton(
                 title: .CLOSE,
                 action: close) }) {
@@ -42,11 +46,25 @@ struct TransactionSheet: View {
                     TransactionSheetRow(
                         title: .TRANSACTION_DATE_LABEL,
                         value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
+                    if editMode {
+                        Button(action: delete) {
+                            /// - TODO: Localize this
+                            Text("Delete")
+                        }
+                    }
                 }
             }
             .padding(.vertical, 16)
         }
-        .frame(minWidth: 360, minHeight: 248)
+        .frame(minWidth: 360, minHeight: editMode ? 272 : 248)
+    }
+
+    private func onEditPress() {
+        if editMode {
+            withAnimation { editMode = false }
+        } else {
+            withAnimation { editMode = true }
+        }
     }
 
     static let tranactionDateFormatter: DateFormatter = {

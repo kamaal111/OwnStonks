@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Dispatch
 
 extension TransactionsScreen {
     final class ViewModel: ObservableObject {
@@ -18,10 +19,18 @@ extension TransactionsScreen {
                 showTransactionSheet = true
             }
         }
+        @Published var showDeleteWarning = false
 
         func selectCell(_ cell: StonkGridCellData, from transactions: [CoreTransaction]) {
             let selectedTransaction = transactions.first(where: { $0.id == cell.transactionID })
             self.selectedTranaction = selectedTransaction
+        }
+
+        func onDelete() {
+            showTransactionSheet = false
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+                self?.showDeleteWarning = true
+            }
         }
 
     }
