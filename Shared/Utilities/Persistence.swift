@@ -38,3 +38,40 @@ struct PersistenceController {
 
     static let shared = PersistenceController().sharedInststance
 }
+
+#if DEBUG
+extension PersistenceController {
+    static let preview: PersistanceManager = {
+        let result = PersistenceController(inMemory: true).sharedInststance
+        let dummyTransactions: [DummyTransaction] = [
+        ]
+        if let context = result.context {
+            for transaction in dummyTransactions {
+                #error("Not finished")
+                let newTransaction = CoreTransaction(context: context)
+                newTransaction.costPerShare = transaction.costPerShare
+                newTransaction.createdDate = Date()
+            }
+        }
+//        for _ in 0..<10 {
+//            let newItem = Item(context: viewContext)
+//            newItem.timestamp = Date()
+//        }
+//        do {
+//            try viewContext.save()
+//        } catch {
+//            // Replace this implementation with code to handle the error appropriately.
+//            let nsError = error as NSError
+//            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
+//        }
+        return result
+    }()
+
+    struct DummyTransaction {
+        let name: String
+        let costPerShare: Double
+        let transactionDate: Date
+        let shares: String
+    }
+}
+#endif
