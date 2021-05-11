@@ -107,14 +107,17 @@ private struct TransactionSheetRow: View {
     }
 }
 
-/// - TODO: Get this to work with mocked core data objects
-// struct TransactionSheet_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Text("Hallo")
-//            .sheet(isPresented: .constant(true), content: {
-//                TransactionSheet(
-//                    cellData: .init(id: 1, content: "Apple", transactionID: UUID()),
-//                    close: { })
-//        })
-//    }
-// }
+ struct TransactionSheet_Previews: PreviewProvider {
+    static var previews: some View {
+        let transaction: CoreTransaction?
+        do {
+            transaction = try PersistenceController.preview.fetch(CoreTransaction.self).get()?.first
+        } catch {
+            fatalError("Could not find transaction")
+        }
+        return Text("Hallo")
+            .sheet(isPresented: .constant(true), content: {
+                TransactionSheet(transaction: transaction, currency: "$", close: { }, delete: { })
+        })
+    }
+ }

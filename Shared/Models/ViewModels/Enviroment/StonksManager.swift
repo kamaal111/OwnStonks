@@ -11,15 +11,21 @@ import ConsoleSwift
 import SwiftUI
 import ShrimpExtensions
 import StonksLocale
+import PersistanceManager
 
 final class StonksManager: ObservableObject {
 
     @Published private var transactions: [CoreTransaction] = []
 
-    private let persistenceController = PersistenceController.shared
+    private let persistenceController: PersistanceManager
 
-    init() {
-        let fetchResult = persistenceController.fetch(CoreTransaction.self)
+    init(preview: Bool = false) {
+        if !preview {
+            self.persistenceController = PersistenceController.shared
+        } else {
+            self.persistenceController = PersistenceController.preview
+        }
+        let fetchResult = self.persistenceController.fetch(CoreTransaction.self)
         switch fetchResult {
         case .failure(let failure):
             console.error(Date(), failure.localizedDescription, failure)

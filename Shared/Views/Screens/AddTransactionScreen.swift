@@ -78,7 +78,7 @@ struct AddTransactionScreen: View {
 struct AddTransactionScreen_Previews: PreviewProvider {
     static var previews: some View {
         AddTransactionScreen()
-            .environmentObject(StonksManager())
+            .environmentObject(StonksManager(preview: true))
             .environmentObject(Navigator())
             .environmentObject(UserData())
     }

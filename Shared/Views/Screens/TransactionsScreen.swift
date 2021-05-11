@@ -122,7 +122,7 @@ struct TransactionsScreen_Previews: PreviewProvider {
     static var previews: some View {
         TransactionsScreen()
             .environmentObject(Navigator())
-            .environmentObject(StonksManager())
+            .environmentObject(StonksManager(preview: true))
             .environmentObject(UserData())
     }
 }

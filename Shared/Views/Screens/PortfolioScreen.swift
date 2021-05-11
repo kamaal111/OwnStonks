@@ -104,6 +104,6 @@ struct PortfolioScreen_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
             .environmentObject(Navigator())
-            .environmentObject(StonksManager())
+            .environmentObject(StonksManager(preview: true))
     }
 }
