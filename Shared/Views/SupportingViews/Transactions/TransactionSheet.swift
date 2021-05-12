@@ -12,6 +12,10 @@ import StonksLocale
 
 struct TransactionSheet: View {
     @State private var editMode = false
+    @State private var editedInvestment = ""
+    @State private var editedCostPerShare = 0.0
+    @State private var editedShares = 0.0
+    @State private var editedTransactionDate = Date()
 
     let transaction: CoreTransaction?
     let currency: String
@@ -34,7 +38,8 @@ struct TransactionSheet: View {
                         .font(.callout)
                     Spacer()
                 }
-                if let transaction = self.transaction {
+                if !editMode {
+                    if let transaction = self.transaction {
                     TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
                     TransactionSheetRow(
                         title: .COST_SHARE_HEADER_TITLE,
@@ -43,22 +48,36 @@ struct TransactionSheet: View {
                     TransactionSheetRow(
                         title: .TRANSACTION_DATE_LABEL,
                         value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
-                    if editMode {
-                        Button(action: delete) {
-                            Text(localized: .DELETE)
-                        }
+                    }
+                } else {
+                    FloatingTextField(text: $editedInvestment, title: .INVESTMENT_LABEL)
+                    EnforcedFloatingDecimalField(
+                        value: $editedCostPerShare,
+                        title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
+                    EnforcedFloatingDecimalField(value: $editedShares, title: .SHARES_LABEL)
+                    FloatingDatePicker(value: $editedTransactionDate, title: .TRANSACTION_DATE_LABEL)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Button(action: delete) {
+                        Text(localized: .DELETE)
                     }
                 }
             }
             .padding(.vertical, 16)
         }
-        .frame(minWidth: 360, minHeight: editMode ? 272 : 248)
+        .frame(minWidth: 360, minHeight: editMode ? 296 : 248)
     }
 
     private func onEditPress() {
         if editMode {
+            ///  - TODO: Save here
             withAnimation { editMode = false }
         } else {
+            if let transaction = self.transaction {
+                editedInvestment = transaction.name
+                editedShares = transaction.shares
+                editedCostPerShare = transaction.costPerShare
+                editedTransactionDate = transaction.transactionDate
+            }
             withAnimation { editMode = true }
         }
     }
