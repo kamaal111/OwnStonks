@@ -26,6 +26,13 @@ const en = {
   TOTAL_PRICE_HEADER_TITLE: "Total Price",
   COST_SHARE_HEADER_TITLE,
   CLOSE: "Close",
+  TRANSACTION: "Transaction",
+  DONE: "Done",
+  EDIT: "Edit",
+  CREATED_DATE: "Created: %@",
+  DELETE: "Delete",
+  DELETE_ITEM_WARNING: "Are you sure you want to delete this item?",
+  YEAH: "Yeah!",
 };
 
 module.exports = en;

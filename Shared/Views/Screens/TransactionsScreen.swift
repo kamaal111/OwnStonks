@@ -85,9 +85,8 @@ struct TransactionsScreen: View {
         })
         .alert(isPresented: $viewModel.showDeleteWarning, content: {
             Alert(
-                /// - TODO: Localize this
-                title: Text("Are you sure you want to delete this item?"),
-                primaryButton: .destructive(Text("Yeah!"), action: {
+                title: Text(localized: .DELETE_ITEM_WARNING),
+                primaryButton: .destructive(Text(localized: .YEAH), action: {
                     guard let transaction = viewModel.selectedTranaction else { return }
                     viewModel.showTransactionSheet = false
                     stonksManager.deleteTransaction(transaction)

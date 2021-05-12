@@ -30,5 +30,12 @@ extension StonksLocale {
         case TOTAL_PRICE_HEADER_TITLE
         case COST_SHARE_HEADER_TITLE
         case CLOSE
+        case TRANSACTION
+        case DONE
+        case EDIT
+        case CREATED_DATE
+        case DELETE
+        case DELETE_ITEM_WARNING
+        case YEAH
     }
 }

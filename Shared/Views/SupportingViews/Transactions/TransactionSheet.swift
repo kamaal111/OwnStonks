@@ -20,19 +20,16 @@ struct TransactionSheet: View {
 
     var body: some View {
         SheetStack(
-            /// - TODO: Localize this
-            title: "Tranaction",
+            title: .TRANSACTION,
             leadingNavigationButton: { NavigationButton(
-                /// - TODO: Localize this
-                title: editMode ? "Done" : "Edit",
+                title: editMode ? .DONE : .EDIT,
                 action: onEditPress) },
             trailingNavigationButton: { NavigationButton(
                 title: .CLOSE,
                 action: close) }) {
             VStack {
                 HStack {
-                    /// - TODO: Localize this
-                    Text("Created: \(Self.creationDateFormatter.string(from: Date()))")
+                    Text(localized: .CREATED_DATE, with: Self.creationDateFormatter.string(from: Date()))
                         .foregroundColor(.secondary)
                         .font(.callout)
                     Spacer()
@@ -48,8 +45,7 @@ struct TransactionSheet: View {
                         value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
                     if editMode {
                         Button(action: delete) {
-                            /// - TODO: Localize this
-                            Text("Delete")
+                            Text(localized: .DELETE)
                         }
                     }
                 }
