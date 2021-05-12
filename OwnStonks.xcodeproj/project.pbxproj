@@ -23,8 +23,6 @@
 		2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF72639E82C00C05BE9 /* ContentView.swift */; };
 		2C2EFC232639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
 		2C2EFC242639E82E00C05BE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C2EFBF82639E82E00C05BE9 /* Assets.xcassets */; };
-		2C2FBD56263F4981001FC779 /* CloudDocs in Frameworks */ = {isa = PBXBuildFile; productRef = 2C2FBD55263F4981001FC779 /* CloudDocs */; };
-		2C2FBD58263F498A001FC779 /* CloudDocs in Frameworks */ = {isa = PBXBuildFile; productRef = 2C2FBD57263F498A001FC779 /* CloudDocs */; };
 		2C47EF612641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47EF5F2641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift */; };
 		2C47EF622641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47EF5F2641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift */; };
 		2C47EF632641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47EF602641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift */; };
@@ -45,6 +43,8 @@
 		2C88FF132646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
 		2CD9E96E26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */; };
 		2CD9E96F26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */; };
+		2CDA725C264C286800C0B9D4 /* PortfolioTotalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA725B264C286800C0B9D4 /* PortfolioTotalsSection.swift */; };
+		2CDA725D264C286800C0B9D4 /* PortfolioTotalsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CDA725B264C286800C0B9D4 /* PortfolioTotalsSection.swift */; };
 		2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB0263D71560032E86B /* ShrimpExtensions */; };
 		2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE62CB7263D71630032E86B /* ShrimpExtensions */; };
 		60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */; };
@@ -131,6 +131,7 @@
 		2C8DC1082645765000A55FFD /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 		2C8DC10A2645765000A55FFD /* Localize.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = Localize.js; sourceTree = "<group>"; };
 		2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionsScreen+ViewModel.swift"; sourceTree = "<group>"; };
+		2CDA725B264C286800C0B9D4 /* PortfolioTotalsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioTotalsSection.swift; sourceTree = "<group>"; };
 		2CF2F2042642F75700F8AF9E /* IDETemplteMacros.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IDETemplteMacros.plist; sourceTree = "<group>"; };
 		2CF2F20B2642FE3600F8AF9E /* generate_docs.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = generate_docs.sh; sourceTree = "<group>"; };
 		60027D692640571B007B1EE9 /* CoreTransaction+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+extensions.swift"; sourceTree = "<group>"; };
@@ -160,7 +161,6 @@
 				2C237FBC264544A800E59144 /* StonksLocale in Frameworks */,
 				6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */,
 				6050FE19263FCE0D00819D92 /* ConsoleSwift in Frameworks */,
-				2C2FBD56263F4981001FC779 /* CloudDocs in Frameworks */,
 				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
 			);
@@ -174,7 +174,6 @@
 				2C237FBA264544A200E59144 /* StonksLocale in Frameworks */,
 				6050FE13263FCDB700819D92 /* PersistanceManager in Frameworks */,
 				6050FE1B263FCE1C00819D92 /* ConsoleSwift in Frameworks */,
-				2C2FBD58263F498A001FC779 /* CloudDocs in Frameworks */,
 				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
 			);
@@ -474,6 +473,7 @@
 			isa = PBXGroup;
 			children = (
 				6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */,
+				2CDA725B264C286800C0B9D4 /* PortfolioTotalsSection.swift */,
 			);
 			path = Portfolio;
 			sourceTree = "<group>";
@@ -508,7 +508,6 @@
 				2CE62CB0263D71560032E86B /* ShrimpExtensions */,
 				2C1486E7263EAFF9006EEB6B /* SalmonUI */,
 				2C1486EF263EB1F9006EEB6B /* StonksUI */,
-				2C2FBD55263F4981001FC779 /* CloudDocs */,
 				6050FE10263FCDAC00819D92 /* PersistanceManager */,
 				6050FE18263FCE0D00819D92 /* ConsoleSwift */,
 				2C237FBB264544A800E59144 /* StonksLocale */,
@@ -535,7 +534,6 @@
 				2CE62CB7263D71630032E86B /* ShrimpExtensions */,
 				2C1486E9263EB03B006EEB6B /* SalmonUI */,
 				2C1486ED263EB1F2006EEB6B /* StonksUI */,
-				2C2FBD57263F498A001FC779 /* CloudDocs */,
 				6050FE12263FCDB700819D92 /* PersistanceManager */,
 				6050FE1A263FCE1C00819D92 /* ConsoleSwift */,
 				2C237FB9264544A200E59144 /* StonksLocale */,
@@ -618,7 +616,6 @@
 			packageReferences = (
 				2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */,
-				2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */,
 				6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */,
 				6050FE17263FCE0D00819D92 /* XCRemoteSwiftPackageReference "ConsoleSwift" */,
 			);
@@ -724,6 +721,7 @@
 				2C47EF632641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
 				2C7497C1263DC75B001205EA /* Constants.swift in Sources */,
 				601414D7263A88C10083D485 /* UIDevice+extensions.swift in Sources */,
+				2CDA725C264C286800C0B9D4 /* PortfolioTotalsSection.swift in Sources */,
 				2CD9E96E26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */,
 				6050FE1F263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
 				60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
@@ -748,6 +746,7 @@
 				6050FE16263FCDD700819D92 /* Persistence.swift in Sources */,
 				2C2EFC222639E82E00C05BE9 /* ContentView.swift in Sources */,
 				2C2EFC202639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
+				2CDA725D264C286800C0B9D4 /* PortfolioTotalsSection.swift in Sources */,
 				2CD9E96F26487FF50035D763 /* TransactionsScreen+ViewModel.swift in Sources */,
 				601414E9263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				6050FE20263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
@@ -1163,14 +1162,6 @@
 				minimumVersion = 4.0.0;
 			};
 		};
-		2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kamaal111/CloudDocs.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
@@ -1223,16 +1214,6 @@
 		2C237FBB264544A800E59144 /* StonksLocale */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StonksLocale;
-		};
-		2C2FBD55263F4981001FC779 /* CloudDocs */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */;
-			productName = CloudDocs;
-		};
-		2C2FBD57263F498A001FC779 /* CloudDocs */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2C2FBD54263F4981001FC779 /* XCRemoteSwiftPackageReference "CloudDocs" */;
-			productName = CloudDocs;
 		};
 		2CE62CB0263D71560032E86B /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;

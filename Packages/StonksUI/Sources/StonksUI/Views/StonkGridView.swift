@@ -20,7 +20,7 @@ public struct StonkGridView<Content: StonkGridCellRenderable>: View {
         data: [[Content]],
         viewWidth: CGFloat,
         isPressable: Bool,
-        onCellPress: @escaping (_ content: Content) -> Void) {
+        onCellPress: @escaping (_ content: Content) -> Void = { _ in }) {
         self.headerTitles = headerTitles
         self.data = data
         self.viewWidth = viewWidth

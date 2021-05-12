@@ -65,12 +65,12 @@ struct PortfolioScreen: View {
                         .font(.headline)
                 }
             } else {
-                GeometryReader { (geometry: GeometryProxy) in
-                    ScrollView {
-                        PortfolioGridView(
-                            multiDimensionedData: portfolioRows,
-                            viewWidth: geometry.size.width,
-                            onCellPress: onCellPress(_:))
+                VStack {
+                    PortfolioTotalsSection()
+                    GeometryReader { (geometry: GeometryProxy) in
+                        ScrollView {
+                            PortfolioGridView(multiDimensionedData: portfolioRows, viewWidth: geometry.size.width)
+                        }
                     }
                 }
             }
@@ -93,10 +93,6 @@ struct PortfolioScreen: View {
             counter += row.count
         }
         return multiDimensionedData
-    }
-
-    private func onCellPress(_ cell: StonkGridCellData) {
-        print(cell)
     }
 }
 

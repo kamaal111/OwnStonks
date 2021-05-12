@@ -15,5 +15,5 @@ extension Color {
     /// App background color
     public static let StonkBackground = Color(.controlBackgroundColor)
     #endif
-    public static let AccentColor = Color("AccentColor")
+    public static let TotalsBackground = Color("TotalsBackground")
 }
