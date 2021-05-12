@@ -96,7 +96,7 @@ private struct TransactionSheetRow: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(alignment: .top) {
             Text(title)
                 .bold()
                 .frame(width: 100, alignment: .leading)

@@ -77,9 +77,29 @@ extension PersistenceController {
         {
             "id": "81da49ba-a560-4022-992e-0faef20a6a59",
             "name": "Apple",
-            "cost_per_share: 132,
-            "transaction_date": "2021-05-11T17:04:10+0000",
+            "cost_per_share": 132.24,
+            "transaction_date": "2021-04-19T17:04:10+0000",
             "shares": 2,
+            "created_date": "2021-05-11T17:04:10+0000",
+            "symbol": "AAPL",
+            "updated_date": "2021-05-11T17:04:10+0000"
+        },
+        {
+            "id": "d39f8929-f32b-4375-8486-b2169872afef",
+            "name": "Apple",
+            "cost_per_share": 119.59,
+            "transaction_date": "2020-11-02T17:04:10+0000",
+            "shares": 3,
+            "created_date": "2021-05-11T17:04:10+0000",
+            "symbol": "AAPL",
+            "updated_date": "2021-05-11T17:04:10+0000"
+        },
+        {
+            "id": "d39f8929-f32b-4375-8486-b2169872afef",
+            "name": "Apple",
+            "cost_per_share": 120.13,
+            "transaction_date": "2020-09-07T17:04:10+0000",
+            "shares": 3,
             "created_date": "2021-05-11T17:04:10+0000",
             "symbol": "AAPL",
             "updated_date": "2021-05-11T17:04:10+0000"
@@ -96,17 +116,19 @@ extension PersistenceController {
         let createdDate: Date
         let symbol: String
         let updatedDate: Date
+    }
+}
 
-        enum CodingKeys: String, CodingKey {
-            case id
-            case name
-            case costPerShare = "cost_per_share"
-            case transactionDate = "transaction_date"
-            case shares
-            case createdDate = "created_date"
-            case symbol
-            case updatedDate = "updated_date"
-        }
+extension PersistenceController.DummyTransaction {
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case costPerShare = "cost_per_share"
+        case transactionDate = "transaction_date"
+        case shares
+        case createdDate = "created_date"
+        case symbol
+        case updatedDate = "updated_date"
     }
 }
 #endif

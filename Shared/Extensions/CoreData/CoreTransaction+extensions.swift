@@ -29,6 +29,7 @@ extension CoreTransaction {
         transaction.symbol = args.symbol
         transaction.transactionDate = args.transactionDate
         transaction.createdDate = Date()
+        transaction.updatedDate = Date()
         if save {
             do {
                 try managedObjectContext.save()
