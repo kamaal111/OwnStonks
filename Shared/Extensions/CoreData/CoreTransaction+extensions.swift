@@ -17,6 +17,23 @@ extension CoreTransaction {
         shares * costPerShare
     }
 
+    func editTransaction(with args: Args, save: Bool = true) -> Result<CoreTransaction, Error> {
+        self.costPerShare = args.costPerShare
+        self.name = args.name
+        self.shares = args.shares
+        self.symbol = args.symbol
+        self.transactionDate = args.transactionDate
+        self.updatedDate = Date()
+        if save {
+            do {
+                try self.managedObjectContext?.save()
+            } catch {
+                return .failure(error)
+            }
+        }
+        return .success(self)
+    }
+
     static func setTransaction(
         args: Args,
         managedObjectContext: NSManagedObjectContext,

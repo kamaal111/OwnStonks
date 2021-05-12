@@ -11,23 +11,37 @@ import StonksUI
 import StonksLocale
 
 struct TransactionSheet: View {
-    @State private var editMode = false
-    @State private var editedInvestment = ""
-    @State private var editedCostPerShare = 0.0
-    @State private var editedShares = 0.0
-    @State private var editedTransactionDate = Date()
+    @ObservedObject
+    private var viewModel: ViewModel
 
     let transaction: CoreTransaction?
     let currency: String
     let close: () -> Void
     let delete: () -> Void
+    let editTransaction: (_ id: UUID, _ args: CoreTransaction.Args) -> Void
+
+    init(
+        transaction: CoreTransaction?,
+        currency: String,
+        close: @escaping () -> Void,
+        delete: @escaping () -> Void,
+        editTransaction: @escaping (_ id: UUID, _ args: CoreTransaction.Args) -> Void) {
+        self.transaction = transaction
+        self.currency = currency
+        self.close = close
+        self.delete = delete
+        self.editTransaction = editTransaction
+        self.viewModel = ViewModel(transaction: transaction)
+    }
 
     var body: some View {
         SheetStack(
             title: .TRANSACTION,
             leadingNavigationButton: { NavigationButton(
-                title: editMode ? .DONE : .EDIT,
-                action: onEditPress) },
+                title: viewModel.editMode ? .DONE : .EDIT,
+                action: {
+                    viewModel.onEditPress(editTransaction: editTransaction)
+                }) },
             trailingNavigationButton: { NavigationButton(
                 title: .CLOSE,
                 action: close) }) {
@@ -38,7 +52,7 @@ struct TransactionSheet: View {
                         .font(.callout)
                     Spacer()
                 }
-                if !editMode {
+                if !viewModel.editMode {
                     if let transaction = self.transaction {
                     TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
                     TransactionSheetRow(
@@ -50,12 +64,13 @@ struct TransactionSheet: View {
                         value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
                     }
                 } else {
-                    FloatingTextField(text: $editedInvestment, title: .INVESTMENT_LABEL)
+                    /// - TODO: Put this in a reuseable view
+                    FloatingTextField(text: $viewModel.editedInvestment, title: .INVESTMENT_LABEL)
                     EnforcedFloatingDecimalField(
-                        value: $editedCostPerShare,
+                        value: $viewModel.editedCostPerShare,
                         title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
-                    EnforcedFloatingDecimalField(value: $editedShares, title: .SHARES_LABEL)
-                    FloatingDatePicker(value: $editedTransactionDate, title: .TRANSACTION_DATE_LABEL)
+                    EnforcedFloatingDecimalField(value: $viewModel.editedShares, title: .SHARES_LABEL)
+                    FloatingDatePicker(value: $viewModel.editedTransactionDate, title: .TRANSACTION_DATE_LABEL)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     Button(action: delete) {
                         Text(localized: .DELETE)
@@ -64,22 +79,7 @@ struct TransactionSheet: View {
             }
             .padding(.vertical, 16)
         }
-        .frame(minWidth: 360, minHeight: editMode ? 296 : 248)
-    }
-
-    private func onEditPress() {
-        if editMode {
-            ///  - TODO: Save here
-            withAnimation { editMode = false }
-        } else {
-            if let transaction = self.transaction {
-                editedInvestment = transaction.name
-                editedShares = transaction.shares
-                editedCostPerShare = transaction.costPerShare
-                editedTransactionDate = transaction.transactionDate
-            }
-            withAnimation { editMode = true }
-        }
+        .frame(minWidth: 360, minHeight: viewModel.editMode ? 296 : 248)
     }
 
     static let tranactionDateFormatter: DateFormatter = {
@@ -132,7 +132,12 @@ private struct TransactionSheetRow: View {
         }
         return Text("Hallo")
             .sheet(isPresented: .constant(true), content: {
-                TransactionSheet(transaction: transaction, currency: "$", close: { }, delete: { })
+                TransactionSheet(
+                    transaction: transaction,
+                    currency: "$",
+                    close: { },
+                    delete: { },
+                    editTransaction: { _, _  in })
         })
     }
  }

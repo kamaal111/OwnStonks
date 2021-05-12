@@ -8,6 +8,7 @@
 import SwiftUI
 import StonksLocale
 
+@available(macOS 11.0, *)
 public struct FloatingTextField: View {
     @Binding public var text: String
 
@@ -61,7 +62,7 @@ public struct FloatingTextField: View {
     public var body: some View {
         ZStack(alignment: .leading) {
             Text(title)
-                .foregroundColor($text.wrappedValue.isEmpty ? .secondary : .accentColor)
+                .foregroundColor(textColor)
                 .offset(y: $text.wrappedValue.isEmpty ? 0 : -25)
                 .scaleEffect($text.wrappedValue.isEmpty ? 1 : 0.75, anchor: .leading)
                 .padding(.horizontal, titleHorizontalPadding)
@@ -76,6 +77,13 @@ public struct FloatingTextField: View {
         .animation(.spring(response: 0.5))
     }
 
+    private var textColor: Color {
+        if $text.wrappedValue.isEmpty {
+            return .secondary
+        }
+        return .accentColor
+    }
+
     private var titleHorizontalPadding: CGFloat {
         if $text.wrappedValue.isEmpty {
             return 4
@@ -84,6 +92,7 @@ public struct FloatingTextField: View {
     }
 }
 
+@available(macOS 11.0, *)
 struct FloatingTextField_Previews: PreviewProvider {
     static var previews: some View {
         Group {

@@ -35,6 +35,8 @@
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
 		2C7497C2263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
+		2C857EE4264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */; };
+		2C857EE5264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */; };
 		2C88FF0C2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
 		2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
 		2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
@@ -119,6 +121,7 @@
 		2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTransactionScreen+ViewModel.swift"; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionSheet+ViewModel.swift"; sourceTree = "<group>"; };
 		2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultValues.swift; sourceTree = "<group>"; };
 		2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyMoney.swift; sourceTree = "<group>"; };
 		2C88FF112646DFC4008057DE /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -307,13 +310,14 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		2C590B1D264099E100C6F48D /* Screens */ = {
+		2C590B1D264099E100C6F48D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */,
 				2CD9E96D26487FF50035D763 /* TransactionsScreen+ViewModel.swift */,
+				2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */,
 			);
-			path = Screens;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2C8DC1032645765000A55FFD /* generate_locales */ = {
@@ -411,7 +415,7 @@
 		60141506263A8CD40083D485 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2C590B1D264099E100C6F48D /* Screens */,
+				2C590B1D264099E100C6F48D /* Views */,
 				60141507263A8CDB0083D485 /* Enviroment */,
 			);
 			path = ViewModels;
@@ -711,6 +715,7 @@
 				2C47EF612641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */,
 				60141509263A8CFB0083D485 /* Navigator.swift in Sources */,
 				60027D6D2640588E007B1EE9 /* StonksManager.swift in Sources */,
+				2C857EE4264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */,
 				601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				60599EBE264462C0008C06EF /* StonkGridCellData.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
@@ -753,6 +758,7 @@
 				60236BA62641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
 				2C47EF622641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
+				2C857EE5264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */,
 				2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,

@@ -111,4 +111,18 @@ final class StonksManager: ObservableObject {
         withAnimation { _ = transactions.remove(at: index) }
     }
 
+    func editTransaction(_ id: UUID, with args: CoreTransaction.Args) {
+        guard let index = transactions.firstIndex(where: { $0.id == id }) else { return }
+        let transaction = transactions[index]
+        let result = transaction.editTransaction(with: args)
+        let updatedTransaction: CoreTransaction
+        switch result {
+        case .failure(let failure):
+            console.error(Date(), failure.localizedDescription, failure)
+            return
+        case .success(let success): updatedTransaction = success
+        }
+        withAnimation { transactions[index] = updatedTransaction }
+    }
+
 }

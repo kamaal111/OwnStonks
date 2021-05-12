@@ -81,7 +81,8 @@ struct TransactionsScreen: View {
                 transaction: viewModel.selectedTranaction,
                 currency: userData.currency,
                 close: { viewModel.showTransactionSheet = false },
-                delete: viewModel.onDelete)
+                delete: viewModel.onDelete,
+                editTransaction: stonksManager.editTransaction(_:with:))
         })
         .alert(isPresented: $viewModel.showDeleteWarning, content: {
             Alert(
