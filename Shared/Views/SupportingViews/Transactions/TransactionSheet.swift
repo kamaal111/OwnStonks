@@ -64,14 +64,12 @@ struct TransactionSheet: View {
                         value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
                     }
                 } else {
-                    /// - TODO: Put this in a reuseable view
-                    FloatingTextField(text: $viewModel.editedInvestment, title: .INVESTMENT_LABEL)
-                    EnforcedFloatingDecimalField(
-                        value: $viewModel.editedCostPerShare,
-                        title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: userData.currency))
-                    EnforcedFloatingDecimalField(value: $viewModel.editedShares, title: .SHARES_LABEL)
-                    FloatingDatePicker(value: $viewModel.editedTransactionDate, title: .TRANSACTION_DATE_LABEL)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    EditTransactionFields(
+                        investment: $viewModel.editedInvestment,
+                        costPerShare: $viewModel.editedCostPerShare,
+                        shares: $viewModel.editedShares,
+                        transactionDate: $viewModel.editedTransactionDate,
+                        currency: userData.currency)
                     Button(action: delete) {
                         Text(localized: .DELETE)
                     }

@@ -15,5 +15,6 @@ extension Color {
     /// App background color
     public static let StonkBackground = Color(.controlBackgroundColor)
     #endif
+    /// Background color of total section in `PortfolioScreen`
     public static let TotalsBackground = Color("TotalsBackground")
 }

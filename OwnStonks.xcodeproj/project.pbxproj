@@ -29,6 +29,8 @@
 		2C47EF642641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C47EF602641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift */; };
 		2C590B1F264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */; };
 		2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */; };
+		2C5B355B264D2328004A93AB /* EditTransactionFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B355A264D2328004A93AB /* EditTransactionFields.swift */; };
+		2C5B355C264D2328004A93AB /* EditTransactionFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B355A264D2328004A93AB /* EditTransactionFields.swift */; };
 		2C7497BE263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
@@ -119,6 +121,7 @@
 		2C47EF5F2641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+CoreDataClass.swift"; sourceTree = "<group>"; };
 		2C47EF602641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTransactionScreen+ViewModel.swift"; sourceTree = "<group>"; };
+		2C5B355A264D2328004A93AB /* EditTransactionFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionFields.swift; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionSheet+ViewModel.swift"; sourceTree = "<group>"; };
@@ -395,6 +398,7 @@
 			children = (
 				601414FE263A8AEE0083D485 /* AppSidebar.swift */,
 				601414F3263A8AC20083D485 /* AppTabView.swift */,
+				2C5B355A264D2328004A93AB /* EditTransactionFields.swift */,
 				6057942A263D4F1700EE2275 /* Portfolio */,
 				2C237FB42645442F00E59144 /* Transactions */,
 			);
@@ -715,6 +719,7 @@
 				2C857EE4264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */,
 				601414E8263A8A980083D485 /* PortfolioScreen.swift in Sources */,
 				60599EBE264462C0008C06EF /* StonkGridCellData.swift in Sources */,
+				2C5B355B264D2328004A93AB /* EditTransactionFields.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
 				601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */,
@@ -765,6 +770,7 @@
 				60599EBF264462C0008C06EF /* StonkGridCellData.swift in Sources */,
 				2C88FF132646DFC4008057DE /* UserData.swift in Sources */,
 				60CAC7162643C356008CD190 /* PortfolioItem.swift in Sources */,
+				2C5B355C264D2328004A93AB /* EditTransactionFields.swift in Sources */,
 				2C47EF642641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
 				2C88FF102646DFA2008057DE /* MoneyMoney.swift in Sources */,
 				2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */,
