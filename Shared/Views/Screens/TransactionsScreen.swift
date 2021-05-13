@@ -79,7 +79,6 @@ struct TransactionsScreen: View {
         .sheet(isPresented: $viewModel.showTransactionSheet, content: {
             TransactionSheet(
                 transaction: viewModel.selectedTranaction,
-                currency: userData.currency,
                 close: { viewModel.showTransactionSheet = false },
                 delete: viewModel.onDelete,
                 editTransaction: stonksManager.editTransaction(_:with:))
@@ -104,11 +103,11 @@ struct TransactionsScreen: View {
                 StonkGridCellData(id: counter + 1, content: "\(transaction.shares)", transactionID: transaction.id),
                 StonkGridCellData(
                     id: counter + 2,
-                    content: "\(userData.currency)\(transaction.costPerShare.toFixed(2))",
+                    content: userData.moneyString(from: transaction.costPerShare),
                     transactionID: transaction.id),
                 StonkGridCellData(
                     id: counter + 3,
-                    content: "\(userData.currency)\(transaction.totalPrice.toFixed(2))",
+                    content: userData.moneyString(from: transaction.totalPrice),
                     transactionID: transaction.id)
             ]
             multiDimensionedData.append(row)

@@ -44,4 +44,8 @@ final class UserData: ObservableObject {
         return formatter
     }
 
+    func moneyString(from value: Double) -> String {
+        currencyFormatter.string(from: value.nsNumber) ?? "\(currency) \(value.toFixed(2))"
+    }
+
 }

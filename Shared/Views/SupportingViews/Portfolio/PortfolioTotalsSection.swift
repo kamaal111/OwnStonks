@@ -15,7 +15,8 @@ struct PortfolioTotalsSection: View {
         HStack {
             Text("Total: \(total)")
         }
-        .padding(.all, 8)
+        .padding(.vertical, 8)
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, alignment: .trailing)
         .background(Color.TotalsBackground)
         .cornerRadius(8)

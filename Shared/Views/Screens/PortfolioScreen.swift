@@ -78,7 +78,7 @@ struct PortfolioScreen: View {
     }
 
     private var totalString: String {
-        userData.currencyFormatter.string(from: stonksManager.totalStonksPrice.nsNumber) ?? ""
+        userData.moneyString(from: stonksManager.totalStonksPrice)
     }
 
     private var portfolioRows: [[StonkGridCellData]] {
@@ -90,7 +90,7 @@ struct PortfolioScreen: View {
                 StonkGridCellData(id: counter + 1, content: "\(portfolioItem.shares)", transactionID: portfolioItem.id),
                 StonkGridCellData(
                     id: counter + 2,
-                    content: "\(userData.currency)\(portfolioItem.totalPrice.toFixed(2))",
+                    content: userData.moneyString(from: portfolioItem.totalPrice),
                     transactionID: portfolioItem.id)
             ]
             multiDimensionedData.append(row)

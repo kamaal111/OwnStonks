@@ -11,23 +11,23 @@ import StonksUI
 import StonksLocale
 
 struct TransactionSheet: View {
+    @EnvironmentObject
+    private var userData: UserData
+
     @ObservedObject
     private var viewModel: ViewModel
 
     let transaction: CoreTransaction?
-    let currency: String
     let close: () -> Void
     let delete: () -> Void
     let editTransaction: (_ id: UUID, _ args: CoreTransaction.Args) -> Void
 
     init(
         transaction: CoreTransaction?,
-        currency: String,
         close: @escaping () -> Void,
         delete: @escaping () -> Void,
         editTransaction: @escaping (_ id: UUID, _ args: CoreTransaction.Args) -> Void) {
         self.transaction = transaction
-        self.currency = currency
         self.close = close
         self.delete = delete
         self.editTransaction = editTransaction
@@ -57,7 +57,7 @@ struct TransactionSheet: View {
                     TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
                     TransactionSheetRow(
                         title: .COST_SHARE_HEADER_TITLE,
-                        value: "\(currency)\(transaction.costPerShare.toFixed(2))")
+                        value: userData.moneyString(from: transaction.costPerShare))
                     TransactionSheetRow(title: .SHARES_LABEL, value: "\(transaction.shares)")
                     TransactionSheetRow(
                         title: .TRANSACTION_DATE_LABEL,
@@ -68,7 +68,7 @@ struct TransactionSheet: View {
                     FloatingTextField(text: $viewModel.editedInvestment, title: .INVESTMENT_LABEL)
                     EnforcedFloatingDecimalField(
                         value: $viewModel.editedCostPerShare,
-                        title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
+                        title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: userData.currency))
                     EnforcedFloatingDecimalField(value: $viewModel.editedShares, title: .SHARES_LABEL)
                     FloatingDatePicker(value: $viewModel.editedTransactionDate, title: .TRANSACTION_DATE_LABEL)
                         .frame(maxWidth: .infinity, alignment: .leading)
@@ -134,10 +134,10 @@ private struct TransactionSheetRow: View {
             .sheet(isPresented: .constant(true), content: {
                 TransactionSheet(
                     transaction: transaction,
-                    currency: "$",
                     close: { },
                     delete: { },
                     editTransaction: { _, _  in })
-        })
+            })
+            .environmentObject(UserData())
     }
  }
