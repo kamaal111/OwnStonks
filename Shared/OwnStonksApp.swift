@@ -24,5 +24,14 @@ struct OwnStonksApp: App {
                 .environmentObject(stonksManager)
                 .environmentObject(userData)
         }
+        #if os(macOS)
+        Settings {
+            #warning("Work on settings")
+            VStack {
+                Text("Settings")
+            }
+            .frame(minWidth: 200, minHeight: 200)
+        }
+        #endif
     }
 }
