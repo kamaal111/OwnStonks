@@ -9,12 +9,14 @@
 import SwiftUI
 
 struct PortfolioTotalsSection: View {
+    let total: String
+
     var body: some View {
         HStack {
-            Text("Totals")
+            Text("Total: \(total)")
         }
-        .padding(.vertical, 8)
-        .frame(maxWidth: .infinity)
+        .padding(.all, 8)
+        .frame(maxWidth: .infinity, alignment: .trailing)
         .background(Color.TotalsBackground)
         .cornerRadius(8)
         .padding(.all, 8)
@@ -23,6 +25,10 @@ struct PortfolioTotalsSection: View {
 
 struct PortfolioTotalsSection_Previews: PreviewProvider {
     static var previews: some View {
-        PortfolioTotalsSection()
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        return PortfolioTotalsSection(total: formatter.string(from: 12) ?? "")
+            .previewLayout(.sizeThatFits)
+            .padding(8)
     }
 }

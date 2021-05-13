@@ -66,7 +66,7 @@ struct PortfolioScreen: View {
                 }
             } else {
                 VStack {
-                    PortfolioTotalsSection()
+                    PortfolioTotalsSection(total: totalString)
                     GeometryReader { (geometry: GeometryProxy) in
                         ScrollView {
                             PortfolioGridView(multiDimensionedData: portfolioRows, viewWidth: geometry.size.width)
@@ -75,6 +75,10 @@ struct PortfolioScreen: View {
                 }
             }
         }
+    }
+
+    private var totalString: String {
+        userData.currencyFormatter.string(from: stonksManager.totalStonksPrice.nsNumber) ?? ""
     }
 
     private var portfolioRows: [[StonkGridCellData]] {

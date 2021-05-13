@@ -58,6 +58,12 @@ final class StonksManager: ObservableObject {
         transactions.sorted(by: { $0.transactionDate.compare($1.transactionDate) == .orderedDescending })
     }
 
+    var totalStonksPrice: Double {
+        transactions.reduce(0) { (result: Double, transaction: CoreTransaction) in
+            result + transaction.totalPrice
+        }
+    }
+
     var portfolioStonks: [PortfolioItem] {
         var combinedTranactions: [String: PortfolioItem] = [:]
         for transaction in transactions {

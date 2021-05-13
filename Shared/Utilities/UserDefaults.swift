@@ -1,5 +1,5 @@
 //
-//  UserDefaultValues.swift
+//  UserDefaults.swift
 //  OwnStonks
 //
 //  Created by Kamaal M Farah on 08/05/2021.
@@ -8,9 +8,7 @@
 
 import Foundation
 
-struct UserDefaultValues {
-    private init() { }
-
+extension UserDefaults {
     @UserDefault(key: .currencyLocaleIdentifier)
     static var currencyLocaleIdentifier: String?
 }

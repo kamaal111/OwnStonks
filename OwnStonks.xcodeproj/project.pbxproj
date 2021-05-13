@@ -35,8 +35,8 @@
 		2C7497C2263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
 		2C857EE4264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */; };
 		2C857EE5264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */; };
-		2C88FF0C2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
-		2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */; };
+		2C88FF0C2646DF6B008057DE /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaults.swift */; };
+		2C88FF0D2646DF6B008057DE /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0B2646DF6B008057DE /* UserDefaults.swift */; };
 		2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
 		2C88FF102646DFA2008057DE /* MoneyMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */; };
 		2C88FF122646DFC4008057DE /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C88FF112646DFC4008057DE /* UserData.swift */; };
@@ -122,7 +122,7 @@
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionSheet+ViewModel.swift"; sourceTree = "<group>"; };
-		2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultValues.swift; sourceTree = "<group>"; };
+		2C88FF0B2646DF6B008057DE /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyMoney.swift; sourceTree = "<group>"; };
 		2C88FF112646DFC4008057DE /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2C8DC1052645765000A55FFD /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
@@ -445,7 +445,7 @@
 			isa = PBXGroup;
 			children = (
 				6050FE14263FCDD700819D92 /* Persistence.swift */,
-				2C88FF0B2646DF6B008057DE /* UserDefaultValues.swift */,
+				2C88FF0B2646DF6B008057DE /* UserDefaults.swift */,
 				2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */,
 			);
 			path = Utilities;
@@ -726,7 +726,7 @@
 				6050FE1F263FCE9500819D92 /* OwnStonks.xcdatamodeld in Sources */,
 				60027D6A2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
-				2C88FF0C2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
+				2C88FF0C2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */,
 				2C88FF122646DFC4008057DE /* UserData.swift in Sources */,
@@ -758,7 +758,7 @@
 				2C47EF622641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
 				2C857EE5264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */,
-				2C88FF0D2646DF6B008057DE /* UserDefaultValues.swift in Sources */,
+				2C88FF0D2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
 				601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */,
@@ -1167,7 +1167,7 @@
 			repositoryURL = "https://github.com/kamaal111/ShrimpExtensions.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.12.1;
+				minimumVersion = 2.0.0;
 			};
 		};
 		6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */ = {

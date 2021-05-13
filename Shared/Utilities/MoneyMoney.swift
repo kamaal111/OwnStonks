@@ -9,8 +9,6 @@
 import Foundation
 
 struct MoneyMoney {
-    private static let defaultCurrencySymbol = "€"
-
     private init() { }
 
     enum Currencies: String, CaseIterable {
@@ -54,22 +52,5 @@ struct MoneyMoney {
         let locale = Locale(identifier: localeID)
         guard let code = locale.currencyCode, code == currencyCode.rawValue else { return nil }
         return locale
-    }
-
-    static func getSymbolFromUserDefaults() -> String {
-        if let userDefaultsCurrencyLocale = UserDefaultValues.currencyLocaleIdentifier {
-            return Locale(identifier: userDefaultsCurrencyLocale).currencySymbol ?? defaultCurrencySymbol
-        }
-        let deviceCurrencyCode = NSLocale.current.currencyCode ?? ""
-        let currency = MoneyMoney.Currencies(rawValue: deviceCurrencyCode) ?? .EUR
-        guard let foundLocale = MoneyMoney.getLocaleForCurrencyCode(code: currency) else {
-            #if DEBUG
-            fatalError("Did not find locale")
-            #else
-            return defaultCurrencySymbol
-            #endif
-        }
-        UserDefaultValues.currencyLocaleIdentifier = foundLocale.identifier
-        return foundLocale.currencySymbol ?? defaultCurrencySymbol
     }
 }
