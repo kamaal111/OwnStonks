@@ -80,6 +80,8 @@
 		609C1CAD2677B5430001FC89 /* SettingsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C1CAB2677B5430001FC89 /* SettingsScene.swift */; };
 		609C1CAF2677B7270001FC89 /* WindowGroupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C1CAE2677B7270001FC89 /* WindowGroupScene.swift */; };
 		609C1CB02677B7270001FC89 /* WindowGroupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C1CAE2677B7270001FC89 /* WindowGroupScene.swift */; };
+		609C1CB32677B9640001FC89 /* StonksNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 609C1CB22677B9640001FC89 /* StonksNetworker */; };
+		609C1CB52677B96C0001FC89 /* StonksNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 609C1CB42677B96C0001FC89 /* StonksNetworker */; };
 		60CAC7152643C356008CD190 /* PortfolioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC7142643C356008CD190 /* PortfolioItem.swift */; };
 		60CAC7162643C356008CD190 /* PortfolioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC7142643C356008CD190 /* PortfolioItem.swift */; };
 /* End PBXBuildFile section */
@@ -157,6 +159,7 @@
 		60599EBD264462C0008C06EF /* StonkGridCellData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StonkGridCellData.swift; sourceTree = "<group>"; };
 		609C1CAB2677B5430001FC89 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		609C1CAE2677B7270001FC89 /* WindowGroupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowGroupScene.swift; sourceTree = "<group>"; };
+		609C1CB12677B9080001FC89 /* StonksNetworker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksNetworker; sourceTree = "<group>"; };
 		60CAC7142643C356008CD190 /* PortfolioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -168,6 +171,7 @@
 				2C1486F0263EB1F9006EEB6B /* StonksUI in Frameworks */,
 				2C237FBC264544A800E59144 /* StonksLocale in Frameworks */,
 				6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */,
+				609C1CB52677B96C0001FC89 /* StonksNetworker in Frameworks */,
 				6050FE19263FCE0D00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
@@ -181,6 +185,7 @@
 				2C1486EE263EB1F2006EEB6B /* StonksUI in Frameworks */,
 				2C237FBA264544A200E59144 /* StonksLocale in Frameworks */,
 				6050FE13263FCDB700819D92 /* PersistanceManager in Frameworks */,
+				609C1CB32677B9640001FC89 /* StonksNetworker in Frameworks */,
 				6050FE1B263FCE1C00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
@@ -207,6 +212,7 @@
 		2C1486EB263EB142006EEB6B /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				609C1CB12677B9080001FC89 /* StonksNetworker */,
 				2C237FB82645449100E59144 /* StonksLocale */,
 				2C1486EC263EB17D006EEB6B /* StonksUI */,
 			);
@@ -530,6 +536,7 @@
 				6050FE10263FCDAC00819D92 /* PersistanceManager */,
 				6050FE18263FCE0D00819D92 /* ConsoleSwift */,
 				2C237FBB264544A800E59144 /* StonksLocale */,
+				609C1CB42677B96C0001FC89 /* StonksNetworker */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -556,6 +563,7 @@
 				6050FE12263FCDB700819D92 /* PersistanceManager */,
 				6050FE1A263FCE1C00819D92 /* ConsoleSwift */,
 				2C237FB9264544A200E59144 /* StonksLocale */,
+				609C1CB22677B9640001FC89 /* StonksNetworker */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -1268,6 +1276,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6050FE17263FCE0D00819D92 /* XCRemoteSwiftPackageReference "ConsoleSwift" */;
 			productName = ConsoleSwift;
+		};
+		609C1CB22677B9640001FC89 /* StonksNetworker */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksNetworker;
+		};
+		609C1CB42677B96C0001FC89 /* StonksNetworker */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = StonksNetworker;
 		};
 /* End XCSwiftPackageProductDependency section */
 
