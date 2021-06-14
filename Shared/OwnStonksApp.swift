@@ -10,27 +10,13 @@ import SwiftUI
 
 @main
 struct OwnStonksApp: App {
-    @StateObject private var navigator = Navigator()
-    @StateObject private var stonksManager = StonksManager()
-    @StateObject private var userData = UserData()
-
-    private let persistenceController = PersistenceController.shared
-
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environment(\.managedObjectContext, persistenceController.container!.viewContext)
-                .environmentObject(navigator)
-                .environmentObject(stonksManager)
-                .environmentObject(userData)
+            WindowGroupScene()
         }
         #if os(macOS)
         Settings {
-            #warning("Work on settings")
-            VStack {
-                Text("Settings")
-            }
-            .frame(minWidth: 200, minHeight: 200)
+            SettingsScene()
         }
         #endif
     }
