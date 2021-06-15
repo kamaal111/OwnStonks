@@ -11,6 +11,7 @@ import SalmonUI
 import StonksUI
 import StonksLocale
 import ShrimpExtensions
+import StonksNetworker
 
 struct PortfolioScreen: View {
     #if canImport(AppKit)
@@ -42,7 +43,24 @@ struct PortfolioScreen: View {
                 }
             })
             .frame(minWidth: 305)
+            .onAppear(perform: {
+                if #available(macOS 12.0, *) {
+                    detach {
+                        await readRoot()
+                    }
+                }
+            })
         #endif
+    }
+
+    @available(macOS 12.0, *)
+    private func readRoot() async {
+        let networker = StonksNetworker()
+        let rootResult = await networker.getRoot()
+        switch rootResult {
+        case .failure(let error): print(error)
+        case .success(let success): print(success)
+        }
     }
 
     private func view() -> some View {
