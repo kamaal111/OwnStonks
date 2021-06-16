@@ -27,15 +27,14 @@ struct AddTransactionScreen: View {
     private var viewModel = ViewModel()
 
     var body: some View {
-        #if canImport(UIKit)
         view()
+            #if canImport(UIKit)
             .navigationBarTitle(Text(localized: .ADD_TRANSACTION_SCREEN_TITLE), displayMode: .inline)
-            .navigationBarItems(trailing: saveButton())
-        #else
-        view()
-            .toolbar(content: saveButton)
+            .navigationBarItems(trailing: saveButton)
+            #else
+            .toolbar(content: { saveButton })
             .navigationTitle(Text(localized: .ADD_TRANSACTION_SCREEN_TITLE))
-        #endif
+            #endif
     }
 
     private func view() -> some View {
@@ -45,6 +44,7 @@ struct AddTransactionScreen: View {
                 costPerShare: $viewModel.costPerShare,
                 shares: $viewModel.shares,
                 transactionDate: $viewModel.transactionDate,
+                symbol: $viewModel.symbol,
                 currency: userData.currency)
         }
         .frame(maxHeight: .infinity, alignment: .top)
@@ -57,7 +57,7 @@ struct AddTransactionScreen: View {
         }
     }
 
-    private func saveButton() -> some View {
+    private var saveButton: some View {
         Button(action: saveAction) {
             Text(localized: .SAVE)
         }

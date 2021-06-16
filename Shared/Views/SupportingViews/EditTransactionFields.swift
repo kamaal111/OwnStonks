@@ -15,11 +15,14 @@ struct EditTransactionFields: View {
     @Binding var costPerShare: Double
     @Binding var shares: Double
     @Binding var transactionDate: Date
+    @Binding var symbol: String
 
     let currency: String
 
     var body: some View {
         FloatingTextField(text: $investment, title: .INVESTMENT_LABEL)
+        #warning("Localize this")
+        FloatingTextField(text: $symbol, title: "Symbol")
         EnforcedFloatingDecimalField(
             value: $costPerShare,
             title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
@@ -36,6 +39,7 @@ struct EditTransactionFields_Previews: PreviewProvider {
             costPerShare: .constant(0),
             shares: .constant(0),
             transactionDate: .constant(Date()),
+            symbol: .constant(""),
             currency: "$")
     }
 }

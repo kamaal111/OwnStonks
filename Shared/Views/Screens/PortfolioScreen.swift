@@ -38,26 +38,6 @@ struct PortfolioScreen: View {
             .navigationTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE))
             .frame(minWidth: 305)
             #endif
-            .onAppear(perform: {
-                if #available(macOS 12.0, *) {
-                    detach {
-                        await readRoot()
-                    }
-                }
-            })
-    }
-
-    @available(macOS 12.0, *)
-    private func readRoot() async {
-        let networker = StonksNetworker()
-        let rootResult = await networker.getRoot()
-        switch rootResult {
-        case .failure(let error): print(error)
-        case .success(let success):
-            if let success = success {
-                print("success", success)
-            }
-        }
     }
 
     private func view() -> some View {

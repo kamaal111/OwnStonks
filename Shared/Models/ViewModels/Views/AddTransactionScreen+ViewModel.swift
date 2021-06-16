@@ -19,6 +19,7 @@ extension AddTransactionScreen {
         @Published var shares = 0.0
         @Published var transactionDate = Date()
         @Published var showAlert = false
+        @Published var symbol = ""
         @Published private(set) var alertMessage: (title: String, message: String)? {
             didSet {
                 guard alertMessage != nil else { return }
@@ -27,7 +28,11 @@ extension AddTransactionScreen {
         }
 
         var transactionArgs: CoreTransaction.Args {
-            .init(name: investment, costPerShare: costPerShare, shares: shares, transactionDate: transactionDate)
+            var maybeSymbol: String?
+            if !symbol.trimmingByWhitespacesAndNewLines.isEmpty {
+                maybeSymbol = symbol
+            }
+            return .init(name: investment, costPerShare: costPerShare, shares: shares, transactionDate: transactionDate, symbol: maybeSymbol)
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {
