@@ -16,10 +16,24 @@ public struct StonksNetworker {
 
     public init() { }
 
-    @available(macOS 12.0, *)
+    @available(macOS 12.0, iOS 15.0, *)
     public func getRoot() async -> Result<RootResponse?, Error> {
-        await withUnsafeContinuation({ (task: UnsafeContinuation<Result<RootResponse?, Error>, Never>) in
-            networker.request(from: baseURL) { (result: Result<RootResponse?, Error>) in
+        await asyncRequest(from: baseURL)
+    }
+
+    @available(macOS 12.0, iOS 15.0, *)
+    private func asyncRequest<T: Codable>(from url: URL) async -> Result<T?, Error> {
+        await withUnsafeContinuation({ (task: UnsafeContinuation<Result<T?, Error>, Never>) in
+            networker.request(from: baseURL) { (result: Result<T?, Error>) in
+                task.resume(returning: result)
+            }
+        })
+    }
+
+    @available(macOS 12.0, iOS 15.0, *)
+    private func asyncRequest<T: Codable>(from request: URLRequest) async -> Result<T?, Error> {
+        await withUnsafeContinuation({ (task: UnsafeContinuation<Result<T?, Error>, Never>) in
+            networker.request(from: request) { (result: Result<T?, Error>) in
                 task.resume(returning: result)
             }
         })

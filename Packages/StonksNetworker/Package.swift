@@ -5,7 +5,10 @@ import PackageDescription
 
 let package = Package(
     name: "StonksNetworker",
-    platforms: [.macOS(.v11)],
+    platforms: [
+        .macOS(.v11),
+        .iOS(.v14),
+    ],
     products: [
         .library(
             name: "StonksNetworker",

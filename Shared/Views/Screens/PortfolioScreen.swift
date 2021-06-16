@@ -26,23 +26,18 @@ struct PortfolioScreen: View {
     @State private var showAddTransactionScreen = false
 
     var body: some View {
-        #if canImport(UIKit)
         view()
+            #if canImport(UIKit) // iOS and iPad
             .navigationBarTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE), displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
                 showAddTransactionScreen = true
             }) {
                 Image(systemName: "plus").size(.squared(20))
             })
-        #else
-        view()
+            #else // macOS
             .navigationTitle(Text(localized: .PORTFOLIO_SCREEN_TITLE))
-            .toolbar(content: {
-                Button(action: { navigator.navigate(to: .addTransaction) }) {
-                    Label(StonksLocale.Keys.ADD_TRANSACTION_LABEL.localized, systemImage: "plus")
-                }
-            })
             .frame(minWidth: 305)
+            #endif
             .onAppear(perform: {
                 if #available(macOS 12.0, *) {
                     detach {
@@ -50,7 +45,6 @@ struct PortfolioScreen: View {
                     }
                 }
             })
-        #endif
     }
 
     @available(macOS 12.0, *)
@@ -59,7 +53,10 @@ struct PortfolioScreen: View {
         let rootResult = await networker.getRoot()
         switch rootResult {
         case .failure(let error): print(error)
-        case .success(let success): print(success)
+        case .success(let success):
+            if let success = success {
+                print("success", success)
+            }
         }
     }
 
