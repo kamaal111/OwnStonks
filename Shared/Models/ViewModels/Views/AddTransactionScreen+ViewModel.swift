@@ -48,10 +48,18 @@ extension AddTransactionScreen {
             let info: InfoResponse
             switch infoResult {
             case let .failure(failure):
-                if failure != .generalError {
-                    // Handle error
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    switch failure {
+                    case .noSymbol:
+                        #warning("Localize this")
+                        self.alertMessage = ("No symbol provided",
+                                             "The symbol is needed to get the actual information")
+                    case .generalError:
+                        #warning("Localize this")
+                        self.alertMessage = ("Could not get info", "")
+                    }
                 }
-                print(failure)
                 return
             case let .success(success): info = success
             }

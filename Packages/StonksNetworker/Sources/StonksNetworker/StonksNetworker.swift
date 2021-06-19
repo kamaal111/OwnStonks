@@ -10,7 +10,7 @@ import ShrimpExtensions
 import XiphiasNet
 
 public struct StonksNetworker {
-    private let networker = XiphiasNet(kowalskiAnalysis: true)
+    private let networker = XiphiasNet(kowalskiAnalysis: false)
 
     public init() { }
 
