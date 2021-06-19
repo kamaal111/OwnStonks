@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import StonksNetworker
 
 extension TransactionSheet {
     final class ViewModel: ObservableObject {
@@ -17,15 +18,51 @@ extension TransactionSheet {
         @Published var editedShares = 0.0
         @Published var editedTransactionDate = Date()
         @Published var editedSymbol = ""
+        @Published var showAlert = false
+        @Published private(set) var alertMessage: (title: String, message: String)? {
+            didSet {
+                guard alertMessage != nil else { return }
+                showAlert = true
+            }
+        }
 
         let transaction: CoreTransaction?
+
+        private let networkController = NetworkController()
 
         init(transaction: CoreTransaction?) {
             self.transaction = transaction
         }
 
+        @available(macOS 12.0, *)
         func getActualPrice() async {
-            #warning("Handle this")
+            let infoResult = await networkController.getInfo(of: editedSymbol)
+            let info: InfoResponse
+            switch infoResult {
+            case let .failure(failure):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    switch failure {
+                    case .noSymbol:
+                        #warning("Localize this")
+                        self.alertMessage = ("No symbol provided",
+                                             "The symbol is needed to get the actual information")
+                    case .generalError:
+                        #warning("Localize this")
+                        self.alertMessage = ("Could not get info", "")
+                    }
+                }
+                return
+            case let .success(success): info = success
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.editedSymbol = info.symbol
+                self.editedCostPerShare = info.close
+                if let shortName = info.shortName {
+                    self.editedInvestment = shortName
+                }
+            }
         }
 
         func onEditPress(editTransaction: (_ id: UUID, _ args: CoreTransaction.Args) -> Void) {

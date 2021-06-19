@@ -9,6 +9,7 @@
 import SwiftUI
 import StonksUI
 import StonksLocale
+import ConsoleSwift
 
 struct TransactionSheet: View {
     @EnvironmentObject
@@ -71,7 +72,13 @@ struct TransactionSheet: View {
                         transactionDate: $viewModel.editedTransactionDate,
                         symbol: $viewModel.editedSymbol,
                         currency: userData.currency,
-                        getActualPrice: viewModel.getActualPrice)
+                        getActualPrice: {
+                        if #available(macOS 12.0, *) {
+                            await viewModel.getActualPrice()
+                        } else {
+                            console.log(Date(), "async await is not supported")
+                        }
+                    })
                     Button(action: delete) {
                         Text(localized: .DELETE)
                     }
@@ -80,6 +87,11 @@ struct TransactionSheet: View {
             .padding(.vertical, 16)
         }
         .frame(minWidth: 360, minHeight: viewModel.editMode ? 296 : 248)
+        .alert(isPresented: $viewModel.showAlert) {
+            Alert(title: Text(viewModel.alertMessage?.title ?? ""),
+                  message: Text(viewModel.alertMessage?.message ?? ""),
+                  dismissButton: .default(Text(localized: .OK)))
+        }
     }
 
     static let tranactionDateFormatter: DateFormatter = {

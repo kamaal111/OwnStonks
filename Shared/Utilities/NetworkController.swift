@@ -10,6 +10,7 @@ import Foundation
 import StonksNetworker
 import ShrimpExtensions
 import XiphiasNet
+import ConsoleSwift
 
 final class NetworkController {
 
@@ -29,6 +30,7 @@ final class NetworkController {
         let info: InfoResponse
         switch result {
         case let .failure(error):
+            console.log(Date(), error.localizedDescription, error)
             if let error = error as? XiphiasNet.NetworkerErrors {
                 switch error {
                 case .responseError(_, _): return .failure(.generalError)

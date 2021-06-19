@@ -97,7 +97,7 @@ public struct InfoResponse: Codable {
         case currency
         case logoUrl = "logo_url"
         case longName = "long_name"
-        case close = "previous_close"
+        case close = "close"
         case shortName = "short_name"
         case symbol
     }
