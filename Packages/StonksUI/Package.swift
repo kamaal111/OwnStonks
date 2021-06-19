@@ -12,12 +12,14 @@ let package = Package(
             targets: ["StonksUI"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/kamaal111/SalmonUI.git", from: "4.0.0"),
         .package(path: "../StonksLocale"),
     ],
     targets: [
         .target(
             name: "StonksUI",
             dependencies: [
+                "SalmonUI",
                 "StonksLocale"
             ]),
         .testTarget(

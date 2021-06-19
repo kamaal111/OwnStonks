@@ -43,6 +43,7 @@ extension AddTransactionScreen {
                 symbol: maybeSymbol)
         }
 
+        @available(macOS 12.0, *)
         func getActualPrice() async {
             let infoResult = await networkController.getInfo(of: symbol)
             let info: InfoResponse

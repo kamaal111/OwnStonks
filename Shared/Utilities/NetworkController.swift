@@ -20,6 +20,7 @@ final class NetworkController {
         case generalError
     }
 
+    @available(macOS 12.0, *)
     func getInfo(of symbol: String) async -> Result<InfoResponse, InfoErrors> {
         guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
             return .failure(.noSymbol)

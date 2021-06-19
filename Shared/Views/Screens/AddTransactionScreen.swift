@@ -46,7 +46,13 @@ struct AddTransactionScreen: View {
                 transactionDate: $viewModel.transactionDate,
                 symbol: $viewModel.symbol,
                 currency: userData.currency,
-                getActualPrice: viewModel.getActualPrice)
+                getActualPrice: {
+                if #available(macOS 12.0, *) {
+                    await viewModel.getActualPrice()
+                } else {
+                    print("async await not supported")
+                }
+            })
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.vertical, 12)

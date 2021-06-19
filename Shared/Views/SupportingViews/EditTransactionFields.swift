@@ -29,14 +29,18 @@ struct EditTransactionFields: View {
             #warning("Localize this")
             FloatingTextField(text: $symbol, title: "Symbol")
             if loadingInfo {
-                KActivityIndicator(isAnimating: $loadingInfo, style: .medium)
+                LoadingView(isLoading: $loadingInfo)
                     .frame(height: 40)
             } else {
                 Button(action: {
                     loadingInfo = true
-                    detach {
-                        await getActualPrice()
-                        loadingInfo = false
+                    if #available(macOS 12.0, *) {
+                        detach {
+                            await getActualPrice()
+                            loadingInfo = false
+                        }
+                    } else {
+                        print("async await is not available")
                     }
                 }) {
                     #warning("Localize this")

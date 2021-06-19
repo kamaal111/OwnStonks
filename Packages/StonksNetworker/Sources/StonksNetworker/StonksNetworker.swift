@@ -14,7 +14,7 @@ public struct StonksNetworker {
 
     public init() { }
 
-    @available(iOS 15.0, *)
+    @available(macOS 12.0, iOS 15.0, *)
     public func getInfo(of symbol: String) async -> Result<[String: InfoResponse]?, Error> {
         await asyncRequest(from: .info(of: symbol))
     }
@@ -78,7 +78,13 @@ public struct InfoResponse: Codable {
     public let shortName: String?
     public let symbol: String
 
-    public init(currency: String?, logoUrl: URL?, longName: String?, close: Double, shortName: String?, symbol: String) {
+    public init(
+        currency: String?,
+        logoUrl: URL?,
+        longName: String?,
+        close: Double,
+        shortName: String?,
+        symbol: String) {
         self.currency = currency
         self.logoUrl = logoUrl
         self.longName = longName
