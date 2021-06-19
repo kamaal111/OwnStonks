@@ -74,15 +74,17 @@ public struct InfoResponse: Codable {
     public let currency: String?
     public let logoUrl: URL?
     public let longName: String?
-    public let previousClose: Double?
+    public let previousClose: Double
     public let shortName: String?
+    public let symbol: String
 
-    public init(currency: String?, logoUrl: URL?, longName: String?, previousClose: Double?, shortName: String?) {
+    public init(currency: String?, logoUrl: URL?, longName: String?, previousClose: Double, shortName: String?, symbol: String) {
         self.currency = currency
         self.logoUrl = logoUrl
         self.longName = longName
         self.previousClose = previousClose
         self.shortName = shortName
+        self.symbol = symbol
     }
 
     public enum CodingKeys: String, CodingKey {
@@ -91,5 +93,6 @@ public struct InfoResponse: Codable {
         case longName = "long_name"
         case previousClose = "previous_close"
         case shortName = "short_name"
+        case symbol
     }
 }

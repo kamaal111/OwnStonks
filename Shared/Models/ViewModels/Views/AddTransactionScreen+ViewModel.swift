@@ -44,7 +44,18 @@ extension AddTransactionScreen {
         }
 
         func getActualPrice() async {
-            await networkController.getInfo(of: symbol)
+            let infoResult = await networkController.getInfo(of: symbol)
+            let info: InfoResponse
+            switch infoResult {
+            case let .failure(failure):
+                if failure != .generalError {
+                    // Handle error
+                }
+                print(failure)
+                return
+            case let .success(success): info = success
+            }
+            print(info)
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

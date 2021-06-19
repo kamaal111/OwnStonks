@@ -15,46 +15,33 @@ final class NetworkController {
 
     private let networker = StonksNetworker()
 
-    func getInfo(of symbol: String) async {
-        guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
-            /// - TODO: THROW ERROR HERE
-            print("symbol is empty")
-            return
-        }
-        let result = await networker.getInfo(of: symbol)
-        let info: [String: InfoResponse]
-        switch result {
-        case let .failure(error):
-            handleError(error: error)
-            return
-        case let .success(success):
-            guard let success = success else {
-                /// - TODO: THROW ERROR HERE
-                print("No response for some reason")
-                return
-            }
-            info = success
-        }
-        print(info)
+    enum InfoErrors: Error {
+        case noSymbol
+        case generalError
     }
 
-    /// - TODO: Throw appropriate error here
-    private func handleError(error: Error) {
-        if let error = error as? XiphiasNet.NetworkerErrors {
-            switch error {
-            case let .responseError(message, code):
-                print(error)
-                print(message)
-                print(code)
-                return
-            case .dataError:
-                print(error)
-                return
-            case .notAValidJSON:
-                print(error)
-                return
-            }
+    func getInfo(of symbol: String) async -> Result<InfoResponse, InfoErrors> {
+        guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
+            return .failure(.noSymbol)
         }
+        let result = await networker.getInfo(of: symbol)
+        let info: InfoResponse
+        switch result {
+        case let .failure(error):
+            if let error = error as? XiphiasNet.NetworkerErrors {
+                switch error {
+                case .responseError(_, _): return .failure(.generalError)
+                case .dataError, .notAValidJSON: return .failure(.generalError)
+                }
+            }
+            return .failure(.generalError)
+        case let .success(success):
+            guard let success = success, let infoValue = success.first?.value else {
+                return .failure(.generalError)
+            }
+            info = infoValue
+        }
+        return .success(info)
     }
 
 }
