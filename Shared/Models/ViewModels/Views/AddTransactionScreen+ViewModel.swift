@@ -32,7 +32,16 @@ extension AddTransactionScreen {
             if !symbol.trimmingByWhitespacesAndNewLines.isEmpty {
                 maybeSymbol = symbol
             }
-            return .init(name: investment, costPerShare: costPerShare, shares: shares, transactionDate: transactionDate, symbol: maybeSymbol)
+            return .init(
+                name: investment,
+                costPerShare: costPerShare,
+                shares: shares,
+                transactionDate: transactionDate,
+                symbol: maybeSymbol)
+        }
+
+        func getActualPrice() {
+            #warning("Handle this")
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

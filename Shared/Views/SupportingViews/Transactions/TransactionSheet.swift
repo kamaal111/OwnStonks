@@ -70,7 +70,8 @@ struct TransactionSheet: View {
                         shares: $viewModel.editedShares,
                         transactionDate: $viewModel.editedTransactionDate,
                         symbol: $viewModel.editedSymbol,
-                        currency: userData.currency)
+                        currency: userData.currency,
+                        getActualPrice: viewModel.getActualPrice)
                     Button(action: delete) {
                         Text(localized: .DELETE)
                     }

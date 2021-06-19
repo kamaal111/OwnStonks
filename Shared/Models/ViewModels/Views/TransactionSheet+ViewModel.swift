@@ -24,6 +24,10 @@ extension TransactionSheet {
             self.transaction = transaction
         }
 
+        func getActualPrice() {
+            #warning("Handle this")
+        }
+
         func onEditPress(editTransaction: (_ id: UUID, _ args: CoreTransaction.Args) -> Void) {
             if editMode {
                 guard !editedInvestment.isEmpty && !editedShares.isZero,

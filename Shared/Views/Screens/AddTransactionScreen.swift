@@ -45,7 +45,8 @@ struct AddTransactionScreen: View {
                 shares: $viewModel.shares,
                 transactionDate: $viewModel.transactionDate,
                 symbol: $viewModel.symbol,
-                currency: userData.currency)
+                currency: userData.currency,
+                getActualPrice: viewModel.getActualPrice)
         }
         .frame(maxHeight: .infinity, alignment: .top)
         .padding(.vertical, 12)
