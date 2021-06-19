@@ -63,7 +63,14 @@ extension AddTransactionScreen {
                 return
             case let .success(success): info = success
             }
-            print(info)
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.symbol = info.symbol
+                self.costPerShare = info.previousClose
+                if let shortName = info.shortName {
+                    self.investment = shortName
+                }
+            }
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

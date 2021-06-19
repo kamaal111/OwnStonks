@@ -30,6 +30,9 @@ public struct EnforcedFloatingDecimalField: View {
         FloatingTextField(text: $text, title: title, textFieldType: .decimals)
             .onAppear(perform: onViewAppear)
             .onChange(of: text, perform: onValueChange(_:))
+            .onChange(of: value) { newValue in
+                text = String(newValue)
+            }
     }
 
     private func onViewAppear() {
