@@ -22,11 +22,14 @@ final class NetworkController {
     }
 
     @available(macOS 12.0, *)
-    func getInfo(of symbol: String) async -> Result<InfoResponse, InfoErrors> {
+    func getInfo(of symbol: String, on closeDate: Date) async -> Result<InfoResponse, InfoErrors> {
         guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
             return .failure(.noSymbol)
         }
-        let result = await networker.getInfo(of: symbol)
+        let queryItems = [
+            "close_date": closeDate.getFormattedDateString(withFormat: "yyyy-MM-dd")
+        ].urlQueryItems
+        let result = await networker.getInfo(of: symbol, with: queryItems)
         let info: InfoResponse
         switch result {
         case let .failure(error):

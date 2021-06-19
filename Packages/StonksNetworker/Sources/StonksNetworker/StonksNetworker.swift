@@ -15,8 +15,10 @@ public struct StonksNetworker {
     public init() { }
 
     @available(macOS 12.0, iOS 15.0, *)
-    public func getInfo(of symbol: String) async -> Result<[String: InfoResponse]?, Error> {
-        await asyncRequest(from: .info(of: symbol))
+    public func getInfo(
+        of symbol: String,
+        with queryItems: [URLQueryItem]) async -> Result<[String: InfoResponse]?, Error> {
+        await asyncRequest(from: .info(of: symbol, with: queryItems))
     }
 
     @available(macOS 12.0, iOS 15.0, *)
@@ -61,13 +63,17 @@ struct Endpoint {
         Endpoint(path: "")
     }
 
-    static func info(of symbol: String) -> Self {
-        Endpoint(path: "info/\(symbol)")
+    static func info(of symbol: String, with queryItems: [URLQueryItem] = []) -> Self {
+        Endpoint(path: "info/\(symbol)", queryItems: queryItems)
     }
 }
 
 public struct RootResponse: Codable {
     public let hello: String
+
+    public init(hello: String) {
+        self.hello = hello
+    }
 }
 
 public struct InfoResponse: Codable {

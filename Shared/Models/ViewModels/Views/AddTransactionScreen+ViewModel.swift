@@ -45,7 +45,7 @@ extension AddTransactionScreen {
 
         @available(macOS 12.0, *)
         func getActualPrice() async {
-            let infoResult = await networkController.getInfo(of: symbol)
+            let infoResult = await networkController.getInfo(of: symbol, on: transactionDate)
             let info: InfoResponse
             switch infoResult {
             case let .failure(failure):
