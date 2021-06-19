@@ -74,15 +74,15 @@ public struct InfoResponse: Codable {
     public let currency: String?
     public let logoUrl: URL?
     public let longName: String?
-    public let previousClose: Double
+    public let close: Double
     public let shortName: String?
     public let symbol: String
 
-    public init(currency: String?, logoUrl: URL?, longName: String?, previousClose: Double, shortName: String?, symbol: String) {
+    public init(currency: String?, logoUrl: URL?, longName: String?, close: Double, shortName: String?, symbol: String) {
         self.currency = currency
         self.logoUrl = logoUrl
         self.longName = longName
-        self.previousClose = previousClose
+        self.close = close
         self.shortName = shortName
         self.symbol = symbol
     }
@@ -91,7 +91,7 @@ public struct InfoResponse: Codable {
         case currency
         case logoUrl = "logo_url"
         case longName = "long_name"
-        case previousClose = "previous_close"
+        case close = "previous_close"
         case shortName = "short_name"
         case symbol
     }
