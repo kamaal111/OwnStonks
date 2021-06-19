@@ -43,11 +43,8 @@ extension AddTransactionScreen {
                 symbol: maybeSymbol)
         }
 
-        func getActualPrice() {
-            detach { [weak self] in
-                guard let self = self else { return }
-                await self.networkController.getInfo(of: self.symbol)
-            }
+        func getActualPrice() async {
+            await networkController.getInfo(of: symbol)
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

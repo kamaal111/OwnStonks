@@ -24,7 +24,7 @@ extension TransactionSheet {
             self.transaction = transaction
         }
 
-        func getActualPrice() {
+        func getActualPrice() async {
             #warning("Handle this")
         }
 
