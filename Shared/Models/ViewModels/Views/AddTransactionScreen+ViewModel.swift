@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import ConsoleSwift
 import StonksLocale
+import StonksNetworker
 
 extension AddTransactionScreen {
     final class ViewModel: ObservableObject {
@@ -27,12 +28,49 @@ extension AddTransactionScreen {
             }
         }
 
+        private let networkController = NetworkController()
+
         var transactionArgs: CoreTransaction.Args {
             var maybeSymbol: String?
             if !symbol.trimmingByWhitespacesAndNewLines.isEmpty {
                 maybeSymbol = symbol
             }
-            return .init(name: investment, costPerShare: costPerShare, shares: shares, transactionDate: transactionDate, symbol: maybeSymbol)
+            return .init(
+                name: investment,
+                costPerShare: costPerShare,
+                shares: shares,
+                transactionDate: transactionDate,
+                symbol: maybeSymbol)
+        }
+
+        func getActualPrice() async {
+            let infoResult = await networkController.getInfo(of: symbol)
+            let info: InfoResponse
+            switch infoResult {
+            case let .failure(failure):
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    switch failure {
+                    case .noSymbol:
+                        #warning("Localize this")
+                        self.alertMessage = ("No symbol provided",
+                                             "The symbol is needed to get the actual information")
+                    case .generalError:
+                        #warning("Localize this")
+                        self.alertMessage = ("Could not get info", "")
+                    }
+                }
+                return
+            case let .success(success): info = success
+            }
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                self.symbol = info.symbol
+                self.costPerShare = info.close
+                if let shortName = info.shortName {
+                    self.investment = shortName
+                }
+            }
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

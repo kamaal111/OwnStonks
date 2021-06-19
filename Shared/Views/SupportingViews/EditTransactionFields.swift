@@ -8,9 +8,12 @@
 
 import SwiftUI
 import StonksUI
+import SalmonUI
 import StonksLocale
 
 struct EditTransactionFields: View {
+    @State private var loadingInfo = false
+
     @Binding var investment: String
     @Binding var costPerShare: Double
     @Binding var shares: Double
@@ -18,11 +21,30 @@ struct EditTransactionFields: View {
     @Binding var symbol: String
 
     let currency: String
+    let getActualPrice: () async -> Void
 
     var body: some View {
         FloatingTextField(text: $investment, title: .INVESTMENT_LABEL)
-        #warning("Localize this")
-        FloatingTextField(text: $symbol, title: "Symbol")
+        HStack {
+            #warning("Localize this")
+            FloatingTextField(text: $symbol, title: "Symbol")
+            if loadingInfo {
+                KActivityIndicator(isAnimating: $loadingInfo, style: .medium)
+                    .frame(height: 40)
+            } else {
+                Button(action: {
+                    loadingInfo = true
+                    detach {
+                        await getActualPrice()
+                        loadingInfo = false
+                    }
+                }) {
+                    #warning("Localize this")
+                    Text("Get Info")
+                }
+                .frame(height: 40)
+            }
+        }
         EnforcedFloatingDecimalField(
             value: $costPerShare,
             title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
@@ -40,6 +62,7 @@ struct EditTransactionFields_Previews: PreviewProvider {
             shares: .constant(0),
             transactionDate: .constant(Date()),
             symbol: .constant(""),
-            currency: "$")
+            currency: "$",
+            getActualPrice: { })
     }
 }

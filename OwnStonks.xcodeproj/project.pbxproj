@@ -82,6 +82,10 @@
 		609C1CB02677B7270001FC89 /* WindowGroupScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 609C1CAE2677B7270001FC89 /* WindowGroupScene.swift */; };
 		609C1CB32677B9640001FC89 /* StonksNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 609C1CB22677B9640001FC89 /* StonksNetworker */; };
 		609C1CB52677B96C0001FC89 /* StonksNetworker in Frameworks */ = {isa = PBXBuildFile; productRef = 609C1CB42677B96C0001FC89 /* StonksNetworker */; };
+		60CAC4E7267E1549006F9136 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC4E6267E1549006F9136 /* NetworkController.swift */; };
+		60CAC4E8267E1549006F9136 /* NetworkController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC4E6267E1549006F9136 /* NetworkController.swift */; };
+		60CAC4EB267E2441006F9136 /* XiphiasNet in Frameworks */ = {isa = PBXBuildFile; productRef = 60CAC4EA267E2441006F9136 /* XiphiasNet */; };
+		60CAC4ED267E244F006F9136 /* XiphiasNet in Frameworks */ = {isa = PBXBuildFile; productRef = 60CAC4EC267E244F006F9136 /* XiphiasNet */; };
 		60CAC7152643C356008CD190 /* PortfolioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC7142643C356008CD190 /* PortfolioItem.swift */; };
 		60CAC7162643C356008CD190 /* PortfolioItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60CAC7142643C356008CD190 /* PortfolioItem.swift */; };
 /* End PBXBuildFile section */
@@ -160,6 +164,7 @@
 		609C1CAB2677B5430001FC89 /* SettingsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsScene.swift; sourceTree = "<group>"; };
 		609C1CAE2677B7270001FC89 /* WindowGroupScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowGroupScene.swift; sourceTree = "<group>"; };
 		609C1CB12677B9080001FC89 /* StonksNetworker */ = {isa = PBXFileReference; lastKnownFileType = folder; path = StonksNetworker; sourceTree = "<group>"; };
+		60CAC4E6267E1549006F9136 /* NetworkController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkController.swift; sourceTree = "<group>"; };
 		60CAC7142643C356008CD190 /* PortfolioItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -175,6 +180,7 @@
 				6050FE19263FCE0D00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
+				60CAC4EB267E2441006F9136 /* XiphiasNet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -189,6 +195,7 @@
 				6050FE1B263FCE1C00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
+				60CAC4ED267E244F006F9136 /* XiphiasNet in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +470,7 @@
 				6050FE14263FCDD700819D92 /* Persistence.swift */,
 				2C88FF0B2646DF6B008057DE /* UserDefaults.swift */,
 				2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */,
+				60CAC4E6267E1549006F9136 /* NetworkController.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -537,6 +545,7 @@
 				6050FE18263FCE0D00819D92 /* ConsoleSwift */,
 				2C237FBB264544A800E59144 /* StonksLocale */,
 				609C1CB42677B96C0001FC89 /* StonksNetworker */,
+				60CAC4EA267E2441006F9136 /* XiphiasNet */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -564,6 +573,7 @@
 				6050FE1A263FCE1C00819D92 /* ConsoleSwift */,
 				2C237FB9264544A200E59144 /* StonksLocale */,
 				609C1CB22677B9640001FC89 /* StonksNetworker */,
+				60CAC4EC267E244F006F9136 /* XiphiasNet */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -645,6 +655,7 @@
 				2C1486E6263EAFF9006EEB6B /* XCRemoteSwiftPackageReference "SalmonUI" */,
 				6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */,
 				6050FE17263FCE0D00819D92 /* XCRemoteSwiftPackageReference "ConsoleSwift" */,
+				60CAC4E9267E2441006F9136 /* XCRemoteSwiftPackageReference "XiphiasNet" */,
 			);
 			productRefGroup = 2C2EFBFE2639E82E00C05BE9 /* Products */;
 			projectDirPath = "";
@@ -758,6 +769,7 @@
 				2C88FF0C2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
 				2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */,
+				60CAC4E7267E1549006F9136 /* NetworkController.swift in Sources */,
 				2C88FF122646DFC4008057DE /* UserData.swift in Sources */,
 				60CAC7152643C356008CD190 /* PortfolioItem.swift in Sources */,
 				601414F4263A8AC20083D485 /* AppTabView.swift in Sources */,
@@ -792,6 +804,7 @@
 				2C88FF0D2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
+				60CAC4E8267E1549006F9136 /* NetworkController.swift in Sources */,
 				601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */,
 				60599EBF264462C0008C06EF /* StonkGridCellData.swift in Sources */,
 				2C88FF132646DFC4008057DE /* UserData.swift in Sources */,
@@ -1218,6 +1231,14 @@
 				minimumVersion = 2.0.0;
 			};
 		};
+		60CAC4E9267E2441006F9136 /* XCRemoteSwiftPackageReference "XiphiasNet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/XiphiasNet.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1284,6 +1305,16 @@
 		609C1CB42677B96C0001FC89 /* StonksNetworker */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = StonksNetworker;
+		};
+		60CAC4EA267E2441006F9136 /* XiphiasNet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60CAC4E9267E2441006F9136 /* XCRemoteSwiftPackageReference "XiphiasNet" */;
+			productName = XiphiasNet;
+		};
+		60CAC4EC267E244F006F9136 /* XiphiasNet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 60CAC4E9267E2441006F9136 /* XCRemoteSwiftPackageReference "XiphiasNet" */;
+			productName = XiphiasNet;
 		};
 /* End XCSwiftPackageProductDependency section */
 
