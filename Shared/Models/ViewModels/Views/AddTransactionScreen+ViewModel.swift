@@ -10,6 +10,7 @@ import Combine
 import Foundation
 import ConsoleSwift
 import StonksLocale
+import StonksNetworker
 
 extension AddTransactionScreen {
     final class ViewModel: ObservableObject {
@@ -27,6 +28,8 @@ extension AddTransactionScreen {
             }
         }
 
+        private let networkController = NetworkController()
+
         var transactionArgs: CoreTransaction.Args {
             var maybeSymbol: String?
             if !symbol.trimmingByWhitespacesAndNewLines.isEmpty {
@@ -41,7 +44,10 @@ extension AddTransactionScreen {
         }
 
         func getActualPrice() {
-            #warning("Handle this")
+            detach { [weak self] in
+                guard let self = self else { return }
+                await self.networkController.getInfo(of: self.symbol)
+            }
         }
 
         func saveAction(stonkResult: Result<CoreTransaction, StonksManager.Errors>) -> Bool {

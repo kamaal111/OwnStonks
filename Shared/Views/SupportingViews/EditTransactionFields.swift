@@ -22,17 +22,17 @@ struct EditTransactionFields: View {
 
     var body: some View {
         FloatingTextField(text: $investment, title: .INVESTMENT_LABEL)
-        #warning("Localize this")
-        FloatingTextField(text: $symbol, title: "Symbol")
         HStack {
-            EnforcedFloatingDecimalField(
-                value: $costPerShare,
-                title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
+            #warning("Localize this")
+            FloatingTextField(text: $symbol, title: "Symbol")
             Button(action: getActualPrice) {
                 #warning("Localize this")
-                Text("Get Price")
+                Text("Get Info")
             }
         }
+        EnforcedFloatingDecimalField(
+            value: $costPerShare,
+            title: StonksLocale.Keys.COST_SHARE_LABEL.localized(with: currency))
         EnforcedFloatingDecimalField(value: $shares, title: .SHARES_LABEL)
         FloatingDatePicker(value: $transactionDate, title: .TRANSACTION_DATE_LABEL)
             .frame(maxWidth: .infinity, alignment: .leading)
