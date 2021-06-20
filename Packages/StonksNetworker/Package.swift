@@ -15,7 +15,7 @@ let package = Package(
             targets: ["StonksNetworker"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", from: "2.0.0"),
+        .package(url: "https://github.com/kamaal111/ShrimpExtensions.git", from: "2.1.0"),
         .package(url: "https://github.com/kamaal111/XiphiasNet.git", from: "4.0.0"),
     ],
     targets: [
