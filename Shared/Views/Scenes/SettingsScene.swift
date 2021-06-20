@@ -11,7 +11,6 @@ import StonksUI
 
 struct SettingsScene: View {
     var body: some View {
-        #warning("Work on settings")
         VStack {
             HStack {
                 Text("Version")
@@ -20,8 +19,7 @@ struct SettingsScene: View {
                 Text(versionString)
             }
         }
-        /// - TODO: Localize this
-        .navigationTitle(Text("Settings"))
+        .navigationTitle(Text(localized: .SETTINGS))
         .padding(.all, .medium)
         .frame(minWidth: 200, maxWidth: 200, minHeight: 200, alignment: .topLeading)
     }

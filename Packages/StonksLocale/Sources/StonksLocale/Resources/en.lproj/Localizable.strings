@@ -35,4 +35,10 @@
 "DELETE" = "Delete";
 "DELETE_ITEM_WARNING" = "Are you sure you want to delete this item?";
 "YEAH" = "Yeah!";
+"SETTINGS" = "Settings";
+"SYMBOL" = "Symbol";
+"NO_SYMBOL_ALERT_TITLE" = "No symbol provided";
+"NO_SYMBOL_ALERT_MESSAGE" = "The symbol is needed to get the actual information";
+"GENERAL_INFO_ALERT_TITLE" = "Could not get info";
+"GET_INFO" = "Get Info";
 

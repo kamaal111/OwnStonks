@@ -27,8 +27,7 @@ struct EditTransactionFields: View {
     var body: some View {
         FloatingTextField(text: $investment, title: .INVESTMENT_LABEL)
         HStack {
-            #warning("Localize this")
-            FloatingTextField(text: $symbol, title: "Symbol")
+            FloatingTextField(text: $symbol, title: .SYMBOL)
             if loadingInfo {
                 LoadingView(isLoading: $loadingInfo)
                     .frame(height: 40)
@@ -44,8 +43,7 @@ struct EditTransactionFields: View {
                         console.log(Date(), "async await is not available")
                     }
                 }) {
-                    #warning("Localize this")
-                    Text("Get Info")
+                    Text(localized: .GET_INFO)
                 }
             }
         }

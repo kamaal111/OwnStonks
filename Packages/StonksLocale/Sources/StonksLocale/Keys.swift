@@ -37,5 +37,11 @@ extension StonksLocale {
         case DELETE
         case DELETE_ITEM_WARNING
         case YEAH
+        case SETTINGS
+        case SYMBOL
+        case NO_SYMBOL_ALERT_TITLE
+        case NO_SYMBOL_ALERT_MESSAGE
+        case GENERAL_INFO_ALERT_TITLE
+        case GET_INFO
     }
 }

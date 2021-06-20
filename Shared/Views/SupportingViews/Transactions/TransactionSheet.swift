@@ -61,8 +61,7 @@ struct TransactionSheet: View {
                     if let transaction = self.transaction {
                         TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
                         if let transactionSymbol = transaction.symbol {
-                            // - TODO: Translate this
-                            TransactionSheetRow(title: "Symbol", value: transactionSymbol)
+                            TransactionSheetRow(title: .SYMBOL, value: transactionSymbol)
                         }
                         TransactionSheetRow(
                             title: .COST_SHARE_HEADER_TITLE,

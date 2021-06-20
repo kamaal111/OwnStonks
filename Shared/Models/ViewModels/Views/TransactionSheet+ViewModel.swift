@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import StonksLocale
 import StonksNetworker
 
 extension TransactionSheet {
@@ -44,12 +45,10 @@ extension TransactionSheet {
                     guard let self = self else { return }
                     switch failure {
                     case .noSymbol:
-                        #warning("Localize this")
-                        self.alertMessage = ("No symbol provided",
-                                             "The symbol is needed to get the actual information")
+                        self.alertMessage = (StonksLocale.Keys.NO_SYMBOL_ALERT_TITLE.localized,
+                                             StonksLocale.Keys.NO_SYMBOL_ALERT_MESSAGE.localized)
                     case .generalError:
-                        #warning("Localize this")
-                        self.alertMessage = ("Could not get info", "")
+                        self.alertMessage = (StonksLocale.Keys.GENERAL_INFO_ALERT_TITLE.localized, "")
                     }
                 }
                 return
