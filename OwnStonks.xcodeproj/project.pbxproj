@@ -31,6 +31,8 @@
 		2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */; };
 		2C5B355B264D2328004A93AB /* EditTransactionFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B355A264D2328004A93AB /* EditTransactionFields.swift */; };
 		2C5B355C264D2328004A93AB /* EditTransactionFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5B355A264D2328004A93AB /* EditTransactionFields.swift */; };
+		2C5DC4E8267FE0B900ED9D31 /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5DC4E7267FE0B900ED9D31 /* NetworkCache.swift */; };
+		2C5DC4E9267FE0B900ED9D31 /* NetworkCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5DC4E7267FE0B900ED9D31 /* NetworkCache.swift */; };
 		2C7497BE263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497BF263DBDE0001205EA /* AddTransactionScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */; };
 		2C7497C1263DC75B001205EA /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7497C0263DC75B001205EA /* Constants.swift */; };
@@ -131,6 +133,7 @@
 		2C47EF602641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreTransaction+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		2C590B1E264099F900C6F48D /* AddTransactionScreen+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddTransactionScreen+ViewModel.swift"; sourceTree = "<group>"; };
 		2C5B355A264D2328004A93AB /* EditTransactionFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionFields.swift; sourceTree = "<group>"; };
+		2C5DC4E7267FE0B900ED9D31 /* NetworkCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCache.swift; sourceTree = "<group>"; };
 		2C7497BD263DBDE0001205EA /* AddTransactionScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreen.swift; sourceTree = "<group>"; };
 		2C7497C0263DC75B001205EA /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		2C857EE3264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TransactionSheet+ViewModel.swift"; sourceTree = "<group>"; };
@@ -471,6 +474,7 @@
 				2C88FF0B2646DF6B008057DE /* UserDefaults.swift */,
 				2C88FF0E2646DFA2008057DE /* MoneyMoney.swift */,
 				60CAC4E6267E1549006F9136 /* NetworkController.swift */,
+				2C5DC4E7267FE0B900ED9D31 /* NetworkCache.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -757,6 +761,7 @@
 				2C5B355B264D2328004A93AB /* EditTransactionFields.swift in Sources */,
 				2C2EFC212639E82E00C05BE9 /* ContentView.swift in Sources */,
 				601414FF263A8AEE0083D485 /* AppSidebar.swift in Sources */,
+				2C5DC4E8267FE0B900ED9D31 /* NetworkCache.swift in Sources */,
 				2C88FF0F2646DFA2008057DE /* MoneyMoney.swift in Sources */,
 				2C47EF632641D0E7008CD53B /* CoreTransaction+CoreDataProperties.swift in Sources */,
 				2C7497C1263DC75B001205EA /* Constants.swift in Sources */,
@@ -804,6 +809,7 @@
 				2C88FF0D2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				6057942D263D4F2E00EE2275 /* PortfolioGridView.swift in Sources */,
 				2C590B20264099F900C6F48D /* AddTransactionScreen+ViewModel.swift in Sources */,
+				2C5DC4E9267FE0B900ED9D31 /* NetworkCache.swift in Sources */,
 				60CAC4E8267E1549006F9136 /* NetworkController.swift in Sources */,
 				601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */,
 				60599EBF264462C0008C06EF /* StonkGridCellData.swift in Sources */,

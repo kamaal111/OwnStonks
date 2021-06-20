@@ -15,17 +15,11 @@ import ConsoleSwift
 final class NetworkController {
 
     private let networker = StonksNetworker()
-    private var cache: [CacheKeys: [String: Data]]
+    private let cache = NetworkCache()
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
-    private init() {
-        var cache: [CacheKeys: [String: Data]] = [:]
-        for key in CacheKeys.allCases {
-            cache[key] = [:]
-        }
-        self.cache = cache
-    }
+    private init() { }
 
     static let shared = NetworkController()
 
@@ -45,9 +39,8 @@ final class NetworkController {
         }
         let formattedCloseDate = closeDate.getFormattedDateString(withFormat: "yyyy-MM-dd")
         let cacheKey = "\(symbol)-\(formattedCloseDate)"
-        if let responseFromCache = cache[.info]?[cacheKey],
-            let decodedResponseFromCache = try? decoder.decode(InfoResponse.self, from: responseFromCache) {
-            return .success(decodedResponseFromCache)
+        if let responseFromCache: InfoResponse = cache.getCache(from: .info, with: cacheKey) {
+            return .success(responseFromCache)
         }
         let queryItems = [
             "close_date": formattedCloseDate
@@ -70,9 +63,7 @@ final class NetworkController {
             }
             info = infoValue
         }
-        if let encodedInfo = try? encoder.encode(info) {
-            cache[.info]?[cacheKey] = encodedInfo
-        }
+        cache.setCache(this: info, in: .info, with: cacheKey)
         return .success(info)
     }
 
