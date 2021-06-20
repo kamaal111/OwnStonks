@@ -15,6 +15,23 @@ import ConsoleSwift
 final class NetworkController {
 
     private let networker = StonksNetworker()
+    private var cache: [CacheKeys: [String: Data]]
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
+
+    private init() {
+        var cache: [CacheKeys: [String: Data]] = [:]
+        for key in CacheKeys.allCases {
+            cache[key] = [:]
+        }
+        self.cache = cache
+    }
+
+    static let shared = NetworkController()
+
+    private enum CacheKeys: CaseIterable {
+        case info
+    }
 
     enum InfoErrors: Error {
         case noSymbol
@@ -26,8 +43,14 @@ final class NetworkController {
         guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
             return .failure(.noSymbol)
         }
+        let formattedCloseDate = closeDate.getFormattedDateString(withFormat: "yyyy-MM-dd")
+        let cacheKey = "\(symbol)-\(formattedCloseDate)"
+        if let responseFromCache = cache[.info]?[cacheKey],
+            let decodedResponseFromCache = try? decoder.decode(InfoResponse.self, from: responseFromCache) {
+            return .success(decodedResponseFromCache)
+        }
         let queryItems = [
-            "close_date": closeDate.getFormattedDateString(withFormat: "yyyy-MM-dd")
+            "close_date": formattedCloseDate
         ].urlQueryItems
         let result = await networker.getInfo(of: symbol, with: queryItems)
         let info: InfoResponse
@@ -46,6 +69,9 @@ final class NetworkController {
                 return .failure(.generalError)
             }
             info = infoValue
+        }
+        if let encodedInfo = try? encoder.encode(info) {
+            cache[.info]?[cacheKey] = encodedInfo
         }
         return .success(info)
     }

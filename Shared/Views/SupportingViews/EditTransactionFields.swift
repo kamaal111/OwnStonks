@@ -10,6 +10,7 @@ import SwiftUI
 import StonksUI
 import SalmonUI
 import StonksLocale
+import ConsoleSwift
 
 struct EditTransactionFields: View {
     @State private var loadingInfo = false
@@ -40,13 +41,12 @@ struct EditTransactionFields: View {
                             loadingInfo = false
                         }
                     } else {
-                        print("async await is not available")
+                        console.log(Date(), "async await is not available")
                     }
                 }) {
                     #warning("Localize this")
                     Text("Get Info")
                 }
-                .frame(height: 40)
             }
         }
         EnforcedFloatingDecimalField(

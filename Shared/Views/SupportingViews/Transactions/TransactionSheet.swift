@@ -47,22 +47,30 @@ struct TransactionSheet: View {
                 title: .CLOSE,
                 action: close) }) {
             VStack {
-                HStack {
-                    Text(localized: .CREATED_DATE, with: Self.creationDateFormatter.string(from: Date()))
-                        .foregroundColor(.secondary)
-                        .font(.callout)
-                    Spacer()
+                if let transactionCreationDate = transaction?.createdDate {
+                    HStack {
+                        Text(
+                            localized: .CREATED_DATE,
+                            with: Self.creationDateFormatter.string(from: transactionCreationDate))
+                            .foregroundColor(.secondary)
+                            .font(.callout)
+                        Spacer()
+                    }
                 }
                 if !viewModel.editMode {
                     if let transaction = self.transaction {
-                    TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
-                    TransactionSheetRow(
-                        title: .COST_SHARE_HEADER_TITLE,
-                        value: userData.moneyString(from: transaction.costPerShare))
-                    TransactionSheetRow(title: .SHARES_LABEL, value: "\(transaction.shares)")
-                    TransactionSheetRow(
-                        title: .TRANSACTION_DATE_LABEL,
-                        value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
+                        TransactionSheetRow(title: .INVESTMENT_LABEL, value: transaction.name)
+                        if let transactionSymbol = transaction.symbol {
+                            // - TODO: Translate this
+                            TransactionSheetRow(title: "Symbol", value: transactionSymbol)
+                        }
+                        TransactionSheetRow(
+                            title: .COST_SHARE_HEADER_TITLE,
+                            value: userData.moneyString(from: transaction.costPerShare))
+                        TransactionSheetRow(title: .SHARES_LABEL, value: "\(transaction.shares)")
+                        TransactionSheetRow(
+                            title: .TRANSACTION_DATE_LABEL,
+                            value: Self.tranactionDateFormatter.string(from: transaction.transactionDate))
                     }
                 } else {
                     EditTransactionFields(
@@ -86,7 +94,7 @@ struct TransactionSheet: View {
             }
             .padding(.vertical, 16)
         }
-        .frame(minWidth: 360, minHeight: viewModel.editMode ? 296 : 248)
+        .frame(minWidth: 360, minHeight: viewMinHeight)
         .alert(isPresented: $viewModel.showAlert) {
             Alert(title: Text(viewModel.alertMessage?.title ?? ""),
                   message: Text(viewModel.alertMessage?.message ?? ""),
@@ -94,13 +102,21 @@ struct TransactionSheet: View {
         }
     }
 
-    static let tranactionDateFormatter: DateFormatter = {
+    private var viewMinHeight: CGFloat {
+        if viewModel.editMode {
+            return 328
+        }
+        let includingSymbolHeight: CGFloat = transaction?.symbol != nil ? 32 : 0
+        return 248 + includingSymbolHeight
+    }
+
+    private static let tranactionDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
         return formatter
     }()
 
-    static let creationDateFormatter: DateFormatter = {
+    private static let creationDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter
@@ -108,6 +124,7 @@ struct TransactionSheet: View {
 
 }
 
+// - TODO: Put this in a seperate file
 private struct TransactionSheetRow: View {
     let title: String
     let value: String

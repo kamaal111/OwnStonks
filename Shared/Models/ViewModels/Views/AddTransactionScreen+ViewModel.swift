@@ -28,7 +28,7 @@ extension AddTransactionScreen {
             }
         }
 
-        private let networkController = NetworkController()
+        private let networkController = NetworkController.shared
 
         var transactionArgs: CoreTransaction.Args {
             var maybeSymbol: String?

@@ -28,7 +28,7 @@ extension TransactionSheet {
 
         let transaction: CoreTransaction?
 
-        private let networkController = NetworkController()
+        private let networkController = NetworkController.shared
 
         init(transaction: CoreTransaction?) {
             self.transaction = transaction
