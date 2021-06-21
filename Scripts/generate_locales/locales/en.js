@@ -39,6 +39,9 @@ const en = {
   NO_SYMBOL_ALERT_MESSAGE: "The symbol is needed to get the actual information",
   GENERAL_INFO_ALERT_TITLE: "Could not get info",
   GET_INFO: "Get Info",
+  INVALID_SYMBOL_ALERT_TITLE: "Invalid Symbol",
+  INVALID_SYMBOL_ALERT_MESSAGE:
+    "Please type a symbol without special characters",
 };
 
 module.exports = en;

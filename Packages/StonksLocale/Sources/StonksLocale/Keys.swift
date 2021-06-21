@@ -43,5 +43,7 @@ extension StonksLocale {
         case NO_SYMBOL_ALERT_MESSAGE
         case GENERAL_INFO_ALERT_TITLE
         case GET_INFO
+        case INVALID_SYMBOL_ALERT_TITLE
+        case INVALID_SYMBOL_ALERT_MESSAGE
     }
 }

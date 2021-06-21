@@ -32,8 +32,7 @@ final class NetworkController {
             case .noSymbol:
                 return StonksLocale.Keys.NO_SYMBOL_ALERT_TITLE.localized
             case .invalidSymbol:
-                // - TODO: LOCALIZE THIS
-                return "Invalid Symbol"
+                return StonksLocale.Keys.INVALID_SYMBOL_ALERT_TITLE.localized
             case .generalError:
                 return StonksLocale.Keys.GENERAL_INFO_ALERT_TITLE.localized
             }
@@ -44,8 +43,7 @@ final class NetworkController {
             case .noSymbol:
                 return StonksLocale.Keys.NO_SYMBOL_ALERT_MESSAGE.localized
             case .invalidSymbol:
-                // - TODO: LOCALIZE THIS
-                return "Please type a symbol without special characters"
+                return StonksLocale.Keys.INVALID_SYMBOL_ALERT_MESSAGE.localized
             case .generalError:
                 return ""
             }
