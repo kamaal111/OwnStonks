@@ -7,6 +7,7 @@
 
 import CoreGraphics
 
+/// An static model to keep style constants
 public struct StonksStyles {
     private init() { }
 
