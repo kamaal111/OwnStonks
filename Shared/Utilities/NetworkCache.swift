@@ -28,7 +28,8 @@ class NetworkCache {
 
     func getCache<T: Codable>(from cacheKey: CacheKeys, with objectKey: String) -> T? {
         guard let data = cache[cacheKey]?[objectKey] else { return nil }
-        return try? decoder.decode(T.self, from: data)
+        let decodedData = try? decoder.decode(T.self, from: data)
+        return decodedData
     }
 
     func setCache<T: Codable>(this object: T, in cacheKey: CacheKeys, with objectKey: String) {
