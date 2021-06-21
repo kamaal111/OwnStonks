@@ -11,6 +11,7 @@ import StonksNetworker
 import ShrimpExtensions
 import XiphiasNet
 import ConsoleSwift
+import StonksLocale
 
 final class NetworkController {
 
@@ -25,6 +26,30 @@ final class NetworkController {
         case noSymbol
         case invalidSymbol
         case generalError
+
+        var title: String {
+            switch self {
+            case .noSymbol:
+                return StonksLocale.Keys.NO_SYMBOL_ALERT_TITLE.localized
+            case .invalidSymbol:
+                // - TODO: LOCALIZE THIS
+                return "Invalid Symbol"
+            case .generalError:
+                return StonksLocale.Keys.GENERAL_INFO_ALERT_TITLE.localized
+            }
+        }
+
+        var message: String {
+            switch self {
+            case .noSymbol:
+                return StonksLocale.Keys.NO_SYMBOL_ALERT_MESSAGE.localized
+            case .invalidSymbol:
+                // - TODO: LOCALIZE THIS
+                return "Please type a symbol without special characters"
+            case .generalError:
+                return ""
+            }
+        }
     }
 
     @available(macOS 12.0, *)
