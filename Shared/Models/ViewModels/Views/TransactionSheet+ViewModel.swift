@@ -47,6 +47,10 @@ extension TransactionSheet {
                     case .noSymbol:
                         self.alertMessage = (StonksLocale.Keys.NO_SYMBOL_ALERT_TITLE.localized,
                                              StonksLocale.Keys.NO_SYMBOL_ALERT_MESSAGE.localized)
+                    // - TODO: LOCALIZE THIS
+                    case .invalidSymbol:
+                        self.alertMessage = ("Invalid Symbol",
+                                             "Please type a symbol without special characters")
                     case .generalError:
                         self.alertMessage = (StonksLocale.Keys.GENERAL_INFO_ALERT_TITLE.localized, "")
                     }

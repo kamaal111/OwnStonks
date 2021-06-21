@@ -23,16 +23,17 @@ final class NetworkController {
 
     enum InfoErrors: Error {
         case noSymbol
+        case invalidSymbol
         case generalError
     }
 
     @available(macOS 12.0, *)
     func getInfo(of symbol: String, on closeDate: Date) async -> Result<InfoResponse, InfoErrors> {
-        let trimmedSymbol = symbol.trimmingByWhitespacesAndNewLines.filter({ character in
-            character == ","
-        })
-        print(trimmedSymbol)
-        guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
+        let trimmedSymbol = symbol.trimmingByWhitespacesAndNewLines
+        if trimmedSymbol.contains(",") {
+            return .failure(.invalidSymbol)
+        }
+        guard !trimmedSymbol.isEmpty else {
             return .failure(.noSymbol)
         }
         let formattedCloseDate = closeDate.getFormattedDateString(withFormat: "yyyy-MM-dd")
@@ -50,8 +51,7 @@ final class NetworkController {
             console.log(Date(), error.localizedDescription, error)
             if let error = error as? XiphiasNet.NetworkerErrors {
                 switch error {
-                case .responseError(_, _): return .failure(.generalError)
-                case .dataError, .notAValidJSON: return .failure(.generalError)
+                case .dataError, .notAValidJSON, .responseError(_, _): return .failure(.generalError)
                 }
             }
             return .failure(.generalError)
@@ -59,12 +59,9 @@ final class NetworkController {
             guard let success = success else {
                 return .failure(.generalError)
             }
-            if let infoResponseFound = success.first(where: { (key: String, _: InfoResponse) in
-                key.uppercased() == symbol.uppercased()
-            }) {
-                print(infoResponseFound)
-            }
-            guard let infoValue = success.first?.value else {
+            guard let infoValue = success.first(where: { (key: String, _: InfoResponse) in
+                key.uppercased() == trimmedSymbol.uppercased()
+            })?.value else {
                 return .failure(.generalError)
             }
             info = infoValue
