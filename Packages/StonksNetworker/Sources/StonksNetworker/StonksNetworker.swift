@@ -9,16 +9,18 @@ import Foundation
 import ShrimpExtensions
 import XiphiasNet
 
+/// An struct to make calls to the stonks API
 public struct StonksNetworker {
     private let networker = XiphiasNet(kowalskiAnalysis: false)
 
+    /// `StonksNetworker` initializer
     public init() { }
 
     @available(macOS 12.0, iOS 15.0, *)
     public func getInfo(
-        of symbol: String,
+        of symbols: [String],
         with queryItems: [URLQueryItem]) async -> Result<[String: InfoResponse]?, Error> {
-        await asyncRequest(from: .info(of: symbol, with: queryItems))
+        await asyncRequest(from: .info(of: symbols.joined(separator: ","), with: queryItems))
     }
 
     @available(macOS 12.0, iOS 15.0, *)
@@ -63,8 +65,8 @@ struct Endpoint {
         Endpoint(path: "")
     }
 
-    static func info(of symbol: String, with queryItems: [URLQueryItem] = []) -> Self {
-        Endpoint(path: "info/\(symbol)", queryItems: queryItems)
+    static func info(of symbols: String, with queryItems: [URLQueryItem] = []) -> Self {
+        Endpoint(path: "info/\(symbols)", queryItems: queryItems)
     }
 }
 

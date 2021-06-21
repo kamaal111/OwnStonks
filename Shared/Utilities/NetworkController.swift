@@ -16,16 +16,10 @@ final class NetworkController {
 
     private let networker = StonksNetworker()
     private let cache = NetworkCache()
-    private let encoder = JSONEncoder()
-    private let decoder = JSONDecoder()
 
     private init() { }
 
     static let shared = NetworkController()
-
-    private enum CacheKeys: CaseIterable {
-        case info
-    }
 
     enum InfoErrors: Error {
         case noSymbol
@@ -34,6 +28,10 @@ final class NetworkController {
 
     @available(macOS 12.0, *)
     func getInfo(of symbol: String, on closeDate: Date) async -> Result<InfoResponse, InfoErrors> {
+        let trimmedSymbol = symbol.trimmingByWhitespacesAndNewLines.filter({ character in
+            character == ","
+        })
+        print(trimmedSymbol)
         guard !symbol.trimmingByWhitespacesAndNewLines.isEmpty else {
             return .failure(.noSymbol)
         }
@@ -45,7 +43,7 @@ final class NetworkController {
         let queryItems = [
             "close_date": formattedCloseDate
         ].urlQueryItems
-        let result = await networker.getInfo(of: symbol, with: queryItems)
+        let result = await networker.getInfo(of: [symbol], with: queryItems)
         let info: InfoResponse
         switch result {
         case let .failure(error):
@@ -58,7 +56,15 @@ final class NetworkController {
             }
             return .failure(.generalError)
         case let .success(success):
-            guard let success = success, let infoValue = success.first?.value else {
+            guard let success = success else {
+                return .failure(.generalError)
+            }
+            if let infoResponseFound = success.first(where: { (key: String, _: InfoResponse) in
+                key.uppercased() == symbol.uppercased()
+            }) {
+                print(infoResponseFound)
+            }
+            guard let infoValue = success.first?.value else {
                 return .failure(.generalError)
             }
             info = infoValue
