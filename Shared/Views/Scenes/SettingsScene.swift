@@ -20,7 +20,7 @@ struct SettingsScene: View {
             }
         }
         .navigationTitle(Text(localized: .SETTINGS))
-        .padding(.all, .medium)
+        .padding(.all, size: .medium)
         .frame(minWidth: 200, maxWidth: 200, minHeight: 200, alignment: .topLeading)
     }
 
