@@ -16,16 +16,17 @@ public struct StonksNetworker {
     /// `StonksNetworker` initializer
     public init() { }
 
+    /// Get info of given symbols
+    /// - Parameters:
+    ///   - symbols: stock symbols
+    ///   - queryItems: url query items to query specific items
+    /// - Returns: an result with an optional dictionary of the symbol as key and `InfoResponse` as value on success and
+    /// an `Error` on failure
     @available(macOS 12.0, iOS 15.0, *)
     public func getInfo(
         of symbols: [String],
         with queryItems: [URLQueryItem]) async -> Result<[String: InfoResponse]?, Error> {
         await asyncRequest(from: .info(of: symbols.joined(separator: ","), with: queryItems))
-    }
-
-    @available(macOS 12.0, iOS 15.0, *)
-    public func getRoot() async -> Result<RootResponse?, Error> {
-        await asyncRequest(from: .root)
     }
 
     @available(macOS 12.0, iOS 15.0, *)
@@ -61,20 +62,8 @@ struct Endpoint {
         return componentsURL
     }
 
-    static var root: Self {
-        Endpoint(path: "")
-    }
-
     static func info(of symbols: String, with queryItems: [URLQueryItem] = []) -> Self {
         Endpoint(path: "info/\(symbols)", queryItems: queryItems)
-    }
-}
-
-public struct RootResponse: Codable {
-    public let hello: String
-
-    public init(hello: String) {
-        self.hello = hello
     }
 }
 

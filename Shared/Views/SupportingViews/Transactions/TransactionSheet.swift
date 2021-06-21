@@ -123,7 +123,6 @@ struct TransactionSheet: View {
 
 }
 
-// - TODO: Put this in a seperate file
 private struct TransactionSheetRow: View {
     let title: String
     let value: String
