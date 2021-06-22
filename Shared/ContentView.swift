@@ -21,6 +21,9 @@ struct ContentView: View {
 #if canImport(UIKit)
 struct IOSContentView: View {
     #if DEBUG
+    @EnvironmentObject
+    private var navigator: Navigator
+
     @State private var showDebugSheet = false
     #endif
 
@@ -40,9 +43,11 @@ struct IOSContentView: View {
             showDebugSheet = true
         })
         .confirmationDialog(Text("Playground"), isPresented: $showDebugSheet, actions: {
-            Button("First") { }
-            Button("Second") { }
-            Button("Third") { }
+            Button(action: {
+                navigator.showPlaygroundScreen = true
+            }) {
+                Text("Go to playground")
+            }
         })
         #endif
     }
@@ -61,5 +66,6 @@ struct MacContentView: View {
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .environmentObject(Navigator())
     }
 }

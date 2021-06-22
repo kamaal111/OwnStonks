@@ -14,7 +14,7 @@ import ShrimpExtensions
 import StonksNetworker
 
 struct PortfolioScreen: View {
-    #if canImport(AppKit)
+    #if canImport(AppKit) || DEBUG
     @EnvironmentObject
     private var navigator: Navigator
     #endif
@@ -44,6 +44,11 @@ struct PortfolioScreen: View {
         ZStack {
             #if canImport(UIKit)
             NavigationLink(destination: AddTransactionScreen(), isActive: $showAddTransactionScreen) {
+                EmptyView()
+            }
+            #endif
+            #if DEBUG
+            NavigationLink(destination: Text("Playground"), isActive: $navigator.showPlaygroundScreen) {
                 EmptyView()
             }
             #endif

@@ -16,6 +16,9 @@ final class Navigator: ObservableObject {
     @Published var tabSelection = ScreenNames.portfolio.rawValue
     #endif
     @Published var screenSelection: String?
+    #if DEBUG
+    @Published var showPlaygroundScreen = false
+    #endif
 
     enum ScreenNames: String {
         case portfolio
