@@ -67,6 +67,11 @@
 		601AD6F42649072500A2F717 /* TransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601AD6F22649072500A2F717 /* TransactionSheet.swift */; };
 		60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60236BA42641AC4200A80B80 /* TransactionsScreen.swift */; };
 		60236BA62641AC4200A80B80 /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60236BA42641AC4200A80B80 /* TransactionsScreen.swift */; };
+		604ADD6B2681B873000A6B6F /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 604ADD6A2681B873000A6B6F /* Charts */; };
+		604ADD6D2681B8A8000A6B6F /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = 604ADD6C2681B8A8000A6B6F /* Charts */; };
+		604ADD702681B90E000A6B6F /* DeviceShakeViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604ADD6F2681B90E000A6B6F /* DeviceShakeViewModifier.swift */; };
+		604ADD722681B95F000A6B6F /* Notification+extionsions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604ADD712681B95F000A6B6F /* Notification+extionsions.swift */; };
+		604ADD732681B95F000A6B6F /* Notification+extionsions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 604ADD712681B95F000A6B6F /* Notification+extionsions.swift */; };
 		6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */ = {isa = PBXBuildFile; productRef = 6050FE10263FCDAC00819D92 /* PersistanceManager */; };
 		6050FE13263FCDB700819D92 /* PersistanceManager in Frameworks */ = {isa = PBXBuildFile; productRef = 6050FE12263FCDB700819D92 /* PersistanceManager */; };
 		6050FE15263FCDD700819D92 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6050FE14263FCDD700819D92 /* Persistence.swift */; };
@@ -160,6 +165,8 @@
 		60236BA42641AC4200A80B80 /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
 		603EE1C42641231600756FE1 /* clear_mac_data.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = clear_mac_data.sh; sourceTree = "<group>"; };
 		603EE1C5264125BF00756FE1 /* pre_compile.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = pre_compile.sh; sourceTree = "<group>"; };
+		604ADD6F2681B90E000A6B6F /* DeviceShakeViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceShakeViewModifier.swift; sourceTree = "<group>"; };
+		604ADD712681B95F000A6B6F /* Notification+extionsions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+extionsions.swift"; sourceTree = "<group>"; };
 		6050FE14263FCDD700819D92 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		6050FE1E263FCE9500819D92 /* OwnStocks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OwnStocks.xcdatamodel; sourceTree = "<group>"; };
 		6057942B263D4F2E00EE2275 /* PortfolioGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioGridView.swift; sourceTree = "<group>"; };
@@ -180,6 +187,7 @@
 				2C237FBC264544A800E59144 /* StonksLocale in Frameworks */,
 				6050FE11263FCDAC00819D92 /* PersistanceManager in Frameworks */,
 				609C1CB52677B96C0001FC89 /* StonksNetworker in Frameworks */,
+				604ADD6B2681B873000A6B6F /* Charts in Frameworks */,
 				6050FE19263FCE0D00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486E8263EAFF9006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB1263D71560032E86B /* ShrimpExtensions in Frameworks */,
@@ -195,6 +203,7 @@
 				2C237FBA264544A200E59144 /* StonksLocale in Frameworks */,
 				6050FE13263FCDB700819D92 /* PersistanceManager in Frameworks */,
 				609C1CB32677B9640001FC89 /* StonksNetworker in Frameworks */,
+				604ADD6D2681B8A8000A6B6F /* Charts in Frameworks */,
 				6050FE1B263FCE1C00819D92 /* ConsoleSwift in Frameworks */,
 				2C1486EA263EB03B006EEB6B /* SalmonUI in Frameworks */,
 				2CE62CB8263D71630032E86B /* ShrimpExtensions in Frameworks */,
@@ -389,6 +398,7 @@
 		601414D5263A88A40083D485 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				604ADD712681B95F000A6B6F /* Notification+extionsions.swift */,
 				601414D6263A88C10083D485 /* UIDevice+extensions.swift */,
 				60027D68264056E7007B1EE9 /* CoreData */,
 			);
@@ -401,6 +411,7 @@
 				609C1CA72677B4D70001FC89 /* Scenes */,
 				601414E6263A8A850083D485 /* Screens */,
 				601414F2263A8AA70083D485 /* SupportingViews */,
+				604ADD6E2681B8F5000A6B6F /* ViewModifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -465,6 +476,14 @@
 				2C8DC1032645765000A55FFD /* generate_locales */,
 			);
 			path = Scripts;
+			sourceTree = "<group>";
+		};
+		604ADD6E2681B8F5000A6B6F /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				604ADD6F2681B90E000A6B6F /* DeviceShakeViewModifier.swift */,
+			);
+			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
 		6050FE0E263FCD6700819D92 /* Utilities */ = {
@@ -550,6 +569,7 @@
 				2C237FBB264544A800E59144 /* StonksLocale */,
 				609C1CB42677B96C0001FC89 /* StonksNetworker */,
 				60CAC4EA267E2441006F9136 /* XiphiasNet */,
+				604ADD6A2681B873000A6B6F /* Charts */,
 			);
 			productName = "OwnStonks (iOS)";
 			productReference = 2C2EFBFD2639E82E00C05BE9 /* OwnStonks.app */;
@@ -578,6 +598,7 @@
 				2C237FB9264544A200E59144 /* StonksLocale */,
 				609C1CB22677B9640001FC89 /* StonksNetworker */,
 				60CAC4EC267E244F006F9136 /* XiphiasNet */,
+				604ADD6C2681B8A8000A6B6F /* Charts */,
 			);
 			productName = "OwnStonks (macOS)";
 			productReference = 2C2EFC052639E82E00C05BE9 /* OwnStonks.app */;
@@ -660,6 +681,7 @@
 				6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */,
 				6050FE17263FCE0D00819D92 /* XCRemoteSwiftPackageReference "ConsoleSwift" */,
 				60CAC4E9267E2441006F9136 /* XCRemoteSwiftPackageReference "XiphiasNet" */,
+				604ADD692681B873000A6B6F /* XCRemoteSwiftPackageReference "Charts" */,
 			);
 			productRefGroup = 2C2EFBFE2639E82E00C05BE9 /* Products */;
 			projectDirPath = "";
@@ -773,6 +795,8 @@
 				60236BA52641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
 				2C88FF0C2646DF6B008057DE /* UserDefaults.swift in Sources */,
 				2C2EFC1F2639E82E00C05BE9 /* OwnStonksApp.swift in Sources */,
+				604ADD702681B90E000A6B6F /* DeviceShakeViewModifier.swift in Sources */,
+				604ADD722681B95F000A6B6F /* Notification+extionsions.swift in Sources */,
 				2C237FB62645442F00E59144 /* TransactionsGridView.swift in Sources */,
 				60CAC4E7267E1549006F9136 /* NetworkController.swift in Sources */,
 				2C88FF122646DFC4008057DE /* UserData.swift in Sources */,
@@ -803,6 +827,7 @@
 				60027D6B2640571B007B1EE9 /* CoreTransaction+extensions.swift in Sources */,
 				60141500263A8AEE0083D485 /* AppSidebar.swift in Sources */,
 				60236BA62641AC4200A80B80 /* TransactionsScreen.swift in Sources */,
+				604ADD732681B95F000A6B6F /* Notification+extionsions.swift in Sources */,
 				2C47EF622641D0E7008CD53B /* CoreTransaction+CoreDataClass.swift in Sources */,
 				6014150A263A8CFB0083D485 /* Navigator.swift in Sources */,
 				2C857EE5264BDBC3009B2CF6 /* TransactionSheet+ViewModel.swift in Sources */,
@@ -1221,6 +1246,14 @@
 				minimumVersion = 2.1.0;
 			};
 		};
+		604ADD692681B873000A6B6F /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		6050FE0F263FCDAC00819D92 /* XCRemoteSwiftPackageReference "PersistanceManager" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kamaal111/PersistanceManager.git";
@@ -1283,6 +1316,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CE62CAF263D71560032E86B /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
 			productName = ShrimpExtensions;
+		};
+		604ADD6A2681B873000A6B6F /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604ADD692681B873000A6B6F /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		604ADD6C2681B8A8000A6B6F /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 604ADD692681B873000A6B6F /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
 		};
 		6050FE10263FCDAC00819D92 /* PersistanceManager */ = {
 			isa = XCSwiftPackageProductDependency;

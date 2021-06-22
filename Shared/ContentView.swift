@@ -20,6 +20,10 @@ struct ContentView: View {
 
 #if canImport(UIKit)
 struct IOSContentView: View {
+    #if DEBUG
+    @State private var showDebugSheet = false
+    #endif
+
     var body: some View {
         ZStack {
             if UIDevice.current.isIpad {
@@ -31,6 +35,16 @@ struct IOSContentView: View {
                 AppTabView()
             }
         }
+        #if DEBUG
+        .onShake(perform: {
+            showDebugSheet = true
+        })
+        .confirmationDialog(Text("Playground"), isPresented: $showDebugSheet, actions: {
+            Button("First") { }
+            Button("Second") { }
+            Button("Third") { }
+        })
+        #endif
     }
 }
 #else
