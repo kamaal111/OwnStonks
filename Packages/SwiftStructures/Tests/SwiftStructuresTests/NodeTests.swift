@@ -21,7 +21,8 @@ final class NodeTests: XCTestCase {
     func testNotEqual() {
         let cases = [
             (Node(value: 1), Node(value: 1, next: Node(value: 2))),
-            (Node(value: 1, next: Node(value: 2)), Node(value: 1))
+            (Node(value: 1, next: Node(value: 2)), Node(value: 1)),
+            (Node(value: 2), Node(value: 1))
         ]
         for (leftNode, rightNode) in cases {
             XCTAssertNotEqual(leftNode, rightNode)

@@ -12,28 +12,21 @@ public final class Navigator<StackValue: Codable & Hashable>: ObservableObject {
     @Published private var stack: Stack<StackValue>
 
     init(stack: [StackValue]) {
-        self.stack = .fromArray(stack)
+        let stack = Stack.fromArray(stack)
+        self.stack = stack
     }
 
     public var currentScreen: StackValue? {
         stack.peek()
     }
 
-    public var screens: [StackValue] {
-        stack.array
+    @MainActor
+    func navigate(to destination: StackValue) {
+        stack.push(destination)
     }
 
     @MainActor
-    public func navigate(to destination: StackValue) {
-        withAnimation(.easeOut(duration: 0.3)) {
-            stack.push(destination)
-        }
-    }
-
-    @MainActor
-    public func goBack() {
-        withAnimation(.easeOut(duration: 0.3)) {
-            _ = stack.pop()
-        }
+    func goBack() {
+        _ = stack.pop()
     }
 }

@@ -12,7 +12,7 @@ struct HomeScreen: View {
     @EnvironmentObject private var navigator: Navigator<Int>
 
     var body: some View {
-        Button(action: { navigator.navigate(to: 1) }) {
+        StackNavigationLink(destination: 1, nextView: { screen in SubViewScreen(screen: screen) }) {
             Text("Next screen")
         }
     }

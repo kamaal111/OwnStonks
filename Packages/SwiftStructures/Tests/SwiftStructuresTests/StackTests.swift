@@ -13,12 +13,14 @@ final class StackTests: XCTestCase {
         let expectedArray = [0, 1, 2]
         let stack = Stack.fromArray(expectedArray)
         XCTAssertEqual(stack.array, expectedArray)
+        XCTAssertFalse(stack.isEmpty)
     }
 
     func testToArrayFromEmptyArray() {
         let expectedArray: [Int] = []
         let stack = Stack.fromArray(expectedArray)
         XCTAssertEqual(stack.array, expectedArray)
+        XCTAssert(stack.isEmpty)
     }
 
     func testFromArray() {

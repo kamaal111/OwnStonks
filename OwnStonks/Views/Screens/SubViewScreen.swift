@@ -14,8 +14,13 @@ struct SubViewScreen: View {
     let screen: Int
 
     var body: some View {
-        Button(action: { navigator.navigate(to: screen + 1) }) {
-            Text("Navigate to \(screen + 1)")
+        VStack {
+            StackNavigationLink(destination: screen + 1, nextView: { screen in SubViewScreen(screen: screen) }) {
+                Text("Navigate to \(screen + 1)")
+            }
+            StackNavigationBackButton(screenType: Int.self) {
+                Text("Go back")
+            }
         }
     }
 }

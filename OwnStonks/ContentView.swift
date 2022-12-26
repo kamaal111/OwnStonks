@@ -31,6 +31,7 @@ struct ContentView: View {
                 })
                 #endif
         }
+        .navigationStyle(shouldHaveASidebar ? .columns : .stack)
     }
 
     private var shouldHaveASidebar: Bool {
@@ -42,6 +43,30 @@ struct ContentView: View {
         }
         return false
         #endif
+    }
+}
+
+extension NavigationView {
+    func navigationStyle(_ style: Style) -> some View {
+        #if os(macOS)
+        self
+        #else
+        ZStack {
+            switch style {
+            case .columns:
+                self
+                    .navigationViewStyle(.columns)
+            case .stack:
+                self
+                    .navigationViewStyle(.stack)
+            }
+        }
+        #endif
+    }
+
+    enum Style {
+        case columns
+        case stack
     }
 }
 

@@ -32,11 +32,11 @@ extension Node: Equatable {
         var leftNode: Node<Value>? = lhs
         var rightNode: Node<Value>? = rhs
         while leftNode != .none && rightNode != .none {
-            if leftNode?.value != rightNode?.value {
+            if leftNode!.value != rightNode!.value {
                 return false
             }
-            leftNode = leftNode?.next
-            rightNode = rightNode?.next
+            leftNode = leftNode!.next
+            rightNode = rightNode!.next
         }
         return leftNode?.value == rightNode?.value
     }

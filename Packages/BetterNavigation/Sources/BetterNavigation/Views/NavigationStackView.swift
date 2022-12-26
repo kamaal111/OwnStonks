@@ -9,19 +9,19 @@ import SwiftUI
 import SalmonUI
 import SwiftStructures
 
-public struct NavigationStackView<Root: View, SubView: View, StackValue: Codable & Equatable & Hashable>: View {
-    @ObservedObject private var navigator: Navigator<StackValue>
+public struct NavigationStackView<Root: View, SubView: View, Screen: Codable & Hashable>: View {
+    @ObservedObject private var navigator: Navigator<Screen>
 
     let root: () -> Root
-    let subView: (StackValue) -> SubView
+    let subView: (Screen) -> SubView
 
     public init(
-        stack: [StackValue],
+        stack: [Screen],
         @ViewBuilder root: @escaping () -> Root,
-        @ViewBuilder subView: @escaping (StackValue) -> SubView) {
+        @ViewBuilder subView: @escaping (Screen) -> SubView) {
             self.root = root
             self.subView = subView
-            self._navigator = ObservedObject(wrappedValue: Navigator<StackValue>(stack: stack))
+            self._navigator = ObservedObject(wrappedValue: Navigator<Screen>(stack: stack))
         }
 
     public var body: some View {

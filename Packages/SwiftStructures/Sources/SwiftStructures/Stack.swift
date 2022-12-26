@@ -16,7 +16,13 @@ public struct Stack<Value: Codable & Hashable>: Equatable, Codable {
         self._count = 0
     }
 
-    public var count: Int { _count }
+    public var count: Int {
+        _count
+    }
+
+    public var isEmpty: Bool {
+        count == 0
+    }
 
     public var array: [Value] {
         top?.array ?? []
