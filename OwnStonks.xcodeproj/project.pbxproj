@@ -13,6 +13,10 @@
 		2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B99732959FD6A00443BAC /* ContentView.swift */; };
 		2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99752959FD6D00443BAC /* Assets.xcassets */; };
 		2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */; };
+		2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9986295A0F2E00443BAC /* SwiftStructures */; };
+		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
+		2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* HomeScreen.swift */; };
+		2C0B9997295A1C5C00443BAC /* SubViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,10 @@
 		2C0B99752959FD6D00443BAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonks.entitlements; sourceTree = "<group>"; };
 		2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		2C0B9981295A00F400443BAC /* SwiftStructures */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftStructures; sourceTree = "<group>"; };
+		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
+		2C0B9994295A1C4300443BAC /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewScreen.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
+				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -40,8 +50,10 @@
 		2C0B99602959FD6A00443BAC = {
 			isa = PBXGroup;
 			children = (
+				2C0B9980295A00C500443BAC /* Packages */,
 				2C0B996B2959FD6A00443BAC /* OwnStonks */,
 				2C0B996A2959FD6A00443BAC /* Products */,
+				2C0B9983295A0EF400443BAC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,11 +68,12 @@
 		2C0B996B2959FD6A00443BAC /* OwnStonks */ = {
 			isa = PBXGroup;
 			children = (
+				2C0B9992295A1C3000443BAC /* Views */,
+				2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */,
+				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */,
 				2C0B996E2959FD6A00443BAC /* Persistence.swift */,
-				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
-				2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */,
 				2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */,
 				2C0B99782959FD6D00443BAC /* Preview Content */,
 			);
@@ -73,6 +86,39 @@
 				2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		2C0B9980295A00C500443BAC /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				2C0B998F295A111B00443BAC /* BetterNavigation */,
+				2C0B9981295A00F400443BAC /* SwiftStructures */,
+			);
+			path = Packages;
+			sourceTree = "<group>";
+		};
+		2C0B9983295A0EF400443BAC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C0B9992295A1C3000443BAC /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2C0B9993295A1C3600443BAC /* Screens */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		2C0B9993295A1C3600443BAC /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				2C0B9994295A1C4300443BAC /* HomeScreen.swift */,
+				2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */,
+			);
+			path = Screens;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -91,6 +137,10 @@
 			dependencies = (
 			);
 			name = OwnStonks;
+			packageProductDependencies = (
+				2C0B9986295A0F2E00443BAC /* SwiftStructures */,
+				2C0B9990295A11D100443BAC /* BetterNavigation */,
+			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
 			productType = "com.apple.product-type.application";
@@ -119,6 +169,8 @@
 				Base,
 			);
 			mainGroup = 2C0B99602959FD6A00443BAC;
+			packageReferences = (
+			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -146,9 +198,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C0B996D2959FD6A00443BAC /* OwnStonksApp.swift in Sources */,
+				2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */,
 				2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,
+				2C0B9997295A1C5C00443BAC /* SubViewScreen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +416,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2C0B9986295A0F2E00443BAC /* SwiftStructures */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SwiftStructures;
+		};
+		2C0B9990295A11D100443BAC /* BetterNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BetterNavigation;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */ = {

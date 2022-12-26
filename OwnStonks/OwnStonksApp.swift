@@ -14,6 +14,7 @@ struct OwnStonksApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .frame(minWidth: 300, minHeight: 300)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
