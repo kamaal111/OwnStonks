@@ -6,14 +6,27 @@
 //
 
 import SwiftUI
+import SalmonUI
+import OSLocales
 import BetterNavigation
 
 struct HomeScreen: View {
-    @EnvironmentObject private var navigator: Navigator<Int>
+    @State private var showAddSymbolSheet = false
 
     var body: some View {
-        StackNavigationLink(destination: 1, nextView: { screen in SubViewScreen(screen: screen) }) {
-            Text("Next screen")
+        VStack {
+            StackNavigationLink(destination: 1, nextView: { screen in SubViewScreen(screen: screen) }) {
+                Text("Next screen")
+            }
+        }
+        .toolbar(content: { toolbarView })
+        .sheet(isPresented: $showAddSymbolSheet, content: { AddSymbolSheet() })
+    }
+
+    private var toolbarView: some View {
+        Button(action: { showAddSymbolSheet = true }) {
+            Image(systemName: "plus")
+                .foregroundColor(.accentColor)
         }
     }
 }

@@ -15,12 +15,7 @@ struct SubViewScreen: View {
 
     var body: some View {
         VStack {
-            StackNavigationLink(destination: screen + 1, nextView: { screen in SubViewScreen(screen: screen) }) {
-                Text("Navigate to \(screen + 1)")
-            }
-            StackNavigationBackButton(screenType: Int.self) {
-                Text("Go back")
-            }
+            Text("Sub")
         }
     }
 }

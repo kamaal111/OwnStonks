@@ -22,14 +22,6 @@ struct ContentView: View {
                 stack: stack,
                 root: { HomeScreen() },
                 subView: { screen in SubViewScreen(screen: screen) })
-                #if os(macOS)
-                .toolbar(content: {
-                    Button(action: { }) {
-                        Label("Random toolbar button", systemImage: "person")
-                            .foregroundColor(.accentColor)
-                    }
-                })
-                #endif
         }
         .navigationStyle(shouldHaveASidebar ? .columns : .stack)
     }

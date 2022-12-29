@@ -22,11 +22,11 @@ public final class Navigator<StackValue: Codable & Hashable>: ObservableObject {
 
     @MainActor
     func navigate(to destination: StackValue) {
-        stack.push(destination)
+        withAnimation { stack.push(destination) }
     }
 
     @MainActor
     func goBack() {
-        _ = stack.pop()
+        withAnimation { _ = stack.pop() }
     }
 }

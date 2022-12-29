@@ -50,3 +50,5 @@ project.xcworkspace/
 Pods/
 
 JazzyDocs
+node_modules
+yarn-error.log

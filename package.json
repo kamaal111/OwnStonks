@@ -1,0 +1,22 @@
+{
+  "devDependencies": {
+    "@kamaal111/localize": "^0.1.0"
+  },
+  "name": "ownstonks",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+      "localize": "node Scripts/generate-locales/locale.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kamaal111/OwnStonks.git"
+  },
+  "author": "Kamaal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kamaal111/OwnStonks/issues"
+  },
+  "homepage": "https://github.com/kamaal111/OwnStonks#readme",
+  "description": ""
+}

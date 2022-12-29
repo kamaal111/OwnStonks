@@ -1,0 +1,12 @@
+/*
+  Localizable.strings
+  OSLocales
+
+  Created by Kamaal Farah on 28/12/2022.
+  Copyright © 2022 Kamaal. All rights reserved.
+*/
+
+"ADD_SYMBOL" = "Add symbol";
+"CLOSE" = "Close";
+"DONE" = "Done";
+

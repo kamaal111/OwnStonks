@@ -17,6 +17,13 @@
 		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
 		2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* HomeScreen.swift */; };
 		2C0B9997295A1C5C00443BAC /* SubViewScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */; };
+		2CB74A78295E32F700408363 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB74A77295E32F700408363 /* OSLocales */; };
+		2CB74A7A295E347100408363 /* OSText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A79295E347100408363 /* OSText.swift */; };
+		2CB74A7D295E351400408363 /* AddSymbolSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* AddSymbolSheet.swift */; };
+		2CB74A7F295E355000408363 /* OSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7E295E355000408363 /* OSButton.swift */; };
+		2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD7D4DE295CD472006F675D /* SalmonUI */; };
+		2CD7D4E6295CD923006F675D /* en.js in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7D4E5295CD923006F675D /* en.js */; };
+		2CD7D4E8295CD965006F675D /* locale.js in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7D4E7295CD965006F675D /* locale.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +39,13 @@
 		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
 		2C0B9994295A1C4300443BAC /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubViewScreen.swift; sourceTree = "<group>"; };
+		2CB74A79295E347100408363 /* OSText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSText.swift; sourceTree = "<group>"; };
+		2CB74A7C295E351400408363 /* AddSymbolSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSymbolSheet.swift; sourceTree = "<group>"; };
+		2CB74A7E295E355000408363 /* OSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSButton.swift; sourceTree = "<group>"; };
+		2CD7D4E0295CD615006F675D /* OSLocales */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = OSLocales; sourceTree = "<group>"; };
+		2CD7D4E1295CD84A006F675D /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		2CD7D4E5295CD923006F675D /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
+		2CD7D4E7295CD965006F675D /* locale.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = locale.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +53,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */,
 				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
+				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
 				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -50,10 +66,13 @@
 		2C0B99602959FD6A00443BAC = {
 			isa = PBXGroup;
 			children = (
-				2C0B9980295A00C500443BAC /* Packages */,
-				2C0B996B2959FD6A00443BAC /* OwnStonks */,
-				2C0B996A2959FD6A00443BAC /* Products */,
+				2CD7D4E1295CD84A006F675D /* package.json */,
 				2C0B9983295A0EF400443BAC /* Frameworks */,
+				2CD7D4E4295CD90D006F675D /* Locales */,
+				2C0B996B2959FD6A00443BAC /* OwnStonks */,
+				2C0B9980295A00C500443BAC /* Packages */,
+				2C0B996A2959FD6A00443BAC /* Products */,
+				2CD7D4E2295CD861006F675D /* Scripts */,
 			);
 			sourceTree = "<group>";
 		};
@@ -68,7 +87,6 @@
 		2C0B996B2959FD6A00443BAC /* OwnStonks */ = {
 			isa = PBXGroup;
 			children = (
-				2C0B9992295A1C3000443BAC /* Views */,
 				2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */,
 				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */,
@@ -76,6 +94,7 @@
 				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
 				2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */,
 				2C0B99782959FD6D00443BAC /* Preview Content */,
+				2C0B9992295A1C3000443BAC /* Views */,
 			);
 			path = OwnStonks;
 			sourceTree = "<group>";
@@ -92,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				2C0B998F295A111B00443BAC /* BetterNavigation */,
+				2CD7D4E0295CD615006F675D /* OSLocales */,
 				2C0B9981295A00F400443BAC /* SwiftStructures */,
 			);
 			path = Packages;
@@ -108,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				2C0B9993295A1C3600443BAC /* Screens */,
+				2CD7D4DC295CD170006F675D /* SupportingViews */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -116,9 +137,51 @@
 			isa = PBXGroup;
 			children = (
 				2C0B9994295A1C4300443BAC /* HomeScreen.swift */,
-				2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */,
 			);
 			path = Screens;
+			sourceTree = "<group>";
+		};
+		2CB74A7B295E350200408363 /* Sheets */ = {
+			isa = PBXGroup;
+			children = (
+				2CB74A7C295E351400408363 /* AddSymbolSheet.swift */,
+			);
+			path = Sheets;
+			sourceTree = "<group>";
+		};
+		2CD7D4DC295CD170006F675D /* SupportingViews */ = {
+			isa = PBXGroup;
+			children = (
+				2CB74A7E295E355000408363 /* OSButton.swift */,
+				2CB74A79295E347100408363 /* OSText.swift */,
+				2C0B9996295A1C5C00443BAC /* SubViewScreen.swift */,
+				2CB74A7B295E350200408363 /* Sheets */,
+			);
+			path = SupportingViews;
+			sourceTree = "<group>";
+		};
+		2CD7D4E2295CD861006F675D /* Scripts */ = {
+			isa = PBXGroup;
+			children = (
+				2CD7D4E3295CD8D2006F675D /* generate-locales */,
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		2CD7D4E3295CD8D2006F675D /* generate-locales */ = {
+			isa = PBXGroup;
+			children = (
+				2CD7D4E7295CD965006F675D /* locale.js */,
+			);
+			path = "generate-locales";
+			sourceTree = "<group>";
+		};
+		2CD7D4E4295CD90D006F675D /* Locales */ = {
+			isa = PBXGroup;
+			children = (
+				2CD7D4E5295CD923006F675D /* en.js */,
+			);
+			path = Locales;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -140,6 +203,8 @@
 			packageProductDependencies = (
 				2C0B9986295A0F2E00443BAC /* SwiftStructures */,
 				2C0B9990295A11D100443BAC /* BetterNavigation */,
+				2CD7D4DE295CD472006F675D /* SalmonUI */,
+				2CB74A77295E32F700408363 /* OSLocales */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -170,6 +235,7 @@
 			);
 			mainGroup = 2C0B99602959FD6A00443BAC;
 			packageReferences = (
+				2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -185,6 +251,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CD7D4E8295CD965006F675D /* locale.js in Resources */,
+				2CD7D4E6295CD923006F675D /* en.js in Resources */,
 				2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */,
 				2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */,
 			);
@@ -198,11 +266,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C0B996D2959FD6A00443BAC /* OwnStonksApp.swift in Sources */,
+				2CB74A7F295E355000408363 /* OSButton.swift in Sources */,
+				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */,
 				2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,
 				2C0B9997295A1C5C00443BAC /* SubViewScreen.swift in Sources */,
+				2CB74A7D295E351400408363 /* AddSymbolSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -417,6 +488,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/SalmonUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		2C0B9986295A0F2E00443BAC /* SwiftStructures */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -425,6 +507,15 @@
 		2C0B9990295A11D100443BAC /* BetterNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BetterNavigation;
+		};
+		2CB74A77295E32F700408363 /* OSLocales */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = OSLocales;
+		};
+		2CD7D4DE295CD472006F675D /* SalmonUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */;
+			productName = SalmonUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 
