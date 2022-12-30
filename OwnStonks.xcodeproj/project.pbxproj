@@ -23,6 +23,10 @@
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
 		2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A2295F76F0008DE698 /* String+extensions.swift */; };
+		2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A4295F8108008DE698 /* OSPicker.swift */; };
+		2CB6E4A8295F838D008DE698 /* OSTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A7295F838D008DE698 /* OSTransaction.swift */; };
+		2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB6E4AB295F8599008DE698 /* ShrimpExtensions */; };
+		2CB6E4AE295F87A2008DE698 /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */; };
 		2CB74A78295E32F700408363 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB74A77295E32F700408363 /* OSLocales */; };
 		2CB74A7A295E347100408363 /* OSText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A79295E347100408363 /* OSText.swift */; };
 		2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* AddTransactionSheet.swift */; };
@@ -51,6 +55,9 @@
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
 		2CB6E49D295F6498008DE698 /* MoneyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTextField.swift; sourceTree = "<group>"; };
 		2CB6E4A2295F76F0008DE698 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
+		2CB6E4A4295F8108008DE698 /* OSPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSPicker.swift; sourceTree = "<group>"; };
+		2CB6E4A7295F838D008DE698 /* OSTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTransaction.swift; sourceTree = "<group>"; };
+		2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaWarudo.swift; sourceTree = "<group>"; };
 		2CB74A79295E347100408363 /* OSText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSText.swift; sourceTree = "<group>"; };
 		2CB74A7C295E351400408363 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
 		2CB74A7E295E355000408363 /* OSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSButton.swift; sourceTree = "<group>"; };
@@ -69,6 +76,7 @@
 				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
 				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
 				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
+				2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -113,9 +121,11 @@
 				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */,
 				2C0B996E2959FD6A00443BAC /* Persistence.swift */,
+				2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */,
 				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
 				2C07AF33295F510C00B7CF6E /* Enumerations */,
 				2CB6E4A1295F76DC008DE698 /* Extensions */,
+				2CB6E4A6295F837E008DE698 /* Models */,
 				2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */,
 				2C0B99782959FD6D00443BAC /* Preview Content */,
 				2C0B9992295A1C3000443BAC /* Views */,
@@ -173,6 +183,22 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		2CB6E4A6295F837E008DE698 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2CB6E4A9295F83B9008DE698 /* Structures */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2CB6E4A9295F83B9008DE698 /* Structures */ = {
+			isa = PBXGroup;
+			children = (
+				2CB6E4A7295F838D008DE698 /* OSTransaction.swift */,
+			);
+			path = Structures;
+			sourceTree = "<group>";
+		};
 		2CB74A7B295E350200408363 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,6 +212,7 @@
 			children = (
 				2CB6E49D295F6498008DE698 /* MoneyTextField.swift */,
 				2CB74A7E295E355000408363 /* OSButton.swift */,
+				2CB6E4A4295F8108008DE698 /* OSPicker.swift */,
 				2CB74A79295E347100408363 /* OSText.swift */,
 				2CB6E497295F5DFE008DE698 /* TitledPicker.swift */,
 				2CB6E49B295F642F008DE698 /* TitledView.swift */,
@@ -239,6 +266,7 @@
 				2C0B9990295A11D100443BAC /* BetterNavigation */,
 				2CD7D4DE295CD472006F675D /* SalmonUI */,
 				2CB74A77295E32F700408363 /* OSLocales */,
+				2CB6E4AB295F8599008DE698 /* ShrimpExtensions */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -270,6 +298,7 @@
 			mainGroup = 2C0B99602959FD6A00443BAC;
 			packageReferences = (
 				2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */,
+				2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -308,9 +337,12 @@
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
+				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
 				2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */,
 				2CB6E49A295F631E008DE698 /* Currencies.swift in Sources */,
+				2CB6E4A8295F838D008DE698 /* OSTransaction.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
+				2CB6E4AE295F87A2008DE698 /* ZaWarudo.swift in Sources */,
 				2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,
 				2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */,
@@ -529,6 +561,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/ShrimpExtensions.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
 		2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kamaalio/SalmonUI.git";
@@ -547,6 +587,11 @@
 		2C0B9990295A11D100443BAC /* BetterNavigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BetterNavigation;
+		};
+		2CB6E4AB295F8599008DE698 /* ShrimpExtensions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
+			productName = ShrimpExtensions;
 		};
 		2CB74A77295E32F700408363 /* OSLocales */ = {
 			isa = XCSwiftPackageProductDependency;

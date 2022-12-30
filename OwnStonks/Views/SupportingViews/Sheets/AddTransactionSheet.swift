@@ -8,9 +8,14 @@
 import SwiftUI
 import SalmonUI
 import OSLocales
+import ShrimpExtensions
 
 struct AddTransactionSheet: View {
     @StateObject private var viewModel = ViewModel()
+
+    @Binding var isShown: Bool
+
+    let submittedTransaction: (_ transaction: OSTransaction) -> Void
 
     var body: some View {
         KSheetStack(
@@ -19,31 +24,18 @@ struct AddTransactionSheet: View {
             trailingNavigationButton: { doneButton }) {
                 content
             }
-            .frame(minWidth: 320, minHeight: 310)
-    }
-
-    private var closeButton: some View {
-        OSButton(action: onClose) {
-            OSText(localized: .CLOSE)
-                .foregroundColor(.accentColor)
-        }
-    }
-
-    private var doneButton: some View {
-        OSButton(action: onDone) {
-            OSText(localized: .DONE)
-                .foregroundColor(.accentColor)
-        }
+            .frame(minWidth: 320, minHeight: 348)
     }
 
     private var content: some View {
         VStack {
+            KFloatingTextField(text: $viewModel.assetName, title: OSLocales.getText(.NAME))
             KFloatingDatePicker(value: $viewModel.transactionDate, title: OSLocales.getText(.TRANSACTION_DATE))
             TitledPicker(
                 selection: $viewModel.transactionType,
                 localized: .TYPE,
                 items: TransactionTypes.allCases) { item in
-                    Text(item.localized)
+                    OSText(item.localized)
                 }
                 .padding(.top, -(AppSizes.small.rawValue))
             KEnforcedFloatingDecimalField(
@@ -61,13 +53,34 @@ struct AddTransactionSheet: View {
         .padding(.vertical, .medium)
     }
 
-    private func onClose() { }
+    private var closeButton: some View {
+        OSButton(action: onClose) {
+            OSText(localized: .CLOSE)
+                .foregroundColor(.accentColor)
+        }
+    }
 
-    private func onDone() { }
+    private var doneButton: some View {
+        OSButton(action: onDone) {
+            OSText(localized: .DONE)
+                .foregroundColor(.accentColor)
+        }
+        .disabled(viewModel.invalidTransaction)
+    }
+
+    private func onClose() {
+        isShown = false
+    }
+
+    private func onDone() {
+        submittedTransaction(viewModel.transaction)
+        onClose()
+    }
 }
 
 private final class ViewModel: ObservableObject {
-    @Published var transactionDate = Date()
+    @Published var assetName = ""
+    @Published var transactionDate = Current.date()
     @Published var transactionType: TransactionTypes = .buy
     @Published var transactionAmount = 0.0
     @Published var pricePerUnitCurrency: Currencies = .EUR
@@ -75,11 +88,23 @@ private final class ViewModel: ObservableObject {
     @Published var feesCurrency: Currencies = .EUR
     @Published var fees = 0.0
 
-    init() { }
+    var transaction: OSTransaction {
+        .init(
+            assetName: assetName,
+            date: transactionDate,
+            type: transactionType,
+            amount: transactionAmount,
+            pricePerUnit: .init(amount: pricePerUnit, currency: pricePerUnitCurrency),
+            fees: .init(amount: fees, currency: feesCurrency))
+    }
+
+    var invalidTransaction: Bool {
+        assetName.trimmingByWhitespacesAndNewLines.isEmpty
+    }
 }
 
 struct AddTransactionSheet_Previews: PreviewProvider {
     static var previews: some View {
-        AddTransactionSheet()
+        AddTransactionSheet(isShown: .constant(true), submittedTransaction: { _ in })
     }
 }

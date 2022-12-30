@@ -17,7 +17,7 @@ struct OSButton<Content: View>: View {
     }
 
     var body: some View {
-        Button(action: { }) {
+        Button(action: action) {
             content()
         }
     }

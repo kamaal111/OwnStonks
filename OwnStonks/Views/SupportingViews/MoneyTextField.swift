@@ -30,13 +30,9 @@ struct MoneyTextField: View {
     var body: some View {
         TitledView(title: title) {
             HStack {
-                Picker("", selection: $currency) {
-                    ForEach(Currencies.allCases, id: \.self) { currency in
-                        Text(currency.rawValue)
-                            .tag(currency)
-                    }
+                OSPicker(selection: $currency, items: Currencies.allCases) { currency in
+                    OSText(currency.rawValue)
                 }
-                .labelsHidden()
                 .frame(width: 60)
                 TextField("", text: $stringValue)
             }

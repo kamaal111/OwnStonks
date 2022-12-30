@@ -20,7 +20,11 @@ struct HomeScreen: View {
             }
         }
         .toolbar(content: { toolbarView })
-        .sheet(isPresented: $showAddSymbolSheet, content: { AddTransactionSheet() })
+        .sheet(isPresented: $showAddSymbolSheet, content: {
+            AddTransactionSheet(isShown: $showAddSymbolSheet, submittedTransaction: { transaction in
+                print("transaction", transaction)
+            })
+        })
     }
 
     private var toolbarView: some View {

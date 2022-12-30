@@ -11,4 +11,5 @@ module.exports = {
     AMOUNT: "Amount",
     PRICE_PER_UNIT: "Price per unit",
     FEES: "Fees",
+    NAME: "Name",
 }

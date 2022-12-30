@@ -17,5 +17,6 @@ extension OSLocales {
         case AMOUNT
         case PRICE_PER_UNIT
         case FEES
+        case NAME
     }
 }
