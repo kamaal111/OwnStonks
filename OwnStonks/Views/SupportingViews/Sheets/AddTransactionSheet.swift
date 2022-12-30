@@ -54,14 +54,14 @@ struct AddTransactionSheet: View {
     }
 
     private var closeButton: some View {
-        OSButton(action: onClose) {
+        Button(action: onClose) {
             OSText(localized: .CLOSE)
                 .foregroundColor(.accentColor)
         }
     }
 
     private var doneButton: some View {
-        OSButton(action: onDone) {
+        Button(action: onDone) {
             OSText(localized: .DONE)
                 .foregroundColor(.accentColor)
         }

@@ -18,5 +18,6 @@ extension OSLocales {
         case PRICE_PER_UNIT
         case FEES
         case NAME
+        case ADD_YOUR_FIRST_TRANSACTION
     }
 }

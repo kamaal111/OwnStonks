@@ -20,6 +20,7 @@ struct OSButton<Content: View>: View {
         Button(action: action) {
             content()
         }
+        .buttonStyle(.plain)
     }
 }
 

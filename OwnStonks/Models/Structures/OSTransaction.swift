@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct OSTransaction: Hashable {
+struct OSTransaction: Hashable, Codable {
     let assetName: String
     let date: Date
     let type: TransactionTypes
@@ -16,7 +16,7 @@ struct OSTransaction: Hashable {
     let fees: Money
 }
 
-struct Money: Hashable {
+struct Money: Hashable, Codable {
     let amount: Double
     let currency: Currencies
 }

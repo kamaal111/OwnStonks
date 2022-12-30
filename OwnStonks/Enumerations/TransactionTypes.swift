@@ -8,7 +8,7 @@
 import OSLocales
 import Foundation
 
-enum TransactionTypes: CaseIterable {
+enum TransactionTypes: String, CaseIterable, Codable {
     case buy
     case sell
 

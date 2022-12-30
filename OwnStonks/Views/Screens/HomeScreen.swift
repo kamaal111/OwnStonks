@@ -8,30 +8,55 @@
 import SwiftUI
 import SalmonUI
 import OSLocales
-import BetterNavigation
+import ShrimpExtensions
 
 struct HomeScreen: View {
-    @State private var showAddSymbolSheet = false
+    @StateObject private var viewModel = ViewModel()
 
     var body: some View {
-        VStack {
-            StackNavigationLink(destination: 1, nextView: { screen in Text("\(screen)") }) {
-                Text("Next screen")
+        KScrollableForm  {
+            if viewModel.transactions.isEmpty {
+                OSButton(action: { viewModel.openAddTransactionSheet() }) {
+                    OSText(localized: .ADD_YOUR_FIRST_TRANSACTION)
+                        .foregroundColor(.accentColor)
+                }
+            }
+            ForEach(viewModel.transactions, id: \.self) { transaction in
+                TransactionView(transaction: transaction)
+                    .padding(.horizontal, .medium)
             }
         }
+        .padding(.vertical, .medium)
         .toolbar(content: { toolbarView })
-        .sheet(isPresented: $showAddSymbolSheet, content: {
-            AddTransactionSheet(isShown: $showAddSymbolSheet, submittedTransaction: { transaction in
-                print("transaction", transaction)
-            })
+        .sheet(isPresented: $viewModel.showAddTransactionSheet, content: {
+            AddTransactionSheet(
+                isShown: $viewModel.showAddTransactionSheet,
+                submittedTransaction: viewModel.handleSubmittedTransaction)
         })
     }
 
     private var toolbarView: some View {
-        Button(action: { showAddSymbolSheet = true }) {
+        Button(action: { viewModel.openAddTransactionSheet() }) {
             Image(systemName: "plus")
                 .foregroundColor(.accentColor)
         }
+        .help(OSLocales.getText(.ADD_TRANSACTION))
+    }
+}
+
+private final class ViewModel: ObservableObject {
+    @Published var showAddTransactionSheet = false
+    @Published private(set) var transactions: [OSTransaction] = []
+
+    func handleSubmittedTransaction(_ transaction: OSTransaction) {
+        transactions = transactions
+            .appended(transaction)
+            .sorted(by: \.date, using: .orderedDescending)
+    }
+
+    @MainActor
+    func openAddTransactionSheet() {
+        showAddTransactionSheet = true
     }
 }
 

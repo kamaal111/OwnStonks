@@ -27,6 +27,7 @@
 		2CB6E4A8295F838D008DE698 /* OSTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A7295F838D008DE698 /* OSTransaction.swift */; };
 		2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB6E4AB295F8599008DE698 /* ShrimpExtensions */; };
 		2CB6E4AE295F87A2008DE698 /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */; };
+		2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AF295F921B008DE698 /* TransactionView.swift */; };
 		2CB74A78295E32F700408363 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB74A77295E32F700408363 /* OSLocales */; };
 		2CB74A7A295E347100408363 /* OSText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A79295E347100408363 /* OSText.swift */; };
 		2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* AddTransactionSheet.swift */; };
@@ -58,6 +59,7 @@
 		2CB6E4A4295F8108008DE698 /* OSPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSPicker.swift; sourceTree = "<group>"; };
 		2CB6E4A7295F838D008DE698 /* OSTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTransaction.swift; sourceTree = "<group>"; };
 		2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaWarudo.swift; sourceTree = "<group>"; };
+		2CB6E4AF295F921B008DE698 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		2CB74A79295E347100408363 /* OSText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSText.swift; sourceTree = "<group>"; };
 		2CB74A7C295E351400408363 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
 		2CB74A7E295E355000408363 /* OSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSButton.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				2CB74A79295E347100408363 /* OSText.swift */,
 				2CB6E497295F5DFE008DE698 /* TitledPicker.swift */,
 				2CB6E49B295F642F008DE698 /* TitledView.swift */,
+				2CB6E4AF295F921B008DE698 /* TransactionView.swift */,
 				2CB74A7B295E350200408363 /* Sheets */,
 			);
 			path = SupportingViews;
@@ -333,6 +336,7 @@
 				2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */,
 				2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */,
 				2C07AF37295F525E00B7CF6E /* TransactionTypes.swift in Sources */,
+				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */,
