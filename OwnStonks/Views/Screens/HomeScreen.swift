@@ -15,12 +15,12 @@ struct HomeScreen: View {
 
     var body: some View {
         VStack {
-            StackNavigationLink(destination: 1, nextView: { screen in SubViewScreen(screen: screen) }) {
+            StackNavigationLink(destination: 1, nextView: { screen in Text("\(screen)") }) {
                 Text("Next screen")
             }
         }
         .toolbar(content: { toolbarView })
-        .sheet(isPresented: $showAddSymbolSheet, content: { AddSymbolSheet() })
+        .sheet(isPresented: $showAddSymbolSheet, content: { AddTransactionSheet() })
     }
 
     private var toolbarView: some View {

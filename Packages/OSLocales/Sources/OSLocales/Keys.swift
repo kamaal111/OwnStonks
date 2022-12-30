@@ -7,8 +7,15 @@
 
 extension OSLocales {
     public enum Keys: String {
-        case ADD_SYMBOL
+        case ADD_TRANSACTION
         case CLOSE
         case DONE
+        case TRANSACTION_DATE
+        case BUY
+        case SELL
+        case TYPE
+        case AMOUNT
+        case PRICE_PER_UNIT
+        case FEES
     }
 }

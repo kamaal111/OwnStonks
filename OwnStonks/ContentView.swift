@@ -9,8 +9,6 @@ import SwiftUI
 import BetterNavigation
 
 struct ContentView: View {
-    @State private var stack: [Int] = []
-
     var body: some View {
         NavigationView {
             if shouldHaveASidebar {
@@ -19,9 +17,9 @@ struct ContentView: View {
                 }
             }
             NavigationStackView(
-                stack: stack,
+                stack: [] as [Int],
                 root: { HomeScreen() },
-                subView: { screen in SubViewScreen(screen: screen) })
+                subView: { screen in Text("\(screen)") })
         }
         .navigationStyle(shouldHaveASidebar ? .columns : .stack)
     }

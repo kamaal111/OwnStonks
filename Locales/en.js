@@ -1,7 +1,14 @@
 // en.js
 
 module.exports = {
-    ADD_SYMBOL: "Add symbol",
+    ADD_TRANSACTION: "Add transaction",
     CLOSE: "Close",
-    DONE: "Done"
+    DONE: "Done",
+    TRANSACTION_DATE: "Transaction date",
+    BUY: "Buy",
+    SELL: "Sell",
+    TYPE: "Type",
+    AMOUNT: "Amount",
+    PRICE_PER_UNIT: "Price per unit",
+    FEES: "Fees",
 }
