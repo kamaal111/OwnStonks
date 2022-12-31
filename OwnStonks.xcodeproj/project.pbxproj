@@ -8,25 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C07AF34295F512300B7CF6E /* AppSizes.swift */; };
-		2C07AF37295F525E00B7CF6E /* TransactionTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C07AF36295F525E00B7CF6E /* TransactionTypes.swift */; };
 		2C0B996D2959FD6A00443BAC /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */; };
 		2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B996E2959FD6A00443BAC /* Persistence.swift */; };
-		2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */; };
 		2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B99732959FD6A00443BAC /* ContentView.swift */; };
 		2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99752959FD6D00443BAC /* Assets.xcassets */; };
 		2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */; };
 		2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9986295A0F2E00443BAC /* SwiftStructures */; };
 		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
 		2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */; };
+		2C5EF049296082F3000536BC /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5EF048296082F3000536BC /* Backend */; };
+		2C7CC3E3296093CE006164DB /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E2296093CE006164DB /* Models */; };
+		2C7CC3E62960973D006164DB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E52960973D006164DB /* Swinject */; };
+		2C7CC3EA2960983F006164DB /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */; };
+		2C7CC3EC29609868006164DB /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3EB29609868006164DB /* Container.swift */; };
+		2C7CC3EF29609B18006164DB /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3EE29609B18006164DB /* Logster */; };
+		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
-		2CB6E49A295F631E008DE698 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E499295F631E008DE698 /* Currencies.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
 		2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A2295F76F0008DE698 /* String+extensions.swift */; };
 		2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A4295F8108008DE698 /* OSPicker.swift */; };
-		2CB6E4A8295F838D008DE698 /* OSTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4A7295F838D008DE698 /* OSTransaction.swift */; };
 		2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB6E4AB295F8599008DE698 /* ShrimpExtensions */; };
-		2CB6E4AE295F87A2008DE698 /* ZaWarudo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */; };
 		2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AF295F921B008DE698 /* TransactionView.swift */; };
 		2CB74A78295E32F700408363 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB74A77295E32F700408363 /* OSLocales */; };
 		2CB74A7A295E347100408363 /* OSText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A79295E347100408363 /* OSText.swift */; };
@@ -37,11 +39,9 @@
 
 /* Begin PBXFileReference section */
 		2C07AF34295F512300B7CF6E /* AppSizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSizes.swift; sourceTree = "<group>"; };
-		2C07AF36295F525E00B7CF6E /* TransactionTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionTypes.swift; sourceTree = "<group>"; };
 		2C0B99692959FD6A00443BAC /* OwnStonks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C0B996E2959FD6A00443BAC /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
-		2C0B99712959FD6A00443BAC /* OwnStonks.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = OwnStonks.xcdatamodel; sourceTree = "<group>"; };
 		2C0B99732959FD6A00443BAC /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2C0B99752959FD6D00443BAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonks.entitlements; sourceTree = "<group>"; };
@@ -49,14 +49,17 @@
 		2C0B9981295A00F400443BAC /* SwiftStructures */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftStructures; sourceTree = "<group>"; };
 		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
 		2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
+		2C5EF044296078CF000536BC /* CDPersist */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CDPersist; sourceTree = "<group>"; };
+		2C5EF0472960829A000536BC /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
+		2C5EF04A29608909000536BC /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Models; sourceTree = "<group>"; };
+		2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
+		2C7CC3EB29609868006164DB /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
+		2C7CC3F029609C96006164DB /* ZaWarudo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ZaWarudo; sourceTree = "<group>"; };
 		2CB6E497295F5DFE008DE698 /* TitledPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledPicker.swift; sourceTree = "<group>"; };
-		2CB6E499295F631E008DE698 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
 		2CB6E49D295F6498008DE698 /* MoneyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTextField.swift; sourceTree = "<group>"; };
 		2CB6E4A2295F76F0008DE698 /* String+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+extensions.swift"; sourceTree = "<group>"; };
 		2CB6E4A4295F8108008DE698 /* OSPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSPicker.swift; sourceTree = "<group>"; };
-		2CB6E4A7295F838D008DE698 /* OSTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSTransaction.swift; sourceTree = "<group>"; };
-		2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZaWarudo.swift; sourceTree = "<group>"; };
 		2CB6E4AF295F921B008DE698 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		2CB74A79295E347100408363 /* OSText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSText.swift; sourceTree = "<group>"; };
 		2CB74A7C295E351400408363 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
@@ -73,10 +76,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */,
+				2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */,
 				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
 				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
+				2C7CC3EF29609B18006164DB /* Logster in Frameworks */,
 				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
+				2C5EF049296082F3000536BC /* Backend in Frameworks */,
+				2C7CC3E3296093CE006164DB /* Models in Frameworks */,
 				2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */,
+				2C7CC3E62960973D006164DB /* Swinject in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -87,8 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				2C07AF34295F512300B7CF6E /* AppSizes.swift */,
-				2CB6E499295F631E008DE698 /* Currencies.swift */,
-				2C07AF36295F525E00B7CF6E /* TransactionTypes.swift */,
 			);
 			path = Enumerations;
 			sourceTree = "<group>";
@@ -118,15 +124,14 @@
 			isa = PBXGroup;
 			children = (
 				2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */,
+				2C7CC3EB29609868006164DB /* Container.swift */,
 				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */,
 				2C0B996E2959FD6A00443BAC /* Persistence.swift */,
-				2CB6E4AD295F87A2008DE698 /* ZaWarudo.swift */,
 				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
 				2C07AF33295F510C00B7CF6E /* Enumerations */,
 				2CB6E4A1295F76DC008DE698 /* Extensions */,
-				2CB6E4A6295F837E008DE698 /* Models */,
-				2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */,
+				2C7CC3E729609772006164DB /* Models */,
 				2C0B99782959FD6D00443BAC /* Preview Content */,
 				2C0B9992295A1C3000443BAC /* Views */,
 			);
@@ -144,9 +149,13 @@
 		2C0B9980295A00C500443BAC /* Packages */ = {
 			isa = PBXGroup;
 			children = (
+				2C5EF0472960829A000536BC /* Backend */,
 				2C0B998F295A111B00443BAC /* BetterNavigation */,
+				2C5EF044296078CF000536BC /* CDPersist */,
+				2C5EF04A29608909000536BC /* Models */,
 				2CD7D4E0295CD615006F675D /* OSLocales */,
 				2C0B9981295A00F400443BAC /* SwiftStructures */,
+				2C7CC3F029609C96006164DB /* ZaWarudo */,
 			);
 			path = Packages;
 			sourceTree = "<group>";
@@ -175,28 +184,28 @@
 			path = Screens;
 			sourceTree = "<group>";
 		};
+		2C7CC3E729609772006164DB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				2C7CC3E8296097A9006164DB /* ViewModels */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		2C7CC3E8296097A9006164DB /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		2CB6E4A1295F76DC008DE698 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				2CB6E4A2295F76F0008DE698 /* String+extensions.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		2CB6E4A6295F837E008DE698 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				2CB6E4A9295F83B9008DE698 /* Structures */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		2CB6E4A9295F83B9008DE698 /* Structures */ = {
-			isa = PBXGroup;
-			children = (
-				2CB6E4A7295F838D008DE698 /* OSTransaction.swift */,
-			);
-			path = Structures;
 			sourceTree = "<group>";
 		};
 		2CB74A7B295E350200408363 /* Sheets */ = {
@@ -268,6 +277,11 @@
 				2CD7D4DE295CD472006F675D /* SalmonUI */,
 				2CB74A77295E32F700408363 /* OSLocales */,
 				2CB6E4AB295F8599008DE698 /* ShrimpExtensions */,
+				2C5EF048296082F3000536BC /* Backend */,
+				2C7CC3E2296093CE006164DB /* Models */,
+				2C7CC3E52960973D006164DB /* Swinject */,
+				2C7CC3EE29609B18006164DB /* Logster */,
+				2C7CC3F129609D27006164DB /* ZaWarudo */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -300,6 +314,8 @@
 			packageReferences = (
 				2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */,
 				2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
+				2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */,
+				2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -331,21 +347,18 @@
 				2CB74A7F295E355000408363 /* OSButton.swift in Sources */,
 				2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */,
 				2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */,
-				2C07AF37295F525E00B7CF6E /* TransactionTypes.swift in Sources */,
 				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
 				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
-				2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */,
-				2CB6E49A295F631E008DE698 /* Currencies.swift in Sources */,
-				2CB6E4A8295F838D008DE698 /* OSTransaction.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
-				2CB6E4AE295F87A2008DE698 /* ZaWarudo.swift in Sources */,
+				2C7CC3EA2960983F006164DB /* TransactionsViewModel.swift in Sources */,
 				2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,
 				2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */,
+				2C7CC3EC29609868006164DB /* Container.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +574,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Swinject/Swinject.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
+		2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/Logster.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kamaalio/ShrimpExtensions.git";
@@ -588,6 +617,28 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = BetterNavigation;
 		};
+		2C5EF048296082F3000536BC /* Backend */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Backend;
+		};
+		2C7CC3E2296093CE006164DB /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
+		};
+		2C7CC3E52960973D006164DB /* Swinject */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */;
+			productName = Swinject;
+		};
+		2C7CC3EE29609B18006164DB /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */;
+			productName = Logster;
+		};
+		2C7CC3F129609D27006164DB /* ZaWarudo */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ZaWarudo;
+		};
 		2CB6E4AB295F8599008DE698 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */;
@@ -603,19 +654,6 @@
 			productName = SalmonUI;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		2C0B99702959FD6A00443BAC /* OwnStonks.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				2C0B99712959FD6A00443BAC /* OwnStonks.xcdatamodel */,
-			);
-			currentVersion = 2C0B99712959FD6A00443BAC /* OwnStonks.xcdatamodel */;
-			path = OwnStonks.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 2C0B99612959FD6A00443BAC /* Project object */;
 }

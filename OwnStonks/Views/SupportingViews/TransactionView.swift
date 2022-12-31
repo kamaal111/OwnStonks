@@ -5,7 +5,9 @@
 //  Created by Kamaal M Farah on 30/12/2022.
 //
 
+import Models
 import SwiftUI
+import ZaWarudo
 
 struct TransactionView: View {
     let transaction: OSTransaction

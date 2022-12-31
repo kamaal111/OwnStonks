@@ -27,7 +27,9 @@ struct TitledView<Content: View>: View {
                 .ktakeWidthEagerly(alignment: .leading)
             content()
                 .ktakeWidthEagerly(alignment: .leading)
+            #if os(iOS)
                 .padding(.leading, -12)
+            #endif
         }
     }
 }

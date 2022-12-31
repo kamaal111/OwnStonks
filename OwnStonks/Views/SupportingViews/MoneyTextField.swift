@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 30/12/2022.
 //
 
+import Models
 import SwiftUI
 import SalmonUI
 import OSLocales
@@ -31,7 +32,7 @@ struct MoneyTextField: View {
         TitledView(title: title) {
             HStack {
                 OSPicker(selection: $currency, items: Currencies.allCases) { currency in
-                    OSText(currency.rawValue)
+                    OSText(currency.symbol)
                 }
                 .frame(width: 60)
                 TextField("", text: $stringValue)

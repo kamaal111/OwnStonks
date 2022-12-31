@@ -9,13 +9,13 @@ import SwiftUI
 
 @main
 struct OwnStonksApp: App {
-    let persistenceController = PersistenceController.shared
+    @StateObject private var transactionsViewModel = TransactionsViewModel()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 300, minHeight: 300)
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .environmentObject(transactionsViewModel)
         }
     }
 }
