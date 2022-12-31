@@ -11,6 +11,7 @@ import Foundation
 import ShrimpExtensions
 
 public struct OSTransaction: Hashable, Codable {
+    public let id: UUID?
     public let assetName: String
     public let date: Date
     public let type: TransactionTypes
@@ -19,12 +20,14 @@ public struct OSTransaction: Hashable, Codable {
     public let fees: Money
 
     public init(
+        id: UUID?,
         assetName: String,
         date: Date,
         type: TransactionTypes,
         amount: Double,
         pricePerUnit: Money,
         fees: Money) {
+            self.id = id
             self.assetName = assetName
             self.date = date
             self.type = type

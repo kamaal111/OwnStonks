@@ -93,6 +93,7 @@ final class TransactionsViewModel: ObservableObject {
     @MainActor
     private func setTransactions(_ transactions: [OSTransaction]) {
         self.transactions = transactions
+            .filter({ $0.id != nil })
             .sorted(by: \.date, using: .orderedDescending)
     }
 }

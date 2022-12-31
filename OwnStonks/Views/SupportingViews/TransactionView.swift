@@ -67,6 +67,7 @@ struct TransactionView_Previews: PreviewProvider {
     static var previews: some View {
         TransactionView(
             transaction: .init(
+                id: UUID(uuidString: "94f03193-bb95-4755-8fbb-979320601dc2")!,
                 assetName: "Bitcoin",
                 date: Current.date(),
                 type: .buy,

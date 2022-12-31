@@ -93,6 +93,7 @@ private final class ViewModel: ObservableObject {
 
     var transaction: OSTransaction {
         .init(
+            id: .none,
             assetName: assetName,
             date: transactionDate,
             type: transactionType,

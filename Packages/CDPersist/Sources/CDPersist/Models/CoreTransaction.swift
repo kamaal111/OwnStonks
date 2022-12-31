@@ -25,6 +25,7 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
 
     public var osTransaction: OSTransaction {
         OSTransaction(
+            id: id,
             assetName: assetName,
             date: transactionDate,
             type: TransactionTypes(rawValue: transactionType)!,
