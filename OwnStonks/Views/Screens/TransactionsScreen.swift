@@ -8,12 +8,14 @@
 import Models
 import SwiftUI
 import SalmonUI
+import PopperUp
 import OSLocales
 import ShrimpExtensions
 import BetterNavigation
 
 struct TransactionsScreen: View {
     @EnvironmentObject private var transactionsViewModel: TransactionsViewModel
+    @EnvironmentObject private var popperUpManager: PopperUpManager
 
     @StateObject private var viewModel = ViewModel()
 
@@ -41,7 +43,7 @@ struct TransactionsScreen: View {
         .sheet(isPresented: $viewModel.showAddTransactionSheet, content: {
             AddTransactionSheet(
                 isShown: $viewModel.showAddTransactionSheet,
-                submittedTransaction: transactionsViewModel.addTransaction)
+                submittedTransaction: handleSubmittedTransaction)
         })
         .onAppear(perform: handleOnAppear)
     }
@@ -55,7 +57,23 @@ struct TransactionsScreen: View {
     }
 
     private func handleOnAppear() {
-        transactionsViewModel.fetch()
+        let result = transactionsViewModel.fetch()
+        switch result {
+        case .failure(let failure):
+            popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
+        case .success:
+            break
+        }
+    }
+
+    private func handleSubmittedTransaction(_ transaction: OSTransaction) {
+        let result = transactionsViewModel.addTransaction(transaction)
+        switch result {
+        case .failure(let failure):
+            popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
+        case .success:
+            break
+        }
     }
 }
 

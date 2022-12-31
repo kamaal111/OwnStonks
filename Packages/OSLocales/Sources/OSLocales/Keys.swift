@@ -20,5 +20,8 @@ extension OSLocales {
         case NAME
         case ADD_YOUR_FIRST_TRANSACTION
         case TRANSACTIONS
+        case GENERAL_ERROR_TITLE
+        case FETCH_TRANSACTIONS_FAILURE_DESCRIPTION
+        case CREATE_TRANSACTION_FAILURE_DESCRIPTION
     }
 }

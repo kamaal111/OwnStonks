@@ -6,9 +6,12 @@
 //
 
 import SwiftUI
+import PopperUp
 import BetterNavigation
 
 struct ContentView: View {
+    @StateObject private var popperUpManager = PopperUpManager()
+
     var body: some View {
         NavigationView {
             if shouldHaveASidebar {
@@ -20,6 +23,7 @@ struct ContentView: View {
                 stack: [] as [Int],
                 root: { TransactionsScreen() },
                 subView: { screen in Text("\(screen)") })
+            .withPopperUp(popperUpManager)
         }
         .navigationStyle(shouldHaveASidebar ? .columns : .stack)
     }

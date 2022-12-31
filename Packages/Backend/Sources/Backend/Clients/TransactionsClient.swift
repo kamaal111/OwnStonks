@@ -18,15 +18,23 @@ public final class TransactionsClient {
         self.persistenceController = container.resolve(PersistenceController.self, argument: preview)!
     }
 
-    public func list() -> [OSTransaction] {
-        #warning("Handle errors as well")
-        return try! CoreTransaction
-            .list(from: persistenceController.context)
-            .map(\.osTransaction)
+    public enum Errors: Error {
+        case listingError(context: Error)
+        case creationError(context: Error)
     }
 
-    @discardableResult
-    public func create(_ transaction: OSTransaction) -> OSTransaction {
+    public func list() -> Result<[OSTransaction], Errors> {
+        let transactions: [CoreTransaction]
+        do {
+            transactions = try CoreTransaction.list(from: persistenceController.context)
+        } catch {
+            return .failure(.listingError(context: error))
+        }
+
+        return .success(transactions.map(\.osTransaction))
+    }
+
+    public func create(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {
         let newTransaction = CoreTransaction(context: persistenceController.context)
         newTransaction.updateDate = Current.date()
         newTransaction.kCreationDate = Current.date()
@@ -40,9 +48,12 @@ public final class TransactionsClient {
         newTransaction.fees = transaction.fees.amount
         newTransaction.feesCurrency = transaction.fees.currency.rawValue
 
-        #warning("Handle errors as well")
-        try! persistenceController.context.save()
+        do {
+            try persistenceController.context.save()
+        } catch {
+            return .failure(.creationError(context: error))
+        }
 
-        return newTransaction.osTransaction
+        return .success(newTransaction.osTransaction)
     }
 }

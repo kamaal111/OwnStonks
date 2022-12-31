@@ -23,6 +23,7 @@
 		2C7CC3EC29609868006164DB /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3EB29609868006164DB /* Container.swift */; };
 		2C7CC3EF29609B18006164DB /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3EE29609B18006164DB /* Logster */; };
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
+		2C7CC3F52960A514006164DB /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F42960A514006164DB /* PopperUp */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
@@ -79,6 +80,7 @@
 				2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */,
 				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
 				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
+				2C7CC3F52960A514006164DB /* PopperUp in Frameworks */,
 				2C7CC3EF29609B18006164DB /* Logster in Frameworks */,
 				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
 				2C5EF049296082F3000536BC /* Backend in Frameworks */,
@@ -282,6 +284,7 @@
 				2C7CC3E52960973D006164DB /* Swinject */,
 				2C7CC3EE29609B18006164DB /* Logster */,
 				2C7CC3F129609D27006164DB /* ZaWarudo */,
+				2C7CC3F42960A514006164DB /* PopperUp */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -316,6 +319,7 @@
 				2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */,
 				2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */,
+				2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -590,6 +594,14 @@
 				minimumVersion = 1.1.0;
 			};
 		};
+		2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/PopperUp.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.4.1;
+			};
+		};
 		2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kamaalio/ShrimpExtensions.git";
@@ -638,6 +650,11 @@
 		2C7CC3F129609D27006164DB /* ZaWarudo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZaWarudo;
+		};
+		2C7CC3F42960A514006164DB /* PopperUp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */;
+			productName = PopperUp;
 		};
 		2CB6E4AB295F8599008DE698 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
