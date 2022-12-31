@@ -5,8 +5,10 @@
 //  Created by Kamaal M Farah on 31/12/2022.
 //
 
+import SwiftUI
 import OSLocales
 import Foundation
+import ShrimpExtensions
 
 public struct OSTransaction: Hashable, Codable {
     public let assetName: String
@@ -40,11 +42,34 @@ public struct Money: Hashable, Codable {
         self.amount = amount
         self.currency = currency
     }
+
+    public var localized: String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = currency.symbol
+
+        guard let string = formatter.string(from: amount.nsNumber) else {
+            assertionFailure("Failed to format money")
+            return ""
+        }
+
+        return string
+    }
 }
 
 public enum TransactionTypes: String, CaseIterable, Codable {
     case buy
     case sell
+
+    public var color: Color {
+        switch self {
+        case .buy:
+            return .green
+        case .sell:
+            return .red
+        }
+    }
 
     public var localized: String {
         switch self {

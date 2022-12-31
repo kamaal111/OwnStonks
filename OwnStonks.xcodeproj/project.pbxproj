@@ -24,6 +24,7 @@
 		2C7CC3EF29609B18006164DB /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3EE29609B18006164DB /* Logster */; };
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
 		2C7CC3F52960A514006164DB /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F42960A514006164DB /* PopperUp */; };
+		2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
@@ -56,6 +57,7 @@
 		2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
 		2C7CC3EB29609868006164DB /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		2C7CC3F029609C96006164DB /* ZaWarudo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ZaWarudo; sourceTree = "<group>"; };
+		2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInformationLabel.swift; sourceTree = "<group>"; };
 		2CB6E497295F5DFE008DE698 /* TitledPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledPicker.swift; sourceTree = "<group>"; };
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
 		2CB6E49D295F6498008DE698 /* MoneyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTextField.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				2CB74A79295E347100408363 /* OSText.swift */,
 				2CB6E497295F5DFE008DE698 /* TitledPicker.swift */,
 				2CB6E49B295F642F008DE698 /* TitledView.swift */,
+				2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */,
 				2CB6E4AF295F921B008DE698 /* TransactionView.swift */,
 				2CB74A7B295E350200408363 /* Sheets */,
 			);
@@ -352,6 +355,7 @@
 				2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */,
 				2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */,
 				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
+				2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,

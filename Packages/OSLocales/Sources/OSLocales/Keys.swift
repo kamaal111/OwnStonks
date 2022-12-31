@@ -23,5 +23,9 @@ extension OSLocales {
         case GENERAL_ERROR_TITLE
         case FETCH_TRANSACTIONS_FAILURE_DESCRIPTION
         case CREATE_TRANSACTION_FAILURE_DESCRIPTION
+        case AMOUNT_LABEL
+        case PER_UNIT_LABEL
+        case FEES_LABEL
+        case TRANSACTION_DATE_LABEL
     }
 }

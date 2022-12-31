@@ -5,12 +5,17 @@ import PackageDescription
 
 let package = Package(
     name: "Models",
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v10_15),
+    ],
     products: [
         .library(
             name: "Models",
             targets: ["Models"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/Kamaalio/ShrimpExtensions.git", "3.0.0" ..< "4.0.0"),
         .package(path: "../OSLocales")
     ],
     targets: [
@@ -18,6 +23,7 @@ let package = Package(
             name: "Models",
             dependencies: [
                 "OSLocales",
+                "ShrimpExtensions",
             ]),
         .testTarget(
             name: "ModelsTests",

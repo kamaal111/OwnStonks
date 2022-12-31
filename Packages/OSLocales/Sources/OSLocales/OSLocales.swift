@@ -15,7 +15,11 @@ public struct OSLocales {
     /// - Parameter key: the localized key.
     /// - Returns: a localized string.
     public static func getText(_ key: Keys) -> String {
-        key.localized
+        getText(key, with: [])
+    }
+
+    public static func getText(_ key: Keys, with variables: [CVarArg]) -> String {
+        key.localized(with: variables)
     }
 }
 

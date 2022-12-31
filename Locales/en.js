@@ -17,4 +17,8 @@ module.exports = {
     GENERAL_ERROR_TITLE: "Something went wrong",
     FETCH_TRANSACTIONS_FAILURE_DESCRIPTION: "Failed to fetch transactions",
     CREATE_TRANSACTION_FAILURE_DESCRIPTION: "Failed to create this transaction",
+    AMOUNT_LABEL: "Amount: %@",
+    PER_UNIT_LABEL: "Per unit: %@",
+    FEES_LABEL: "Fees: %@",
+    TRANSACTION_DATE_LABEL: "Date: %@",
 }

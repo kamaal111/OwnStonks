@@ -30,7 +30,11 @@ struct TransactionsScreen: View {
                 }
                 ForEach(transactionsViewModel.transactions, id: \.self) { transaction in
                     TransactionView(transaction: transaction)
-                        .padding(.horizontal, .medium)
+                    #if os(macOS)
+                    if transactionsViewModel.transactions.last != transaction {
+                        Divider()
+                    }
+                    #endif
                 }
             }
             #if os(macOS)

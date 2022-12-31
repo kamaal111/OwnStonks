@@ -13,7 +13,11 @@ func OSText(_ content: String) -> Text {
 }
 
 func OSText(localized key: OSLocales.Keys) -> Text {
-    OSText(OSLocales.getText(key))
+    OSText(localized: key, with: [])
+}
+
+func OSText(localized key: OSLocales.Keys, with variables: [CVarArg]) -> Text {
+    OSText(OSLocales.getText(key, with: variables))
 }
 
 struct OSText_Previews: PreviewProvider {
