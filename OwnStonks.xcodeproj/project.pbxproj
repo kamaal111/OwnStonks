@@ -17,7 +17,7 @@
 		2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */; };
 		2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9986295A0F2E00443BAC /* SwiftStructures */; };
 		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
-		2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* HomeScreen.swift */; };
+		2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49A295F631E008DE698 /* Currencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E499295F631E008DE698 /* Currencies.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
@@ -33,8 +33,6 @@
 		2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* AddTransactionSheet.swift */; };
 		2CB74A7F295E355000408363 /* OSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7E295E355000408363 /* OSButton.swift */; };
 		2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD7D4DE295CD472006F675D /* SalmonUI */; };
-		2CD7D4E6295CD923006F675D /* en.js in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7D4E5295CD923006F675D /* en.js */; };
-		2CD7D4E8295CD965006F675D /* locale.js in Resources */ = {isa = PBXBuildFile; fileRef = 2CD7D4E7295CD965006F675D /* locale.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,7 +48,7 @@
 		2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C0B9981295A00F400443BAC /* SwiftStructures */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftStructures; sourceTree = "<group>"; };
 		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
-		2C0B9994295A1C4300443BAC /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
+		2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
 		2CB6E497295F5DFE008DE698 /* TitledPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledPicker.swift; sourceTree = "<group>"; };
 		2CB6E499295F631E008DE698 /* Currencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Currencies.swift; sourceTree = "<group>"; };
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
@@ -172,7 +170,7 @@
 		2C0B9993295A1C3600443BAC /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				2C0B9994295A1C4300443BAC /* HomeScreen.swift */,
+				2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -317,8 +315,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2CD7D4E8295CD965006F675D /* locale.js in Resources */,
-				2CD7D4E6295CD923006F675D /* en.js in Resources */,
 				2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */,
 				2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */,
 			);
@@ -339,7 +335,7 @@
 				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
-				2C0B9995295A1C4300443BAC /* HomeScreen.swift in Sources */,
+				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
 				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
 				2C0B99722959FD6A00443BAC /* OwnStonks.xcdatamodeld in Sources */,

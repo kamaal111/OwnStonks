@@ -19,5 +19,6 @@ extension OSLocales {
         case FEES
         case NAME
         case ADD_YOUR_FIRST_TRANSACTION
+        case TRANSACTIONS
     }
 }

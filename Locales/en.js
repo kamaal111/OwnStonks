@@ -13,4 +13,5 @@ module.exports = {
     FEES: "Fees",
     NAME: "Name",
     ADD_YOUR_FIRST_TRANSACTION: "Press here to add your first transaction",
+    TRANSACTIONS: "Transactions",
 }

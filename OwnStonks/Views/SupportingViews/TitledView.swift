@@ -23,10 +23,11 @@ struct TitledView<Content: View>: View {
                 .font(.caption)
                 .foregroundColor(.accentColor)
                 .padding(.bottom, -(AppSizes.extraSmall.rawValue))
-                .padding(.leading, .extraSmall)
                 .padding(.top, .extraSmall)
                 .ktakeWidthEagerly(alignment: .leading)
             content()
+                .ktakeWidthEagerly(alignment: .leading)
+                .padding(.leading, -12)
         }
     }
 }

@@ -31,6 +31,7 @@ struct AddTransactionSheet: View {
         VStack {
             KFloatingTextField(text: $viewModel.assetName, title: OSLocales.getText(.NAME))
             KFloatingDatePicker(value: $viewModel.transactionDate, title: OSLocales.getText(.TRANSACTION_DATE))
+                .ktakeWidthEagerly(alignment: .leading)
             TitledPicker(
                 selection: $viewModel.transactionType,
                 localized: .TYPE,

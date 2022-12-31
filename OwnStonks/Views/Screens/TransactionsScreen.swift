@@ -1,5 +1,5 @@
 //
-//  HomeScreen.swift
+//  TransactionsScreen.swift
 //  OwnStonks
 //
 //  Created by Kamaal M Farah on 26/12/2022.
@@ -9,25 +9,32 @@ import SwiftUI
 import SalmonUI
 import OSLocales
 import ShrimpExtensions
+import BetterNavigation
 
-struct HomeScreen: View {
+struct TransactionsScreen: View {
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
         KScrollableForm  {
-            if viewModel.transactions.isEmpty {
-                OSButton(action: { viewModel.openAddTransactionSheet() }) {
-                    OSText(localized: .ADD_YOUR_FIRST_TRANSACTION)
-                        .foregroundColor(.accentColor)
+            KSection(header: OSLocales.getText(.TRANSACTIONS)) {
+                if viewModel.transactions.isEmpty {
+                    OSButton(action: { viewModel.openAddTransactionSheet() }) {
+                        OSText(localized: .ADD_YOUR_FIRST_TRANSACTION)
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                ForEach(viewModel.transactions, id: \.self) { transaction in
+                    TransactionView(transaction: transaction)
+                        .padding(.horizontal, .medium)
                 }
             }
-            ForEach(viewModel.transactions, id: \.self) { transaction in
-                TransactionView(transaction: transaction)
-                    .padding(.horizontal, .medium)
-            }
+            #if os(macOS)
+            .padding(.horizontal, .medium)
+            #endif
         }
         .padding(.vertical, .medium)
         .toolbar(content: { toolbarView })
+        .navigationTitle(title: OSLocales.getText(.TRANSACTIONS), displayMode: .large)
         .sheet(isPresented: $viewModel.showAddTransactionSheet, content: {
             AddTransactionSheet(
                 isShown: $viewModel.showAddTransactionSheet,
@@ -60,8 +67,8 @@ private final class ViewModel: ObservableObject {
     }
 }
 
-struct HomeScreen_Previews: PreviewProvider {
+struct TransactionsScreen_Previews: PreviewProvider {
     static var previews: some View {
-        HomeScreen()
+        TransactionsScreen()
     }
 }

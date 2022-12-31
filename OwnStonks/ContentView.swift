@@ -18,7 +18,7 @@ struct ContentView: View {
             }
             NavigationStackView(
                 stack: [] as [Int],
-                root: { HomeScreen() },
+                root: { TransactionsScreen() },
                 subView: { screen in Text("\(screen)") })
         }
         .navigationStyle(shouldHaveASidebar ? .columns : .stack)
