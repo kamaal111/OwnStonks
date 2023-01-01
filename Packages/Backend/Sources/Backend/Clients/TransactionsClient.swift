@@ -12,11 +12,11 @@ import CDPersist
 import Foundation
 import ShrimpExtensions
 
-public final class TransactionsClient {
-    let persistenceController: PersistenceController
+public struct TransactionsClient {
+    let preview: Bool
 
     public init(preview: Bool = false) {
-        self.persistenceController = container.resolve(PersistenceController.self, argument: preview)!
+        self.preview = preview
     }
 
     public enum Errors: Error {
@@ -69,5 +69,9 @@ public final class TransactionsClient {
         }
 
         return .success(newTransaction.osTransaction)
+    }
+
+    private var persistenceController: PersistenceController {
+        container.resolve(PersistenceController.self, argument: preview)!
     }
 }

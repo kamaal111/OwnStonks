@@ -5,10 +5,16 @@
 //  Created by Kamaal M Farah on 31/12/2022.
 //
 
-public final class Backend {
+public class Backend {
     public let transactions: TransactionsClient
+    public let forex: ForexClient
 
-    public init(preview: Bool = false) {
+    private init(preview: Bool = false) {
         self.transactions = TransactionsClient(preview: preview)
+        self.forex = ForexClient(preview: preview)
     }
+
+    public static let shared = Backend()
+
+    public static let preview = Backend(preview: true)
 }

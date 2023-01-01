@@ -15,6 +15,7 @@ import BetterNavigation
 
 struct TransactionsScreen: View {
     @EnvironmentObject private var transactionsManager: TransactionsManager
+    @EnvironmentObject private var exchangeRateManager: ExchangeRateManager
     @EnvironmentObject private var popperUpManager: PopperUpManager
 
     @StateObject private var viewModel = ViewModel()
@@ -74,6 +75,7 @@ struct TransactionsScreen: View {
             if case .failure(let failure) = result {
                 popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
             }
+            await exchangeRateManager.fetch()
         }
     }
 

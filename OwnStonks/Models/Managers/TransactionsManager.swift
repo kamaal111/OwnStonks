@@ -19,10 +19,10 @@ private let logger = Logster(from: TransactionsManager.self)
 final class TransactionsManager: ObservableObject {
     @Published private(set) var transactions: [OSTransaction] = []
 
-    private let backend: Backend
+    private let preview: Bool
 
     init(preview: Bool = false) {
-        self.backend = container.resolve(Backend.self, argument: preview)!
+        self.preview = preview
     }
 
     func fetch() async -> Result<Void, Errors> {
@@ -74,6 +74,10 @@ final class TransactionsManager: ObservableObject {
         return .success(())
     }
 
+    private var backend: Backend {
+        container.resolve(Backend.self, argument: preview)!
+    }
+
     @MainActor
     private func setTransactions(_ transactions: [OSTransaction]) {
         self.transactions = transactions
@@ -93,6 +97,7 @@ final class TransactionsManager: ObservableObject {
     }
 
     private func benchmark<T>(function: () async -> T, duration: (_ duration: TimeInterval) -> Void) async -> T {
+        #warning("Duplicate code")
         let info = ProcessInfo.processInfo
         let begin = info.systemUptime
         let result = await function()
