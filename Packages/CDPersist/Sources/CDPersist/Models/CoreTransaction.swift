@@ -7,6 +7,7 @@
 
 import Models
 import CoreData
+import ZaWarudo
 import ManuallyManagedObject
 
 @objc(CoreTransaction)
@@ -34,6 +35,23 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
             fees: Money(amount: fees, currency: Currencies(rawValue: feesCurrency)!))
     }
 
+    public func update(from transaction: OSTransaction) throws -> CoreTransaction {
+        try update(from: transaction, save: true)
+    }
+
+    public static func create(
+        from transaction: OSTransaction,
+        using context: NSManagedObjectContext) throws -> CoreTransaction {
+            let newTransaction = try CoreTransaction(context: context)
+                .update(from: transaction, save: false)
+            newTransaction.id = Current.uuid()
+            newTransaction.kCreationDate = Current.date()
+
+            try context.save()
+
+            return newTransaction
+        }
+
     public static let properties: [ManagedObjectPropertyConfiguration] = [
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.updateDate, type: .date, isOptional: false),
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.kCreationDate, type: .date, isOptional: false),
@@ -47,4 +65,20 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.fees, type: .double, isOptional: false),
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.feesCurrency, type: .string, isOptional: false),
     ]
+
+    private func update(from transaction: OSTransaction, save: Bool) throws -> CoreTransaction {
+        self.updateDate = Current.date()
+        self.assetName = transaction.assetName
+        self.transactionDate = transaction.date
+        self.transactionType = transaction.type.rawValue
+        self.amount = transaction.amount
+        self.pricePerUnit = transaction.pricePerUnit.amount
+        self.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
+        self.fees = transaction.fees.amount
+        self.feesCurrency = transaction.fees.currency.rawValue
+
+        try managedObjectContext?.save()
+
+        return self
+    }
 }

@@ -50,41 +50,20 @@ public final class TransactionsClient {
 
         guard let foundTransaction else { return .failure(.uncommitedTransaction) }
 
-        foundTransaction.updateDate = Current.date()
-        foundTransaction.assetName = transaction.assetName
-        foundTransaction.transactionDate = transaction.date
-        foundTransaction.transactionType = transaction.type.rawValue
-        foundTransaction.amount = transaction.amount
-        foundTransaction.pricePerUnit = transaction.pricePerUnit.amount
-        foundTransaction.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
-        foundTransaction.fees = transaction.fees.amount
-        foundTransaction.feesCurrency = transaction.fees.currency.rawValue
-
+        let updatedTransaction: CoreTransaction
         do {
-            try persistenceController.context.save()
+            updatedTransaction = try foundTransaction.update(from: transaction)
         } catch {
             return .failure(.updateError(context: error))
         }
 
-        return .success(foundTransaction.osTransaction)
+        return .success(updatedTransaction.osTransaction)
     }
 
     public func create(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {
-        let newTransaction = CoreTransaction(context: persistenceController.context)
-        newTransaction.updateDate = Current.date()
-        newTransaction.kCreationDate = Current.date()
-        newTransaction.id = Current.uuid()
-        newTransaction.assetName = transaction.assetName
-        newTransaction.transactionDate = transaction.date
-        newTransaction.transactionType = transaction.type.rawValue
-        newTransaction.amount = transaction.amount
-        newTransaction.pricePerUnit = transaction.pricePerUnit.amount
-        newTransaction.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
-        newTransaction.fees = transaction.fees.amount
-        newTransaction.feesCurrency = transaction.fees.currency.rawValue
-
+        let newTransaction: CoreTransaction
         do {
-            try persistenceController.context.save()
+            newTransaction = try CoreTransaction.create(from: transaction, using: persistenceController.context)
         } catch {
             return .failure(.creationError(context: error))
         }
