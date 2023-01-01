@@ -25,6 +25,10 @@
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
 		2C7CC3F52960A514006164DB /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F42960A514006164DB /* PopperUp */; };
 		2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */; };
+		2C7CC3FA2960BF03006164DB /* InvisibleFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3F92960BF03006164DB /* InvisibleFill.swift */; };
+		2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */; };
+		2C7CC3FE2960C8D9006164DB /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FD2960C8D9006164DB /* EditableText.swift */; };
+		2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FF2960CA51006164DB /* EditableDate.swift */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
@@ -34,8 +38,11 @@
 		2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E4AF295F921B008DE698 /* TransactionView.swift */; };
 		2CB74A78295E32F700408363 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB74A77295E32F700408363 /* OSLocales */; };
 		2CB74A7A295E347100408363 /* OSText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A79295E347100408363 /* OSText.swift */; };
-		2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* AddTransactionSheet.swift */; };
+		2CB74A7D295E351400408363 /* TransactionDetailSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7C295E351400408363 /* TransactionDetailSheet.swift */; };
 		2CB74A7F295E355000408363 /* OSButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB74A7E295E355000408363 /* OSButton.swift */; };
+		2CCCA5A62961D90600B1C846 /* EditablePickerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCA5A52961D90600B1C846 /* EditablePickerType.swift */; };
+		2CCCA5A82961DBD200B1C846 /* EditableDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCA5A72961DBD200B1C846 /* EditableDecimal.swift */; };
+		2CCCA5AA2961DCEF00B1C846 /* EditableMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */; };
 		2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD7D4DE295CD472006F675D /* SalmonUI */; };
 /* End PBXBuildFile section */
 
@@ -58,6 +65,10 @@
 		2C7CC3EB29609868006164DB /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		2C7CC3F029609C96006164DB /* ZaWarudo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ZaWarudo; sourceTree = "<group>"; };
 		2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInformationLabel.swift; sourceTree = "<group>"; };
+		2C7CC3F92960BF03006164DB /* InvisibleFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvisibleFill.swift; sourceTree = "<group>"; };
+		2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheetContext.swift; sourceTree = "<group>"; };
+		2C7CC3FD2960C8D9006164DB /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
+		2C7CC3FF2960CA51006164DB /* EditableDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDate.swift; sourceTree = "<group>"; };
 		2CB6E497295F5DFE008DE698 /* TitledPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledPicker.swift; sourceTree = "<group>"; };
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
 		2CB6E49D295F6498008DE698 /* MoneyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTextField.swift; sourceTree = "<group>"; };
@@ -65,8 +76,11 @@
 		2CB6E4A4295F8108008DE698 /* OSPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSPicker.swift; sourceTree = "<group>"; };
 		2CB6E4AF295F921B008DE698 /* TransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionView.swift; sourceTree = "<group>"; };
 		2CB74A79295E347100408363 /* OSText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSText.swift; sourceTree = "<group>"; };
-		2CB74A7C295E351400408363 /* AddTransactionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionSheet.swift; sourceTree = "<group>"; };
+		2CB74A7C295E351400408363 /* TransactionDetailSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheet.swift; sourceTree = "<group>"; };
 		2CB74A7E295E355000408363 /* OSButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSButton.swift; sourceTree = "<group>"; };
+		2CCCA5A52961D90600B1C846 /* EditablePickerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditablePickerType.swift; sourceTree = "<group>"; };
+		2CCCA5A72961DBD200B1C846 /* EditableDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDecimal.swift; sourceTree = "<group>"; };
+		2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableMoney.swift; sourceTree = "<group>"; };
 		2CD7D4E0295CD615006F675D /* OSLocales */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = OSLocales; sourceTree = "<group>"; };
 		2CD7D4E1295CD84A006F675D /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CD7D4E5295CD923006F675D /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
@@ -99,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				2C07AF34295F512300B7CF6E /* AppSizes.swift */,
+				2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */,
 			);
 			path = Enumerations;
 			sourceTree = "<group>";
@@ -176,6 +191,7 @@
 			children = (
 				2C0B9993295A1C3600443BAC /* Screens */,
 				2CD7D4DC295CD170006F675D /* SupportingViews */,
+				2C7CC3F82960BEF2006164DB /* ViewModifiers */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -204,6 +220,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		2C7CC3F82960BEF2006164DB /* ViewModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				2C7CC3F92960BF03006164DB /* InvisibleFill.swift */,
+			);
+			path = ViewModifiers;
+			sourceTree = "<group>";
+		};
 		2CB6E4A1295F76DC008DE698 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -215,7 +239,7 @@
 		2CB74A7B295E350200408363 /* Sheets */ = {
 			isa = PBXGroup;
 			children = (
-				2CB74A7C295E351400408363 /* AddTransactionSheet.swift */,
+				2CB74A7C295E351400408363 /* TransactionDetailSheet.swift */,
 			);
 			path = Sheets;
 			sourceTree = "<group>";
@@ -223,6 +247,11 @@
 		2CD7D4DC295CD170006F675D /* SupportingViews */ = {
 			isa = PBXGroup;
 			children = (
+				2C7CC3FF2960CA51006164DB /* EditableDate.swift */,
+				2CCCA5A72961DBD200B1C846 /* EditableDecimal.swift */,
+				2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */,
+				2CCCA5A52961D90600B1C846 /* EditablePickerType.swift */,
+				2C7CC3FD2960C8D9006164DB /* EditableText.swift */,
 				2CB6E49D295F6498008DE698 /* MoneyTextField.swift */,
 				2CB74A7E295E355000408363 /* OSButton.swift */,
 				2CB6E4A4295F8108008DE698 /* OSPicker.swift */,
@@ -350,22 +379,29 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C7CC3FE2960C8D9006164DB /* EditableText.swift in Sources */,
 				2C0B996D2959FD6A00443BAC /* OwnStonksApp.swift in Sources */,
 				2CB74A7F295E355000408363 /* OSButton.swift in Sources */,
+				2C7CC3FA2960BF03006164DB /* InvisibleFill.swift in Sources */,
 				2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */,
 				2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */,
 				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
 				2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */,
+				2CCCA5AA2961DCEF00B1C846 /* EditableMoney.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,
+				2CCCA5A62961D90600B1C846 /* EditablePickerType.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
+				2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */,
 				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
 				2C7CC3EA2960983F006164DB /* TransactionsViewModel.swift in Sources */,
+				2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */,
 				2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,
-				2CB74A7D295E351400408363 /* AddTransactionSheet.swift in Sources */,
+				2CCCA5A82961DBD200B1C846 /* EditableDecimal.swift in Sources */,
+				2CB74A7D295E351400408363 /* TransactionDetailSheet.swift in Sources */,
 				2C7CC3EC29609868006164DB /* Container.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

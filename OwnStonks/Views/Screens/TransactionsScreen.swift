@@ -29,7 +29,9 @@ struct TransactionsScreen: View {
                     }
                 }
                 ForEach(transactionsViewModel.transactions, id: \.self) { transaction in
-                    TransactionView(transaction: transaction)
+                    TransactionView(transaction: transaction, action: { transaction in
+                        viewModel.openEditTransactionSheet(with: transaction)
+                    })
                     #if os(macOS)
                     if transactionsViewModel.transactions.last != transaction {
                         Divider()
@@ -44,10 +46,16 @@ struct TransactionsScreen: View {
         .padding(.vertical, .medium)
         .toolbar(content: { toolbarView })
         .navigationTitle(title: OSLocales.getText(.TRANSACTIONS), displayMode: .large)
-        .sheet(isPresented: $viewModel.showAddTransactionSheet, content: {
-            AddTransactionSheet(
-                isShown: $viewModel.showAddTransactionSheet,
-                submittedTransaction: handleSubmittedTransaction)
+        .sheet(isPresented: $viewModel.showSheet, content: {
+            switch viewModel.shownSheetType {
+            case .none:
+                EmptyView()
+            case .addTransaction, .editTransaction:
+                TransactionDetailSheet(
+                    isShown: $viewModel.showSheet,
+                    context: viewModel.shownSheetType!,
+                    submittedTransaction: handleSubmittedTransaction)
+            }
         })
         .onAppear(perform: handleOnAppear)
     }
@@ -71,22 +79,47 @@ struct TransactionsScreen: View {
     }
 
     private func handleSubmittedTransaction(_ transaction: OSTransaction) {
-        let result = transactionsViewModel.addTransaction(transaction)
-        switch result {
-        case .failure(let failure):
-            popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
-        case .success:
-            break
+        switch viewModel.shownSheetType {
+        case .none:
+            assertionFailure("Should not be able to submit when there is no type")
+        case .editTransaction(transaction: let transaction):
+            #warning("Handle edited transaction")
+            print("came from editing")
+        case .addTransaction:
+            let result = transactionsViewModel.addTransaction(transaction)
+            switch result {
+            case .failure(let failure):
+                popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
+            case .success:
+                break
+            }
         }
     }
 }
 
 private final class ViewModel: ObservableObject {
-    @Published var showAddTransactionSheet = false
+    @Published var showSheet = false
+    @Published private(set) var shownSheetType: TransactionDetailSheetContext? {
+        didSet { Task { await shownSheetDidSet() } }
+    }
 
     @MainActor
     func openAddTransactionSheet() {
-        showAddTransactionSheet = true
+        shownSheetType = .addTransaction
+    }
+
+    @MainActor
+    func openEditTransactionSheet(with transaction: OSTransaction) {
+        shownSheetType = .editTransaction(transaction: transaction)
+    }
+
+    @MainActor
+    func shownSheetDidSet() {
+        if shownSheetType != nil && !showSheet {
+            showSheet = true
+        } else if shownSheetType == nil && showSheet {
+            showSheet = false
+        }
     }
 }
 

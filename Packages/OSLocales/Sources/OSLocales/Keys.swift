@@ -27,5 +27,6 @@ extension OSLocales {
         case PER_UNIT_LABEL
         case FEES_LABEL
         case TRANSACTION_DATE_LABEL
+        case EDIT
     }
 }

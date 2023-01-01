@@ -15,28 +15,31 @@ struct TransactionView: View {
     @Environment(\.layoutDirection) private var layoutDirection: LayoutDirection
 
     let transaction: OSTransaction
+    let action: (_ transaction: OSTransaction) -> Void
 
     var body: some View {
-        HStack {
-            VStack(alignment: .leading) {
-                OSText(transaction.assetName)
-                    .foregroundColor(.accentColor)
-                typeLabel
+        OSButton(action: { action(transaction) }) {
+            HStack {
+                VStack(alignment: .leading) {
+                    OSText(transaction.assetName)
+                        .foregroundColor(.accentColor)
+                    typeLabel
+                }
+                .padding(.trailing, .medium)
+                VStack(alignment: .leading) {
+                    TransactionInformationLabel(
+                        title: .TRANSACTION_DATE_LABEL,
+                        value: Self.dateFormatter.string(from: transaction.date))
+                    TransactionInformationLabel(title: .AMOUNT_LABEL, value: String(transaction.amount))
+                }
+                .padding(.trailing, .medium)
+                VStack(alignment: .leading) {
+                    TransactionInformationLabel(title: .PER_UNIT_LABEL, value: transaction.pricePerUnit.localized)
+                    TransactionInformationLabel(title: .FEES_LABEL, value: transaction.fees.localized)
+                }
             }
-            .padding(.trailing, .medium)
-            VStack(alignment: .leading) {
-                TransactionInformationLabel(
-                    title: .TRANSACTION_DATE_LABEL,
-                    value: Self.dateFormatter.string(from: transaction.date))
-                TransactionInformationLabel(title: .AMOUNT_LABEL, value: String(transaction.amount))
-            }
-            .padding(.trailing, .medium)
-            VStack(alignment: .leading) {
-                TransactionInformationLabel(title: .PER_UNIT_LABEL, value: transaction.pricePerUnit.localized)
-                TransactionInformationLabel(title: .FEES_LABEL, value: transaction.fees.localized)
-            }
+            .ktakeWidthEagerly(alignment: .leading)
         }
-        .ktakeWidthEagerly(alignment: .leading)
     }
 
     private var typeLabel: some View {
@@ -73,6 +76,7 @@ struct TransactionView_Previews: PreviewProvider {
                 type: .buy,
                 amount: 0.0001200,
                 pricePerUnit: .init(amount: 15_000, currency: .EUR),
-                fees: .init(amount: 0, currency: .EUR)))
+                fees: .init(amount: 0, currency: .EUR)),
+            action: { _ in })
     }
 }

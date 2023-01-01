@@ -21,4 +21,5 @@ module.exports = {
     PER_UNIT_LABEL: "Per unit: %@",
     FEES_LABEL: "Fees: %@",
     TRANSACTION_DATE_LABEL: "Date: %@",
+    EDIT: "Edit",
 }

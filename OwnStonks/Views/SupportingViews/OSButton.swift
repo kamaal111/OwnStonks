@@ -19,6 +19,7 @@ struct OSButton<Content: View>: View {
     var body: some View {
         Button(action: action) {
             content()
+                .invisibleFill()
         }
         .buttonStyle(.plain)
     }
