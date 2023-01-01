@@ -44,16 +44,24 @@ struct MoneyTextField: View {
     }
 
     private func onStringValueChange(_ newValue: String) {
-        let sanitizedString = String(newValue.sanitizedDouble)
+        let sanitizedDoubleValue = newValue.sanitizedDouble
+        let sanitizedString = String(sanitizedDoubleValue)
         if sanitizedString != stringValue {
             stringValue = sanitizedString
+        }
+        if sanitizedDoubleValue != value {
+            value = sanitizedDoubleValue
         }
     }
 
     private func onValueChange(_ newValue: Double) {
-        let sanitizedValue = String(String(newValue).sanitizedDouble)
-        if sanitizedValue != stringValue {
-            stringValue = sanitizedValue
+        let sanitizedDoubleValue = String(newValue).sanitizedDouble
+        let sanitizedString = String(sanitizedDoubleValue)
+        if sanitizedString != stringValue {
+            stringValue = sanitizedString
+        }
+        if sanitizedDoubleValue != value {
+            value = sanitizedDoubleValue
         }
     }
 

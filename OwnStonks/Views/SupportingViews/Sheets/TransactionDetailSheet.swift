@@ -13,12 +13,22 @@ import OSLocales
 import ShrimpExtensions
 
 struct TransactionDetailSheet: View {
-    @StateObject private var viewModel = ViewModel()
+    @StateObject private var viewModel: ViewModel
 
     @Binding var isShown: Bool
 
     let context: TransactionDetailSheetContext
     let submittedTransaction: (_ transaction: OSTransaction) -> Void
+
+    init(
+        isShown: Binding<Bool>,
+        context: TransactionDetailSheetContext,
+        submittedTransaction: @escaping (_ transaction: OSTransaction) -> Void) {
+            self._isShown = isShown
+            self.context = context
+            self.submittedTransaction = submittedTransaction
+            self._viewModel = StateObject(wrappedValue: ViewModel(isEditing: context.initialyEditing))
+        }
 
     var body: some View {
         KSheetStack(
@@ -27,7 +37,7 @@ struct TransactionDetailSheet: View {
             trailingNavigationButton: { doneButton }) {
                 content
             }
-            .frame(minWidth: 320, minHeight: 348)
+            .frame(minWidth: 320, minHeight: viewModel.isEditing ? 348 : 220)
             .onAppear(perform: handleOnAppear)
     }
 
@@ -91,10 +101,7 @@ struct TransactionDetailSheet: View {
     }
 
     private func handleOnAppear() {
-        switch context {
-        case .addTransaction:
-            break
-        case .editTransaction(transaction: let transaction):
+        if case .editTransaction(let transaction) = context {
             viewModel.setValues(with: transaction)
         }
     }
@@ -122,9 +129,13 @@ private final class ViewModel: ObservableObject {
     @Published var pricePerUnit = 0.0
     @Published var feesCurrency: Currencies = .EUR
     @Published var fees = 0.0
-    @Published private(set) var isEditing = true
+    @Published private(set) var isEditing: Bool
 
     private var transactionID: UUID?
+
+    init(isEditing: Bool) {
+        self.isEditing = isEditing
+    }
 
     var transaction: OSTransaction {
         .init(
@@ -143,7 +154,9 @@ private final class ViewModel: ObservableObject {
 
     @MainActor
     func toggleEditing() {
-        isEditing.toggle()
+        withAnimation {
+            isEditing.toggle()
+        }
     }
 
     @MainActor

@@ -10,6 +10,7 @@ import Swinject
 import ZaWarudo
 import CDPersist
 import Foundation
+import ShrimpExtensions
 
 public final class TransactionsClient {
     let persistenceController: PersistenceController
@@ -21,6 +22,8 @@ public final class TransactionsClient {
     public enum Errors: Error {
         case listingError(context: Error)
         case creationError(context: Error)
+        case updateError(context: Error)
+        case uncommitedTransaction
     }
 
     public func list() -> Result<[OSTransaction], Errors> {
@@ -32,6 +35,38 @@ public final class TransactionsClient {
         }
 
         return .success(transactions.map(\.osTransaction))
+    }
+
+    public func update(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {
+        guard let id = transaction.id?.nsString else { return .failure(.uncommitedTransaction) }
+
+        let predicate = NSPredicate(format: "id = %@", id)
+        let foundTransaction: CoreTransaction?
+        do {
+            foundTransaction = try CoreTransaction.find(by: predicate, from: persistenceController.context)
+        } catch {
+            return .failure(.updateError(context: error))
+        }
+
+        guard let foundTransaction else { return .failure(.uncommitedTransaction) }
+
+        foundTransaction.updateDate = Current.date()
+        foundTransaction.assetName = transaction.assetName
+        foundTransaction.transactionDate = transaction.date
+        foundTransaction.transactionType = transaction.type.rawValue
+        foundTransaction.amount = transaction.amount
+        foundTransaction.pricePerUnit = transaction.pricePerUnit.amount
+        foundTransaction.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
+        foundTransaction.fees = transaction.fees.amount
+        foundTransaction.feesCurrency = transaction.fees.currency.rawValue
+
+        do {
+            try persistenceController.context.save()
+        } catch {
+            return .failure(.updateError(context: error))
+        }
+
+        return .success(foundTransaction.osTransaction)
     }
 
     public func create(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {

@@ -14,7 +14,7 @@ import ShrimpExtensions
 import BetterNavigation
 
 struct TransactionsScreen: View {
-    @EnvironmentObject private var transactionsViewModel: TransactionsViewModel
+    @EnvironmentObject private var transactionsManager: TransactionsManager
     @EnvironmentObject private var popperUpManager: PopperUpManager
 
     @StateObject private var viewModel = ViewModel()
@@ -22,18 +22,18 @@ struct TransactionsScreen: View {
     var body: some View {
         KScrollableForm  {
             KSection(header: OSLocales.getText(.TRANSACTIONS)) {
-                if transactionsViewModel.transactions.isEmpty {
+                if transactionsManager.transactions.isEmpty {
                     OSButton(action: { viewModel.openAddTransactionSheet() }) {
                         OSText(localized: .ADD_YOUR_FIRST_TRANSACTION)
                             .foregroundColor(.accentColor)
                     }
                 }
-                ForEach(transactionsViewModel.transactions, id: \.self) { transaction in
+                ForEach(transactionsManager.transactions, id: \.self) { transaction in
                     TransactionView(transaction: transaction, action: { transaction in
                         viewModel.openEditTransactionSheet(with: transaction)
                     })
                     #if os(macOS)
-                    if transactionsViewModel.transactions.last != transaction {
+                    if transactionsManager.transactions.last != transaction {
                         Divider()
                     }
                     #endif
@@ -54,7 +54,7 @@ struct TransactionsScreen: View {
                 TransactionDetailSheet(
                     isShown: $viewModel.showSheet,
                     context: viewModel.shownSheetType!,
-                    submittedTransaction: handleSubmittedTransaction)
+                    submittedTransaction: { transaction in Task { await handleSubmittedTransaction(transaction) } })
             }
         })
         .onAppear(perform: handleOnAppear)
@@ -69,30 +69,33 @@ struct TransactionsScreen: View {
     }
 
     private func handleOnAppear() {
-        let result = transactionsViewModel.fetch()
-        switch result {
-        case .failure(let failure):
-            popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
-        case .success:
-            break
+        Task {
+            let result = await transactionsManager.fetch()
+            if case .failure(let failure) = result {
+                popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
+            }
         }
     }
 
-    private func handleSubmittedTransaction(_ transaction: OSTransaction) {
+    private func handleSubmittedTransaction(_ transaction: OSTransaction) async {
+        var maybeError: TransactionsManager.Errors?
         switch viewModel.shownSheetType {
         case .none:
             assertionFailure("Should not be able to submit when there is no type")
-        case .editTransaction(transaction: let transaction):
-            #warning("Handle edited transaction")
-            print("came from editing")
-        case .addTransaction:
-            let result = transactionsViewModel.addTransaction(transaction)
-            switch result {
-            case .failure(let failure):
-                popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
-            case .success:
-                break
+        case .editTransaction:
+            let result = await transactionsManager.updateTransaction(transaction)
+            if case .failure(let failure) = result {
+                maybeError = failure
             }
+        case .addTransaction:
+            let result = await transactionsManager.addTransaction(transaction)
+            if case .failure(let failure) = result {
+                maybeError = failure
+            }
+        }
+
+        if let error = maybeError {
+            popperUpManager.showPopup(style: error.popUpStyle, timeout: 3)
         }
     }
 }

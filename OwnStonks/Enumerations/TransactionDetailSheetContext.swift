@@ -11,4 +11,13 @@ import Foundation
 enum TransactionDetailSheetContext {
     case addTransaction
     case editTransaction(transaction: OSTransaction)
+
+    var initialyEditing: Bool {
+        switch self {
+        case .addTransaction:
+            return true
+        case .editTransaction:
+            return false
+        }
+    }
 }

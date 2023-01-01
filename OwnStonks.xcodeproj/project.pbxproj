@@ -19,7 +19,7 @@
 		2C5EF049296082F3000536BC /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5EF048296082F3000536BC /* Backend */; };
 		2C7CC3E3296093CE006164DB /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E2296093CE006164DB /* Models */; };
 		2C7CC3E62960973D006164DB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E52960973D006164DB /* Swinject */; };
-		2C7CC3EA2960983F006164DB /* TransactionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */; };
+		2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3E92960983F006164DB /* TransactionsManager.swift */; };
 		2C7CC3EC29609868006164DB /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3EB29609868006164DB /* Container.swift */; };
 		2C7CC3EF29609B18006164DB /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3EE29609B18006164DB /* Logster */; };
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
@@ -61,7 +61,7 @@
 		2C5EF044296078CF000536BC /* CDPersist */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CDPersist; sourceTree = "<group>"; };
 		2C5EF0472960829A000536BC /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
 		2C5EF04A29608909000536BC /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Models; sourceTree = "<group>"; };
-		2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModel.swift; sourceTree = "<group>"; };
+		2C7CC3E92960983F006164DB /* TransactionsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsManager.swift; sourceTree = "<group>"; };
 		2C7CC3EB29609868006164DB /* Container.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Container.swift; sourceTree = "<group>"; };
 		2C7CC3F029609C96006164DB /* ZaWarudo */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ZaWarudo; sourceTree = "<group>"; };
 		2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionInformationLabel.swift; sourceTree = "<group>"; };
@@ -207,17 +207,17 @@
 		2C7CC3E729609772006164DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				2C7CC3E8296097A9006164DB /* ViewModels */,
+				2C7CC3E8296097A9006164DB /* Managers */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		2C7CC3E8296097A9006164DB /* ViewModels */ = {
+		2C7CC3E8296097A9006164DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				2C7CC3E92960983F006164DB /* TransactionsViewModel.swift */,
+				2C7CC3E92960983F006164DB /* TransactionsManager.swift */,
 			);
-			path = ViewModels;
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		2C7CC3F82960BEF2006164DB /* ViewModifiers */ = {
@@ -396,7 +396,7 @@
 				2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */,
 				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
-				2C7CC3EA2960983F006164DB /* TransactionsViewModel.swift in Sources */,
+				2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */,
 				2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */,
 				2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,

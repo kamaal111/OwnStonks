@@ -16,6 +16,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Swinject/Swinject.git", "2.8.3" ..< "3.0.0"),
+        .package(url: "https://github.com/Kamaalio/ShrimpExtensions.git", "3.0.0" ..< "4.0.0"),
         .package(path: "../CDPersist"),
         .package(path: "../Models"),
         .package(path: "../ZaWarudo"),
@@ -25,6 +26,7 @@ let package = Package(
             name: "Backend",
             dependencies: [
                 "Swinject",
+                "ShrimpExtensions",
                 "CDPersist",
                 "Models",
                 "ZaWarudo",

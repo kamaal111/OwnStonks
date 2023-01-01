@@ -9,13 +9,13 @@ import SwiftUI
 
 @main
 struct OwnStonksApp: App {
-    @StateObject private var transactionsViewModel = TransactionsViewModel()
+    @StateObject private var transactionsManager = TransactionsManager()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .frame(minWidth: 300, minHeight: 300)
-                .environmentObject(transactionsViewModel)
+                .environmentObject(transactionsManager)
         }
     }
 }
