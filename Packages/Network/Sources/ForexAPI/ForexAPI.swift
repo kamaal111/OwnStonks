@@ -76,5 +76,26 @@ extension ForexAPI {
                 return .invalidURL(url: url)
             }
         }
+
+        fileprivate var stringified: String {
+            switch self {
+            case .generalError(context: let context):
+                return "general_error_\(context)"
+            case .responseError(message: let message, code: let code):
+                return "response_error_\(message)_\(code)"
+            case .notAValidJSON:
+                return "not_valid_json"
+            case .parsingError(context: let context):
+                return "parsing_error_\(context)"
+            case .invalidURL(url: let url):
+                return "invalid_url_\(url)"
+            }
+        }
+    }
+}
+
+extension ForexAPI.Errors: Equatable {
+    public static func == (lhs: ForexAPI.Errors, rhs: ForexAPI.Errors) -> Bool {
+        lhs.stringified == rhs.stringified
     }
 }
