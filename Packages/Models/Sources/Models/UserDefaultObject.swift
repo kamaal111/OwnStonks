@@ -9,7 +9,7 @@ import Foundation
 
 extension UserDefaults {
     @UserDefaultObject(key: .exchangeRates)
-    public static var exchangeRates: [Date: ExchangeRates]?
+    public static var exchangeRates: [Date: [ExchangeRates]]?
 }
 
 @propertyWrapper

@@ -26,7 +26,7 @@ final class ExchangeRateManager: ObservableObject {
         await benchmark(
             function: {
                 logger.info("Fetching exchange rates")
-                let exchangeRates = await backend.forex.getLatest()
+                let exchangeRates = await backend.forex.getLatest(base: .EUR, symbols: [.USD])
                 await setExchangeRates(exchangeRates)
             },
             duration: { duration in

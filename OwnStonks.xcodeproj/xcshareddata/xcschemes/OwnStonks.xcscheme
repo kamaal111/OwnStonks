@@ -48,6 +48,16 @@
                ReferencedContainer = "container:Packages/BetterNavigation">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "BackendTests"
+               BuildableName = "BackendTests"
+               BlueprintName = "BackendTests"
+               ReferencedContainer = "container:Packages/Backend">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

@@ -25,24 +25,29 @@ public class ForexAPI {
         self.preview = preview
     }
 
-    public func latest() async -> Result<ExchangeRates, Errors> {
+    public func latest(base: Currencies, symbols: [Currencies]) async -> Result<ExchangeRates, Errors> {
         guard !preview else { return .success(.preview) }
 
         let url = BASE_URL
             .appendingPathComponent("latest")
-        let config = XRequestConfig(priority: XRequestConfig.defaultPriority, kowalskiAnalysis: false)
-        return await networker.request(from: url, headers: defaultHeaders, config: config)
-            .mapError({ Errors.fromXiphiasNet($0) })
+        var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        var queryItems = [
+            URLQueryItem(name: "base", value: base.rawValue)
+        ]
+        let symbols = symbols.filter({ $0 != base })
+        if !symbols.isEmpty {
+            queryItems.append(URLQueryItem(name: "symbols", value: symbols.map(\.rawValue).joined(separator: ",")))
+        }
+        urlComponents.queryItems = queryItems
+
+        return await networker.request(from: urlComponents.url!)
+            .mapError({ .fromXiphiasNet($0) })
             .map(\.data)
     }
 
     public static let shared = ForexAPI()
 
     public static let preview = ForexAPI(preview: true)
-
-    private var defaultHeaders: [String: String] {
-        [:]
-    }
 
     private var networker: XiphiasNet {
         container.resolve(XiphiasNet.self, argument: urlSession)!

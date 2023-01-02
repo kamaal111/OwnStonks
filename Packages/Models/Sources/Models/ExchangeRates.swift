@@ -12,10 +12,34 @@ public struct ExchangeRates: Codable, Hashable {
     @DateValue<YearMonthDayStrategy> public var date: Date
     public var rates: [String: Double]
 
-    public init(base: String, date: Date, rates: [String : Double]) {
+    public init(base: String, date: Date, rates: [String: Double]) {
         self.base = base
         self.date = date
         self.rates = rates
+    }
+
+    public init(base: Currencies, date: Date, rates: [Currencies: Double]) {
+        let rates: [String: Double] = rates.reduce([:], {
+            var result = $0
+            result[$1.key.rawValue] = $1.value
+            return result
+        })
+        self.init(base: base.rawValue, date: date, rates: rates)
+    }
+
+    public var baseCurrency: Currencies? {
+        Currencies(rawValue: base)
+    }
+
+    public var ratesMappedByCurrency: [Currencies: Double] {
+        rates
+            .reduce([:], {
+                guard let currency = Currencies(rawValue: $1.key) else { return $0 }
+
+                var result = $0
+                result[currency] = $1.value
+                return result
+            })
     }
 
     public static let preview: ExchangeRates = {
