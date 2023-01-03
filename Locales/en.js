@@ -23,4 +23,7 @@ module.exports = {
     FEES_LABEL: "Fees: %@",
     TRANSACTION_DATE_LABEL: "Date: %@",
     EDIT: "Edit",
+    SCENES: "Scenes",
+    SETTINGS: "Settings",
+    TOGGLE_SIDEBAR: "Toggle sidebar",
 }

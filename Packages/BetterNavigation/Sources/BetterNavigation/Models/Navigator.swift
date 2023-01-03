@@ -9,24 +9,36 @@ import SwiftUI
 import SwiftStructures
 
 public final class Navigator<StackValue: Codable & Hashable>: ObservableObject {
-    @Published private var stack: Stack<StackValue>
+    @Published private var stacks: [StackValue: Stack<StackValue>]
+    @Published public private(set) var currentStack: StackValue
 
-    init(stack: [StackValue]) {
+    public init(stack: [StackValue], initialStack: StackValue) {
         let stack = Stack.fromArray(stack)
-        self.stack = stack
+        self.stacks = [initialStack: stack]
+        self.currentStack = initialStack
     }
 
     public var currentScreen: StackValue? {
-        stack.peek()
+        stacks[currentStack]?.peek()
+    }
+
+    @MainActor
+    func changeStack(to stack: StackValue) {
+        guard currentStack != stack else { return }
+
+        if stacks[stack] == nil {
+            stacks[stack] = Stack()
+        }
+        currentStack = stack
     }
 
     @MainActor
     func navigate(to destination: StackValue) {
-        withAnimation { stack.push(destination) }
+        withAnimation { stacks[currentStack]?.push(destination) }
     }
 
     @MainActor
     func goBack() {
-        withAnimation { _ = stack.pop() }
+        withAnimation { _ = stacks[currentStack]?.pop() }
     }
 }

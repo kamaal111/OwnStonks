@@ -29,5 +29,8 @@ extension OSLocales {
         case FEES_LABEL
         case TRANSACTION_DATE_LABEL
         case EDIT
+        case SCENES
+        case SETTINGS
+        case TOGGLE_SIDEBAR
     }
 }

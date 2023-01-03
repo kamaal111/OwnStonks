@@ -11,21 +11,20 @@ import BetterNavigation
 
 struct ContentView: View {
     @StateObject private var popperUpManager = PopperUpManager()
+    @StateObject private var navigator = Navigator<Screens>(stack: [], initialStack: .transactions)
 
     var body: some View {
         NavigationView {
             if shouldHaveASidebar {
-                List {
-                    Text("Sidbar")
-                }
+                Sidebar()
             }
             NavigationStackView(
-                stack: [] as [Int],
-                root: { TransactionsScreen() },
-                subView: { screen in Text("\(screen)") })
+                root: { (screen: Screens) in ScreenDecider(screen: screen) },
+                subView: { (screen: Screens) in ScreenDecider(screen: screen) })
             .withPopperUp(popperUpManager)
         }
         .navigationStyle(shouldHaveASidebar ? .columns : .stack)
+        .environmentObject(navigator)
     }
 
     private var shouldHaveASidebar: Bool {

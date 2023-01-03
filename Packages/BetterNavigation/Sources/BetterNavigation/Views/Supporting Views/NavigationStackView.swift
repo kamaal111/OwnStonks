@@ -7,29 +7,27 @@
 
 import SwiftUI
 import SalmonUI
-import SwiftStructures
 
 public struct NavigationStackView<Root: View, SubView: View, Screen: Codable & Hashable>: View {
-    @ObservedObject private var navigator: Navigator<Screen>
+    @EnvironmentObject private var navigator: Navigator<Screen>
 
-    let root: () -> Root
+    let root: (Screen) -> Root
     let subView: (Screen) -> SubView
 
     public init(
-        stack: [Screen],
-        @ViewBuilder root: @escaping () -> Root,
+        @ViewBuilder root: @escaping (Screen) -> Root,
         @ViewBuilder subView: @escaping (Screen) -> SubView) {
             self.root = root
             self.subView = subView
-            self._navigator = ObservedObject(wrappedValue: Navigator<Screen>(stack: stack))
         }
 
+    #warning("Make it support tab screen as well")
     public var body: some View {
         #if os(macOS)
         KJustStack {
             switch navigator.currentScreen {
             case .none:
-                root()
+                root(navigator.currentStack)
             case .some(let unwrapped):
                 subView(unwrapped)
                     .id(unwrapped)
@@ -44,16 +42,14 @@ public struct NavigationStackView<Root: View, SubView: View, Screen: Codable & H
                     }
             }
         }
-        .environmentObject(navigator)
         #else
-        root()
-            .environmentObject(navigator)
+        root(navigator.currentStack)
         #endif
     }
 }
 
 struct NavigationStackView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationStackView(stack: [] as [Int], root: { Text("Root") }, subView: { screen in Text("\(screen)") })
+        NavigationStackView(root: { _ in Text("22") }, subView: { (screen: Int) in Text("\(screen)") })
     }
 }

@@ -16,7 +16,11 @@
 		2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9986295A0F2E00443BAC /* SwiftStructures */; };
 		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
 		2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */; };
+		2C0FFCB82964CE1E007046A0 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FFCB72964CE1E007046A0 /* Sidebar.swift */; };
+		2C0FFCBA2964CE45007046A0 /* ScreenDecider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FFCB92964CE45007046A0 /* ScreenDecider.swift */; };
+		2C0FFCBC2964CE9C007046A0 /* Screens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FFCBB2964CE9C007046A0 /* Screens.swift */; };
 		2C205B0A2962201300AD366E /* ExchangeRateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C205B092962201300AD366E /* ExchangeRateManager.swift */; };
+		2C58696A2964B1DF00D45F6A /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5869692964B1DF00D45F6A /* UserData.swift */; };
 		2C5EF049296082F3000536BC /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5EF048296082F3000536BC /* Backend */; };
 		2C7CC3E3296093CE006164DB /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E2296093CE006164DB /* Models */; };
 		2C7CC3E62960973D006164DB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E52960973D006164DB /* Swinject */; };
@@ -59,7 +63,11 @@
 		2C0B9981295A00F400443BAC /* SwiftStructures */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftStructures; sourceTree = "<group>"; };
 		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
 		2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
+		2C0FFCB72964CE1E007046A0 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		2C0FFCB92964CE45007046A0 /* ScreenDecider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenDecider.swift; sourceTree = "<group>"; };
+		2C0FFCBB2964CE9C007046A0 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
 		2C205B092962201300AD366E /* ExchangeRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateManager.swift; sourceTree = "<group>"; };
+		2C5869692964B1DF00D45F6A /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		2C5EF044296078CF000536BC /* CDPersist */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CDPersist; sourceTree = "<group>"; };
 		2C5EF0472960829A000536BC /* Backend */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Backend; sourceTree = "<group>"; };
 		2C5EF04A29608909000536BC /* Models */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Models; sourceTree = "<group>"; };
@@ -117,6 +125,7 @@
 			children = (
 				2C07AF34295F512300B7CF6E /* AppSizes.swift */,
 				2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */,
+				2C0FFCBB2964CE9C007046A0 /* Screens.swift */,
 			);
 			path = Enumerations;
 			sourceTree = "<group>";
@@ -221,6 +230,7 @@
 			children = (
 				2C205B092962201300AD366E /* ExchangeRateManager.swift */,
 				2C7CC3E92960983F006164DB /* TransactionsManager.swift */,
+				2C5869692964B1DF00D45F6A /* UserData.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -261,6 +271,8 @@
 				2CB74A7E295E355000408363 /* OSButton.swift */,
 				2CB6E4A4295F8108008DE698 /* OSPicker.swift */,
 				2CB74A79295E347100408363 /* OSText.swift */,
+				2C0FFCB92964CE45007046A0 /* ScreenDecider.swift */,
+				2C0FFCB72964CE1E007046A0 /* Sidebar.swift */,
 				2CB6E497295F5DFE008DE698 /* TitledPicker.swift */,
 				2CB6E49B295F642F008DE698 /* TitledView.swift */,
 				2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */,
@@ -384,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C58696A2964B1DF00D45F6A /* UserData.swift in Sources */,
 				2C7CC3FE2960C8D9006164DB /* EditableText.swift in Sources */,
 				2C0B996D2959FD6A00443BAC /* OwnStonksApp.swift in Sources */,
 				2CB74A7F295E355000408363 /* OSButton.swift in Sources */,
@@ -391,6 +404,7 @@
 				2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */,
 				2C07AF35295F512300B7CF6E /* AppSizes.swift in Sources */,
 				2CB6E4B0295F921B008DE698 /* TransactionView.swift in Sources */,
+				2C0FFCBC2964CE9C007046A0 /* Screens.swift in Sources */,
 				2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */,
 				2CCCA5AA2961DCEF00B1C846 /* EditableMoney.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
@@ -399,7 +413,9 @@
 				2CCCA5A62961D90600B1C846 /* EditablePickerType.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
 				2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */,
+				2C0FFCB82964CE1E007046A0 /* Sidebar.swift in Sources */,
 				2CB6E4A5295F8108008DE698 /* OSPicker.swift in Sources */,
+				2C0FFCBA2964CE45007046A0 /* ScreenDecider.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
 				2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */,
 				2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */,

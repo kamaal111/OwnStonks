@@ -11,6 +11,7 @@ import SwiftUI
 struct OwnStonksApp: App {
     @StateObject private var transactionsManager = TransactionsManager()
     @StateObject private var exchangeRateManager = ExchangeRateManager()
+    @StateObject private var userData = UserData()
 
     var body: some Scene {
         WindowGroup {
@@ -18,6 +19,7 @@ struct OwnStonksApp: App {
                 .frame(minWidth: 300, minHeight: 300)
                 .environmentObject(transactionsManager)
                 .environmentObject(exchangeRateManager)
+                .environmentObject(userData)
         }
     }
 }
