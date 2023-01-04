@@ -26,4 +26,5 @@ module.exports = {
     SCENES: "Scenes",
     SETTINGS: "Settings",
     TOGGLE_SIDEBAR: "Toggle sidebar",
+    CURRENCY: "Currency",
 }

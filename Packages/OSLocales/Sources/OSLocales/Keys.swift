@@ -32,5 +32,6 @@ extension OSLocales {
         case SCENES
         case SETTINGS
         case TOGGLE_SIDEBAR
+        case CURRENCY
     }
 }

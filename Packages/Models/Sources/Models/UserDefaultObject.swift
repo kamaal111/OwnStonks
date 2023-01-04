@@ -10,6 +10,8 @@ import Foundation
 extension UserDefaults {
     @UserDefaultObject(key: .exchangeRates)
     public static var exchangeRates: [Date: [ExchangeRates]]?
+    @UserDefaultObject(key: .preferedCurrency)
+    public static var preferedCurrency: Currencies?
 }
 
 @propertyWrapper
@@ -24,6 +26,7 @@ public struct UserDefaultObject<Value: Codable> {
 
     enum Keys: String {
         case exchangeRates
+        case preferedCurrency
     }
 
     public var wrappedValue: Value? {

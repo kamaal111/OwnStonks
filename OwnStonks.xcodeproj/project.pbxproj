@@ -27,9 +27,7 @@
 		2C7CC3E62960973D006164DB /* Swinject in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E52960973D006164DB /* Swinject */; };
 		2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3E92960983F006164DB /* TransactionsManager.swift */; };
 		2C7CC3EC29609868006164DB /* Container.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3EB29609868006164DB /* Container.swift */; };
-		2C7CC3EF29609B18006164DB /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3EE29609B18006164DB /* Logster */; };
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
-		2C7CC3F52960A514006164DB /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F42960A514006164DB /* PopperUp */; };
 		2C7CC3F72960B9BD006164DB /* TransactionInformationLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3F62960B9BD006164DB /* TransactionInformationLabel.swift */; };
 		2C7CC3FA2960BF03006164DB /* InvisibleFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3F92960BF03006164DB /* InvisibleFill.swift */; };
 		2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */; };
@@ -50,6 +48,9 @@
 		2CCCA5A82961DBD200B1C846 /* EditableDecimal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCA5A72961DBD200B1C846 /* EditableDecimal.swift */; };
 		2CCCA5AA2961DCEF00B1C846 /* EditableMoney.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */; };
 		2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD7D4DE295CD472006F675D /* SalmonUI */; };
+		2CD8A8A8296620FA00D50D60 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD8A8A7296620FA00D50D60 /* SettingsUI */; };
+		2CD8A8AB296621BB00D50D60 /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD8A8AA296621BB00D50D60 /* Logster */; };
+		2CD8A8AE296621E300D50D60 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2CD8A8AD296621E300D50D60 /* PopperUp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -108,10 +109,11 @@
 				2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */,
 				2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */,
 				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
+				2CD8A8AB296621BB00D50D60 /* Logster in Frameworks */,
 				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
-				2C7CC3F52960A514006164DB /* PopperUp in Frameworks */,
-				2C7CC3EF29609B18006164DB /* Logster in Frameworks */,
+				2CD8A8A8296620FA00D50D60 /* SettingsUI in Frameworks */,
 				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
+				2CD8A8AE296621E300D50D60 /* PopperUp in Frameworks */,
 				2C5EF049296082F3000536BC /* Backend in Frameworks */,
 				2C7CC3E3296093CE006164DB /* Models in Frameworks */,
 				2CB6E4AC295F8599008DE698 /* ShrimpExtensions in Frameworks */,
@@ -334,9 +336,10 @@
 				2C5EF048296082F3000536BC /* Backend */,
 				2C7CC3E2296093CE006164DB /* Models */,
 				2C7CC3E52960973D006164DB /* Swinject */,
-				2C7CC3EE29609B18006164DB /* Logster */,
 				2C7CC3F129609D27006164DB /* ZaWarudo */,
-				2C7CC3F42960A514006164DB /* PopperUp */,
+				2CD8A8A7296620FA00D50D60 /* SettingsUI */,
+				2CD8A8AA296621BB00D50D60 /* Logster */,
+				2CD8A8AD296621E300D50D60 /* PopperUp */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -370,8 +373,9 @@
 				2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */,
 				2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */,
 				2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */,
-				2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */,
-				2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */,
+				2CD8A8A6296620FA00D50D60 /* XCRemoteSwiftPackageReference "SettingsUI" */,
+				2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */,
+				2CD8A8AC296621E300D50D60 /* XCRemoteSwiftPackageReference "PopperUp" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -654,22 +658,6 @@
 				minimumVersion = 2.8.3;
 			};
 		};
-		2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kamaal111/Logster.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.0;
-			};
-		};
-		2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kamaal111/PopperUp.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.4.1;
-			};
-		};
 		2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kamaalio/ShrimpExtensions.git";
@@ -684,6 +672,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 5.1.1;
+			};
+		};
+		2CD8A8A6296620FA00D50D60 /* XCRemoteSwiftPackageReference "SettingsUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/SettingsUI.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
+		2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/Logster.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+		2CD8A8AC296621E300D50D60 /* XCRemoteSwiftPackageReference "PopperUp" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/PopperUp.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.4.1;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -710,19 +722,9 @@
 			package = 2C7CC3E42960973D006164DB /* XCRemoteSwiftPackageReference "Swinject" */;
 			productName = Swinject;
 		};
-		2C7CC3EE29609B18006164DB /* Logster */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2C7CC3ED29609B18006164DB /* XCRemoteSwiftPackageReference "Logster" */;
-			productName = Logster;
-		};
 		2C7CC3F129609D27006164DB /* ZaWarudo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZaWarudo;
-		};
-		2C7CC3F42960A514006164DB /* PopperUp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 2C7CC3F32960A514006164DB /* XCRemoteSwiftPackageReference "PopperUp" */;
-			productName = PopperUp;
 		};
 		2CB6E4AB295F8599008DE698 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -737,6 +739,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CD7D4DD295CD472006F675D /* XCRemoteSwiftPackageReference "SalmonUI" */;
 			productName = SalmonUI;
+		};
+		2CD8A8A7296620FA00D50D60 /* SettingsUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD8A8A6296620FA00D50D60 /* XCRemoteSwiftPackageReference "SettingsUI" */;
+			productName = SettingsUI;
+		};
+		2CD8A8AA296621BB00D50D60 /* Logster */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */;
+			productName = Logster;
+		};
+		2CD8A8AD296621E300D50D60 /* PopperUp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2CD8A8AC296621E300D50D60 /* XCRemoteSwiftPackageReference "PopperUp" */;
+			productName = PopperUp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -24,6 +24,8 @@ struct OwnStonksApp: App {
         #if os(macOS)
         Settings {
             AppSettingsScreen()
+                .frame(minHeight: 220)
+                .environmentObject(userData)
         }
         #endif
     }

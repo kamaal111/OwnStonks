@@ -6,10 +6,14 @@
 //
 
 import SwiftUI
+import SettingsUI
 
 struct AppSettingsScreen: View {
+    @EnvironmentObject private var userData: UserData
+
     var body: some View {
-        Text("Hello, World!")
+        SettingsScreen(configuration: userData.settingsConfiguration)
+            .onSettingsPreferenceChange({ preference in userData.handlePreferenceChange(preference) })
     }
 }
 
