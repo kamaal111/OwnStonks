@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct StackNavigationLink<Content: View, NextView: View, Destination: Codable & Hashable>: View {
+public struct StackNavigationLink<Content: View, NextView: View, Destination: NavigatorStackValue>: View {
     @EnvironmentObject private var navigator: Navigator<Destination>
 
     let destination: Destination
@@ -36,10 +36,12 @@ public struct StackNavigationLink<Content: View, NextView: View, Destination: Co
     }
 }
 
+#if DEBUG
 struct StackNavigationLink_Previews: PreviewProvider {
     static var previews: some View {
-        StackNavigationLink(destination: 2, nextView: { screen in Text("\(screen)") }) {
+        StackNavigationLink(destination: PreviewScreenType.screen, nextView: { screen in Text("s") }) {
             Text("Link")
         }
     }
 }
+#endif

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct StackNavigationChangeStackButton<Content: View, Destination: Codable & Hashable>: View {
+public struct StackNavigationChangeStackButton<Content: View, Destination: NavigatorStackValue>: View {
     @EnvironmentObject private var navigator: Navigator<Destination>
 
     let destination: Destination
@@ -27,10 +27,12 @@ public struct StackNavigationChangeStackButton<Content: View, Destination: Codab
     }
 }
 
+#if DEBUG
 struct StackNavigationChangeStackButton_Previews: PreviewProvider {
     static var previews: some View {
-        StackNavigationChangeStackButton(destination: 1) {
+        StackNavigationChangeStackButton(destination: PreviewScreenType.screen) {
             Text("Yes")
         }
     }
 }
+#endif

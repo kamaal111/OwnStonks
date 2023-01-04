@@ -46,7 +46,6 @@ struct TransactionsScreen: View {
         }
         .padding(.vertical, .medium)
         .toolbar(content: { toolbarView })
-        .navigationTitle(title: OSLocales.getText(.TRANSACTIONS), displayMode: .large)
         .sheet(isPresented: $viewModel.showSheet, content: {
             switch viewModel.shownSheetType {
             case .none:

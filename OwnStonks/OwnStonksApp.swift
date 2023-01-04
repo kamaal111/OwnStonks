@@ -21,5 +21,10 @@ struct OwnStonksApp: App {
                 .environmentObject(exchangeRateManager)
                 .environmentObject(userData)
         }
+        #if os(macOS)
+        Settings {
+            AppSettingsScreen()
+        }
+        #endif
     }
 }

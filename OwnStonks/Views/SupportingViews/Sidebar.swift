@@ -11,12 +11,10 @@ import OSLocales
 import BetterNavigation
 
 struct Sidebar: View {
-    @EnvironmentObject private var navigator: Navigator<Screens>
-
     var body: some View {
         List {
             Section(OSLocales.getText(.SCENES)) {
-                ForEach(Screens.allCases.filter(\.shouldBeOnSidebar), id: \.self) { screen in
+                ForEach(Screens.allCases.filter(\.isSidebarItem), id: \.self) { screen in
                     StackNavigationChangeStackButton(destination: screen) {
                         Label(screen.title, systemImage: screen.imageSystemName)
                             .foregroundColor(.accentColor)

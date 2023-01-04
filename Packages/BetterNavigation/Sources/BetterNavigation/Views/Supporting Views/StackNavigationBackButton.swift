@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public struct StackNavigationBackButton<Destination: Codable & Hashable, Content: View>: View {
+public struct StackNavigationBackButton<Destination: NavigatorStackValue, Content: View>: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @EnvironmentObject private var navigator: Navigator<Destination>
@@ -31,10 +31,12 @@ public struct StackNavigationBackButton<Destination: Codable & Hashable, Content
     }
 }
 
+#if DEBUG
 struct StackNavigationBackButton_Previews: PreviewProvider {
     static var previews: some View {
-        StackNavigationBackButton(screenType: Int.self) {
+        StackNavigationBackButton(screenType: PreviewScreenType.self) {
             Text("Go back")
         }
     }
 }
+#endif

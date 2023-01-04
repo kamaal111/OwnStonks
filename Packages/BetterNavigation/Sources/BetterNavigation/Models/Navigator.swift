@@ -8,18 +8,22 @@
 import SwiftUI
 import SwiftStructures
 
-public final class Navigator<StackValue: Codable & Hashable>: ObservableObject {
+final class Navigator<StackValue: NavigatorStackValue>: ObservableObject {
     @Published private var stacks: [StackValue: Stack<StackValue>]
-    @Published public private(set) var currentStack: StackValue
+    @Published var currentStack: StackValue
 
-    public init(stack: [StackValue], initialStack: StackValue) {
+    init(stack: [StackValue], initialStack: StackValue) {
         let stack = Stack.fromArray(stack)
         self.stacks = [initialStack: stack]
         self.currentStack = initialStack
     }
 
-    public var currentScreen: StackValue? {
+    var currentScreen: StackValue? {
         stacks[currentStack]?.peek()
+    }
+
+    var screens: [StackValue] {
+        Array(StackValue.allCases)
     }
 
     @MainActor

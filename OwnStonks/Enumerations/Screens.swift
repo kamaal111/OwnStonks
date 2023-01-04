@@ -7,8 +7,9 @@
 
 import OSLocales
 import Foundation
+import BetterNavigation
 
-enum Screens: Hashable, Codable, CaseIterable {
+enum Screens: Hashable, Codable, CaseIterable, NavigatorStackValue {
     case transactions
     case settings
 
@@ -30,10 +31,19 @@ enum Screens: Hashable, Codable, CaseIterable {
         }
     }
 
-    var shouldBeOnSidebar: Bool {
+    var isSidebarItem: Bool {
         switch self {
         case .transactions, .settings:
             return true
         }
     }
+
+    var isTabItem: Bool {
+        switch self {
+        case .transactions, .settings:
+            return true
+        }
+    }
+
+    static let root: Self = .transactions
 }
