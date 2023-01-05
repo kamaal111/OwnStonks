@@ -1,0 +1,4 @@
+[submodule "xcode-acknowledgements"]
+	path = Scripts/xcode-acknowledgements
+	url = git@github.com:kamaal111/xcode-acknowledgements.git
+	branch = main

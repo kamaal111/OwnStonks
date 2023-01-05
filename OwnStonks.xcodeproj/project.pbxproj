@@ -33,6 +33,8 @@
 		2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */; };
 		2C7CC3FE2960C8D9006164DB /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FD2960C8D9006164DB /* EditableText.swift */; };
 		2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FF2960CA51006164DB /* EditableDate.swift */; };
+		2CAD62EF2967539D00DAACB0 /* Acknowledgements.json in Resources */ = {isa = PBXBuildFile; fileRef = 2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */; };
+		2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
@@ -82,6 +84,9 @@
 		2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheetContext.swift; sourceTree = "<group>"; };
 		2C7CC3FD2960C8D9006164DB /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		2C7CC3FF2960CA51006164DB /* EditableDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDate.swift; sourceTree = "<group>"; };
+		2CAD62EA29674D8B00DAACB0 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
+		2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Acknowledgements.json; sourceTree = "<group>"; };
+		2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUnpacker.swift; sourceTree = "<group>"; };
 		2CB6E497295F5DFE008DE698 /* TitledPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledPicker.swift; sourceTree = "<group>"; };
 		2CB6E49B295F642F008DE698 /* TitledView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitledView.swift; sourceTree = "<group>"; };
 		2CB6E49D295F6498008DE698 /* MoneyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneyTextField.swift; sourceTree = "<group>"; };
@@ -163,11 +168,12 @@
 				2C0B99732959FD6A00443BAC /* ContentView.swift */,
 				2C0B996C2959FD6A00443BAC /* OwnStonksApp.swift */,
 				2C0B996E2959FD6A00443BAC /* Persistence.swift */,
-				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
 				2C07AF33295F510C00B7CF6E /* Enumerations */,
 				2CB6E4A1295F76DC008DE698 /* Extensions */,
 				2C7CC3E729609772006164DB /* Models */,
 				2C0B99782959FD6D00443BAC /* Preview Content */,
+				2CAD62EB29674DA900DAACB0 /* Resources */,
+				2CAD62F02967562F00DAACB0 /* Utilities */,
 				2C0B9992295A1C3000443BAC /* Views */,
 			);
 			path = OwnStonks;
@@ -248,6 +254,47 @@
 			path = ViewModifiers;
 			sourceTree = "<group>";
 		};
+		2CAD62E829674D8B00DAACB0 /* xcode-acknowledgements */ = {
+			isa = PBXGroup;
+			children = (
+				2CAD62EA29674D8B00DAACB0 /* main.py */,
+			);
+			path = "xcode-acknowledgements";
+			sourceTree = "<group>";
+		};
+		2CAD62EB29674DA900DAACB0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2CAD62EC29674DB700DAACB0 /* Assets */,
+				2CAD62ED29674DC900DAACB0 /* Data */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		2CAD62EC29674DB700DAACB0 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				2C0B99752959FD6D00443BAC /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		2CAD62ED29674DC900DAACB0 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		2CAD62F02967562F00DAACB0 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		2CB6E4A1295F76DC008DE698 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -291,6 +338,7 @@
 			isa = PBXGroup;
 			children = (
 				2CD7D4E3295CD8D2006F675D /* generate-locales */,
+				2CAD62E829674D8B00DAACB0 /* xcode-acknowledgements */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -391,6 +439,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAD62EF2967539D00DAACB0 /* Acknowledgements.json in Resources */,
 				2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */,
 				2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */,
 			);
@@ -418,6 +467,7 @@
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,
 				2CCCA5A62961D90600B1C846 /* EditablePickerType.swift in Sources */,
+				2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
 				2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */,
 				2C0FFCB82964CE1E007046A0 /* Sidebar.swift in Sources */,
@@ -679,7 +729,7 @@
 			repositoryURL = "https://github.com/Kamaalio/SettingsUI.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.2.0;
+				minimumVersion = 0.3.0;
 			};
 		};
 		2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */ = {

@@ -1,0 +1,104 @@
+{
+  "pins" : [
+    {
+      "identity" : "confettiswiftui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/simibac/ConfettiSwiftUI.git",
+      "state" : {
+        "revision" : "8d3a15d0aa2991e0761749b767ef8d89bca6275a",
+        "version" : "1.0.1"
+      }
+    },
+    {
+      "identity" : "githubapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/GitHubAPI.git",
+      "state" : {
+        "revision" : "61cf801b44ad22cbce46235231f91075e482b58e",
+        "version" : "0.1.2"
+      }
+    },
+    {
+      "identity" : "inappbrowsersui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/InAppBrowserSUI.git",
+      "state" : {
+        "revision" : "191c767f7226313002ea78903dab5f11e2e05d59",
+        "version" : "2.1.0"
+      }
+    },
+    {
+      "identity" : "logster",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/Logster.git",
+      "state" : {
+        "revision" : "c16009fc4ca6a6e8948fca05070f0b095a7096ee",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "manuallymanagedobject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/ManuallyManagedObject.git",
+      "state" : {
+        "revision" : "e24c0b4e76c9ce32d70a675dfd739fa51758e61c",
+        "version" : "2.0.2"
+      }
+    },
+    {
+      "identity" : "popperup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/PopperUp.git",
+      "state" : {
+        "revision" : "a4efef612871eeb95cb166f4bd2bb47c2fe47f22",
+        "version" : "0.4.1"
+      }
+    },
+    {
+      "identity" : "salmonui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/SalmonUI.git",
+      "state" : {
+        "revision" : "66deec6d366d36f148ea20a11a4910fd49f59f07",
+        "version" : "5.1.1"
+      }
+    },
+    {
+      "identity" : "settingsui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/SettingsUI.git",
+      "state" : {
+        "revision" : "3f5a5579da2527dc12c99e71feb0efa85dd8f4f2",
+        "version" : "0.3.0"
+      }
+    },
+    {
+      "identity" : "shrimpextensions",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Kamaalio/ShrimpExtensions.git",
+      "state" : {
+        "revision" : "905f3cd824d34f00a98ecd7b7b276b5a489956fd",
+        "version" : "3.0.0"
+      }
+    },
+    {
+      "identity" : "swinject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Swinject/Swinject.git",
+      "state" : {
+        "revision" : "8bc503e60965298984fb58cf47b71c541449fe2a",
+        "version" : "2.8.3"
+      }
+    },
+    {
+      "identity" : "xiphiasnet",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/XiphiasNet.git",
+      "state" : {
+        "revision" : "b8c2bd983f6c6df1338fdebc1d5b4740119b745b",
+        "version" : "7.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

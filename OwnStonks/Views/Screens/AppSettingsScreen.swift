@@ -14,6 +14,13 @@ struct AppSettingsScreen: View {
     var body: some View {
         SettingsScreen(configuration: userData.settingsConfiguration)
             .onSettingsPreferenceChange({ preference in userData.handlePreferenceChange(preference) })
+            .onAppear(perform: handleOnAppear)
+    }
+
+    private func handleOnAppear() {
+        Task {
+            await userData.loadAcknowledgements()
+        }
     }
 }
 

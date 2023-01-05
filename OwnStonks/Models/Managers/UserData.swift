@@ -6,10 +6,10 @@
 //
 
 import Models
+import SwiftUI
 import Logster
 import OSLocales
 import SettingsUI
-import Foundation
 import ShrimpExtensions
 
 private let logger = Logster(from: UserData.self)
@@ -18,13 +18,27 @@ final class UserData: ObservableObject {
     @Published private(set) var preferedCurrency: Currencies {
         didSet { preferedCurrencyDidSet() }
     }
+    @Published private var showLogs = true
+    @Published private var acknowledgements: Acknowledgements?
 
     init() {
         self.preferedCurrency = UserDefaults.preferedCurrency ?? .EUR
     }
 
     var settingsConfiguration: SettingsConfiguration {
-        .init(preferences: preferences)
+        .init(acknowledgements: acknowledgements, preferences: preferences, showLogs: showLogs)
+    }
+
+    func loadAcknowledgements() async {
+        guard acknowledgements == nil else { return }
+
+        guard let acknowledgements = JSONUnpacker<Acknowledgements>(filename: "Acknowledgements").content else {
+            logger.error("Failed to find acknowledgements")
+            assertionFailure("Failed to find acknowledgements")
+            return
+        }
+
+        await setAcknowledgements(acknowledgements)
     }
 
     @MainActor
@@ -55,6 +69,12 @@ final class UserData: ObservableObject {
         [
             currencyPreference
         ]
+    }
+
+    @MainActor
+    private func setAcknowledgements(_ acknowledgements: Acknowledgements) {
+        logger.info("acknowledgements loaded")
+        withAnimation { self.acknowledgements = acknowledgements }
     }
 
     private func preferedCurrencyDidSet() {
