@@ -12,7 +12,7 @@ enum TransactionDetailSheetContext {
     case addTransaction
     case editTransaction(transaction: OSTransaction)
 
-    var initialyEditing: Bool {
+    var isNew: Bool {
         switch self {
         case .addTransaction:
             return true

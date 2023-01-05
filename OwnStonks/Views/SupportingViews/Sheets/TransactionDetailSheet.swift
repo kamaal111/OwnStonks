@@ -6,11 +6,14 @@
 //
 
 import Models
+import Logster
 import SwiftUI
 import SalmonUI
 import ZaWarudo
 import OSLocales
 import ShrimpExtensions
+
+private let logger = Logster(from: TransactionDetailSheet.self)
 
 struct TransactionDetailSheet: View {
     @StateObject private var viewModel: ViewModel
@@ -27,7 +30,7 @@ struct TransactionDetailSheet: View {
             self._isShown = isShown
             self.context = context
             self.submittedTransaction = submittedTransaction
-            self._viewModel = StateObject(wrappedValue: ViewModel(isEditing: context.initialyEditing))
+            self._viewModel = StateObject(wrappedValue: ViewModel(isEditing: context.isNew))
         }
 
     var body: some View {
@@ -43,6 +46,12 @@ struct TransactionDetailSheet: View {
 
     private var content: some View {
         VStack(spacing: 4) {
+            if context.isNew {
+                WideButton(action: { viewModel.importTransactionsFromFile() }) {
+                    OSText(localized: .IMPORT)
+                        .bold()
+                }
+            }
             EditableText(text: $viewModel.assetName, localized: .NAME, isEditing: viewModel.isEditing)
             EditableDate(date: $viewModel.transactionDate, localized: .TRANSACTION_DATE, isEditing: viewModel.isEditing)
             EditablePickerType(
@@ -65,6 +74,7 @@ struct TransactionDetailSheet: View {
                 isEditing: viewModel.isEditing)
         }
         .padding(.vertical, .medium)
+        .openFile(isPresented: $viewModel.showOpenFileView, onFileOpen: viewModel.loadContentOfImportedFile)
     }
 
     private var closeButton: some View {
@@ -130,6 +140,7 @@ private final class ViewModel: ObservableObject {
     @Published var feesCurrency: Currencies = .EUR
     @Published var fees = 0.0
     @Published private(set) var isEditing: Bool
+    @Published var showOpenFileView = false
 
     private var transactionID: UUID?
 
@@ -153,6 +164,11 @@ private final class ViewModel: ObservableObject {
     }
 
     @MainActor
+    func importTransactionsFromFile() {
+        showOpenFileView = true
+    }
+
+    @MainActor
     func toggleEditing() {
         withAnimation {
             isEditing.toggle()
@@ -171,6 +187,10 @@ private final class ViewModel: ObservableObject {
         feesCurrency = transaction.fees.currency
         fees = transaction.fees.amount
         isEditing = false
+    }
+
+    func loadContentOfImportedFile(_ data: Data) {
+        print(String(data: data, encoding: .utf8))
     }
 }
 

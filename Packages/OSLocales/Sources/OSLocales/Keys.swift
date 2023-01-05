@@ -33,5 +33,6 @@ extension OSLocales {
         case SETTINGS
         case TOGGLE_SIDEBAR
         case CURRENCY
+        case IMPORT
     }
 }

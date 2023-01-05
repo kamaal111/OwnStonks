@@ -27,4 +27,5 @@ module.exports = {
     SETTINGS: "Settings",
     TOGGLE_SIDEBAR: "Toggle sidebar",
     CURRENCY: "Currency",
+    IMPORT: "Import",
 }
