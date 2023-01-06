@@ -16,12 +16,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Kamaalio/ShrimpExtensions.git", "3.0.0" ..< "4.0.0"),
-        .package(path: "../OSLocales")
+        .package(path: "../OSLocales"),
+        .package(path: "../CSVUtils")
     ],
     targets: [
         .target(
             name: "Models",
             dependencies: [
+                "CSVUtils",
                 "OSLocales",
                 "ShrimpExtensions",
             ]),

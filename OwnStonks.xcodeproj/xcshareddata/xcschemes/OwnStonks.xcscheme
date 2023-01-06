@@ -59,6 +59,26 @@
                ReferencedContainer = "container:Packages/Backend">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "CSVUtilsTests"
+               BuildableName = "CSVUtilsTests"
+               BlueprintName = "CSVUtilsTests"
+               ReferencedContainer = "container:Packages/CSVUtils">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "ModelsTests"
+               BuildableName = "ModelsTests"
+               BlueprintName = "ModelsTests"
+               ReferencedContainer = "container:Packages/Models">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

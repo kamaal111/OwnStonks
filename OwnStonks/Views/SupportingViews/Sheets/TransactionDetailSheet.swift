@@ -190,7 +190,16 @@ private final class ViewModel: ObservableObject {
     }
 
     func loadContentOfImportedFile(_ data: Data) {
-        print(String(data: data, encoding: .utf8))
+        let transactions: [OSTransaction]
+        do {
+            transactions = try OSTransaction.fromCSV(data: data, seperator: ";")
+        } catch {
+            logger.error(label: "Failed to read contents of CSV", error: error)
+            assertionFailure("Failed to read contents of CSV")
+            return
+        }
+        print(transactions)
+        #warning("Process further")
     }
 }
 

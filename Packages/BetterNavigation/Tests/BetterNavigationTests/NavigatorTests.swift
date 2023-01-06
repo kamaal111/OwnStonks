@@ -10,32 +10,32 @@ import XCTest
 
 final class NavigatorTests: XCTestCase {
     func testInitializer() {
-        let stack = Navigator(stack: [0, 1, 2])
-        XCTAssertEqual(stack.currentScreen, 2)
+        let stack = Navigator<PreviewScreenType>(stack: [.screen, .sub])
+        XCTAssertEqual(stack.currentScreen, .sub)
     }
 
     func testEmptyStackInitializer() {
-        let stack = Navigator(stack: [] as [Int])
+        let stack = Navigator(stack: [] as [PreviewScreenType])
         XCTAssertNil(stack.currentScreen)
     }
 
     func testNavigate() async {
-        let stack = Navigator(stack: [0, 1, 2])
-        await stack.navigate(to: 3)
-        XCTAssertEqual(stack.currentScreen, 3)
-        await stack.navigate(to: 420)
-        XCTAssertEqual(stack.currentScreen, 420)
+        let stack = Navigator<PreviewScreenType>(stack: [.sub, .screen])
+        await stack.navigate(to: .screen)
+        XCTAssertEqual(stack.currentScreen, .screen)
+        await stack.navigate(to: .sub)
+        XCTAssertEqual(stack.currentScreen, .sub)
     }
 
     func testGoBack() async {
-        let stack = Navigator(stack: [0, 1])
+        let stack = Navigator<PreviewScreenType>(stack: [.screen, .sub])
         await stack.goBack()
-        XCTAssertEqual(stack.currentScreen, 0)
-        await stack.goBack()
-        XCTAssertNil(stack.currentScreen)
+        XCTAssertEqual(stack.currentScreen, .screen)
         await stack.goBack()
         XCTAssertNil(stack.currentScreen)
-        await stack.navigate(to: 69)
-        XCTAssertEqual(stack.currentScreen, 69)
+        await stack.goBack()
+        XCTAssertNil(stack.currentScreen)
+        await stack.navigate(to: .sub)
+        XCTAssertEqual(stack.currentScreen, .sub)
     }
 }

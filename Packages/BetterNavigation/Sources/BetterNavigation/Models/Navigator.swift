@@ -12,7 +12,7 @@ final class Navigator<StackValue: NavigatorStackValue>: ObservableObject {
     @Published private var stacks: [StackValue: Stack<StackValue>]
     @Published var currentStack: StackValue
 
-    init(stack: [StackValue], initialStack: StackValue) {
+    init(stack: [StackValue], initialStack: StackValue = .root) {
         let stack = Stack.fromArray(stack)
         self.stacks = [initialStack: stack]
         self.currentStack = initialStack

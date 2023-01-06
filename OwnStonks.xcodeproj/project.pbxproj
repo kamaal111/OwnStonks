@@ -73,6 +73,7 @@
 		2C0FFCB72964CE1E007046A0 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2C0FFCB92964CE45007046A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		2C0FFCBB2964CE9C007046A0 /* Screens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Screens.swift; sourceTree = "<group>"; };
+		2C1A45CF2968A8DE000D400F /* CSVUtils */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = CSVUtils; sourceTree = "<group>"; };
 		2C205B092962201300AD366E /* ExchangeRateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExchangeRateManager.swift; sourceTree = "<group>"; };
 		2C4485FC2967663C0095671B /* OpenFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenFile.swift; sourceTree = "<group>"; };
 		2C4485FE29677AC30095671B /* SecureFileOpener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureFileOpener.swift; sourceTree = "<group>"; };
@@ -199,6 +200,7 @@
 				2C5EF0472960829A000536BC /* Backend */,
 				2C0B998F295A111B00443BAC /* BetterNavigation */,
 				2C5EF044296078CF000536BC /* CDPersist */,
+				2C1A45CF2968A8DE000D400F /* CSVUtils */,
 				2C5EF04A29608909000536BC /* Models */,
 				2CCCA5AB2961F3B700B1C846 /* Network */,
 				2CD7D4E0295CD615006F675D /* OSLocales */,
@@ -255,8 +257,8 @@
 		2C7CC3F82960BEF2006164DB /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
-				2C4485FC2967663C0095671B /* OpenFile.swift */,
 				2C7CC3F92960BF03006164DB /* InvisibleFill.swift */,
+				2C4485FC2967663C0095671B /* OpenFile.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";

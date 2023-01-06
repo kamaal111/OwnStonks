@@ -5,7 +5,9 @@
 //  Created by Kamaal M Farah on 31/12/2022.
 //
 
+import CSVUtils
 import Foundation
+import ShrimpExtensions
 
 public struct OSTransaction: Hashable, Codable {
     public let id: UUID?
@@ -32,4 +34,55 @@ public struct OSTransaction: Hashable, Codable {
             self.pricePerUnit = pricePerUnit
             self.fees = fees
         }
+
+    public static func fromCSV(data: Data, seperator: Character) throws -> [OSTransaction] {
+        let items: [CSVRepresentation] = try CSVUtils.decode(data: data, seperator: ";")
+        return items
+            .compactMap({ $0.toOSTransaction() })
+    }
+
+    struct CSVRepresentation: Codable {
+        let type: String
+        let name: String
+        let perUnit: String
+        let amount: String
+        let fees: String
+        let date: String
+
+        enum CodingKeys: String, CodingKey {
+            case type = "Type"
+            case name = "Name"
+            case perUnit = "Per unit"
+            case amount = "Amount"
+            case fees = "Fees"
+            case date = "Date"
+        }
+
+        func toOSTransaction() -> OSTransaction? {
+            guard let pricePerUnit = Money.fromString(string: perUnit),
+                  let fees = Money.fromString(string: fees),
+                  let type = TransactionTypes(rawValue: type.lowercased()),
+                  let date = Self.dateFormatter.date(from: date),
+                  let amount = Double(amount)
+            else { return nil }
+
+            return OSTransaction(
+                id: nil,
+                assetName: name,
+                date: date,
+                type: type,
+                amount: amount,
+                pricePerUnit: pricePerUnit,
+                fees: fees)
+        }
+
+        static let dateFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-y"
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+            formatter.locale = Locale(identifier: "en_US_POSIX")
+
+            return formatter
+        }()
+    }
 }

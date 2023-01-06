@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import ShrimpExtensions
 
 public enum Currencies: String, CaseIterable, Codable, Identifiable {
     case EUR
@@ -16,8 +17,10 @@ public enum Currencies: String, CaseIterable, Codable, Identifiable {
         switch self {
         case .EUR:
             return "€"
-        case .USD, .CAD:
-            return "$"
+        case .USD:
+            return "US$"
+        case .CAD:
+            return "CA$"
         }
     }
 
@@ -30,5 +33,9 @@ public enum Currencies: String, CaseIterable, Codable, Identifiable {
         case .CAD:
             return UUID(uuidString: "159a21a1-ac56-4ce5-9022-ea5e6bc0ab16")!
         }
+    }
+
+    static func fromSymbol(_ symbol: String) -> Currencies? {
+        Currencies.allCases.find(by: \.symbol, is: symbol)
     }
 }

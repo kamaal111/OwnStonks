@@ -6,12 +6,12 @@
 //
 
 import Models
+import SwiftUI
 import Backend
 import Logster
 import PopperUp
 import Swinject
 import OSLocales
-import Foundation
 import ShrimpExtensions
 
 private let logger = Logster(from: TransactionsManager.self)
@@ -80,9 +80,11 @@ final class TransactionsManager: ObservableObject {
 
     @MainActor
     private func setTransactions(_ transactions: [OSTransaction]) {
-        self.transactions = transactions
+        let transactions = transactions
             .filter({ $0.id != nil })
             .sorted(by: \.date, using: .orderedDescending)
+
+        withAnimation { self.transactions = transactions }
     }
 
     @MainActor

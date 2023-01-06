@@ -23,7 +23,7 @@ public struct NavigationStackView<Root: View, SubView: View, Sidebar: View, Scre
             self.root = root
             self.subView = subView
             self.sidebar = sidebar
-            self._navigator = ObservedObject(wrappedValue: Navigator(stack: stack, initialStack: .root))
+            self._navigator = ObservedObject(wrappedValue: Navigator(stack: stack))
         }
 
     public var body: some View {

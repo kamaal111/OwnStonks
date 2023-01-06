@@ -16,8 +16,9 @@ public protocol NavigatorStackValue: Codable, Hashable, CaseIterable {
 }
 
 #if DEBUG
-enum PreviewScreenType: NavigatorStackValue {
+enum PreviewScreenType: NavigatorStackValue, Equatable {
     case screen
+    case sub
 
     var isTabItem: Bool { true }
     var isSidebarItem: Bool { true }
