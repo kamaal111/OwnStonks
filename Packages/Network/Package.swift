@@ -15,12 +15,11 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kamaal111/XiphiasNet.git", "7.0.0" ..< "8.0.0"),
-        .package(url: "https://github.com/Swinject/Swinject.git", "2.8.3" ..< "3.0.0"),
         .package(path: "../Models"),
     ],
     targets: [
         .target(name: "Network", dependencies: []),
         .testTarget(name: "NetworkTests", dependencies: ["Network"]),
-        .target(name: "ForexAPI", dependencies: ["XiphiasNet", "Swinject", "Models"]),
+        .target(name: "ForexAPI", dependencies: ["XiphiasNet", "Models"]),
     ]
 )

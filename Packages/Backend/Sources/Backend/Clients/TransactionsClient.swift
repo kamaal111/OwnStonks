@@ -7,7 +7,6 @@
 
 import Models
 import Logster
-import Swinject
 import ZaWarudo
 import CDPersist
 import Foundation
@@ -16,10 +15,10 @@ import ShrimpExtensions
 private let logger = Logster(from: TransactionsClient.self)
 
 public struct TransactionsClient {
-    let preview: Bool
+    private let persistenceController: PersistenceController
 
-    public init(preview: Bool = false) {
-        self.preview = preview
+    public init(persistenceController: PersistenceController = .shared) {
+        self.persistenceController = persistenceController
     }
 
     public enum Errors: Error {
@@ -148,9 +147,5 @@ public struct TransactionsClient {
 
         assert(createdTransactions.count == transactions.count, "Should have created all provided transaction")
         return .success(createdTransactions.map(\.osTransaction))
-    }
-
-    private var persistenceController: PersistenceController {
-        container.resolve(PersistenceController.self, argument: preview)!
     }
 }

@@ -10,7 +10,6 @@ import SwiftUI
 import Backend
 import Logster
 import PopperUp
-import Swinject
 import OSLocales
 import ShrimpExtensions
 
@@ -20,10 +19,10 @@ final class TransactionsManager: ObservableObject {
     @Published private(set) var transactions: [OSTransaction] = []
     @Published private(set) var isLoading = false
 
-    private let preview: Bool
+    private let backend: Backend
 
-    init(preview: Bool = false) {
-        self.preview = preview
+    init(backend: Backend = .shared) {
+        self.backend = backend
     }
 
     func fetch() async -> Result<Void, Errors> {
@@ -101,10 +100,6 @@ final class TransactionsManager: ObservableObject {
 
             return .success(())
         }, duration: { duration in logger.info("Successfully saved transactions in \((duration) * 1000) ms") })
-    }
-
-    private var backend: Backend {
-        container.resolve(Backend.self, argument: preview)!
     }
 
     @MainActor

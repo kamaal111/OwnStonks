@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-               BuildableName = "OwnStonks.app"
-               BlueprintName = "OwnStonks"
+               BlueprintIdentifier = "2CE74C39296A35750058E9C5"
+               BuildableName = "OwnStonks (macOS).app"
+               BlueprintName = "OwnStonks (macOS)"
                ReferencedContainer = "container:OwnStonks.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,17 +26,16 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES"
-      codeCoverageEnabled = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftStructuresTests"
-               BuildableName = "SwiftStructuresTests"
-               BlueprintName = "SwiftStructuresTests"
-               ReferencedContainer = "container:Packages/SwiftStructures">
+               BlueprintIdentifier = "BackendTests"
+               BuildableName = "BackendTests"
+               BlueprintName = "BackendTests"
+               ReferencedContainer = "container:Packages/Backend">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,16 +46,6 @@
                BuildableName = "BetterNavigationTests"
                BlueprintName = "BetterNavigationTests"
                ReferencedContainer = "container:Packages/BetterNavigation">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BackendTests"
-               BuildableName = "BackendTests"
-               BlueprintName = "BackendTests"
-               ReferencedContainer = "container:Packages/Backend">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -79,6 +68,16 @@
                ReferencedContainer = "container:Packages/Models">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "SwiftStructuresTests"
+               BuildableName = "SwiftStructuresTests"
+               BlueprintName = "SwiftStructuresTests"
+               ReferencedContainer = "container:Packages/SwiftStructures">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -95,9 +94,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-            BuildableName = "OwnStonks.app"
-            BlueprintName = "OwnStonks"
+            BlueprintIdentifier = "2CE74C39296A35750058E9C5"
+            BuildableName = "OwnStonks (macOS).app"
+            BlueprintName = "OwnStonks (macOS)"
             ReferencedContainer = "container:OwnStonks.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -112,9 +111,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-            BuildableName = "OwnStonks.app"
-            BlueprintName = "OwnStonks"
+            BlueprintIdentifier = "2CE74C39296A35750058E9C5"
+            BuildableName = "OwnStonks (macOS).app"
+            BlueprintName = "OwnStonks (macOS)"
             ReferencedContainer = "container:OwnStonks.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

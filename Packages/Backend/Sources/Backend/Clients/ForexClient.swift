@@ -6,15 +6,16 @@
 //
 
 import Models
-import Swinject
 import ForexAPI
 import Foundation
 
 public struct ForexClient {
     private let preview: Bool
     private let cacheUtil = ForexCacheUtil()
+    private let forexAPI: ForexAPI
 
-    public init(preview: Bool = false) {
+    public init(preview: Bool = false, urlSession: URLSession = .shared) {
+        self.forexAPI = ForexAPI(preview: preview, urlSession: urlSession)
         self.preview = preview
     }
 
@@ -22,13 +23,9 @@ public struct ForexClient {
         guard !preview else { return .success(.preview) }
 
         return await cacheUtil.cacheLatest(base: base, symbols: symbols, apiCall: { base, symbols in
-            await api.latest(base: base, symbols: symbols)
+            await forexAPI.latest(base: base, symbols: symbols)
         })
         .mapError({ .getExchangeFailure(context: $0) })
-    }
-
-    private var api: ForexAPI {
-        container.resolve(ForexAPI.self, argument: preview)!
     }
 }
 

@@ -19,7 +19,7 @@ struct TransactionsScreen: View {
     @EnvironmentObject private var popperUpManager: PopperUpManager
     @EnvironmentObject private var userData: UserData
 
-    @Environment(\.editMode) var editMode: EditMode
+    @Environment(\.editMode) var editMode
 
     @StateObject private var viewModel = ViewModel()
 
@@ -37,7 +37,7 @@ struct TransactionsScreen: View {
                 ForEach(transactionsManager.transactions, id: \.self) { transaction in
                     TransactionView(
                         transaction: transaction,
-                        editMode: editMode,
+                        editMode: editModeValue,
                         action: { transaction in viewModel.openEditTransactionSheet(with: transaction) },
                         onDelete: handleOnDelete)
                     #if os(macOS)
@@ -72,6 +72,14 @@ struct TransactionsScreen: View {
             }
         })
         .onAppear(perform: handleOnAppear)
+    }
+
+    private var editModeValue: EditMode {
+        #if os(macOS)
+        editMode
+        #else
+        editMode?.wrappedValue ?? .inactive
+        #endif
     }
 
     private var toolbarView: some View {

@@ -6,23 +6,22 @@
 //
 
 import Models
-import Swinject
 import XiphiasNet
 import Foundation
 
 private let BASE_URL = URL(string: "https://theforexapi.com/api")!
 
 public class ForexAPI {
-    private let urlSession: URLSession
     private let preview: Bool
+    private let networker: XiphiasNet
 
     convenience init(preview: Bool = false) {
         self.init(preview: preview, urlSession: .shared)
     }
 
-    init(preview: Bool, urlSession: URLSession) {
-        self.urlSession = urlSession
+    public init(preview: Bool, urlSession: URLSession) {
         self.preview = preview
+        self.networker = XiphiasNet(urlSession: urlSession)
     }
 
     public func latest(base: Currencies, symbols: [Currencies]) async -> Result<ExchangeRates, Errors> {
@@ -48,10 +47,6 @@ public class ForexAPI {
     public static let shared = ForexAPI()
 
     public static let preview = ForexAPI(preview: true)
-
-    private var networker: XiphiasNet {
-        container.resolve(XiphiasNet.self, argument: urlSession)!
-    }
 }
 
 extension ForexAPI {

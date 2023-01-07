@@ -8,7 +8,6 @@
 import Models
 import Logster
 import Backend
-import Swinject
 import Foundation
 
 private let logger = Logster(from: ExchangeRateManager.self)
@@ -16,10 +15,21 @@ private let logger = Logster(from: ExchangeRateManager.self)
 final class ExchangeRateManager: ObservableObject {
     @Published private(set) var exchangeRates: ExchangeRates?
 
-    private let preview: Bool
+    private let backend: Backend
 
-    init(preview: Bool = false) {
-        self.preview = preview
+    init(backend: Backend = .shared) {
+        self.backend = backend
+    }
+
+    func convert(from money: Money, preferedCurrency: Currencies) -> Money {
+        guard let exchangeRates else { return money }
+
+        guard let rate = exchangeRates.ratesMappedByCurrency[money.currency] else {
+            logger.warning("Rate for \(money.currency) not fetched yet")
+            return money
+        }
+
+        return money
     }
 
     func fetch(preferedCurrency: Currencies) async {
@@ -50,10 +60,6 @@ final class ExchangeRateManager: ObservableObject {
             duration: { duration in
                 logger.info("Successfully fetched exchange rates in \((duration) * 1000) ms")
             })
-    }
-
-    private var backend: Backend {
-        container.resolve(Backend.self, argument: preview)!
     }
 
     @MainActor
