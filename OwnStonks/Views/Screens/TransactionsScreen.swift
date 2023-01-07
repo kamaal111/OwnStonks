@@ -18,6 +18,8 @@ struct TransactionsScreen: View {
     @EnvironmentObject private var exchangeRateManager: ExchangeRateManager
     @EnvironmentObject private var popperUpManager: PopperUpManager
 
+    @Environment(\.editMode) var editMode: EditMode
+
     @StateObject private var viewModel = ViewModel()
 
     var body: some View {
@@ -30,15 +32,24 @@ struct TransactionsScreen: View {
                     }
                 }
                 ForEach(transactionsManager.transactions, id: \.self) { transaction in
-                    TransactionView(transaction: transaction, action: { transaction in
-                        viewModel.openEditTransactionSheet(with: transaction)
-                    })
+                    TransactionView(
+                        transaction: transaction,
+                        editMode: editMode,
+                        action: { transaction in viewModel.openEditTransactionSheet(with: transaction) },
+                        onDelete: handleOnDelete)
                     #if os(macOS)
                     if transactionsManager.transactions.last != transaction {
                         Divider()
                     }
                     #endif
                 }
+                #if os(iOS)
+                .onDelete(perform: { indices in
+                    for index in indices {
+                        handleOnDelete(transactionsManager.transactions[index])
+                    }
+                })
+                #endif
             }
             #if os(macOS)
             .padding(.horizontal, .medium)
@@ -61,11 +72,18 @@ struct TransactionsScreen: View {
     }
 
     private var toolbarView: some View {
-        Button(action: { viewModel.openAddTransactionSheet() }) {
-            Image(systemName: "plus")
-                .foregroundColor(.accentColor)
+        HStack {
+            EditButton()
+            Button(action: { viewModel.openAddTransactionSheet() }) {
+                Image(systemName: "plus")
+                    .foregroundColor(.accentColor)
+            }
+            .help(OSLocales.getText(.ADD_TRANSACTION))
         }
-        .help(OSLocales.getText(.ADD_TRANSACTION))
+    }
+
+    private func handleOnDelete(_ transaction: OSTransaction) {
+        print("transaction", transaction)
     }
 
     private func handleOnAppear() {

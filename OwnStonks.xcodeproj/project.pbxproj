@@ -35,6 +35,9 @@
 		2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */; };
 		2C7CC3FE2960C8D9006164DB /* EditableText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FD2960C8D9006164DB /* EditableText.swift */; };
 		2C7CC4002960CA51006164DB /* EditableDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3FF2960CA51006164DB /* EditableDate.swift */; };
+		2C8228422969AEA6002DDC19 /* EditModeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228412969AEA6002DDC19 /* EditModeToggle.swift */; };
+		2C8228442969AF26002DDC19 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */; };
+		2C8228462969B1EE002DDC19 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228452969B1EE002DDC19 /* EditButton.swift */; };
 		2CAD62EF2967539D00DAACB0 /* Acknowledgements.json in Resources */ = {isa = PBXBuildFile; fileRef = 2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */; };
 		2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */; };
 		2CAD62F429675CA500DAACB0 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F329675CA500DAACB0 /* WideButton.swift */; };
@@ -90,6 +93,9 @@
 		2C7CC3FB2960C2C2006164DB /* TransactionDetailSheetContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailSheetContext.swift; sourceTree = "<group>"; };
 		2C7CC3FD2960C8D9006164DB /* EditableText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableText.swift; sourceTree = "<group>"; };
 		2C7CC3FF2960CA51006164DB /* EditableDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDate.swift; sourceTree = "<group>"; };
+		2C8228412969AEA6002DDC19 /* EditModeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeToggle.swift; sourceTree = "<group>"; };
+		2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
+		2C8228452969B1EE002DDC19 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
 		2CAD62EA29674D8B00DAACB0 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
 		2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Acknowledgements.json; sourceTree = "<group>"; };
 		2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUnpacker.swift; sourceTree = "<group>"; };
@@ -257,6 +263,7 @@
 		2C7CC3F82960BEF2006164DB /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
+				2C8228412969AEA6002DDC19 /* EditModeToggle.swift */,
 				2C7CC3F92960BF03006164DB /* InvisibleFill.swift */,
 				2C4485FC2967663C0095671B /* OpenFile.swift */,
 			);
@@ -308,6 +315,7 @@
 		2CB6E4A1295F76DC008DE698 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */,
 				2CB6E4A2295F76F0008DE698 /* String+extensions.swift */,
 			);
 			path = Extensions;
@@ -329,6 +337,7 @@
 				2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */,
 				2CCCA5A52961D90600B1C846 /* EditablePickerType.swift */,
 				2C7CC3FD2960C8D9006164DB /* EditableText.swift */,
+				2C8228452969B1EE002DDC19 /* EditButton.swift */,
 				2C0FFCB92964CE45007046A0 /* MainView.swift */,
 				2CB6E49D295F6498008DE698 /* MoneyTextField.swift */,
 				2CB74A7E295E355000408363 /* OSButton.swift */,
@@ -476,9 +485,11 @@
 				2CCCA5AA2961DCEF00B1C846 /* EditableMoney.swift in Sources */,
 				2C4485FF29677AC30095671B /* SecureFileOpener.swift in Sources */,
 				2CB74A7A295E347100408363 /* OSText.swift in Sources */,
+				2C8228442969AF26002DDC19 /* NotificationName+extensions.swift in Sources */,
 				2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */,
 				2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */,
 				2CCCA5A62961D90600B1C846 /* EditablePickerType.swift in Sources */,
+				2C8228462969B1EE002DDC19 /* EditButton.swift in Sources */,
 				2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */,
 				2CAD62F429675CA500DAACB0 /* WideButton.swift in Sources */,
 				2CB6E4A3295F76F0008DE698 /* String+extensions.swift in Sources */,
@@ -488,6 +499,7 @@
 				2C0FFCBA2964CE45007046A0 /* MainView.swift in Sources */,
 				2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */,
 				2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */,
+				2C8228422969AEA6002DDC19 /* EditModeToggle.swift in Sources */,
 				2C7CC3FC2960C2C2006164DB /* TransactionDetailSheetContext.swift in Sources */,
 				2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */,
 				2C0B996F2959FD6A00443BAC /* Persistence.swift in Sources */,

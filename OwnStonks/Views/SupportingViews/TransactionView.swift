@@ -14,12 +14,17 @@ import OSLocales
 struct TransactionView: View {
     @Environment(\.layoutDirection) private var layoutDirection: LayoutDirection
 
+    @State private var isDeleting = false
+
     let transaction: OSTransaction
+    let editMode: EditMode
     let action: (_ transaction: OSTransaction) -> Void
+    let onDelete: (_ transaction: OSTransaction) -> Void
 
     var body: some View {
         OSButton(action: { action(transaction) }) {
             HStack {
+                #warning("If screen is not that wide than show 3 items per column")
                 VStack(alignment: .leading) {
                     OSText(transaction.assetName)
                         .foregroundColor(.accentColor)
@@ -40,6 +45,13 @@ struct TransactionView: View {
             }
             .ktakeWidthEagerly(alignment: .leading)
         }
+        .disabled(editMode.isEditing)
+        #if os(macOS)
+        .kDeletableView(
+            isDeleting: $isDeleting,
+            enabled: editMode.isEditing,
+            onDelete: { onDelete(transaction) })
+        #endif
     }
 
     private var typeLabel: some View {
@@ -77,6 +89,8 @@ struct TransactionView_Previews: PreviewProvider {
                 amount: 0.0001200,
                 pricePerUnit: .init(amount: 15_000, currency: .EUR),
                 fees: .init(amount: 0, currency: .EUR)),
-            action: { _ in })
+            editMode: .inactive,
+            action: { _ in },
+            onDelete: { _ in })
     }
 }
