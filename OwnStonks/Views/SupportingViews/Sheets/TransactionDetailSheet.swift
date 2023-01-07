@@ -9,6 +9,7 @@ import Models
 import Logster
 import SwiftUI
 import SalmonUI
+import PopperUp
 import ZaWarudo
 import OSLocales
 import ShrimpExtensions
@@ -21,17 +22,19 @@ struct TransactionDetailSheet: View {
     @Binding var isShown: Bool
 
     let context: TransactionDetailSheetContext
-    let submittedTransaction: (_ transaction: OSTransaction) -> Void
+    let submittedTransactions: (_ transaction: [OSTransaction]) -> Void
 
     init(
         isShown: Binding<Bool>,
         context: TransactionDetailSheetContext,
-        submittedTransaction: @escaping (_ transaction: OSTransaction) -> Void) {
+        submittedTransactions: @escaping (_ transaction: [OSTransaction]) -> Void) {
             self._isShown = isShown
             self.context = context
-            self.submittedTransaction = submittedTransaction
+            self.submittedTransactions = submittedTransactions
             self._viewModel = StateObject(wrappedValue: ViewModel(isEditing: context.isNew))
         }
+
+    // - MARK: Views
 
     var body: some View {
         KSheetStack(
@@ -74,7 +77,14 @@ struct TransactionDetailSheet: View {
                 isEditing: viewModel.isEditing)
         }
         .padding(.vertical, .medium)
-        .openFile(isPresented: $viewModel.showOpenFileView, onFileOpen: viewModel.loadContentOfImportedFile)
+        .openFile(isPresented: $viewModel.showOpenFileView, onFileOpen: handleOpenFile)
+        .popperUpLite(
+            isPresented: $viewModel.showErrorPopup,
+            style: .bottom(
+                title: OSLocales.getText(.DECODE_CSV_FAILURE_TITLE),
+                type: .warning,
+                description: OSLocales.getText(.DECODE_CSV_FAILURE_DESCRIPTION)),
+            backgroundColor: Color("BackgroundColor"))
     }
 
     private var closeButton: some View {
@@ -110,6 +120,18 @@ struct TransactionDetailSheet: View {
         }
     }
 
+    // - MARK: Lifecycle handlers
+
+    private func handleOpenFile(_ data: Data) {
+        Task {
+            let transactions = await viewModel.loadContentOfImportedFile(data)
+            guard let transactions, !transactions.isEmpty else { return }
+
+            submittedTransactions(transactions)
+            onClose()
+        }
+    }
+
     private func handleOnAppear() {
         if case .editTransaction(let transaction) = context {
             viewModel.setValues(with: transaction)
@@ -121,7 +143,7 @@ struct TransactionDetailSheet: View {
     }
 
     private func onDone() {
-        submittedTransaction(viewModel.transaction)
+        submittedTransactions([viewModel.transaction])
         onClose()
     }
 
@@ -129,6 +151,8 @@ struct TransactionDetailSheet: View {
         viewModel.toggleEditing()
     }
 }
+
+// - MARK: View Model
 
 private final class ViewModel: ObservableObject {
     @Published var assetName = ""
@@ -141,12 +165,16 @@ private final class ViewModel: ObservableObject {
     @Published var fees = 0.0
     @Published private(set) var isEditing: Bool
     @Published var showOpenFileView = false
+    @Published var showErrorPopup = false
 
     private var transactionID: UUID?
+    private var errorPopupTimer: Timer?
 
     init(isEditing: Bool) {
         self.isEditing = isEditing
     }
+
+    // - MARK: API
 
     var transaction: OSTransaction {
         .init(
@@ -189,22 +217,47 @@ private final class ViewModel: ObservableObject {
         isEditing = false
     }
 
-    func loadContentOfImportedFile(_ data: Data) {
+    func loadContentOfImportedFile(_ data: Data) async -> [OSTransaction]? {
         let transactions: [OSTransaction]
         do {
             transactions = try OSTransaction.fromCSV(data: data, seperator: ";")
         } catch {
-            logger.error(label: "Failed to read contents of CSV", error: error)
-            assertionFailure("Failed to read contents of CSV")
-            return
+            logger.warning("Failed to read contents of CSV; description='\(error.localizedDescription)'; error='\(error)")
+            await openErrorPopup()
+            return nil
         }
-        print(transactions)
-        #warning("Process further")
+
+        return transactions
+    }
+
+    // - MARK: Privates
+
+    @MainActor
+    private func openErrorPopup() {
+        guard !showErrorPopup else { return }
+
+        showErrorPopup = true
+        errorPopupTimer = Timer.scheduledTimer(withTimeInterval: 3, repeats: false, block: { [weak self] timer in
+            self?.handleErrorPopupTimer(timer)
+        })
+    }
+
+    private func handleErrorPopupTimer(_ timer: Timer) {
+        errorPopupTimer?.invalidate()
+        errorPopupTimer = nil
+        Task { await closeErrorPopUp() }
+    }
+
+    @MainActor
+    private func closeErrorPopUp() {
+        showErrorPopup = false
     }
 }
 
+// - MARK: Preview
+
 struct TransactionDetailSheet_Previews: PreviewProvider {
     static var previews: some View {
-        TransactionDetailSheet(isShown: .constant(true), context: .addTransaction, submittedTransaction: { _ in })
+        TransactionDetailSheet(isShown: .constant(true), context: .addTransaction, submittedTransactions: { _ in })
     }
 }

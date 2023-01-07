@@ -33,4 +33,6 @@
 "TOGGLE_SIDEBAR" = "Toggle sidebar";
 "CURRENCY" = "Currency";
 "IMPORT" = "Import";
+"DECODE_CSV_FAILURE_TITLE" = "Invalid CSV";
+"DECODE_CSV_FAILURE_DESCRIPTION" = "Failed to decode CSV file";
 

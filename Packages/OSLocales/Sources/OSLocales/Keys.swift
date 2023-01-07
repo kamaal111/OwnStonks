@@ -34,5 +34,7 @@ extension OSLocales {
         case TOGGLE_SIDEBAR
         case CURRENCY
         case IMPORT
+        case DECODE_CSV_FAILURE_TITLE
+        case DECODE_CSV_FAILURE_DESCRIPTION
     }
 }

@@ -77,7 +77,9 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
         self.fees = transaction.fees.amount
         self.feesCurrency = transaction.fees.currency.rawValue
 
-        try managedObjectContext?.save()
+        if save {
+            try managedObjectContext?.save()
+        }
 
         return self
     }

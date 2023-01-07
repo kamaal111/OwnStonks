@@ -54,7 +54,7 @@ struct TransactionsScreen: View {
                 TransactionDetailSheet(
                     isShown: $viewModel.showSheet,
                     context: viewModel.shownSheetType!,
-                    submittedTransaction: { transaction in Task { await handleSubmittedTransaction(transaction) } })
+                    submittedTransactions: { transactions in Task { await handleSubmittedTransactions(transactions) } })
             }
         })
         .onAppear(perform: handleOnAppear)
@@ -78,18 +78,18 @@ struct TransactionsScreen: View {
         }
     }
 
-    private func handleSubmittedTransaction(_ transaction: OSTransaction) async {
+    private func handleSubmittedTransactions(_ transactions: [OSTransaction]) async {
         var maybeError: TransactionsManager.Errors?
         switch viewModel.shownSheetType {
         case .none:
             assertionFailure("Should not be able to submit when there is no type")
         case .editTransaction:
-            let result = await transactionsManager.updateTransaction(transaction)
+            let result = await transactionsManager.updateTransactions(transactions)
             if case .failure(let failure) = result {
                 maybeError = failure
             }
         case .addTransaction:
-            let result = await transactionsManager.addTransaction(transaction)
+            let result = await transactionsManager.addTransaction(transactions)
             if case .failure(let failure) = result {
                 maybeError = failure
             }

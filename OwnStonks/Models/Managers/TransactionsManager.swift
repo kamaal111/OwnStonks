@@ -45,32 +45,43 @@ final class TransactionsManager: ObservableObject {
         })
     }
 
-    func updateTransaction(_ transaction: OSTransaction) async -> Result<Void, Errors> {
-        let updateTransactionResult = backend.transactions.update(transaction)
-        let updatedTransaction: OSTransaction
-        switch updateTransactionResult {
-        case .failure(let failure):
-            return .failure(.fromTransactionClientError(failure))
-        case .success(let success):
-            updatedTransaction = success
+    func updateTransactions(_ transactions: [OSTransaction]) async -> Result<Void, Errors> {
+        #warning("Be able to update multiple from backend")
+        for transaction in transactions {
+            let updateTransactionResult = backend.transactions.update(transaction)
+            let updatedTransaction: OSTransaction
+            switch updateTransactionResult {
+            case .failure(let failure):
+                return .failure(.fromTransactionClientError(failure))
+            case .success(let success):
+                updatedTransaction = success
+            }
+
+            await updateTransactionInTransactions(updatedTransaction)
+            logger.info("Updated transaction with ID \(transaction.id?.uuidString ?? "(null)")")
         }
 
-        await updateTransactionInTransactions(updatedTransaction)
-        logger.info("Updated transaction with ID \(transaction.id?.uuidString ?? "(null)")")
         return .success(())
     }
 
-    func addTransaction(_ transaction: OSTransaction) async -> Result<Void, Errors> {
-        let newTransaction: OSTransaction
-        let createTransactionResult = backend.transactions.create(transaction)
-        switch createTransactionResult {
-        case .failure(let failure):
-            return .failure(.fromTransactionClientError(failure))
-        case .success(let success):
-            newTransaction = success
+    func addTransaction(_ transactions: [OSTransaction]) async -> Result<Void, Errors> {
+        #warning("Be able to add multiple from backend")
+        var newTransactions: [OSTransaction] = []
+        for transaction in transactions {
+            let newTransaction: OSTransaction
+            let createTransactionResult = backend.transactions.create(transaction)
+            switch createTransactionResult {
+            case .failure(let failure):
+                return .failure(.fromTransactionClientError(failure))
+            case .success(let success):
+                newTransaction = success
+            }
+
+            newTransactions = newTransactions.appended(newTransaction)
         }
 
-        await setTransactions(transactions.appended(newTransaction))
+        await setTransactions(self.transactions.concat(newTransactions))
+
         return .success(())
     }
 
