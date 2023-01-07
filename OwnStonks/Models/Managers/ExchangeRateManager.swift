@@ -22,12 +22,29 @@ final class ExchangeRateManager: ObservableObject {
         self.preview = preview
     }
 
-    func fetch() async {
+    func fetch(preferedCurrency: Currencies) async {
         await benchmark(
             function: {
                 logger.info("Fetching exchange rates")
-                #warning("Handle error")
-                let exchangeRates = try! await backend.forex.getLatest(base: .EUR, symbols: [.USD]).get()
+                let result = await backend.forex.getLatest(base: preferedCurrency, symbols: Currencies.allCases)
+                var exchangeRates: ExchangeRates?
+                switch result {
+                case .failure(let failure):
+                    logger.error(label: "Failed to fetch exchange rates", error: failure)
+                case .success(let success):
+                    exchangeRates = success
+                }
+
+                if exchangeRates == nil {
+                    logger.info("Attempting to access fallback exchange rates")
+                    exchangeRates = getFallbackExchangeRates(preferedCurrency: preferedCurrency)
+                }
+
+                guard let exchangeRates else {
+                    logger.error("No exchange rates found")
+                    return
+                }
+
                 await setExchangeRates(exchangeRates)
             },
             duration: { duration in
@@ -40,10 +57,21 @@ final class ExchangeRateManager: ObservableObject {
     }
 
     @MainActor
-    private func setExchangeRates(_ exchangeRates: ExchangeRates?) {
-        guard let exchangeRates else { return }
-
+    private func setExchangeRates(_ exchangeRates: ExchangeRates) {
         self.exchangeRates = exchangeRates
+    }
+
+    private func getFallbackExchangeRates(preferedCurrency: Currencies) -> ExchangeRates? {
+        guard let cachedExchangeRates = UserDefaults.exchangeRates else { return nil }
+
+        let latestKey = cachedExchangeRates
+            .keys
+            .sorted(by: { $0.compare($1) == .orderedDescending })
+            .first
+        guard let latestKey else { return nil }
+
+        return cachedExchangeRates[latestKey]?
+            .find(by: \.base, is: preferedCurrency.rawValue)
     }
 
     private func benchmark<T>(function: () async -> T, duration: (_ duration: TimeInterval) -> Void) async -> T {
