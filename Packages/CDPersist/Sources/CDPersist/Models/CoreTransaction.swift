@@ -35,19 +35,36 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
             fees: Money(amount: fees, currency: Currencies(rawValue: feesCurrency)!))
     }
 
-    public func update(from transaction: OSTransaction) throws -> CoreTransaction {
-        try update(from: transaction, save: true)
+    public func update(from transaction: OSTransaction, save: Bool = true) throws -> CoreTransaction {
+        self.updateDate = Current.date()
+        self.assetName = transaction.assetName
+        self.transactionDate = transaction.date
+        self.transactionType = transaction.type.rawValue
+        self.amount = transaction.amount
+        self.pricePerUnit = transaction.pricePerUnit.amount
+        self.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
+        self.fees = transaction.fees.amount
+        self.feesCurrency = transaction.fees.currency.rawValue
+
+        if save {
+            try managedObjectContext?.save()
+        }
+
+        return self
     }
 
     public static func create(
         from transaction: OSTransaction,
-        using context: NSManagedObjectContext) throws -> CoreTransaction {
+        using context: NSManagedObjectContext,
+        save: Bool = true) throws -> CoreTransaction {
             let newTransaction = try CoreTransaction(context: context)
                 .update(from: transaction, save: false)
             newTransaction.id = Current.uuid()
             newTransaction.kCreationDate = Current.date()
 
-            try context.save()
+            if save {
+                try context.save()
+            }
 
             return newTransaction
         }
@@ -65,22 +82,4 @@ public class CoreTransaction: NSManagedObject, ManuallyManagedObject, Identifiab
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.fees, type: .double, isOptional: false),
         ManagedObjectPropertyConfiguration(name: \CoreTransaction.feesCurrency, type: .string, isOptional: false),
     ]
-
-    private func update(from transaction: OSTransaction, save: Bool) throws -> CoreTransaction {
-        self.updateDate = Current.date()
-        self.assetName = transaction.assetName
-        self.transactionDate = transaction.date
-        self.transactionType = transaction.type.rawValue
-        self.amount = transaction.amount
-        self.pricePerUnit = transaction.pricePerUnit.amount
-        self.pricePerUnitCurrency = transaction.pricePerUnit.currency.rawValue
-        self.fees = transaction.fees.amount
-        self.feesCurrency = transaction.fees.currency.rawValue
-
-        if save {
-            try managedObjectContext?.save()
-        }
-
-        return self
-    }
 }

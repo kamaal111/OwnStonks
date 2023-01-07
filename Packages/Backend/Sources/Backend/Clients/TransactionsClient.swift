@@ -6,11 +6,14 @@
 //
 
 import Models
+import Logster
 import Swinject
 import ZaWarudo
 import CDPersist
 import Foundation
 import ShrimpExtensions
+
+private let logger = Logster(from: TransactionsClient.self)
 
 public struct TransactionsClient {
     let preview: Bool
@@ -37,38 +40,84 @@ public struct TransactionsClient {
         return .success(transactions.map(\.osTransaction))
     }
 
-    public func update(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {
-        guard let id = transaction.id?.nsString else { return .failure(.uncommitedTransaction) }
+    public func updateMultiple(_ transactions: [OSTransaction]) -> Result<[OSTransaction], Errors> {
+        let transactionIDs = transactions.compactMap(\.id)
+        assert(transactionIDs.count == transactions.count, "Transaction IDs count and transaction count should be exactly the same")
 
-        let predicate = NSPredicate(format: "id = %@", id)
-        let foundTransaction: CoreTransaction?
-        do {
-            foundTransaction = try CoreTransaction.find(by: predicate, from: persistenceController.context)
-        } catch {
-            return .failure(.updateError(context: error))
+        guard !transactionIDs.isEmpty else {
+            assertionFailure("Prevent this by happening here, should have been caught before")
+            return .success([])
         }
 
-        guard let foundTransaction else { return .failure(.uncommitedTransaction) }
-
-        let updatedTransaction: CoreTransaction
+        let predicate = NSPredicate(format: "id IN %@", transactionIDs.map(\.nsString))
+        let foundTransactions: [CoreTransaction]
         do {
-            updatedTransaction = try foundTransaction.update(from: transaction)
+            foundTransactions = try CoreTransaction.filter(by: predicate, from: persistenceController.context)
         } catch {
-            return .failure(.updateError(context: error))
+            foundTransactions = []
+            logger.error(label: "Failed to get filtered transactions", error: error)
+            assertionFailure("Failed to get filtered transactions; \(error)")
         }
 
-        return .success(updatedTransaction.osTransaction)
+        assert(foundTransactions.count == transactions.count, "Should find all input transactions")
+
+        let transactionPairs = foundTransactions
+            .compactMap({ transaction -> (found: CoreTransaction, input: OSTransaction)? in
+                guard let input = transactions.find(by: \.id, is: transaction.id) else {
+                    assertionFailure("Should never come here!")
+                    return nil
+                }
+
+                return (found: transaction, input: input)
+            })
+        assert(transactionPairs.count == transactions.count, "Should be exactly the same")
+
+        var updatedTransactions: [CoreTransaction] = []
+        var errors: [Error] = []
+        for (index, pair) in transactionPairs.enumerated() {
+            let updatedTransaction: CoreTransaction
+            do {
+                updatedTransaction = try pair.found.update(
+                    from: pair.input,
+                    save: index == (transactions.count - 1))
+            } catch {
+                errors = errors.appended(error)
+                logger.error(label: "Error recieved while updating", error: error)
+                assertionFailure("Error recieved while updating")
+                continue
+            }
+
+            updatedTransactions = updatedTransactions.appended(updatedTransaction)
+        }
+
+        guard errors.isEmpty else { return .failure(.updateError(context: errors.first!)) }
+
+        assert(updatedTransactions.count == transactions.count, "Should have updated all transactions")
+        return .success(updatedTransactions.map(\.osTransaction))
     }
 
-    public func create(_ transaction: OSTransaction) -> Result<OSTransaction, Errors> {
-        let newTransaction: CoreTransaction
-        do {
-            newTransaction = try CoreTransaction.create(from: transaction, using: persistenceController.context)
-        } catch {
-            return .failure(.creationError(context: error))
+    public func createMultiple(_ transactions: [OSTransaction]) -> Result<[OSTransaction], Errors> {
+        var createdTransactions: [CoreTransaction] = []
+        var errors: [Error] = []
+        for (index, transaction) in transactions.enumerated() {
+            let newTransaction: CoreTransaction
+            do {
+                newTransaction = try CoreTransaction.create(
+                    from: transaction,
+                    using: persistenceController.context,
+                    save: index == (transactions.count - 1))
+            } catch {
+                errors = errors.appended(error)
+                continue
+            }
+
+            createdTransactions = createdTransactions.appended(newTransaction)
         }
 
-        return .success(newTransaction.osTransaction)
+        guard errors.isEmpty else { return .failure(.creationError(context: errors.first!)) }
+
+        assert(createdTransactions.count == transactions.count, "Should have created all provided transaction")
+        return .success(createdTransactions.map(\.osTransaction))
     }
 
     private var persistenceController: PersistenceController {
