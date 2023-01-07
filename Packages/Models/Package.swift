@@ -15,7 +15,7 @@ let package = Package(
             targets: ["Models"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Kamaalio/ShrimpExtensions.git", "3.0.0" ..< "4.0.0"),
+        .package(url: "https://github.com/Kamaalio/ShrimpExtensions.git", "3.1.0" ..< "4.0.0"),
         .package(path: "../OSLocales"),
         .package(path: "../CSVUtils")
     ],

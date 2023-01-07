@@ -77,8 +77,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kamaalio/ShrimpExtensions.git",
       "state" : {
-        "revision" : "905f3cd824d34f00a98ecd7b7b276b5a489956fd",
-        "version" : "3.0.0"
+        "revision" : "d3440db5ad0d814278d7b9e86496b94f816ee112",
+        "version" : "3.1.0"
       }
     },
     {

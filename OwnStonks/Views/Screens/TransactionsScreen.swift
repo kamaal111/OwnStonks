@@ -25,7 +25,9 @@ struct TransactionsScreen: View {
     var body: some View {
         KScrollableForm  {
             KSection(header: OSLocales.getText(.TRANSACTIONS)) {
-                if transactionsManager.transactions.isEmpty {
+                if transactionsManager.isLoading {
+                    KLoading()
+                } else if transactionsManager.transactions.isEmpty {
                     OSButton(action: { viewModel.openAddTransactionSheet() }) {
                         OSText(localized: .ADD_YOUR_FIRST_TRANSACTION)
                             .foregroundColor(.accentColor)

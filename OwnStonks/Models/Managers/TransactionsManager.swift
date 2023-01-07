@@ -18,6 +18,7 @@ private let logger = Logster(from: TransactionsManager.self)
 
 final class TransactionsManager: ObservableObject {
     @Published private(set) var transactions: [OSTransaction] = []
+    @Published private(set) var isLoading = false
 
     private let preview: Bool
 
@@ -27,19 +28,21 @@ final class TransactionsManager: ObservableObject {
 
     func fetch() async -> Result<Void, Errors> {
         await benchmark(function: {
-            logger.info("Fetching transactions")
+            await wrapLoading({
+                logger.info("Fetching transactions")
 
-            let transactions: [OSTransaction]
-            let transactionsResult = backend.transactions.list()
-            switch transactionsResult {
-            case .failure(let failure):
-                return .failure(.fromTransactionClientError(failure))
-            case .success(let success):
-                transactions = success
-            }
+                let transactions: [OSTransaction]
+                let transactionsResult = backend.transactions.list()
+                switch transactionsResult {
+                case .failure(let failure):
+                    return .failure(.fromTransactionClientError(failure))
+                case .success(let success):
+                    transactions = success
+                }
 
-            await setTransactions(transactions)
-            return .success(())
+                await setTransactions(transactions)
+                return .success(())
+            })
         }, duration: { duration in
             logger.info("Successfully fetched transactions in \((duration) * 1000) ms")
         })
@@ -131,6 +134,18 @@ final class TransactionsManager: ObservableObject {
         let result = await function()
         duration(info.systemUptime - begin)
         return result
+    }
+
+    private func wrapLoading<T>(_ function: () async -> T) async -> T {
+        await setIsLoading(true)
+        let result = await function()
+        await setIsLoading(false)
+        return result
+    }
+
+    @MainActor
+    private func setIsLoading(_ state: Bool) {
+        isLoading = state
     }
 }
 
