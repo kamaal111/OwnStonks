@@ -45,6 +45,26 @@ final class TransactionsManager: ObservableObject {
         })
     }
 
+    func deleteTransaction(_ transaction: OSTransaction) async -> Result<Void, Errors> {
+        guard let transactionID = transaction.id,
+              let transactionIndex = transactions.findIndex(by: \.id, is: transactionID) else {
+            assertionFailure("Should have had a ID")
+            return .success(())
+        }
+
+        let result = backend.transactions.delete(transaction)
+        switch result {
+        case .failure(let failure):
+            return .failure(.fromTransactionClientError(failure))
+        case .success:
+            break
+        }
+
+        await setTransactions(transactions.removed(at: transactionIndex))
+        logger.info("Deleted transaction with ID \(transactionID)")
+        return .success(())
+    }
+
     func updateTransactions(_ transactions: [OSTransaction]) async -> Result<Void, Errors> {
         let updateTransactionsResult = backend.transactions.updateMultiple(transactions)
         let updatedTransactions: [OSTransaction]
@@ -64,18 +84,20 @@ final class TransactionsManager: ObservableObject {
     }
 
     func addTransaction(_ transactions: [OSTransaction]) async -> Result<Void, Errors> {
-        let newTransactions: [OSTransaction]
-        let createTransactionsResult = backend.transactions.createMultiple(transactions)
-        switch createTransactionsResult {
-        case .failure(let failure):
-            return .failure(.fromTransactionClientError(failure))
-        case .success(let success):
-            newTransactions = success
-        }
+        await benchmark(function: {
+            let newTransactions: [OSTransaction]
+            let createTransactionsResult = backend.transactions.createMultiple(transactions)
+            switch createTransactionsResult {
+            case .failure(let failure):
+                return .failure(.fromTransactionClientError(failure))
+            case .success(let success):
+                newTransactions = success
+            }
 
-        await setTransactions(self.transactions.concat(newTransactions))
+            await setTransactions(self.transactions.concat(newTransactions))
 
-        return .success(())
+            return .success(())
+        }, duration: { duration in logger.info("Successfully saved transactions in \((duration) * 1000) ms") })
     }
 
     private var backend: Backend {
@@ -117,7 +139,7 @@ extension TransactionsManager {
         case fetchError(context: TransactionsClient.Errors)
         case createError(context: TransactionsClient.Errors)
         case updateError(context: TransactionsClient.Errors)
-        case uncommitedTransaction(context: TransactionsClient.Errors)
+        case deleteError(context: TransactionsClient.Errors?)
 
         var popUpStyle: PopperUpStyles {
             switch self {
@@ -142,13 +164,13 @@ extension TransactionsManager {
                     title: OSLocales.getText(.GENERAL_ERROR_TITLE),
                     type: .error,
                     description: OSLocales.getText(.UPDATE_TRANSACTION_FAILURE_DESCRIPTION))
-            case .uncommitedTransaction:
-                logger.error(label: "Failed to find this transaction", error: self)
-                assertionFailure("Failed to find this transaction")
+            case .deleteError:
+                logger.error(label: "Failed to delete transaction", error: self)
+                assertionFailure("Failed to delete transaction")
                 return .bottom(
                     title: OSLocales.getText(.GENERAL_ERROR_TITLE),
                     type: .error,
-                    description: OSLocales.getText(.UPDATE_TRANSACTION_FAILURE_DESCRIPTION))
+                    description: OSLocales.getText(.DELETE_TRANSACTION_FAILURE_DESCRIPTION))
             }
         }
 
@@ -160,8 +182,8 @@ extension TransactionsManager {
                 return .createError(context: error)
             case .updateError:
                 return .updateError(context: error)
-            case .uncommitedTransaction:
-                return .uncommitedTransaction(context: error)
+            case .deleteError:
+                return .deleteError(context: error)
             }
         }
     }

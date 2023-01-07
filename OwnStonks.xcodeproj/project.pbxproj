@@ -38,6 +38,7 @@
 		2C8228422969AEA6002DDC19 /* EditModeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228412969AEA6002DDC19 /* EditModeToggle.swift */; };
 		2C8228442969AF26002DDC19 /* NotificationName+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */; };
 		2C8228462969B1EE002DDC19 /* EditButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8228452969B1EE002DDC19 /* EditButton.swift */; };
+		2C8EDF452969C7A0000FACDC /* Array+extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8EDF442969C7A0000FACDC /* Array+extensions.swift */; };
 		2CAD62EF2967539D00DAACB0 /* Acknowledgements.json in Resources */ = {isa = PBXBuildFile; fileRef = 2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */; };
 		2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */; };
 		2CAD62F429675CA500DAACB0 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F329675CA500DAACB0 /* WideButton.swift */; };
@@ -96,6 +97,7 @@
 		2C8228412969AEA6002DDC19 /* EditModeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditModeToggle.swift; sourceTree = "<group>"; };
 		2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+extensions.swift"; sourceTree = "<group>"; };
 		2C8228452969B1EE002DDC19 /* EditButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditButton.swift; sourceTree = "<group>"; };
+		2C8EDF442969C7A0000FACDC /* Array+extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+extensions.swift"; sourceTree = "<group>"; };
 		2CAD62EA29674D8B00DAACB0 /* main.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = main.py; sourceTree = "<group>"; };
 		2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = Acknowledgements.json; sourceTree = "<group>"; };
 		2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONUnpacker.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 		2CB6E4A1295F76DC008DE698 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				2C8EDF442969C7A0000FACDC /* Array+extensions.swift */,
 				2C8228432969AF26002DDC19 /* NotificationName+extensions.swift */,
 				2CB6E4A2295F76F0008DE698 /* String+extensions.swift */,
 			);
@@ -509,6 +512,7 @@
 				2C205B0A2962201300AD366E /* ExchangeRateManager.swift in Sources */,
 				2C4C8B90296612AF004DF2B3 /* AppSettingsScreen.swift in Sources */,
 				2C7CC3EC29609868006164DB /* Container.swift in Sources */,
+				2C8EDF452969C7A0000FACDC /* Array+extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

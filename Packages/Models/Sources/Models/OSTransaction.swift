@@ -63,8 +63,10 @@ public struct OSTransaction: Hashable, Codable {
                   let fees = Money.fromString(string: fees),
                   let type = TransactionTypes(rawValue: type.lowercased()),
                   let date = Self.dateFormatter.date(from: date),
-                  let amount = Double(amount)
-            else { return nil }
+                  let amount = amount.localizedStringToDouble else {
+                assertionFailure("Failed to decode transcation")
+                return nil
+            }
 
             return OSTransaction(
                 id: nil,

@@ -26,7 +26,7 @@ public struct TransactionsClient {
         case listingError(context: Error)
         case creationError(context: Error)
         case updateError(context: Error)
-        case uncommitedTransaction
+        case deleteError(context: Error?)
     }
 
     public func list() -> Result<[OSTransaction], Errors> {
@@ -38,6 +38,36 @@ public struct TransactionsClient {
         }
 
         return .success(transactions.map(\.osTransaction))
+    }
+
+    public func delete(_ transaction: OSTransaction) -> Result<Void, Errors> {
+        guard let transactionID = transaction.id else {
+            logger.error("Uncomitted transaction found")
+            assertionFailure("Uncomitted transaction found")
+            return .success(())
+        }
+
+        let predicate = NSPredicate(format: "id = %@", transactionID.nsString)
+        let foundTransaction: CoreTransaction?
+        do {
+            foundTransaction = try CoreTransaction.find(by: predicate, from: persistenceController.context)
+        } catch {
+            assertionFailure("Should have found transaction")
+            return .failure(.deleteError(context: error))
+        }
+
+        guard let foundTransaction else {
+            assertionFailure("Should have found transaction")
+            return .failure(.deleteError(context: nil))
+        }
+
+        do {
+            try foundTransaction.delete()
+        } catch {
+            return .failure(.deleteError(context: error))
+        }
+
+        return .success(())
     }
 
     public func updateMultiple(_ transactions: [OSTransaction]) -> Result<[OSTransaction], Errors> {

@@ -18,6 +18,7 @@ module.exports = {
     FETCH_TRANSACTIONS_FAILURE_DESCRIPTION: "Failed to fetch transactions",
     CREATE_TRANSACTION_FAILURE_DESCRIPTION: "Failed to create this transaction",
     UPDATE_TRANSACTION_FAILURE_DESCRIPTION: "Failed to update this transaction",
+    DELETE_TRANSACTION_FAILURE_DESCRIPTION: "Failed to delete this transaction",
     AMOUNT_LABEL: "Amount: %@",
     PER_UNIT_LABEL: "Per unit: %@",
     FEES_LABEL: "Fees: %@",

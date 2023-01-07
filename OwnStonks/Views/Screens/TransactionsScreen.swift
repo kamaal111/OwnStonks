@@ -83,7 +83,12 @@ struct TransactionsScreen: View {
     }
 
     private func handleOnDelete(_ transaction: OSTransaction) {
-        print("transaction", transaction)
+        Task {
+            let result = await transactionsManager.deleteTransaction(transaction)
+            if case .failure(let failure) = result {
+                popperUpManager.showPopup(style: failure.popUpStyle, timeout: 3)
+            }
+        }
     }
 
     private func handleOnAppear() {
