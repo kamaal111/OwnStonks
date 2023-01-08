@@ -10,6 +10,7 @@ import Logster
 import ZaWarudo
 import ForexAPI
 import Foundation
+import Environment
 import ShrimpExtensions
 
 class ForexCacheUtil {
@@ -27,6 +28,13 @@ class ForexCacheUtil {
         apiCall: (_ base: Currencies, _ symbols: [Currencies]) async -> Result<ExchangeRates, ForexAPI.Errors>) async -> Result<ExchangeRates?, ForexAPI.Errors> {
             let symbols = symbols.filter({ $0 != base })
             guard !symbols.isEmpty else { return .success(.none) }
+
+            if Environment.CommandLineArguments.skipForexCaching.enabled {
+                return await apiCall(base, symbols)
+                    .map({ success -> ExchangeRates? in
+                        success
+                    })
+            }
 
             let now = Current.date()
             var foundCachedRates: [Currencies: Double] = [:]

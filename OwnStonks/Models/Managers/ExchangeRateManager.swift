@@ -9,16 +9,17 @@ import Models
 import Logster
 import Backend
 import Foundation
-
-private let logger = Logster(from: ExchangeRateManager.self)
+import Environment
 
 final class ExchangeRateManager: ObservableObject {
     @Published private(set) var exchangeRates: ExchangeRates?
 
     private let backend: Backend
+    private let logger: Logster
 
-    init(backend: Backend = .shared) {
+    init(backend: Backend = .shared, logger: Logster = Logster(from: ExchangeRateManager.self)) {
         self.backend = backend
+        self.logger = logger
     }
 
     func convert(from money: Money, preferedCurrency: Currencies) -> Money {
@@ -45,7 +46,7 @@ final class ExchangeRateManager: ObservableObject {
                     exchangeRates = success
                 }
 
-                if exchangeRates == nil {
+                if exchangeRates == nil && !Environment.CommandLineArguments.skipForexCaching.enabled {
                     logger.info("Attempting to access fallback exchange rates")
                     exchangeRates = getFallbackExchangeRates(preferedCurrency: preferedCurrency)
                 }
@@ -58,7 +59,7 @@ final class ExchangeRateManager: ObservableObject {
                 await setExchangeRates(exchangeRates)
             },
             duration: { duration in
-                logger.info("Successfully fetched exchange rates in \((duration) * 1000) ms")
+                logger.info("Fetched exchange rates in \((duration) * 1000) ms")
             })
     }
 
@@ -76,6 +77,7 @@ final class ExchangeRateManager: ObservableObject {
             .first
         guard let latestKey else { return nil }
 
+        #warning("Should use ForexClient to assemble fallback")
         return cachedExchangeRates[latestKey]?
             .find(by: \.base, is: preferedCurrency.rawValue)
     }

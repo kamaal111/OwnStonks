@@ -42,16 +42,6 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BetterNavigationTests"
-               BuildableName = "BetterNavigationTests"
-               BlueprintName = "BetterNavigationTests"
-               ReferencedContainer = "container:Packages/BetterNavigation">
-            </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
                BlueprintIdentifier = "CSVUtilsTests"
                BuildableName = "CSVUtilsTests"
                BlueprintName = "CSVUtilsTests"
@@ -72,10 +62,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SwiftStructuresTests"
-               BuildableName = "SwiftStructuresTests"
-               BlueprintName = "SwiftStructuresTests"
-               ReferencedContainer = "container:Packages/SwiftStructures">
+               BlueprintIdentifier = "2CE74CA0296A380B0058E9C5"
+               BuildableName = "OwnStonksTests (macOS).xctest"
+               BlueprintName = "OwnStonksTests (macOS)"
+               ReferencedContainer = "container:OwnStonks.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>

@@ -8,34 +8,65 @@
 import XCTest
 import Backend
 import Logster
+import Environment
 import MockURLProtocol
 @testable import OwnStonks
 
 final class ExchangeRateManagerTests: XCTestCase {
-    func testFetchFailure() async throws {
-        MockURLProtocol.requestHandler = { _ in
-            let statusCode = 400
-            let jsonString = """
-            {
-                "message": "oh nooooo!"
-            }
-            """
+    var logHolder: LogHolder!
+    var manager: ExchangeRateManager!
 
+    override func setUpWithError() throws {
+        Environment.CommandLineArguments.inject(.skipForexCaching)
+        logHolder = LogHolder()
+        let logger = Logster(from: ExchangeRateManagerTests.self, holder: logHolder)
+        manager = ExchangeRateManager(backend: Backend(preview: false, urlSession: urlSession), logger: logger)
+    }
+
+    override func tearDownWithError() throws {
+        Environment.CommandLineArguments.remove(.skipForexCaching)
+    }
+
+    lazy var urlSession: URLSession = {
+        let configuration = URLSessionConfiguration.default
+        configuration.protocolClasses = [MockURLProtocol.self]
+        return URLSession(configuration: configuration)
+    }()
+
+    func testFetchFailure() async throws {
+        makeResponse(with: "{\"message\": \"oh noooo!\"}", status: 400)
+
+        await manager.fetch(preferedCurrency: .EUR)
+        try await Task.sleep(milliSeconds: 50) // How else do wait untill the logs have been synced? 🤷‍♂️
+
+        let maybeError = await logHolder.logs.first(where: { $0.type == .error })
+        let error = try XCTUnwrap(maybeError)
+        print(error)
+    }
+
+    func makeResponse(with responseBody: String, status: Int) {
+        MockURLProtocol.requestHandler = { _ in
             let response = HTTPURLResponse(
                 url: URL(string: "https://kamaal.io")!,
-                statusCode: statusCode,
+                statusCode: status,
                 httpVersion: nil,
                 headerFields: nil
             )!
 
-            let data = jsonString.data(using: .utf8)
+            let data = responseBody.data(using: .utf8)
             return (response, data)
         }
-        let configuration = URLSessionConfiguration.default
-        configuration.protocolClasses = [MockURLProtocol.self]
-        let urlSession = URLSession(configuration: configuration)
-        let manager = ExchangeRateManager(backend: Backend(preview: false, urlSession: urlSession))
-        await manager.fetch(preferedCurrency: .EUR)
+    }
+}
+
+extension Task where Success == Never, Failure == Never {
+    static func sleep(seconds: Double) async throws {
+        let duration = UInt64(seconds * 1_000_000_000)
+        try await Task.sleep(nanoseconds: duration)
+    }
+
+    static func sleep(milliSeconds: Double) async throws {
+        try await sleep(seconds: milliSeconds / 1000)
     }
 }
 

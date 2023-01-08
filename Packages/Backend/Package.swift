@@ -21,6 +21,7 @@ let package = Package(
         .package(path: "../CDPersist"),
         .package(path: "../Models"),
         .package(path: "../ZaWarudo"),
+        .package(path: "../Environment"),
     ],
     targets: [
         .target(
@@ -32,6 +33,7 @@ let package = Package(
                 "Models",
                 "ZaWarudo",
                 "ForexAPI",
+                "Environment",
             ]),
         .testTarget(
             name: "BackendTests",
