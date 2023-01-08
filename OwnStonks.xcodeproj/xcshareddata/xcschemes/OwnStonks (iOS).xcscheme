@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-               BuildableName = "OwnStonks (iOS).app"
+               BuildableName = "OwnStonks.app"
                BlueprintName = "OwnStonks (iOS)"
                ReferencedContainer = "container:OwnStonks.xcodeproj">
             </BuildableReference>
@@ -106,7 +106,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-            BuildableName = "OwnStonks (iOS).app"
+            BuildableName = "OwnStonks.app"
             BlueprintName = "OwnStonks (iOS)"
             ReferencedContainer = "container:OwnStonks.xcodeproj">
          </BuildableReference>
@@ -123,7 +123,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2C0B99682959FD6A00443BAC"
-            BuildableName = "OwnStonks (iOS).app"
+            BuildableName = "OwnStonks.app"
             BlueprintName = "OwnStonks (iOS)"
             ReferencedContainer = "container:OwnStonks.xcodeproj">
          </BuildableReference>

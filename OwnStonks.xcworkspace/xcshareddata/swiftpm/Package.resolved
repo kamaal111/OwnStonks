@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "betternavigation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/BetterNavigation.git",
+      "state" : {
+        "revision" : "b318c377c3662ac49197f116e1da8d20b63cf9d1",
+        "version" : "0.1.1"
+      }
+    },
+    {
       "identity" : "confettiswiftui",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/simibac/ConfettiSwiftUI.git",
@@ -88,6 +97,15 @@
       "state" : {
         "revision" : "d3440db5ad0d814278d7b9e86496b94f816ee112",
         "version" : "3.1.0"
+      }
+    },
+    {
+      "identity" : "swiftstructures",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/kamaal111/SwiftStructures.git",
+      "state" : {
+        "revision" : "5a294b799d5dff2dc758a8566f388b7060ca43e5",
+        "version" : "1.0.0"
       }
     },
     {

@@ -13,8 +13,6 @@
 		2C0B99742959FD6A00443BAC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B99732959FD6A00443BAC /* ContentView.swift */; };
 		2C0B99762959FD6D00443BAC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99752959FD6D00443BAC /* Assets.xcassets */; };
 		2C0B997A2959FD6D00443BAC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */; };
-		2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9986295A0F2E00443BAC /* SwiftStructures */; };
-		2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C0B9990295A11D100443BAC /* BetterNavigation */; };
 		2C0B9995295A1C4300443BAC /* TransactionsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */; };
 		2C0FFCB82964CE1E007046A0 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FFCB72964CE1E007046A0 /* Sidebar.swift */; };
 		2C0FFCBA2964CE45007046A0 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FFCB92964CE45007046A0 /* MainView.swift */; };
@@ -29,6 +27,8 @@
 		2C618403296A1CFC00CE48BC /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 2C618402296A1CFC00CE48BC /* Backend */; };
 		2C618408296A1FC900CE48BC /* MockURLProtocol in Frameworks */ = {isa = PBXBuildFile; productRef = 2C618407296A1FC900CE48BC /* MockURLProtocol */; };
 		2C61840C296A243300CE48BC /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2C61840B296A243300CE48BC /* Logster */; };
+		2C7A9033296ADE000078AE93 /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7A9032296ADE000078AE93 /* BetterNavigation */; };
+		2C7A9035296ADE140078AE93 /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7A9034296ADE140078AE93 /* BetterNavigation */; };
 		2C7CC3E3296093CE006164DB /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3E2296093CE006164DB /* Models */; };
 		2C7CC3EA2960983F006164DB /* TransactionsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7CC3E92960983F006164DB /* TransactionsManager.swift */; };
 		2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2C7CC3F129609D27006164DB /* ZaWarudo */; };
@@ -99,11 +99,9 @@
 		2CE74C6E296A35750058E9C5 /* AppSettingsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4C8B8F296612AF004DF2B3 /* AppSettingsScreen.swift */; };
 		2CE74C70296A35750058E9C5 /* SalmonUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C3C296A35750058E9C5 /* SalmonUI */; };
 		2CE74C71296A35750058E9C5 /* ZaWarudo in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C43296A35750058E9C5 /* ZaWarudo */; };
-		2CE74C72296A35750058E9C5 /* BetterNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C3B296A35750058E9C5 /* BetterNavigation */; };
 		2CE74C73296A35750058E9C5 /* Logster in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C46296A35750058E9C5 /* Logster */; };
 		2CE74C74296A35750058E9C5 /* OSLocales in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C3E296A35750058E9C5 /* OSLocales */; };
 		2CE74C75296A35750058E9C5 /* SettingsUI in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C44296A35750058E9C5 /* SettingsUI */; };
-		2CE74C76296A35750058E9C5 /* SwiftStructures in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C3A296A35750058E9C5 /* SwiftStructures */; };
 		2CE74C77296A35750058E9C5 /* PopperUp in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C48296A35750058E9C5 /* PopperUp */; };
 		2CE74C78296A35750058E9C5 /* Backend in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C41296A35750058E9C5 /* Backend */; };
 		2CE74C79296A35750058E9C5 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2CE74C42296A35750058E9C5 /* Models */; };
@@ -143,8 +141,6 @@
 		2C0B99752959FD6D00443BAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C0B99772959FD6D00443BAC /* OwnStonks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonks.entitlements; sourceTree = "<group>"; };
 		2C0B99792959FD6D00443BAC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		2C0B9981295A00F400443BAC /* SwiftStructures */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftStructures; sourceTree = "<group>"; };
-		2C0B998F295A111B00443BAC /* BetterNavigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = BetterNavigation; sourceTree = "<group>"; };
 		2C0B9994295A1C4300443BAC /* TransactionsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsScreen.swift; sourceTree = "<group>"; };
 		2C0FFCB72964CE1E007046A0 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		2C0FFCB92964CE45007046A0 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
@@ -201,12 +197,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				2CD7D4DF295CD472006F675D /* SalmonUI in Frameworks */,
+				2C7A9033296ADE000078AE93 /* BetterNavigation in Frameworks */,
 				2C7CC3F229609D27006164DB /* ZaWarudo in Frameworks */,
-				2C0B9991295A11D100443BAC /* BetterNavigation in Frameworks */,
 				2CD8A8AB296621BB00D50D60 /* Logster in Frameworks */,
 				2CB74A78295E32F700408363 /* OSLocales in Frameworks */,
 				2CD8A8A8296620FA00D50D60 /* SettingsUI in Frameworks */,
-				2C0B9987295A0F2E00443BAC /* SwiftStructures in Frameworks */,
 				2CD8A8AE296621E300D50D60 /* PopperUp in Frameworks */,
 				2C5EF049296082F3000536BC /* Backend in Frameworks */,
 				2C7CC3E3296093CE006164DB /* Models in Frameworks */,
@@ -230,11 +225,10 @@
 			files = (
 				2CE74C70296A35750058E9C5 /* SalmonUI in Frameworks */,
 				2CE74C71296A35750058E9C5 /* ZaWarudo in Frameworks */,
-				2CE74C72296A35750058E9C5 /* BetterNavigation in Frameworks */,
 				2CE74C73296A35750058E9C5 /* Logster in Frameworks */,
 				2CE74C74296A35750058E9C5 /* OSLocales in Frameworks */,
+				2C7A9035296ADE140078AE93 /* BetterNavigation in Frameworks */,
 				2CE74C75296A35750058E9C5 /* SettingsUI in Frameworks */,
-				2CE74C76296A35750058E9C5 /* SwiftStructures in Frameworks */,
 				2CE74C77296A35750058E9C5 /* PopperUp in Frameworks */,
 				2CE74C78296A35750058E9C5 /* Backend in Frameworks */,
 				2CE74C79296A35750058E9C5 /* Models in Frameworks */,
@@ -320,13 +314,11 @@
 			isa = PBXGroup;
 			children = (
 				2C5EF0472960829A000536BC /* Backend */,
-				2C0B998F295A111B00443BAC /* BetterNavigation */,
 				2C5EF044296078CF000536BC /* CDPersist */,
 				2C1A45CF2968A8DE000D400F /* CSVUtils */,
 				2C5EF04A29608909000536BC /* Models */,
 				2CCCA5AB2961F3B700B1C846 /* Network */,
 				2CD7D4E0295CD615006F675D /* OSLocales */,
-				2C0B9981295A00F400443BAC /* SwiftStructures */,
 				2C7CC3F029609C96006164DB /* ZaWarudo */,
 			);
 			path = Packages;
@@ -528,8 +520,6 @@
 			);
 			name = "OwnStonks (iOS)";
 			packageProductDependencies = (
-				2C0B9986295A0F2E00443BAC /* SwiftStructures */,
-				2C0B9990295A11D100443BAC /* BetterNavigation */,
 				2CD7D4DE295CD472006F675D /* SalmonUI */,
 				2CB74A77295E32F700408363 /* OSLocales */,
 				2CB6E4AB295F8599008DE698 /* ShrimpExtensions */,
@@ -539,6 +529,7 @@
 				2CD8A8A7296620FA00D50D60 /* SettingsUI */,
 				2CD8A8AA296621BB00D50D60 /* Logster */,
 				2CD8A8AD296621E300D50D60 /* PopperUp */,
+				2C7A9032296ADE000078AE93 /* BetterNavigation */,
 			);
 			productName = OwnStonks;
 			productReference = 2C0B99692959FD6A00443BAC /* OwnStonks.app */;
@@ -581,8 +572,6 @@
 			);
 			name = "OwnStonks (macOS)";
 			packageProductDependencies = (
-				2CE74C3A296A35750058E9C5 /* SwiftStructures */,
-				2CE74C3B296A35750058E9C5 /* BetterNavigation */,
 				2CE74C3C296A35750058E9C5 /* SalmonUI */,
 				2CE74C3E296A35750058E9C5 /* OSLocales */,
 				2CE74C3F296A35750058E9C5 /* ShrimpExtensions */,
@@ -592,6 +581,7 @@
 				2CE74C44296A35750058E9C5 /* SettingsUI */,
 				2CE74C46296A35750058E9C5 /* Logster */,
 				2CE74C48296A35750058E9C5 /* PopperUp */,
+				2C7A9034296ADE140078AE93 /* BetterNavigation */,
 			);
 			productName = OwnStonks;
 			productReference = 2CE74C82296A35750058E9C5 /* OwnStonks.app */;
@@ -658,6 +648,7 @@
 				2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */,
 				2CD8A8AC296621E300D50D60 /* XCRemoteSwiftPackageReference "PopperUp" */,
 				2C618406296A1FC900CE48BC /* XCRemoteSwiftPackageReference "MockURLProtocol" */,
+				2C7A9031296ADE000078AE93 /* XCRemoteSwiftPackageReference "BetterNavigation" */,
 			);
 			productRefGroup = 2C0B996A2959FD6A00443BAC /* Products */;
 			projectDirPath = "";
@@ -1237,6 +1228,14 @@
 				minimumVersion = 0.1.1;
 			};
 		};
+		2C7A9031296ADE000078AE93 /* XCRemoteSwiftPackageReference "BetterNavigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kamaal111/BetterNavigation.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.1;
+			};
+		};
 		2CB6E4AA295F8599008DE698 /* XCRemoteSwiftPackageReference "ShrimpExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Kamaalio/ShrimpExtensions.git";
@@ -1320,14 +1319,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		2C0B9986295A0F2E00443BAC /* SwiftStructures */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftStructures;
-		};
-		2C0B9990295A11D100443BAC /* BetterNavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BetterNavigation;
-		};
 		2C5EF048296082F3000536BC /* Backend */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Backend;
@@ -1345,6 +1336,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CD8A8A9296621BB00D50D60 /* XCRemoteSwiftPackageReference "Logster" */;
 			productName = Logster;
+		};
+		2C7A9032296ADE000078AE93 /* BetterNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C7A9031296ADE000078AE93 /* XCRemoteSwiftPackageReference "BetterNavigation" */;
+			productName = BetterNavigation;
+		};
+		2C7A9034296ADE140078AE93 /* BetterNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C7A9031296ADE000078AE93 /* XCRemoteSwiftPackageReference "BetterNavigation" */;
+			productName = BetterNavigation;
 		};
 		2C7CC3E2296093CE006164DB /* Models */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1382,14 +1383,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 2CD8A8AC296621E300D50D60 /* XCRemoteSwiftPackageReference "PopperUp" */;
 			productName = PopperUp;
-		};
-		2CE74C3A296A35750058E9C5 /* SwiftStructures */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftStructures;
-		};
-		2CE74C3B296A35750058E9C5 /* BetterNavigation */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = BetterNavigation;
 		};
 		2CE74C3C296A35750058E9C5 /* SalmonUI */ = {
 			isa = XCSwiftPackageProductDependency;

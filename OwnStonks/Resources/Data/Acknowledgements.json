@@ -1,6 +1,12 @@
 {
   "packages": [
     {
+      "name": "BetterNavigation",
+      "url": "https://github.com/kamaal111/BetterNavigation",
+      "author": "kamaal111",
+      "license": null
+    },
+    {
       "name": "ConfettiSwiftUI",
       "url": "https://github.com/simibac/ConfettiSwiftUI",
       "author": "simibac",
@@ -58,6 +64,12 @@
       "name": "ShrimpExtensions",
       "url": "https://github.com/Kamaalio/ShrimpExtensions",
       "author": "Kamaalio",
+      "license": null
+    },
+    {
+      "name": "SwiftStructures",
+      "url": "https://github.com/kamaal111/SwiftStructures",
+      "author": "kamaal111",
       "license": null
     },
     {
