@@ -10,6 +10,77 @@ import Models
 @testable import Backend
 
 final class ForexCacheUtilTests: XCTestCase {
+    func testGetFallbackFromCompleteEntryWithSameBase() throws {
+        let expectedResult = ExchangeRates(base: .CAD, date: Date(), rates: [.EUR: 420, .USD: 69])
+        let initialCacheContainerData = [Date(): [expectedResult]]
+        let container = TestCacheContainer(exchangeRates: initialCacheContainerData)
+        let cacheUtil = ForexCacheUtil(container: container)
+
+        let result = try XCTUnwrap(cacheUtil.getFallback(base: .CAD, symbols: [.EUR, .USD]))
+        XCTAssertEqual(result.base, expectedResult.base)
+        XCTAssertEqual(result.date, expectedResult.date)
+        XCTAssertEqual(result.rates, expectedResult.rates)
+    }
+
+    func testGetFallbackFromPartialyCompleteEntryWithSameBase() throws {
+        let initialCacheContainerData = [Date(): [
+            ExchangeRates(base: .CAD, date: Date(), rates: [.EUR: 420]),
+            ExchangeRates(base: .USD, date: Date(), rates: [.CAD: 2]),
+        ]]
+        let container = TestCacheContainer(exchangeRates: initialCacheContainerData)
+        let cacheUtil = ForexCacheUtil(container: container)
+
+        let result = try XCTUnwrap(cacheUtil.getFallback(base: .CAD, symbols: [.EUR, .USD]))
+        XCTAssertEqual(result.baseCurrency, .CAD)
+        XCTAssertEqual(result.ratesMappedByCurrency, [.EUR: 420, .USD: 0.5])
+    }
+
+    func testGetFallbackFromNonBaseEntry() throws {
+        let initialCacheContainerData = [Date(): [
+            ExchangeRates(base: .EUR, date: Date(), rates: [.CAD: 0.5]),
+            ExchangeRates(base: .USD, date: Date(), rates: [.CAD: 2]),
+        ]]
+        let container = TestCacheContainer(exchangeRates: initialCacheContainerData)
+        let cacheUtil = ForexCacheUtil(container: container)
+
+        let result = try XCTUnwrap(cacheUtil.getFallback(base: .CAD, symbols: [.EUR, .USD]))
+        XCTAssertEqual(result.baseCurrency, .CAD)
+        XCTAssertEqual(result.ratesMappedByCurrency, [.EUR: 2, .USD: 0.5])
+    }
+
+    func testGetFallbackNotFound() throws {
+        let initialCacheContainerData = [Date(): [
+            ExchangeRates(base: .EUR, date: Date(), rates: [.USD: 0.5]),
+        ]]
+        let container = TestCacheContainer(exchangeRates: initialCacheContainerData)
+        let cacheUtil = ForexCacheUtil(container: container)
+
+        let result = cacheUtil.getFallback(base: .EUR, symbols: [.CAD])
+
+        XCTAssertNil(result)
+    }
+
+    func testGetFallbackWithInvalidSymbols() {
+        let cases: [(Currencies, [Currencies])] = [
+            (.CAD, []),
+            (.CAD, [.CAD]),
+        ]
+
+        let initialCacheContainerData = [Date(): [ExchangeRates(base: .CAD, date: Date(), rates: [.EUR: 420, .USD: 69])]]
+        let container = TestCacheContainer(exchangeRates: initialCacheContainerData)
+        let cacheUtil = ForexCacheUtil(container: container)
+        for (base, symbols) in cases {
+            let result = cacheUtil.getFallback(base: base, symbols: symbols)
+            XCTAssertNil(result)
+        }
+    }
+
+    func testGetFallbackWithNoCache() {
+        let container = TestCacheContainer(exchangeRates: nil)
+        let cacheUtil = ForexCacheUtil(container: container)
+        XCTAssertNil(cacheUtil.getFallback(base: .EUR, symbols: [.CAD]))
+    }
+
     func testCacheLatestWithInvalidSymbols() async throws {
         let cases: [([Currencies])] = [
             ([]),

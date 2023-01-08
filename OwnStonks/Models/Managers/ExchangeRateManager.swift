@@ -45,7 +45,8 @@ final class ExchangeRateManager: ObservableObject {
         await benchmark(
             function: {
                 logger.info("Fetching exchange rates")
-                let result = await backend.forex.getLatest(base: preferedCurrency, symbols: Currencies.allCases)
+                let symbols = Currencies.allCases
+                let result = await backend.forex.getLatest(base: preferedCurrency, symbols: symbols)
                 var exchangeRates: ExchangeRates?
                 switch result {
                 case .failure(let failure):
@@ -56,7 +57,7 @@ final class ExchangeRateManager: ObservableObject {
 
                 if exchangeRates == nil && !Environment.CommandLineArguments.skipForexCaching.enabled {
                     logger.info("Attempting to access fallback exchange rates")
-                    exchangeRates = getFallbackExchangeRates(preferedCurrency: preferedCurrency)
+                    exchangeRates = backend.forex.getFallback(base: preferedCurrency, symbols: symbols)
                 }
 
                 guard let exchangeRates else {
@@ -74,20 +75,6 @@ final class ExchangeRateManager: ObservableObject {
     @MainActor
     private func setExchangeRates(_ exchangeRates: ExchangeRates) {
         self.exchangeRates = exchangeRates
-    }
-
-    private func getFallbackExchangeRates(preferedCurrency: Currencies) -> ExchangeRates? {
-        guard let cachedExchangeRates = UserDefaults.exchangeRates else { return nil }
-
-        let latestKey = cachedExchangeRates
-            .keys
-            .sorted(by: { $0.compare($1) == .orderedDescending })
-            .first
-        guard let latestKey else { return nil }
-
-        #warning("Should use ForexClient to assemble fallback")
-        return cachedExchangeRates[latestKey]?
-            .find(by: \.base, is: preferedCurrency.rawValue)
     }
 
     private func benchmark<T>(function: () async -> T, duration: (_ duration: TimeInterval) -> Void) async -> T {

@@ -27,6 +27,10 @@ public struct ForexClient {
         })
         .mapError({ .getExchangeFailure(context: $0) })
     }
+
+    public func getFallback(base: Currencies, symbols: [Currencies]) ->  ExchangeRates? {
+        cacheUtil.getFallback(base: base, symbols: symbols)
+    }
 }
 
 extension ForexClient {

@@ -50,6 +50,7 @@ final class UserData: ObservableObject {
                 assertionFailure("Failed to find currency by ID")
                 return
             }
+            #warning("Should refetch exchange rates")
             preferedCurrency = currency
         default:
             logger.error("Failed to find preference by ID")

@@ -22,6 +22,57 @@ class ForexCacheUtil {
         self.container = container
     }
 
+    func getFallback(base: Currencies, symbols: [Currencies]) -> ExchangeRates? {
+        guard let cachedExchangeRates = container.exchangeRates else { return nil }
+
+        let symbols = symbols.filter({ $0 != base })
+        guard !symbols.isEmpty else { return nil }
+
+        let sortedKeys = cachedExchangeRates
+            .keys
+            .sorted(by: { $0.compare($1) == .orderedDescending })
+
+        for key in sortedKeys {
+            let exchangeRates = cachedExchangeRates[key]!
+            var rates: [Currencies: Double] = [:]
+            if let exchangeRateWithSameBase = exchangeRates.find(by: \.base, is: base.rawValue) {
+                let ratesMappedByCurrency = exchangeRateWithSameBase.ratesMappedByCurrency
+                for symbol in symbols {
+                    if let rate = ratesMappedByCurrency[symbol] {
+                        rates[symbol] = rate
+                    }
+                }
+
+                let sortedRatesSymbols = rates.keys.sorted(by: \.rawValue, using: .orderedDescending)
+                let sortedSymbols = symbols.sorted(by: \.rawValue, using: .orderedDescending)
+                if sortedRatesSymbols == sortedSymbols {
+                    return exchangeRateWithSameBase
+                }
+            }
+
+            for exchangeRate in exchangeRates {
+                guard let exchangeRateBase = exchangeRate.baseCurrency else {
+                    assertionFailure("Failed to get base currency")
+                    continue
+                }
+
+                let remainingSymbols = symbols.filter({ !rates.keys.contains($0) })
+                guard let symbol = remainingSymbols.find(where: { $0 == exchangeRateBase }),
+                      let rate = exchangeRate.ratesMappedByCurrency[base] else { continue }
+
+                rates[symbol] = Double((1 / rate).toFixed(4))
+            }
+
+            let sortedRatesSymbols = rates.keys.sorted(by: \.rawValue, using: .orderedDescending)
+            let sortedSymbols = symbols.sorted(by: \.rawValue, using: .orderedDescending)
+            if sortedRatesSymbols == sortedSymbols {
+                return ExchangeRates(base: base, date: key, rates: rates)
+            }
+        }
+
+        return nil
+    }
+
     func cacheLatest(
         base: Currencies,
         symbols: [Currencies],
@@ -64,7 +115,7 @@ class ForexCacheUtil {
                             return result
                         })
                     groupedExchangeRatesByBase[base] = completeExchangeRates
-                    container.exchangeRates = [now: groupedExchangeRatesByBase.values.asArray()]
+                    container.exchangeRates = [now.hashed: groupedExchangeRatesByBase.values.asArray()]
                     logger.info("Got exchange rates for \(base.rawValue) from cache")
                     return .success(completeExchangeRates)
                 } else {
@@ -109,7 +160,7 @@ class ForexCacheUtil {
                     return result
                 })
             groupedExchangeRatesByBase[base] = completeExchangeRates
-            container.exchangeRates = [now: groupedExchangeRatesByBase.values.asArray()]
+            container.exchangeRates = [now.hashed: groupedExchangeRatesByBase.values.asArray()]
 
             logger.info("Fetched exchange rates from API")
             return .success(completeExchangeRates)
@@ -119,7 +170,7 @@ class ForexCacheUtil {
         cachedExchangeRates: [ExchangeRates],
         base: Currencies,
         symbols: [Currencies]) -> [Currencies: Double] {
-            return cachedExchangeRates.reduce([:], { result, exchangeRate in
+            cachedExchangeRates.reduce([:], { result, exchangeRate in
                 guard let exchangeRateBase = exchangeRate.baseCurrency else {
                     assertionFailure("Unsupported currency \(exchangeRate.base)")
                     return result
@@ -144,4 +195,16 @@ class ForexCacheUtil {
                 return result
             })
         }
+}
+
+extension Date {
+    var hashed: Date {
+        let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: self)
+        guard let hashedDate = Calendar.current.date(from: dateComponents) else {
+            assertionFailure("Failed to hash date")
+            return Date()
+        }
+
+        return hashedDate
+    }
 }
