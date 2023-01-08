@@ -175,6 +175,7 @@
 		2CCCA5A72961DBD200B1C846 /* EditableDecimal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableDecimal.swift; sourceTree = "<group>"; };
 		2CCCA5A92961DCEF00B1C846 /* EditableMoney.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditableMoney.swift; sourceTree = "<group>"; };
 		2CCCA5AB2961F3B700B1C846 /* Network */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Network; sourceTree = "<group>"; };
+		2CCFF59F296B23DA002A514B /* ForexKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ForexKit; sourceTree = "<group>"; };
 		2CD7D4E0295CD615006F675D /* OSLocales */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = OSLocales; sourceTree = "<group>"; };
 		2CD7D4E1295CD84A006F675D /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CD7D4E5295CD923006F675D /* en.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = en.js; sourceTree = "<group>"; };
@@ -315,6 +316,7 @@
 				2C5EF044296078CF000536BC /* CDPersist */,
 				2C1A45CF2968A8DE000D400F /* CSVUtils */,
 				2C7A905F296AEA000078AE93 /* Environment */,
+				2CCFF59F296B23DA002A514B /* ForexKit */,
 				2C5EF04A29608909000536BC /* Models */,
 				2CCCA5AB2961F3B700B1C846 /* Network */,
 				2CD7D4E0295CD615006F675D /* OSLocales */,

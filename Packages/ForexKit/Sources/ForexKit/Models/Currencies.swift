@@ -2,11 +2,10 @@
 //  Currencies.swift
 //  
 //
-//  Created by Kamaal M Farah on 01/01/2023.
+//  Created by Kamaal M Farah on 08/01/2023.
 //
 
 import Foundation
-import ShrimpExtensions
 
 public enum Currencies: String, CaseIterable, Codable, Identifiable {
     case EUR
@@ -35,7 +34,7 @@ public enum Currencies: String, CaseIterable, Codable, Identifiable {
         }
     }
 
-    static func findBySymbol(_ symbol: String) -> Currencies? {
-        Currencies.allCases.find(by: \.symbol, is: symbol)
+    public static func findBySymbol(_ symbol: String) -> Currencies? {
+        Currencies.allCases.first(where: { $0.symbol == symbol })
     }
 }

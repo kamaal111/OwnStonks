@@ -2,24 +2,30 @@
 //  ForexCacheUtil.swift
 //  
 //
-//  Created by Kamaal M Farah on 02/01/2023.
+//  Created by Kamaal M Farah on 08/01/2023.
 //
 
-import Models
-import Logster
-import ZaWarudo
-import ForexAPI
 import Foundation
-import Environment
-import ShrimpExtensions
+
+struct ForexKitConfiguration {
+    let skipCaching: Bool
+
+    init(skipCaching: Bool) {
+        self.skipCaching = skipCaching
+    }
+
+    init() {
+        self.init(skipCaching: false)
+    }
+}
 
 class ForexCacheUtil {
     var container: CacheContainerable
+    let configuration: ForexKitConfiguration
 
-    private let logger = Logster(from: ForexCacheUtil.self)
-
-    init(container: CacheContainerable = CacheContainer()) {
+    init(container: CacheContainerable = CacheContainer(), configuration: ForexKitConfiguration = .init()) {
         self.container = container
+        self.configuration = configuration
     }
 
     func cacheLatest(
@@ -27,20 +33,20 @@ class ForexCacheUtil {
         symbols: [Currencies],
         apiCall: (_ base: Currencies, _ symbols: [Currencies]) async -> Result<ExchangeRates, ForexAPI.Errors>) async -> Result<ExchangeRates?, ForexAPI.Errors> {
             let symbols = symbols.filter({ $0 != base })
-            guard !symbols.isEmpty else { return .success(.none) }
+            guard !symbols.isEmpty else { return .success(nil) }
 
-            if Environment.CommandLineArguments.skipForexCaching.enabled {
+            if configuration.skipCaching {
                 return await apiCall(base, symbols)
                     .map({ success -> ExchangeRates? in
                         success
                     })
             }
 
-            let now = Current.date()
+            let cacheKey = Date().hashed
             var foundCachedRates: [Currencies: Double] = [:]
             var remainingSymbols = symbols
-            let cachedExchangeRates = (container.exchangeRates ?? [:])
-                .find(where: { $0.key.isSameDay(as: now.hashed) })?
+            let cachedExchangeRates = container.exchangeRates?
+                .first(where: { $0.key.hashed == cacheKey })?
                 .value
             if let cachedExchangeRates {
                 foundCachedRates = getCachedResultForLatest(
@@ -49,10 +55,9 @@ class ForexCacheUtil {
                     symbols: symbols)
                 let foundCachedRatesSymbols = foundCachedRates
                     .map(\.key)
-                    .sorted(by: \.rawValue, using: .orderedAscending)
-
-                if foundCachedRatesSymbols == symbols.sorted(by: \.rawValue, using: .orderedAscending) {
-                    let completeExchangeRates = ExchangeRates(base: base, date: now, rates: foundCachedRates)
+                    .sorted(by: { $0.rawValue < $1.rawValue })
+                if foundCachedRatesSymbols == symbols.sorted(by: { $0.rawValue < $1.rawValue }) {
+                    let completeExchangeRates = ExchangeRates(base: base, date: cacheKey, rates: foundCachedRates)
                     var groupedExchangeRatesByBase: [Currencies: ExchangeRates] = Dictionary(
                         grouping: cachedExchangeRates.filter({ $0.baseCurrency != nil }),
                         by: \.baseCurrency!)
@@ -64,13 +69,13 @@ class ForexCacheUtil {
                             return result
                         })
                     groupedExchangeRatesByBase[base] = completeExchangeRates
-                    container.exchangeRates = [now.hashed: groupedExchangeRatesByBase.values.asArray()]
-                    logger.info("Got exchange rates for \(base.rawValue) from cache")
+                    container.exchangeRates = [cacheKey: Array(groupedExchangeRatesByBase.values)]
+
                     return .success(completeExchangeRates)
                 } else {
                     var newRemainingSymbols: [Currencies] = []
                     for symbol in symbols where !foundCachedRatesSymbols.contains(symbol) {
-                        newRemainingSymbols = newRemainingSymbols.appended(symbol)
+                        newRemainingSymbols.append(symbol)
                     }
                     remainingSymbols = newRemainingSymbols
                 }
@@ -78,16 +83,16 @@ class ForexCacheUtil {
 
             assert(!remainingSymbols.isEmpty, "Remaining symbols should not be empty!")
 
-            if remainingSymbols != symbols {
-                logger.info("Fetching uncached symbols \(remainingSymbols)")
-            }
-
             let result = await apiCall(base, remainingSymbols)
                 .map({
-                    ExchangeRates(
+                    var ratesMappedByCurrency = $0.ratesMappedByCurrency
+                    for (key, value) in foundCachedRates {
+                        ratesMappedByCurrency[key] = value
+                    }
+                    return ExchangeRates(
                         base: base,
                         date: $0.date,
-                        rates: $0.ratesMappedByCurrency.merged(with: foundCachedRates))
+                        rates: ratesMappedByCurrency)
                 })
 
             let completeExchangeRates: ExchangeRates
@@ -109,9 +114,8 @@ class ForexCacheUtil {
                     return result
                 })
             groupedExchangeRatesByBase[base] = completeExchangeRates
-            container.exchangeRates = [now.hashed: groupedExchangeRatesByBase.values.asArray()]
+            container.exchangeRates = [cacheKey: Array(groupedExchangeRatesByBase.values)]
 
-            logger.info("Fetched exchange rates from API")
             return .success(completeExchangeRates)
         }
 
@@ -128,7 +132,7 @@ class ForexCacheUtil {
         for key in sortedKeys {
             let exchangeRates = cachedExchangeRates[key]!
             var rates: [Currencies: Double] = [:]
-            if let exchangeRateWithSameBase = exchangeRates.find(by: \.base, is: base.rawValue) {
+            if let exchangeRateWithSameBase = exchangeRates.first(where: { $0.base == base.rawValue }) {
                 let ratesMappedByCurrency = exchangeRateWithSameBase.ratesMappedByCurrency
                 for symbol in symbols {
                     if let rate = ratesMappedByCurrency[symbol] {
@@ -136,8 +140,8 @@ class ForexCacheUtil {
                     }
                 }
 
-                let sortedRatesSymbols = rates.keys.sorted(by: \.rawValue, using: .orderedDescending)
-                let sortedSymbols = symbols.sorted(by: \.rawValue, using: .orderedDescending)
+                let sortedRatesSymbols = rates.keys.sorted(by: { $0.rawValue < $1.rawValue })
+                let sortedSymbols = symbols.sorted(by: { $0.rawValue < $1.rawValue })
                 if sortedRatesSymbols == sortedSymbols {
                     return exchangeRateWithSameBase
                 }
@@ -150,14 +154,14 @@ class ForexCacheUtil {
                 }
 
                 let remainingSymbols = symbols.filter({ !rates.keys.contains($0) })
-                guard let symbol = remainingSymbols.find(where: { $0 == exchangeRateBase }),
+                guard let symbol = remainingSymbols.first(where: { $0 == exchangeRateBase }),
                       let rate = exchangeRate.ratesMappedByCurrency[base] else { continue }
 
-                rates[symbol] = Double((1 / rate).toFixed(4))
+                rates[symbol] = Double(String(format: "%.\(4)f", 1 / rate))
             }
 
-            let sortedRatesSymbols = rates.keys.sorted(by: \.rawValue, using: .orderedDescending)
-            let sortedSymbols = symbols.sorted(by: \.rawValue, using: .orderedDescending)
+            let sortedRatesSymbols = rates.keys.sorted(by: { $0.rawValue < $1.rawValue })
+            let sortedSymbols = symbols.sorted(by: { $0.rawValue < $1.rawValue })
             if sortedRatesSymbols == sortedSymbols {
                 return ExchangeRates(base: base, date: key, rates: rates)
             }
@@ -188,10 +192,10 @@ class ForexCacheUtil {
                     return result
                 }
 
-                guard let symbol = symbols.find(where: { $0 == exchangeRateBase }),
+                guard let symbol = symbols.first(where: { $0 == exchangeRateBase }),
                       let rate = ratesMappedByCurrency[base] else { return result }
 
-                result[symbol] = Double((1 / rate).toFixed(4))
+                result[symbol] = Double(String(format: "%.\(4)f", 1 / rate))
                 return result
             })
         }

@@ -45,7 +45,7 @@ public struct Money: Hashable, Codable, Localized {
             currencyString = string[string.index(endNumberIndex, offsetBy: 1)..<string.endIndex]
         }
 
-        guard let currency = Currencies.fromSymbol(String(currencyString).trimmingByWhitespacesAndNewLines)
+        guard let currency = Currencies.findBySymbol(String(currencyString).trimmingByWhitespacesAndNewLines)
         else { return nil }
 
         return Money(amount: amount, currency: currency)
