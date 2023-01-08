@@ -22,15 +22,23 @@ final class ExchangeRateManager: ObservableObject {
         self.logger = logger
     }
 
-    func convert(from money: Money, preferedCurrency: Currencies) -> Money {
-        guard let exchangeRates else { return money }
+    func convert(from money: Money, preferedCurrency: Currencies) -> Money? {
+        guard let exchangeRates else { return nil }
 
-        guard let rate = exchangeRates.ratesMappedByCurrency[money.currency] else {
-            logger.warning("Rate for \(money.currency) not fetched yet")
+        if money.currency == preferedCurrency {
             return money
         }
 
-        return money
+        if money.amount == 0 {
+            return Money(amount: 0, currency: preferedCurrency)
+        }
+
+        guard let rate = exchangeRates.ratesMappedByCurrency[money.currency] else {
+            logger.warning("Rate for \(money.currency) not fetched yet")
+            return nil
+        }
+
+        return Money(amount: money.amount * rate, currency: preferedCurrency)
     }
 
     func fetch(preferedCurrency: Currencies) async {

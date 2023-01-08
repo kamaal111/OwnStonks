@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Models
 import Backend
 import Logster
 import Environment
@@ -33,7 +34,23 @@ final class ExchangeRateManagerTests: XCTestCase {
         return URLSession(configuration: configuration)
     }()
 
-    func testFetch() async throws {
+    func testConvert() async throws {
+        makeResponse(with: successResponse, status: 200)
+
+        await manager.fetch(preferedCurrency: .EUR)
+
+        let cases: [(Money, Currencies, Money)] = [
+            (Money(amount: 420, currency: .EUR), .EUR, Money(amount: 420, currency: .EUR)),
+            (Money(amount: 69, currency: .USD), .EUR, Money(amount: 73.5954, currency: .EUR)),
+            (Money(amount: 0, currency: .EUR), .CAD, Money(amount: 0, currency: .CAD)),
+        ]
+        for (input, preferedCurrency, expectedResult) in cases {
+            let result = manager.convert(from: input, preferedCurrency: preferedCurrency)
+            XCTAssertEqual(result, expectedResult)
+        }
+    }
+
+    func testConvertWithUndefinedRate() async throws {
         let response = """
 {
     "base": "EUR",
@@ -42,12 +59,37 @@ final class ExchangeRateManagerTests: XCTestCase {
         "CAD": 1.444,
         "GBP": 0.88693,
         "JPY": 140.66,
-        "TRY": 19.9649,
-        "USD": 1.0666
+        "TRY": 19.9649
     }
 }
 """
         makeResponse(with: response, status: 200)
+
+        await manager.fetch(preferedCurrency: .EUR)
+
+        let input = Money(amount: 69, currency: .USD)
+        let result = manager.convert(from: input, preferedCurrency: .EUR)
+        XCTAssertNil(result)
+    }
+
+    func testConvertWithoutFetchedRates() async throws {
+        let response = """
+{
+    "message": "Something went wrong"
+}
+"""
+        makeResponse(with: response, status: 400)
+
+        await manager.fetch(preferedCurrency: .EUR)
+
+        let input = Money(amount: 69, currency: .USD)
+        let result = manager.convert(from: input, preferedCurrency: .EUR)
+        XCTAssertNil(result)
+    }
+
+    func testFetch() async throws {
+        makeResponse(with: successResponse, status: 200)
+
         await manager.fetch(preferedCurrency: .EUR)
 
         let exchangeRates = try XCTUnwrap(manager.exchangeRates)
@@ -99,12 +141,16 @@ extension Task where Success == Never, Failure == Never {
     }
 }
 
-private let forexData = """
+private let successResponse = """
 {
     "base": "EUR",
     "date": "2022-12-30",
     "rates": {
-        "CAD": 1.444
+        "CAD": 1.444,
+        "GBP": 0.88693,
+        "JPY": 140.66,
+        "TRY": 19.9649,
+        "USD": 1.0666
     }
 }
 """

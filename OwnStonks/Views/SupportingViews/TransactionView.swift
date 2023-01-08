@@ -12,12 +12,15 @@ import ZaWarudo
 import OSLocales
 
 struct TransactionView: View {
+    @EnvironmentObject private var exchangeRateManager: ExchangeRateManager
+
     @Environment(\.layoutDirection) private var layoutDirection: LayoutDirection
 
     @State private var isDeleting = false
 
     let transaction: OSTransaction
     let editMode: EditMode
+    let preferedCurrency: Currencies
     let action: (_ transaction: OSTransaction) -> Void
     let onDelete: (_ transaction: OSTransaction) -> Void
 
@@ -39,8 +42,10 @@ struct TransactionView: View {
                 }
                 .padding(.trailing, .medium)
                 VStack(alignment: .leading) {
-                    TransactionInformationLabel(title: .PER_UNIT_LABEL, value: transaction.pricePerUnit.localized)
-                    TransactionInformationLabel(title: .FEES_LABEL, value: transaction.fees.localized)
+                    TransactionInformationLabel(
+                        title: .PER_UNIT_LABEL,
+                        value: convertedTransaction.pricePerUnit.localized)
+                    TransactionInformationLabel(title: .FEES_LABEL, value: convertedTransaction.fees.localized)
                 }
             }
             .ktakeWidthEagerly(alignment: .leading)
@@ -52,6 +57,16 @@ struct TransactionView: View {
             enabled: editMode.isEditing,
             onDelete: { onDelete(transaction) })
         #endif
+    }
+
+    private var convertedTransaction: OSTransaction {
+        transaction
+            .setFees(exchangeRateManager.convert(
+                from: transaction.fees,
+                preferedCurrency: preferedCurrency) ?? transaction.fees)
+            .setPricePerUnit(exchangeRateManager.convert(
+                from: transaction.pricePerUnit,
+                preferedCurrency: preferedCurrency) ?? transaction.pricePerUnit)
     }
 
     private var typeLabel: some View {
@@ -90,6 +105,7 @@ struct TransactionView_Previews: PreviewProvider {
                 pricePerUnit: .init(amount: 15_000, currency: .EUR),
                 fees: .init(amount: 0, currency: .EUR)),
             editMode: .inactive,
+            preferedCurrency: .EUR,
             action: { _ in },
             onDelete: { _ in })
     }

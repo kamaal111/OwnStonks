@@ -38,6 +38,7 @@ struct TransactionsScreen: View {
                     TransactionView(
                         transaction: transaction,
                         editMode: editModeValue,
+                        preferedCurrency: userData.preferedCurrency,
                         action: { transaction in viewModel.openEditTransactionSheet(with: transaction) },
                         onDelete: handleOnDelete)
                     #if os(macOS)

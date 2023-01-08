@@ -22,7 +22,7 @@ Date;Type;Name;Amount;Per unit;Fees
             OSTransaction(
                 id: nil,
                 assetName: "Apple",
-                date: OSTransaction.CSVRepresentation.dateFormatter.date(from: "1/10/22")!,
+                date: YearMonthDayStrategy.dateFormatter.date(from: "1/10/22")!,
                 type: .buy,
                 amount: 30,
                 pricePerUnit: Money(amount: 123.12, currency: .EUR),
@@ -30,7 +30,7 @@ Date;Type;Name;Amount;Per unit;Fees
             OSTransaction(
                 id: nil,
                 assetName: "Uber",
-                date: OSTransaction.CSVRepresentation.dateFormatter.date(from: "04/05/22")!,
+                date: YearMonthDayStrategy.dateFormatter.date(from: "04/05/22")!,
                 type: .buy,
                 amount: 20,
                 pricePerUnit: Money(amount: 20, currency: .USD),

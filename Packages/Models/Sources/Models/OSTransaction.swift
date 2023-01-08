@@ -35,6 +35,28 @@ public struct OSTransaction: Hashable, Codable {
             self.fees = fees
         }
 
+    public func setPricePerUnit(_ money: Money) -> OSTransaction {
+        OSTransaction(
+            id: id,
+            assetName: assetName,
+            date: date,
+            type: type,
+            amount: amount,
+            pricePerUnit: money,
+            fees: fees)
+    }
+
+    public func setFees(_ money: Money) -> OSTransaction {
+        OSTransaction(
+            id: id,
+            assetName: assetName,
+            date: date,
+            type: type,
+            amount: amount,
+            pricePerUnit: pricePerUnit,
+            fees: money)
+    }
+
     public static func fromCSV(data: Data, seperator: Character) throws -> [OSTransaction] {
         let items: [CSVRepresentation] = try CSVUtils.decode(data: data, seperator: ";")
         return items

@@ -51,6 +51,8 @@
 		2CAD62EF2967539D00DAACB0 /* Acknowledgements.json in Resources */ = {isa = PBXBuildFile; fileRef = 2CAD62EE2967539D00DAACB0 /* Acknowledgements.json */; };
 		2CAD62F22967564500DAACB0 /* JSONUnpacker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F12967564500DAACB0 /* JSONUnpacker.swift */; };
 		2CAD62F429675CA500DAACB0 /* WideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CAD62F329675CA500DAACB0 /* WideButton.swift */; };
+		2CB2F413296B04DE00F82C14 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB2F412296B04DE00F82C14 /* Models */; };
+		2CB2F415296B04E400F82C14 /* Models in Frameworks */ = {isa = PBXBuildFile; productRef = 2CB2F414296B04E400F82C14 /* Models */; };
 		2CB6E498295F5DFE008DE698 /* TitledPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E497295F5DFE008DE698 /* TitledPicker.swift */; };
 		2CB6E49C295F642F008DE698 /* TitledView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49B295F642F008DE698 /* TitledView.swift */; };
 		2CB6E49E295F6498008DE698 /* MoneyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB6E49D295F6498008DE698 /* MoneyTextField.swift */; };
@@ -204,6 +206,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB2F415296B04E400F82C14 /* Models in Frameworks */,
 				2C7A9047296AE1510078AE93 /* MockURLProtocol in Frameworks */,
 				2C7A9067296AED610078AE93 /* Environment in Frameworks */,
 				2C7A905D296AE67A0078AE93 /* Backend in Frameworks */,
@@ -233,6 +236,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CB2F413296B04DE00F82C14 /* Models in Frameworks */,
 				2CE74CB0296A384B0058E9C5 /* MockURLProtocol in Frameworks */,
 				2C7A9065296AED5A0078AE93 /* Environment in Frameworks */,
 				2C7A905B296AE6540078AE93 /* Backend in Frameworks */,
@@ -549,6 +553,7 @@
 				2C7A905C296AE67A0078AE93 /* Backend */,
 				2C7A9066296AED610078AE93 /* Environment */,
 				2C7A906E296AF53A0078AE93 /* Logster */,
+				2CB2F414296B04E400F82C14 /* Models */,
 			);
 			productName = "OwnStonksTests (iOS)";
 			productReference = 2C7A903A296AE1230078AE93 /* OwnStonksTests (iOS).xctest */;
@@ -602,6 +607,7 @@
 				2C7A905A296AE6540078AE93 /* Backend */,
 				2C7A9064296AED5A0078AE93 /* Environment */,
 				2C7A906C296AF36E0078AE93 /* Logster */,
+				2CB2F412296B04DE00F82C14 /* Models */,
 			);
 			productName = "OwnStonksTests (macOS)";
 			productReference = 2CE74CA1296A380B0058E9C5 /* OwnStonksTests (macOS).xctest */;
@@ -1355,6 +1361,14 @@
 		2C7CC3F129609D27006164DB /* ZaWarudo */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ZaWarudo;
+		};
+		2CB2F412296B04DE00F82C14 /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
+		};
+		2CB2F414296B04E400F82C14 /* Models */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Models;
 		};
 		2CB6E4AB295F8599008DE698 /* ShrimpExtensions */ = {
 			isa = XCSwiftPackageProductDependency;
