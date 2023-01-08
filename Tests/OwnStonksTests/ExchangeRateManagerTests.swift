@@ -33,15 +33,44 @@ final class ExchangeRateManagerTests: XCTestCase {
         return URLSession(configuration: configuration)
     }()
 
+    func testFetch() async throws {
+        let response = """
+{
+    "base": "EUR",
+    "date": "2022-12-30",
+    "rates": {
+        "CAD": 1.444,
+        "GBP": 0.88693,
+        "JPY": 140.66,
+        "TRY": 19.9649,
+        "USD": 1.0666
+    }
+}
+"""
+        makeResponse(with: response, status: 200)
+        await manager.fetch(preferedCurrency: .EUR)
+
+        let exchangeRates = try XCTUnwrap(manager.exchangeRates)
+        XCTAssertEqual(exchangeRates.baseCurrency, .EUR)
+        let dateComponents = Calendar.current.dateComponents([.day, .year, .month], from: exchangeRates.date)
+        XCTAssertEqual(dateComponents.day, 30)
+        XCTAssertEqual(dateComponents.month, 12)
+        XCTAssertEqual(dateComponents.year, 2022)
+        XCTAssertEqual(exchangeRates.ratesMappedByCurrency[.CAD], 1.444)
+        XCTAssertEqual(exchangeRates.ratesMappedByCurrency[.USD], 1.0666)
+        XCTAssertNil(exchangeRates.ratesMappedByCurrency[.EUR])
+    }
+
     func testFetchFailure() async throws {
         makeResponse(with: "{\"message\": \"oh noooo!\"}", status: 400)
 
         await manager.fetch(preferedCurrency: .EUR)
-        try await Task.sleep(milliSeconds: 50) // How else do wait untill the logs have been synced? 🤷‍♂️
+        try await Task.sleep(milliSeconds: 40) // How else do wait untill the logs have been synced? 🤷‍♂️
 
         let maybeError = await logHolder.logs.first(where: { $0.type == .error })
         let error = try XCTUnwrap(maybeError)
-        print(error)
+        XCTAssert(error.message.contains("oh noooo!"))
+        XCTAssertNil(manager.exchangeRates)
     }
 
     func makeResponse(with responseBody: String, status: Int) {

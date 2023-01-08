@@ -62,7 +62,7 @@ public struct OSTransaction: Hashable, Codable {
             guard let pricePerUnit = Money.fromString(string: perUnit),
                   let fees = Money.fromString(string: fees),
                   let type = TransactionTypes(rawValue: type.lowercased()),
-                  let date = Self.dateFormatter.date(from: date),
+                  let date = YearMonthDayStrategy.dateFormatter.date(from: date),
                   let amount = amount.localizedStringToDouble else {
                 assertionFailure("Failed to decode transcation")
                 return nil
@@ -77,14 +77,5 @@ public struct OSTransaction: Hashable, Codable {
                 pricePerUnit: pricePerUnit,
                 fees: fees)
         }
-
-        static let dateFormatter: DateFormatter = {
-            let formatter = DateFormatter()
-            formatter.dateFormat = "dd-MM-y"
-            formatter.timeZone = TimeZone(secondsFromGMT: 0)
-            formatter.locale = Locale(identifier: "en_US_POSIX")
-
-            return formatter
-        }()
     }
 }

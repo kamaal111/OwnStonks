@@ -44,7 +44,7 @@ extension DateValue: Hashable {
 }
 
 public struct YearMonthDayStrategy {
-    private static let dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
