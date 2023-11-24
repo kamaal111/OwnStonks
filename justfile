@@ -14,7 +14,7 @@ test-ios destination:
 format:
     swiftformat .
 
-bootstrap: brew-install-bundle
+bootstrap: brew-install-bundle install-node-modules
 
 assert-has-no-diffs:
     #!/bin/zsh
@@ -38,6 +38,10 @@ brew-install-bundle:
     brew update
     brew tap homebrew/bundle
     brew bundle
+
+[private]
+install-node-modules:
+    bun install
 
 [private]
 assert-empty value:

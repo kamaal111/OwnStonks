@@ -1,0 +1,12 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Scenes" : {
+      "extractionState" : "manual"
+    },
+    "Toggle Sidebar" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.0"
+}

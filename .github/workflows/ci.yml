@@ -15,7 +15,6 @@ jobs:
     name: Test
     timeout-minutes: 20
     runs-on: macos-13
-    if: false
     strategy:
       matrix:
         device: ["platform=iOS Simulator,name=iPhone 15 Pro Max"]

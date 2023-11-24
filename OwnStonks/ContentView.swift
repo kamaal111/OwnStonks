@@ -7,14 +7,11 @@
 
 import SwiftUI
 import SwiftData
+import Navigation
 
 struct ContentView: View {
     var body: some View {
-        NavigationSplitView {
-            Text("Hello there!")
-        } detail: {
-            Text("Select an item")
-        }
+        AppNavigationView()
     }
 }
 
