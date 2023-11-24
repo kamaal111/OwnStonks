@@ -2,29 +2,23 @@
 //  ContentView.swift
 //  OwnStonks
 //
-//  Created by Kamaal M Farah on 26/12/2022.
+//  Created by Kamaal M Farah on 24/11/2023.
 //
 
 import SwiftUI
-import PopperUp
-import BetterNavigation
+import SwiftData
 
 struct ContentView: View {
-    @StateObject private var popperUpManager = PopperUpManager()
-
     var body: some View {
-        NavigationStackView(
-            stack: [] as [Screens],
-            root: { screen in MainView(screen: screen) },
-            subView: { screen in MainView(screen: screen, displayMode: .inline) },
-            sidebar: { Sidebar() })
-        .withEditMode()
-        .withPopperUp(popperUpManager)
+        NavigationSplitView {
+            Text("Hello there!")
+        } detail: {
+            Text("Select an item")
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView()
+        .modelContainer(for: Item.self, inMemory: true)
 }

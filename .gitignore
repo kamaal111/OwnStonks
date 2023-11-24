@@ -52,3 +52,5 @@ Pods/
 JazzyDocs
 node_modules
 yarn-error.log
+
+Brewfile.lock.json

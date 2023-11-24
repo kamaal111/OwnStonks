@@ -2,31 +2,31 @@
 //  OwnStonksApp.swift
 //  OwnStonks
 //
-//  Created by Kamaal M Farah on 26/12/2022.
+//  Created by Kamaal M Farah on 24/11/2023.
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct OwnStonksApp: App {
-    @StateObject private var transactionsManager = TransactionsManager()
-    @StateObject private var exchangeRateManager = ExchangeRateManager()
-    @StateObject private var userData = UserData()
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([
+            Item.self,
+        ])
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+
+        do {
+            return try ModelContainer(for: schema, configurations: [modelConfiguration])
+        } catch {
+            fatalError("Could not create ModelContainer: \(error)")
+        }
+    }()
 
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(minWidth: 300, minHeight: 300)
-                .environmentObject(transactionsManager)
-                .environmentObject(exchangeRateManager)
-                .environmentObject(userData)
         }
-        #if os(macOS)
-        Settings {
-            AppSettingsScreen()
-                .frame(minHeight: 220)
-                .environmentObject(userData)
-        }
-        #endif
+        .modelContainer(sharedModelContainer)
     }
 }

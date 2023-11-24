@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  XCODE_APP_NAME: Xcode_15.0.1.app
+
+jobs:
+  test:
+    name: Test
+    timeout-minutes: 20
+    runs-on: macos-13
+    if: false
+    strategy:
+      matrix:
+        device: ["platform=iOS Simulator,name=iPhone 15 Pro Max"]
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Select Xcode version
+        run: |
+          ls -d /Applications/Xcode*
+          sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
+
+      - name: Bootstrap project
+        run: just bootstrap
+
+      - name: Test
+        run: just test-ios "${{ matrix.device }}"
+
+      - name: Check diff
+        run: just assert-has-no-diffs

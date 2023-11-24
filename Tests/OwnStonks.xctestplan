@@ -1,0 +1,23 @@
+{
+  "configurations" : [
+    {
+      "id" : "4D444F8E-5DFD-4693-8F55-989097BBCEBB",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:OwnStonks.xcodeproj",
+      "identifier" : "2C5266522B112C24000CD2D5",
+      "name" : "OwnStonks"
+    }
+  },
+  "testTargets" : [
+
+  ],
+  "version" : 1
+}
