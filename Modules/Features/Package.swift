@@ -9,8 +9,21 @@ let package = Package(
     products: [
         .library(name: "Transactions", targets: ["Transactions"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.2.0")),
+        .package(path: "../AppUI"),
+    ],
     targets: [
-        .target(name: "Transactions"),
+        .target(
+            name: "Transactions",
+            dependencies: [
+                .product(name: "KamaalUI", package: "KamaalSwift"),
+                .product(name: "AppUI", package: "AppUI"),
+            ],
+            resources: [
+                .process("Internals/Resources"),
+            ]
+        ),
         .testTarget(name: "TransactionsTests", dependencies: ["Transactions"]),
     ]
 )

@@ -30,7 +30,7 @@ struct Sidebar: View {
                 Label(NSLocalizedString("Toggle Sidebar", bundle: .module, comment: ""), systemImage: "sidebar.left")
                     .foregroundColor(.accentColor)
             }
-            .help(AppLocales.getText(.TOGGLE_SIDEBAR))
+            .help(NSLocalizedString("Toggle Sidebar", bundle: .module, comment: ""))
         })
         #endif
     }

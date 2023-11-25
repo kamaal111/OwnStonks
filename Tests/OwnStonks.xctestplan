@@ -30,6 +30,13 @@
         "identifier" : "TransactionsTests",
         "name" : "TransactionsTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/AppUI",
+        "identifier" : "AppUITests",
+        "name" : "AppUITests"
+      }
     }
   ],
   "version" : 1

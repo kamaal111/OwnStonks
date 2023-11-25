@@ -27,6 +27,7 @@
 		2C52666D2B11302C000CD2D5 /* prebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = prebuild.sh; sourceTree = "<group>"; };
 		2C840D792B1255190043F850 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		2C840D7A2B1255850043F850 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
+		2C840D7B2B12695D0043F850 /* AppUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppUI; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +102,7 @@
 		2C52666E2B113DE6000CD2D5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2C840D7B2B12695D0043F850 /* AppUI */,
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
 			);
