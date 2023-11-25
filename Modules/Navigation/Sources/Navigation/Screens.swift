@@ -6,36 +6,37 @@
 //
 
 import Foundation
+import Transactions
 import KamaalNavigation
 
 enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue {
-    case home
+    case transactions
 
     var id: Screens { self }
 
     var isTabItem: Bool {
         switch self {
-        case .home: true
+        case .transactions: true
         }
     }
 
     var isSidebarItem: Bool {
         switch self {
-        case .home: true
+        case .transactions: true
         }
     }
 
     var imageSystemName: String {
         switch self {
-        case .home: "house.fill"
+        case .transactions: "house.fill"
         }
     }
 
     var title: String {
         switch self {
-        case .home: "Home"
+        case .transactions: NSLocalizedString("Transactions", bundle: .module, comment: "")
         }
     }
 
-    static var root: Screens = .home
+    static var root: Screens = .transactions
 }

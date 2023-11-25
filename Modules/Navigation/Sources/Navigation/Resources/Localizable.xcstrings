@@ -6,6 +6,9 @@
     },
     "Toggle Sidebar" : {
       "extractionState" : "manual"
+    },
+    "Transactions" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.0"

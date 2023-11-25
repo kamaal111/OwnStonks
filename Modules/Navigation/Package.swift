@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.2.0")),
+        .package(path: "../Features"),
     ],
     targets: [
         .target(
@@ -22,6 +23,7 @@ let package = Package(
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "KamaalPopUp", package: "KamaalSwift"),
                 .product(name: "KamaalNavigation", package: "KamaalSwift"),
+                .product(name: "Transactions", package: "Features"),
             ],
             resources: [
                 .process("Resources"),

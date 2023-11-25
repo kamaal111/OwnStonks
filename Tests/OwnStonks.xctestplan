@@ -17,7 +17,20 @@
     }
   },
   "testTargets" : [
-
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Navigation",
+        "identifier" : "NavigationTests",
+        "name" : "NavigationTests"
+      }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features",
+        "identifier" : "TransactionsTests",
+        "name" : "TransactionsTests"
+      }
+    }
   ],
   "version" : 1
 }
