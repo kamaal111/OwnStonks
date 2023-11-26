@@ -10,6 +10,8 @@ let package = Package(
         .library(name: "Transactions", targets: ["Transactions"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/Quick/Quick.git", from: "7.0.0"),
+        .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0"),
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.2.0")),
         .package(path: "../AppUI"),
     ],
@@ -24,6 +26,10 @@ let package = Package(
                 .process("Internals/Resources"),
             ]
         ),
-        .testTarget(name: "TransactionsTests", dependencies: ["Transactions"]),
+        .testTarget(name: "TransactionsTests", dependencies: [
+            "Quick",
+            "Nimble",
+            "Transactions",
+        ]),
     ]
 )

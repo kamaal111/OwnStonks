@@ -9,7 +9,6 @@
     }
   ],
   "defaultOptions" : {
-    "codeCoverage" : false,
     "targetForVariableExpansion" : {
       "containerPath" : "container:OwnStonks.xcodeproj",
       "identifier" : "2C5266522B112C24000CD2D5",

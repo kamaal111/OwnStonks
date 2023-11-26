@@ -17,6 +17,7 @@ public struct TransactionsScreen: View {
         VStack {
             Text("Hello, World!")
         }
+        .frame(minWidth: 320, minHeight: 348)
         .toolbar {
             #if os(iOS)
             ToolbarItem(placement: .topBarTrailing) { toolbarItem }
