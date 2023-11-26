@@ -9,6 +9,12 @@
     },
     "Done" : {
       "extractionState" : "manual"
+    },
+    "Name" : {
+      "extractionState" : "manual"
+    },
+    "Transaction Date" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.0"

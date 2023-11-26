@@ -14,6 +14,9 @@ enum ModifyTransactionSheetContext {
 }
 
 struct ModifyTransactionSheet: View {
+    @State private var name = ""
+    @State private var transactionDate = Date()
+
     @Binding var isShown: Bool
 
     let context: ModifyTransactionSheetContext
@@ -25,9 +28,23 @@ struct ModifyTransactionSheet: View {
             leadingNavigationButton: { navigationButton(label: "Close", action: { isShown = false }) },
             trailingNavigationButton: { navigationButton(label: "Done", action: onDone) }
         ) {
-            Text("Hello")
+            VStack(alignment: .leading) {
+                KFloatingTextField(text: $name, title: NSLocalizedString("Name", bundle: .module, comment: ""))
+                KFloatingDatePicker(
+                    value: $transactionDate,
+                    title: NSLocalizedString("Transaction Date", bundle: .module, comment: ""),
+                    displayedComponents: [.date]
+                )
+                // Type Picker
+                // Amount Field
+                // Price Per Field
+                // Fees Field
+            }
         }
         .padding(.vertical, .medium)
+        #if os(macOS)
+            .frame(minWidth: 320, minHeight: 348)
+        #endif
     }
 
     private var title: String {
