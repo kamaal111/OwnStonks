@@ -4,6 +4,9 @@
     "Add Transaction" : {
       "extractionState" : "manual"
     },
+    "Buy" : {
+      "extractionState" : "manual"
+    },
     "Close" : {
       "extractionState" : "manual"
     },
@@ -13,7 +16,13 @@
     "Name" : {
       "extractionState" : "manual"
     },
+    "Sell" : {
+      "extractionState" : "manual"
+    },
     "Transaction Date" : {
+      "extractionState" : "manual"
+    },
+    "Type" : {
       "extractionState" : "manual"
     }
   },

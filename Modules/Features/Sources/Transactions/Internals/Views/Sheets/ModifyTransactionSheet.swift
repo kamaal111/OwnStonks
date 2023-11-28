@@ -16,6 +16,7 @@ enum ModifyTransactionSheetContext {
 struct ModifyTransactionSheet: View {
     @State private var name = ""
     @State private var transactionDate = Date()
+    @State private var transactionType: TransactionTypes = .buy
 
     @Binding var isShown: Bool
 
@@ -35,7 +36,13 @@ struct ModifyTransactionSheet: View {
                     title: NSLocalizedString("Transaction Date", bundle: .module, comment: ""),
                     displayedComponents: [.date]
                 )
-                // Type Picker
+                KTitledPicker(
+                    selection: $transactionType,
+                    title: NSLocalizedString("Type", bundle: .module, comment: ""),
+                    items: TransactionTypes.allCases
+                ) { type in
+                    Text(type.localized)
+                }
                 // Amount Field
                 // Price Per Field
                 // Fees Field
