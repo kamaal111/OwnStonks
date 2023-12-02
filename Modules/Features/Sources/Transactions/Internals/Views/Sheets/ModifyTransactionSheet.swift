@@ -21,6 +21,8 @@ struct ModifyTransactionSheet: View {
     @State private var amount = "0.0"
     @State private var pricePerAssetCurrency: Currencies = .EUR
     @State private var pricePerAsset = "0.0"
+    @State private var feesCurrency: Currencies = .EUR
+    @State private var fees = "0.0"
 
     @Binding var isShown: Bool
 
@@ -48,7 +50,8 @@ struct ModifyTransactionSheet: View {
                     Text(type.localized)
                 }
                 KFloatingDecimalField(
-                    value: $amount, title: NSLocalizedString("Amount", bundle: .module, comment: ""),
+                    value: $amount,
+                    title: NSLocalizedString("Amount", bundle: .module, comment: ""),
                     fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
                     fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
                 )
@@ -60,13 +63,21 @@ struct ModifyTransactionSheet: View {
                     fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
                     fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
                 )
-                // Fees Field
+                MoneyField(
+                    currency: $feesCurrency,
+                    value: $fees,
+                    title: NSLocalizedString("Fees", bundle: .module, comment: ""),
+                    currencies: Currencies.allCases.filter { !$0.isCryptoCurrency },
+                    fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
+                    fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
+                )
             }
         }
         .padding(.vertical, .medium)
         #if os(macOS)
             .frame(minWidth: 320, minHeight: 348)
         #endif
+            .onChange(of: pricePerAssetCurrency, onPricePerAssetCurrencyChange)
     }
 
     private var title: String {
@@ -80,6 +91,12 @@ struct ModifyTransactionSheet: View {
             Text(label, bundle: .module)
                 .bold()
                 .foregroundStyle(.tint)
+        }
+    }
+
+    private func onPricePerAssetCurrencyChange(_: Currencies, _ newValue: Currencies) {
+        if feesCurrency != newValue {
+            feesCurrency = newValue
         }
     }
 }

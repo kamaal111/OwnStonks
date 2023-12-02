@@ -16,6 +16,9 @@
     "Done" : {
       "extractionState" : "manual"
     },
+    "Fees" : {
+      "extractionState" : "manual"
+    },
     "Fix" : {
       "extractionState" : "manual"
     },
