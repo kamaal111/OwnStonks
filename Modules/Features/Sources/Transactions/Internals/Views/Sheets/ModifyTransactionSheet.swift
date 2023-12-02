@@ -17,6 +17,7 @@ struct ModifyTransactionSheet: View {
     @State private var name = ""
     @State private var transactionDate = Date()
     @State private var transactionType: TransactionTypes = .buy
+    @State private var amount = "0.0"
 
     @Binding var isShown: Bool
 
@@ -43,7 +44,11 @@ struct ModifyTransactionSheet: View {
                 ) { type in
                     Text(type.localized)
                 }
-                // Amount Field
+                KFloatingDecimalField(
+                    value: $amount, title: NSLocalizedString("Amount", bundle: .module, comment: ""),
+                    fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
+                    fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
+                )
                 // Price Per Field
                 // Fees Field
             }
