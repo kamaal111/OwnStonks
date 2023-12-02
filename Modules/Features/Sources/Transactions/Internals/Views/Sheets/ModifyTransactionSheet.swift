@@ -8,6 +8,7 @@
 import AppUI
 import SwiftUI
 import KamaalUI
+import ForexKit
 
 enum ModifyTransactionSheetContext {
     case new
@@ -18,6 +19,8 @@ struct ModifyTransactionSheet: View {
     @State private var transactionDate = Date()
     @State private var transactionType: TransactionTypes = .buy
     @State private var amount = "0.0"
+    @State private var pricePerAssetCurrency: Currencies = .EUR
+    @State private var pricePerAsset = "0.0"
 
     @Binding var isShown: Bool
 
@@ -49,7 +52,14 @@ struct ModifyTransactionSheet: View {
                     fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
                     fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
                 )
-                // Price Per Field
+                MoneyField(
+                    currency: $pricePerAssetCurrency,
+                    value: $pricePerAsset,
+                    title: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
+                    currencies: Currencies.allCases.filter { !$0.isCryptoCurrency },
+                    fixButtonTitle: NSLocalizedString("Fix", bundle: .module, comment: ""),
+                    fixMessage: NSLocalizedString("Invalid value", bundle: .module, comment: "")
+                )
                 // Fees Field
             }
         }

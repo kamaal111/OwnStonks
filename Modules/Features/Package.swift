@@ -12,7 +12,8 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", from: "7.0.0"),
         .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0"),
-        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.0")),
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.1.0")),
         .package(path: "../AppUI"),
     ],
     targets: [
@@ -21,6 +22,7 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "AppUI", package: "AppUI"),
+                "ForexKit",
             ],
             resources: [
                 .process("Internals/Resources"),

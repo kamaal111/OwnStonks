@@ -25,6 +25,9 @@
     "Name" : {
       "extractionState" : "manual"
     },
+    "Price per unit" : {
+      "extractionState" : "manual"
+    },
     "Sell" : {
       "extractionState" : "manual"
     },
