@@ -26,9 +26,21 @@ public struct TransactionsScreen: View {
                     AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
                 }
                 ForEach(transactionManager.transactions) { transaction in
-                    Text(transaction.name)
+                    TransactionsListItem(
+                        transaction: transaction,
+                        layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large
+                    )
+                    #if os(macOS)
+                    if transactionManager.transactions.last != transaction {
+                        Divider()
+                    }
+                    #endif
                 }
             }
+            .kBindToFrameSize($viewModel.transactionsSectionSize)
+            #if os(macOS)
+                .padding(.horizontal, .medium)
+            #endif
         }
         .padding(.vertical, .medium)
         .toolbar {
@@ -91,6 +103,8 @@ extension TransactionsScreen {
         var showSheet = false {
             didSet { showSheetDidSet() }
         }
+
+        var transactionsSectionSize: CGSize = .zero
 
         private(set) var shownSheet: Sheets? {
             didSet { shownSheetDidSet() }

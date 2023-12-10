@@ -7,6 +7,7 @@
 
 import ForexKit
 import Foundation
+import KamaalExtensions
 
 struct AppTransaction: Hashable, Identifiable {
     let id: UUID?
@@ -39,4 +40,18 @@ struct AppTransaction: Hashable, Identifiable {
 struct Money: Hashable {
     let value: Double
     let currency: Currencies
+
+    var localized: String {
+        let formatter = NumberFormatter()
+        formatter.locale = Locale.current
+        formatter.numberStyle = .currency
+        formatter.currencySymbol = currency.symbol
+
+        guard let string = formatter.string(from: value.nsNumber) else {
+            assertionFailure("Failed to format money")
+            return ""
+        }
+
+        return string
+    }
 }
