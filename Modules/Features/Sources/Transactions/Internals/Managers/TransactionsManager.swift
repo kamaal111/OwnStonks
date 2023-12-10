@@ -18,13 +18,13 @@ final class TransactionsManager {
     private(set) var storedTransactions: [StoredTransaction]
     private(set) var loading: Bool
 
-    private let persistentData: PersistentData
+    private let persistentData: PersistentDatable
 
     convenience init() {
-        self.init(persistentData: .shared)
+        self.init(persistentData: PersistentData.shared)
     }
 
-    init(persistentData: PersistentData) {
+    init(persistentData: PersistentDatable) {
         self.storedTransactions = []
         self.loading = true
         self.persistentData = persistentData

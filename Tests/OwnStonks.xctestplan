@@ -31,10 +31,19 @@
       }
     },
     {
+      "enabled" : false,
       "target" : {
         "containerPath" : "container:Modules\/AppUI",
         "identifier" : "AppUITests",
         "name" : "AppUITests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:Modules\/PersistentData",
+        "identifier" : "PersistentDataTests",
+        "name" : "PersistentDataTests"
       }
     }
   ],

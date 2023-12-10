@@ -26,7 +26,9 @@ let package = Package(
         ),
         .testTarget(
             name: "PersistentDataTests",
-            dependencies: ["PersistentData"]
+            dependencies: [
+                "PersistentData",
+            ]
         ),
     ]
 )
