@@ -17,9 +17,10 @@ enum TransactionsListItemLayouts {
 struct TransactionsListItem: View {
     let transaction: AppTransaction
     let layout: TransactionsListItemLayouts
+    let action: () -> Void
 
     var body: some View {
-        Button(action: { print("transaction", transaction) }) {
+        Button(action: action) {
             HStack {
                 VStack(alignment: .leading) {
                     Text(transaction.name)
@@ -58,17 +59,15 @@ struct TransactionsListItem: View {
     }
 
     private func informationLabel(
-        _ label: LocalizedStringKey,
+        _ label: String,
         value: String,
         foregroundColor: Color = .primary
     ) -> some View {
-        HStack {
-            (Text(label, bundle: .module) + Text(":"))
-                .foregroundColor(.secondary)
-            Text(value)
-                .textCase(.lowercase)
-                .foregroundColor(foregroundColor)
-        }
+        AppLabel(
+            title: NSLocalizedString(label, bundle: .module, comment: ""),
+            value: value,
+            valueColor: foregroundColor
+        )
     }
 
     private var informationData: [InformationDataKeys: String] {
@@ -93,7 +92,7 @@ private enum InformationDataKeys: CaseIterable {
     case pricePerUnit
     case fees
 
-    var localizedStringKey: LocalizedStringKey {
+    var localizedStringKey: String {
         switch self {
         case .transactionDate: "Transaction Date"
         case .amount: "Amount"
@@ -104,15 +103,5 @@ private enum InformationDataKeys: CaseIterable {
 }
 
 #Preview {
-    TransactionsListItem(
-        transaction: AppTransaction(
-            name: "Apple",
-            transactionDate: Date(timeIntervalSince1970: 1_702_233_813),
-            transactionType: .buy,
-            amount: 25,
-            pricePerUnit: Money(value: 100, currency: .USD),
-            fees: Money(value: 1, currency: .EUR)
-        ),
-        layout: .large
-    )
+    TransactionsListItem(transaction: .preview, layout: .large, action: { })
 }

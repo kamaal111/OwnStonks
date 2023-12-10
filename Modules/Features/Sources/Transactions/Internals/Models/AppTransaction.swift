@@ -35,6 +35,15 @@ struct AppTransaction: Hashable, Identifiable {
         self.pricePerUnit = pricePerUnit
         self.fees = fees
     }
+
+    static let preview = AppTransaction(
+        name: "Apple",
+        transactionDate: Date(timeIntervalSince1970: 1_702_233_813),
+        transactionType: .buy,
+        amount: 25,
+        pricePerUnit: Money(value: 100, currency: .USD),
+        fees: Money(value: 1, currency: .EUR)
+    )
 }
 
 struct Money: Hashable {

@@ -52,6 +52,12 @@ final class TransactionsManager {
     }
 
     @MainActor
+    func editTransaction(_ transaction: AppTransaction) {
+        assert(transaction.id != nil)
+        fatalError("Edit here!")
+    }
+
+    @MainActor
     func createTransaction(_ transaction: AppTransaction) {
         assert(!transaction.name.trimmingByWhitespacesAndNewLines.isEmpty)
         let storedTransaction = StoredTransaction.create(

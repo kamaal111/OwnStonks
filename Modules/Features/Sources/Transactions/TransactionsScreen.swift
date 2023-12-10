@@ -28,7 +28,8 @@ public struct TransactionsScreen: View {
                 ForEach(transactionManager.transactions) { transaction in
                     TransactionsListItem(
                         transaction: transaction,
-                        layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large
+                        layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
+                        action: { viewModel.handleTransactionPress(transaction) }
                     )
                     #if os(macOS)
                     if transactionManager.transactions.last != transaction {
@@ -65,9 +66,16 @@ public struct TransactionsScreen: View {
     private var presentedSheet: some View {
         KJustStack {
             switch viewModel.shownSheet {
-            case .addTransction: ModifyTransactionSheet(
+            case .addTransction:
+                TransactionDetailsSheet(
                     isShown: $viewModel.showSheet,
                     context: .new,
+                    onDone: onModifyTransactionDone
+                )
+            case let .transactionDetails(transaction):
+                TransactionDetailsSheet(
+                    isShown: $viewModel.showSheet,
+                    context: .details(transaction),
                     onDone: onModifyTransactionDone
                 )
             case .none: EmptyView()
@@ -76,7 +84,11 @@ public struct TransactionsScreen: View {
     }
 
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
-        transactionManager.createTransaction(transaction)
+        switch viewModel.shownSheet {
+        case .addTransction: transactionManager.createTransaction(transaction)
+        case .transactionDetails: transactionManager.editTransaction(transaction)
+        case .none: assertionFailure("Should not be here!")
+        }
     }
 
     private func handleOnAppear() {
@@ -114,6 +126,10 @@ extension TransactionsScreen {
             shownSheet = .addTransction
         }
 
+        func handleTransactionPress(_ transaction: AppTransaction) {
+            shownSheet = .transactionDetails(transaction)
+        }
+
         private func shownSheetDidSet() {
             if shownSheet == nil, showSheet {
                 showSheet = false
@@ -129,8 +145,9 @@ extension TransactionsScreen {
         }
     }
 
-    enum Sheets {
+    enum Sheets: Equatable {
         case addTransction
+        case transactionDetails(_ transaction: AppTransaction)
     }
 }
 
