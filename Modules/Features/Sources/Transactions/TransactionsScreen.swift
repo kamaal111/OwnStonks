@@ -18,17 +18,19 @@ public struct TransactionsScreen: View {
     public init() { }
 
     public var body: some View {
-        VStack {
-            if transactionManager.loading {
-                KLoading()
-            } else if transactionManager.transactionsAreEmpty {
-                // TODO: MAKE THIS PROPER!
-                Text("Make new 🐸")
-            }
-            ForEach(transactionManager.transactions) { transaction in
-                Text(transaction.name)
+        KScrollableForm {
+            KSection(header: NSLocalizedString("Transactions", bundle: .module, comment: "")) {
+                if transactionManager.loading {
+                    KLoading()
+                } else if transactionManager.transactionsAreEmpty {
+                    AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
+                }
+                ForEach(transactionManager.transactions) { transaction in
+                    Text(transaction.name)
+                }
             }
         }
+        .padding(.vertical, .medium)
         .toolbar {
             #if os(iOS)
             ToolbarItem(placement: .topBarTrailing) { toolbarItem }

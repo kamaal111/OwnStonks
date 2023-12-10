@@ -4,6 +4,9 @@
     "Add Transaction" : {
       "extractionState" : "manual"
     },
+    "Add your first transaction" : {
+      "extractionState" : "manual"
+    },
     "Amount" : {
       "extractionState" : "manual"
     },
@@ -38,6 +41,9 @@
       "extractionState" : "manual"
     },
     "Transaction Date" : {
+      "extractionState" : "manual"
+    },
+    "Transactions" : {
       "extractionState" : "manual"
     },
     "Type" : {
