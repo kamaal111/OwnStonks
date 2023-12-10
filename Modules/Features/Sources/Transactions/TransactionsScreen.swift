@@ -7,15 +7,27 @@
 
 import SwiftUI
 import KamaalUI
+import KamaalPopUp
 
 public struct TransactionsScreen: View {
+    @Environment(TransactionsManager.self) private var transactionManager
+    @EnvironmentObject private var popUpManager: KPopUpManager
+
     @State private var viewModel = ViewModel()
 
     public init() { }
 
     public var body: some View {
         VStack {
-            Text("Hello, World!")
+            if transactionManager.loading {
+                KLoading()
+            } else if transactionManager.transactionsAreEmpty {
+                // TODO: MAKE THIS PROPER!
+                Text("Make new 🐸")
+            }
+            ForEach(transactionManager.transactions) { transaction in
+                Text(transaction.name)
+            }
         }
         .toolbar {
             #if os(iOS)
@@ -25,6 +37,7 @@ public struct TransactionsScreen: View {
             #endif
         }
         .sheet(isPresented: $viewModel.showSheet) { presentedSheet }
+        .onAppear(perform: handleOnAppear)
     }
 
     private var toolbarItem: some View {
@@ -41,9 +54,30 @@ public struct TransactionsScreen: View {
             case .addTransction: ModifyTransactionSheet(
                     isShown: $viewModel.showSheet,
                     context: .new,
-                    onDone: viewModel.onModifyTransactionDone
+                    onDone: onModifyTransactionDone
                 )
             case .none: EmptyView()
+            }
+        }
+    }
+
+    private func onModifyTransactionDone(_ transaction: AppTransaction) {
+        transactionManager.createTransaction(transaction)
+    }
+
+    private func handleOnAppear() {
+        Task {
+            do {
+                try await transactionManager.fetchTransactions()
+            } catch {
+                popUpManager.showPopUp(
+                    style: .bottom(
+                        title: NSLocalizedString("Failed to get transctions", bundle: .module, comment: ""),
+                        type: .error,
+                        description: nil
+                    ),
+                    timeout: 5
+                )
             }
         }
     }
@@ -63,8 +97,6 @@ extension TransactionsScreen {
         func showAddTransactionSheet() {
             shownSheet = .addTransction
         }
-
-        func onModifyTransactionDone() { }
 
         private func shownSheetDidSet() {
             if shownSheet == nil, showSheet {

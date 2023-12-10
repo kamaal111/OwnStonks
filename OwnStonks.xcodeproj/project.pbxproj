@@ -9,17 +9,17 @@
 /* Begin PBXBuildFile section */
 		2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */; };
 		2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266582B112C24000CD2D5 /* ContentView.swift */; };
-		2C52665B2B112C24000CD2D5 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C52665A2B112C24000CD2D5 /* Item.swift */; };
 		2C52665D2B112C24000CD2D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
 		2C5266612B112C24000CD2D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */; };
 		2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5266712B113EE3000CD2D5 /* Navigation */; };
+		2CAA42892B26187600D91B3E /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA42882B26187600D91B3E /* PersistentData */; };
+		2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA428A2B26198E00D91B3E /* Transactions */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2C5266532B112C24000CD2D5 /* OwnStonks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C5266582B112C24000CD2D5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		2C52665A2B112C24000CD2D5 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		2C52665C2B112C24000CD2D5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2C52665E2B112C24000CD2D5 /* OwnStonks.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonks.entitlements; sourceTree = "<group>"; };
 		2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -28,6 +28,7 @@
 		2C840D792B1255190043F850 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		2C840D7A2B1255850043F850 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
 		2C840D7B2B12695D0043F850 /* AppUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppUI; sourceTree = "<group>"; };
+		2CAE16682B252B0D00F49575 /* PersistentData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PersistentData; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +36,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
 				2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */,
+				2CAA42892B26187600D91B3E /* PersistentData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,7 +70,6 @@
 			children = (
 				2C52665E2B112C24000CD2D5 /* OwnStonks.entitlements */,
 				2C5266582B112C24000CD2D5 /* ContentView.swift */,
-				2C52665A2B112C24000CD2D5 /* Item.swift */,
 				2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */,
 				2C52665C2B112C24000CD2D5 /* Assets.xcassets */,
 				2C52665F2B112C24000CD2D5 /* Preview Content */,
@@ -105,6 +107,7 @@
 				2C840D7B2B12695D0043F850 /* AppUI */,
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
+				2CAE16682B252B0D00F49575 /* PersistentData */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -135,6 +138,8 @@
 			name = OwnStonks;
 			packageProductDependencies = (
 				2C5266712B113EE3000CD2D5 /* Navigation */,
+				2CAA42882B26187600D91B3E /* PersistentData */,
+				2CAA428A2B26198E00D91B3E /* Transactions */,
 			);
 			productName = OwnStonks;
 			productReference = 2C5266532B112C24000CD2D5 /* OwnStonks.app */;
@@ -213,7 +218,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */,
-				2C52665B2B112C24000CD2D5 /* Item.swift in Sources */,
 				2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +444,14 @@
 		2C5266712B113EE3000CD2D5 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
+		};
+		2CAA42882B26187600D91B3E /* PersistentData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PersistentData;
+		};
+		2CAA428A2B26198E00D91B3E /* Transactions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Transactions;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

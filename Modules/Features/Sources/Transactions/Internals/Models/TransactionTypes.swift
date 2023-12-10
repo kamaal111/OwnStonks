@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum TransactionTypes: CaseIterable {
+enum TransactionTypes: String, CaseIterable {
     case buy
     case sell
 
