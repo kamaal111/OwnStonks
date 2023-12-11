@@ -86,7 +86,19 @@ public struct TransactionsScreen: View {
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
         switch viewModel.shownSheet {
         case .addTransction: transactionManager.createTransaction(transaction)
-        case .transactionDetails: transactionManager.editTransaction(transaction)
+        case .transactionDetails:
+            do {
+                try transactionManager.editTransaction(transaction)
+            } catch {
+                popUpManager.showPopUp(
+                    style: .bottom(
+                        title: NSLocalizedString("Failed to update transaction", bundle: .module, comment: ""),
+                        type: .error,
+                        description: nil
+                    ),
+                    timeout: 5
+                )
+            }
         case .none: assertionFailure("Should not be here!")
         }
     }
@@ -98,7 +110,7 @@ public struct TransactionsScreen: View {
             } catch {
                 popUpManager.showPopUp(
                     style: .bottom(
-                        title: NSLocalizedString("Failed to get transctions", bundle: .module, comment: ""),
+                        title: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
                         type: .error,
                         description: nil
                     ),

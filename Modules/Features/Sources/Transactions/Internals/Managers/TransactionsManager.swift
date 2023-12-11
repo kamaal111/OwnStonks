@@ -52,9 +52,23 @@ final class TransactionsManager {
     }
 
     @MainActor
-    func editTransaction(_ transaction: AppTransaction) {
+    func editTransaction(_ transaction: AppTransaction) throws {
         assert(transaction.id != nil)
-        fatalError("Edit here!")
+        assert(storedTransactions.contains(where: { $0.id == transaction.id }))
+        guard let transactionID = transaction.id,
+              let storedTransactionIndex = storedTransactions.findIndex(by: \.id, is: transactionID) else { return }
+
+        let storedTransaction = storedTransactions[storedTransactionIndex]
+        let updatedTransaction = try storedTransaction.update(
+            name: transaction.name,
+            transactionDate: transaction.transactionDate,
+            transactionType: transaction.transactionType.rawValue,
+            amount: transaction.amount,
+            pricePerUnit: (transaction.pricePerUnit.value, transaction.pricePerUnit.currency),
+            fees: (transaction.fees.value, transaction.fees.currency)
+        )
+
+        storedTransactions[storedTransactionIndex] = updatedTransaction
     }
 
     @MainActor

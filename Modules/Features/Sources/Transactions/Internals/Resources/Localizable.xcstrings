@@ -22,7 +22,10 @@
     "Edit" : {
       "extractionState" : "manual"
     },
-    "Failed to get transctions" : {
+    "Failed to get transactions" : {
+      "extractionState" : "manual"
+    },
+    "Failed to update transaction" : {
       "extractionState" : "manual"
     },
     "Fees" : {

@@ -12,6 +12,60 @@ import Foundation
 
 final class TransactionsManagerSpec: AsyncSpec {
     override class func spec() {
+        describe("Edit transactions") {
+            it("should edit transaction") {
+                // Given
+                let persistentData = try TestPersistentData()
+                let manager = TransactionsManager(persistentData: persistentData)
+                await manager.createTransaction(testTransaction)
+                let storedTransaction = manager.transactions[0]
+                let transactionWithChanges = AppTransaction(
+                    id: storedTransaction.id!,
+                    name: "NewNewCo",
+                    transactionDate: storedTransaction.transactionDate,
+                    transactionType: .sell,
+                    amount: 22,
+                    pricePerUnit: Money(value: 44, currency: .CAD),
+                    fees: Money(value: 1, currency: .BGN)
+                )
+
+                // Sanity
+                expect(storedTransaction) != transactionWithChanges
+
+                // When
+                try await manager.editTransaction(transactionWithChanges)
+
+                // Then
+                expect(manager.transactions.count) == 1
+                expect(manager.transactions[0]) == transactionWithChanges
+            }
+
+            it("should keep stored transaction changes in memory after fetch") {
+                // Given
+                let persistentData = try TestPersistentData()
+                let manager = TransactionsManager(persistentData: persistentData)
+                await manager.createTransaction(testTransaction)
+                let storedTransaction = manager.transactions[0]
+                let transactionWithChanges = AppTransaction(
+                    id: storedTransaction.id!,
+                    name: "NewNewCo",
+                    transactionDate: storedTransaction.transactionDate,
+                    transactionType: .sell,
+                    amount: 22,
+                    pricePerUnit: Money(value: 44, currency: .CAD),
+                    fees: Money(value: 1, currency: .BGN)
+                )
+                try await manager.editTransaction(transactionWithChanges)
+
+                // When
+                try await manager.fetchTransactions()
+
+                // Then
+                expect(manager.transactions.count) == 1
+                expect(manager.transactions[0]) == transactionWithChanges
+            }
+        }
+
         describe("Creating transactions") {
             it("should create and store transaction") {
                 // Given

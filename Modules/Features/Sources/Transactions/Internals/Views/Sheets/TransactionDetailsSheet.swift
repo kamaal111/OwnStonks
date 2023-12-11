@@ -238,7 +238,7 @@ extension TransactionDetailsSheet {
 
         @MainActor
         func disableEditing() {
-            withAnimation { isEditing = false }
+            isEditing = false
         }
 
         private func pricePerUnitCurrencyDidSet() {
