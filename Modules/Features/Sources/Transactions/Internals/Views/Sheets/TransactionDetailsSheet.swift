@@ -64,8 +64,7 @@ struct TransactionDetailsSheet: View {
                     if isEditing {
                         navigationButton(label: "Done", action: handleDone).disabled(!transactionIsValid)
                     } else {
-                        // TODO: EDIT BUTTON SHOULD BE HERE
-                        Text("")
+                        navigationButton(label: "Edit", action: { withAnimation { isEditing = true } })
                     }
                 }
             }
@@ -170,6 +169,10 @@ struct TransactionDetailsSheet: View {
         guard let transaction else { return }
 
         onDone(transaction)
+        if case .details = context {
+            withAnimation { isEditing = false }
+        }
+
         close()
     }
 

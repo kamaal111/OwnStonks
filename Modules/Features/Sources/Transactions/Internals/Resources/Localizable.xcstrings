@@ -19,6 +19,9 @@
     "Done" : {
       "extractionState" : "manual"
     },
+    "Edit" : {
+      "extractionState" : "manual"
+    },
     "Failed to get transctions" : {
       "extractionState" : "manual"
     },
