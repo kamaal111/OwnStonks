@@ -1,5 +1,5 @@
 //
-//  TransactionsScreenSpec.swift
+//  TransactionsScreenViewModelSpec.swift
 //
 //
 //  Created by Kamaal M Farah on 26/11/2023.
@@ -10,13 +10,16 @@ import Nimble
 import XCTest
 @testable import Transactions
 
-final class TransactionsScreenSpec: QuickSpec {
+final class TransactionsScreenViewModelSpec: QuickSpec {
     override class func spec() {
+        var viewModel: TransactionsScreen.ViewModel!
+
+        beforeEach {
+            viewModel = TransactionsScreen.ViewModel()
+        }
+
         describe("ViewModel sheet state") {
             it("should show add transaction sheet") {
-                // Given
-                let viewModel = TransactionsScreen.ViewModel()
-
                 // When
                 viewModel.showAddTransactionSheet()
 
@@ -26,17 +29,12 @@ final class TransactionsScreenSpec: QuickSpec {
             }
 
             it("should have the correct state by default") {
-                // Given
-                let viewModel = TransactionsScreen.ViewModel()
-
                 // Then
                 expect(viewModel.shownSheet).to(beNil())
                 expect(viewModel.showSheet) == false
             }
 
             it("should reset sheet state on sheet dismissal") {
-                // Given
-                let viewModel = TransactionsScreen.ViewModel()
                 viewModel.showAddTransactionSheet()
 
                 // When

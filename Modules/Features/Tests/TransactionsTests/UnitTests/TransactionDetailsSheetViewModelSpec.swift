@@ -1,5 +1,5 @@
 //
-//  TransactionDetailsSheetSpec.swift
+//  TransactionDetailsSheetViewModelSpec.swift
 //
 //
 //  Created by Kamaal M Farah on 11/12/2023.
@@ -10,7 +10,7 @@ import Nimble
 import Foundation
 @testable import Transactions
 
-final class TransactionDetailsSheetSpec: AsyncSpec {
+final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
     override class func spec() {
         describe("State changes") {
             context("Fees and price per unit currency changes") {

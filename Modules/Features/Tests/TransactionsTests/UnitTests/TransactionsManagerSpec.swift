@@ -12,11 +12,17 @@ import Foundation
 
 final class TransactionsManagerSpec: AsyncSpec {
     override class func spec() {
+        var persistentData: TestPersistentData!
+        var manager: TransactionsManager!
+
+        beforeEach {
+            persistentData = try TestPersistentData()
+            manager = TransactionsManager(persistentData: persistentData)
+        }
+
         describe("Edit transactions") {
             it("should edit transaction") {
                 // Given
-                let persistentData = try TestPersistentData()
-                let manager = TransactionsManager(persistentData: persistentData)
                 await manager.createTransaction(testTransaction)
                 let storedTransaction = manager.transactions[0]
                 let transactionWithChanges = AppTransaction(
@@ -42,8 +48,6 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should keep stored transaction changes in memory after fetch") {
                 // Given
-                let persistentData = try TestPersistentData()
-                let manager = TransactionsManager(persistentData: persistentData)
                 await manager.createTransaction(testTransaction)
                 let storedTransaction = manager.transactions[0]
                 let transactionWithChanges = AppTransaction(
@@ -68,10 +72,6 @@ final class TransactionsManagerSpec: AsyncSpec {
 
         describe("Creating transactions") {
             it("should create and store transaction") {
-                // Given
-                let persistentData = try TestPersistentData()
-                let manager = TransactionsManager(persistentData: persistentData)
-
                 // When
                 await manager.createTransaction(testTransaction)
 
@@ -82,10 +82,6 @@ final class TransactionsManagerSpec: AsyncSpec {
             }
 
             it("should create and store transaction and keep in memory when fetched") {
-                // Given
-                let persistentData = try TestPersistentData()
-                let manager = TransactionsManager(persistentData: persistentData)
-
                 // When
                 await manager.createTransaction(testTransaction)
                 try await manager.fetchTransactions()
@@ -99,10 +95,6 @@ final class TransactionsManagerSpec: AsyncSpec {
 
         describe("Fetching transactions") {
             it("should fetch transactions with a empty container") {
-                // Given
-                let persistentData = try TestPersistentData()
-                let manager = TransactionsManager(persistentData: persistentData)
-
                 // Sanity
                 expect(manager.transactionsAreEmpty) == true
 
@@ -115,8 +107,6 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should fetch stored transactions") {
                 // Given
-                let persistentData = try TestPersistentData()
-                var manager = TransactionsManager(persistentData: persistentData)
                 await manager.createTransaction(testTransaction)
 
                 // Sanity

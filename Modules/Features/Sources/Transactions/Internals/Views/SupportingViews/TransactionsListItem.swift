@@ -9,14 +9,9 @@ import AppUI
 import SwiftUI
 import KamaalUI
 
-enum TransactionsListItemLayouts {
-    case medium
-    case large
-}
-
 struct TransactionsListItem: View {
     let transaction: AppTransaction
-    let layout: TransactionsListItemLayouts
+    let layout: TransactionsListLayouts
     let action: () -> Void
 
     var body: some View {

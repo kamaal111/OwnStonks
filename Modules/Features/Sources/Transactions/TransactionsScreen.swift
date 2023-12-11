@@ -25,18 +25,11 @@ public struct TransactionsScreen: View {
                 } else if transactionManager.transactionsAreEmpty {
                     AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
                 }
-                ForEach(transactionManager.transactions) { transaction in
-                    TransactionsListItem(
-                        transaction: transaction,
-                        layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
-                        action: { viewModel.handleTransactionPress(transaction) }
-                    )
-                    #if os(macOS)
-                    if transactionManager.transactions.last != transaction {
-                        Divider()
-                    }
-                    #endif
-                }
+                TransactionsList(
+                    transactions: transactionManager.transactions,
+                    layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
+                    transactionAction: { transaction in viewModel.handleTransactionPress(transaction) }
+                )
             }
             .kBindToFrameSize($viewModel.transactionsSectionSize)
             #if os(macOS)
@@ -60,6 +53,8 @@ public struct TransactionsScreen: View {
             Image(systemName: "plus")
                 .bold()
                 .foregroundStyle(.tint)
+                .accessibilityHint(NSLocalizedString("Open new transaction sheet", bundle: .module, comment: ""))
+                .accessibilityLabel(Text("Add Transaction", bundle: .module))
         }
     }
 
