@@ -33,11 +33,17 @@ let package = Package(
                 .process("Internals/Resources"),
             ]
         ),
-        .testTarget(name: "TransactionsTests", dependencies: [
-            "Quick",
-            "Nimble",
-            "Transactions",
-            "PersistentData",
-        ]),
+        .testTarget(
+            name: "TransactionsTests",
+            dependencies: [
+                "Quick",
+                "Nimble",
+                "Transactions",
+                "PersistentData",
+            ],
+            resources: [
+                .process("../../Sources/Transactions/Internals/Resources"),
+            ]
+        ),
     ]
 )

@@ -11,25 +11,16 @@ import KamaalUI
 import ForexKit
 import KamaalExtensions
 
-enum TransactionDetailsSheetContext {
+enum TransactionDetailsSheetContext: Equatable {
     case new
     case details(_ transaction: AppTransaction)
 }
 
 struct TransactionDetailsSheet: View {
-    @State private var name = ""
-    @State private var transactionDate = Date()
-    @State private var transactionType: TransactionTypes = .buy
-    @State private var amount = "0.0"
-    @State private var pricePerUnitCurrency: Currencies = .EUR
-    @State private var pricePerUnit = "0.0"
-    @State private var feesCurrency: Currencies = .EUR
-    @State private var fees = "0.0"
-    @State private var isEditing = true
+    @State private var viewModel: ViewModel
 
     @Binding var isShown: Bool
 
-    let context: TransactionDetailsSheetContext
     let onDone: (_ transaction: AppTransaction) -> Void
 
     init(
@@ -38,78 +29,65 @@ struct TransactionDetailsSheet: View {
         onDone: @escaping (_: AppTransaction) -> Void
     ) {
         self._isShown = isShown
-        self.context = context
+        self._viewModel = State(initialValue: ViewModel(context: context))
         self.onDone = onDone
-        switch context {
-        case .new: break
-        case let .details(transaction):
-            self._name = State(initialValue: transaction.name)
-            self._transactionDate = State(initialValue: transaction.transactionDate)
-            self._transactionType = State(initialValue: transaction.transactionType)
-            self._amount = State(initialValue: String(transaction.amount))
-            self._pricePerUnitCurrency = State(initialValue: transaction.pricePerUnit.currency)
-            self._pricePerUnit = State(initialValue: String(transaction.pricePerUnit.value))
-            self._feesCurrency = State(initialValue: transaction.fees.currency)
-            self._fees = State(initialValue: String(transaction.fees.value))
-            self._isEditing = State(initialValue: false)
-        }
     }
 
     var body: some View {
         KSheetStack(
-            title: title,
+            title: viewModel.title,
             leadingNavigationButton: { navigationButton(label: "Close", action: close) },
             trailingNavigationButton: {
                 KJustStack {
-                    if isEditing {
-                        navigationButton(label: "Done", action: handleDone).disabled(!transactionIsValid)
+                    if viewModel.isEditing {
+                        navigationButton(label: "Done", action: handleDone).disabled(!viewModel.transactionIsValid)
                     } else {
-                        navigationButton(label: "Edit", action: { withAnimation { isEditing = true } })
+                        navigationButton(label: "Edit", action: { viewModel.enableEditing() })
                     }
                 }
             }
         ) {
             VStack(alignment: .leading) {
                 EditableText(
-                    text: $name,
+                    text: $viewModel.name,
                     label: NSLocalizedString("Name", bundle: .module, comment: ""),
-                    isEditing: isEditing,
+                    isEditing: viewModel.isEditing,
                     textCase: .none
                 )
                 EditableDate(
-                    date: $transactionDate,
+                    date: $viewModel.transactionDate,
                     label: NSLocalizedString("Transaction Date", bundle: .module, comment: ""),
-                    isEditing: isEditing
+                    isEditing: viewModel.isEditing
                 )
-                .padding(.top, isEditing ? .nada : .extraExtraSmall)
+                .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 EditablePicker(
-                    selection: $transactionType,
+                    selection: $viewModel.transactionType,
                     label: NSLocalizedString("Type", bundle: .module, comment: ""),
-                    isEditing: isEditing,
+                    isEditing: viewModel.isEditing,
                     items: TransactionTypes.allCases,
-                    valueColor: transactionType.color
+                    valueColor: viewModel.transactionType.color
                 ) { item in
                     Text(item.localized)
                 }
-                .padding(.top, isEditing ? .nada : .extraExtraSmall)
+                .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 EditableDecimalText(
-                    text: $amount,
+                    text: $viewModel.amount,
                     label: NSLocalizedString("Amount", bundle: .module, comment: ""),
-                    isEditing: isEditing
+                    isEditing: viewModel.isEditing
                 )
-                .padding(.top, isEditing ? .nada : .extraExtraSmall)
+                .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 EditableMoney(
-                    currency: $pricePerUnitCurrency,
-                    value: $pricePerUnit,
+                    currency: $viewModel.pricePerUnitCurrency,
+                    value: $viewModel.pricePerUnit,
                     label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
-                    isEditing: isEditing
+                    isEditing: viewModel.isEditing
                 )
-                .padding(.top, isEditing ? .nada : .extraExtraSmall)
+                .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 EditableMoney(
-                    currency: $feesCurrency,
-                    value: $fees,
+                    currency: $viewModel.feesCurrency,
+                    value: $viewModel.fees,
                     label: NSLocalizedString("Fees", bundle: .module, comment: ""),
-                    isEditing: isEditing
+                    isEditing: viewModel.isEditing
                 )
             }
             #if os(macOS)
@@ -118,42 +96,8 @@ struct TransactionDetailsSheet: View {
         }
         .padding(.vertical, .medium)
         #if os(macOS)
-            .frame(minWidth: 320, minHeight: isEditing ? 380 : 260)
+            .frame(minWidth: 320, minHeight: viewModel.isEditing ? 380 : 260)
         #endif
-            .onChange(of: pricePerUnitCurrency, onPricePerUnitCurrencyChange)
-    }
-
-    private var title: String {
-        switch context {
-        case .new: NSLocalizedString("Add Transaction", bundle: .module, comment: "")
-        case let .details(transaction): transaction.name
-        }
-    }
-
-    private var transactionIsValid: Bool {
-        transaction != nil
-    }
-
-    private var transaction: AppTransaction? {
-        guard !name.trimmingByWhitespacesAndNewLines.isEmpty else { return nil }
-        guard let amount = Double(amount) else { return nil }
-        guard let pricePerUnit = Double(pricePerUnit) else { return nil }
-        guard let fees = Double(fees) else { return nil }
-
-        var id: UUID?
-        if case let .details(transaction) = context {
-            id = transaction.id
-        }
-
-        return AppTransaction(
-            id: id,
-            name: name,
-            transactionDate: transactionDate,
-            transactionType: transactionType,
-            amount: amount,
-            pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
-            fees: Money(value: fees, currency: feesCurrency)
-        )
     }
 
     private func navigationButton(label: LocalizedStringKey, action: @escaping () -> Void) -> some View {
@@ -165,24 +109,142 @@ struct TransactionDetailsSheet: View {
     }
 
     private func handleDone() {
-        assert(transactionIsValid)
-        guard let transaction else { return }
+        assert(viewModel.transactionIsValid)
+        guard let transaction = viewModel.transaction else { return }
 
         onDone(transaction)
-        if case .details = context {
-            withAnimation { isEditing = false }
+        if case .details = viewModel.context {
+            Task { await viewModel.disableEditing() }
+        } else {
+            close()
         }
-
-        close()
     }
 
     private func close() {
         isShown = false
     }
+}
 
-    private func onPricePerUnitCurrencyChange(_: Currencies, _ newValue: Currencies) {
-        if feesCurrency != newValue {
-            feesCurrency = newValue
+extension TransactionDetailsSheet {
+    @Observable
+    final class ViewModel {
+        var name: String
+        var transactionDate: Date
+        var transactionType: TransactionTypes
+        var amount: String
+        var pricePerUnitCurrency: Currencies {
+            didSet { pricePerUnitCurrencyDidSet() }
+        }
+
+        var pricePerUnit: String
+        var feesCurrency: Currencies
+        var fees: String
+        private(set) var isEditing: Bool
+
+        let context: TransactionDetailsSheetContext
+
+        convenience init(context: TransactionDetailsSheetContext) {
+            switch context {
+            case .new:
+                self.init(
+                    context: context,
+                    name: "",
+                    transactionDate: Date(),
+                    transactionType: .buy,
+                    amount: "0.0",
+                    pricePerUnitCurrency: .EUR,
+                    pricePerUnit: "0.0",
+                    feesCurrency: .EUR,
+                    fees: "0.0",
+                    isEditing: true
+                )
+            case let .details(transaction):
+                self.init(
+                    context: context,
+                    name: transaction.name,
+                    transactionDate: transaction.transactionDate,
+                    transactionType: transaction.transactionType,
+                    amount: String(transaction.amount),
+                    pricePerUnitCurrency: transaction.pricePerUnit.currency,
+                    pricePerUnit: String(transaction.pricePerUnit.value),
+                    feesCurrency: transaction.fees.currency,
+                    fees: String(transaction.fees.value),
+                    isEditing: false
+                )
+            }
+        }
+
+        init(
+            context: TransactionDetailsSheetContext,
+            name: String,
+            transactionDate: Date,
+            transactionType: TransactionTypes,
+            amount: String,
+            pricePerUnitCurrency: Currencies,
+            pricePerUnit: String,
+            feesCurrency: Currencies,
+            fees: String,
+            isEditing: Bool
+        ) {
+            self.context = context
+            self.name = name
+            self.transactionDate = transactionDate
+            self.transactionType = transactionType
+            self.amount = amount
+            self.pricePerUnitCurrency = pricePerUnitCurrency
+            self.pricePerUnit = pricePerUnit
+            self.feesCurrency = feesCurrency
+            self.fees = fees
+            self.isEditing = isEditing
+        }
+
+        var transactionIsValid: Bool {
+            transaction != nil
+        }
+
+        var title: String {
+            switch context {
+            case .new: NSLocalizedString("Add Transaction", bundle: .module, comment: "")
+            case let .details(transaction): transaction.name
+            }
+        }
+
+        var transaction: AppTransaction? {
+            guard !name.trimmingByWhitespacesAndNewLines.isEmpty else { return nil }
+            guard let amount = Double(amount) else { return nil }
+            guard let pricePerUnit = Double(pricePerUnit) else { return nil }
+            guard let fees = Double(fees) else { return nil }
+
+            var id: UUID?
+            if case let .details(transaction) = context {
+                id = transaction.id
+            }
+
+            return AppTransaction(
+                id: id,
+                name: name,
+                transactionDate: transactionDate,
+                transactionType: transactionType,
+                amount: amount,
+                pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
+                fees: Money(value: fees, currency: feesCurrency)
+            )
+        }
+
+        @MainActor
+        func enableEditing() {
+            withAnimation { isEditing = true }
+        }
+
+        @MainActor
+        func disableEditing() {
+            withAnimation { isEditing = false }
+        }
+
+        private func pricePerUnitCurrencyDidSet() {
+            if feesCurrency != pricePerUnitCurrency {
+                feesCurrency = pricePerUnitCurrency
+            }
         }
     }
 }

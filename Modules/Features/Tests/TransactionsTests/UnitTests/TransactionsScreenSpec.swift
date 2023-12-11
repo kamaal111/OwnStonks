@@ -21,8 +21,8 @@ final class TransactionsScreenSpec: QuickSpec {
                 viewModel.showAddTransactionSheet()
 
                 // Then
-                XCTAssertEqual(viewModel.shownSheet, .addTransction)
-                XCTAssert(viewModel.showSheet)
+                expect(viewModel.shownSheet) == .addTransction
+                expect(viewModel.showSheet) == true
             }
 
             it("should have the correct state by default") {
@@ -30,8 +30,8 @@ final class TransactionsScreenSpec: QuickSpec {
                 let viewModel = TransactionsScreen.ViewModel()
 
                 // Then
-                XCTAssertNil(viewModel.shownSheet)
-                XCTAssertFalse(viewModel.showSheet)
+                expect(viewModel.shownSheet).to(beNil())
+                expect(viewModel.showSheet) == false
             }
 
             it("should reset sheet state on sheet dismissal") {
@@ -43,8 +43,8 @@ final class TransactionsScreenSpec: QuickSpec {
                 viewModel.showSheet = false
 
                 // Then
-                XCTAssertNil(viewModel.shownSheet)
-                XCTAssertFalse(viewModel.showSheet)
+                expect(viewModel.shownSheet).to(beNil())
+                expect(viewModel.showSheet) == false
             }
         }
     }
