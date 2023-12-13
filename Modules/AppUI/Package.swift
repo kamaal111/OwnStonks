@@ -9,8 +9,19 @@ let package = Package(
     products: [
         .library(name: "AppUI", targets: ["AppUI"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
+    ],
     targets: [
-        .target(name: "AppUI"),
+        .target(
+            name: "AppUI",
+            dependencies: [
+                .product(name: "KamaalUI", package: "KamaalSwift"),
+            ],
+            resources: [
+                .process("Internals/Resources"),
+            ]
+        ),
         .testTarget(name: "AppUITests", dependencies: ["AppUI"]),
     ]
 )

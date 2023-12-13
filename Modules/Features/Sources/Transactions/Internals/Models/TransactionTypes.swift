@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 28/11/2023.
 //
 
+import AppUI
 import SwiftUI
 
 enum TransactionTypes: String, CaseIterable, LocalizedItem {

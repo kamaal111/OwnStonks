@@ -1,0 +1,12 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Invalid value" : {
+      "extractionState" : "manual"
+    },
+    "Key" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.0"
+}

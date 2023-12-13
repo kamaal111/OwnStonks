@@ -6,21 +6,22 @@
 //
 
 import SwiftUI
+import KamaalUI
 
-struct AppLabel: View {
+public struct AppLabel: View {
     let title: String
     let value: String
     let valueColor: Color
     let textCase: Text.Case?
 
-    init(title: String, value: String, valueColor: Color = .primary, textCase: Text.Case? = .lowercase) {
+    public init(title: String, value: String, valueColor: Color = .primary, textCase: Text.Case? = .lowercase) {
         self.title = title
         self.value = value
         self.valueColor = valueColor
         self.textCase = textCase
     }
 
-    var body: some View {
+    public var body: some View {
         HStack {
             (Text(title) + Text(":"))
                 .foregroundColor(.secondary)

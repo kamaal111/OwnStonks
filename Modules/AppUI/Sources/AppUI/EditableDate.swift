@@ -8,13 +8,19 @@
 import SwiftUI
 import KamaalUI
 
-struct EditableDate: View {
+public struct EditableDate: View {
     @Binding var date: Date
 
     let label: String
     let isEditing: Bool
 
-    var body: some View {
+    public init(date: Binding<Date>, label: String, isEditing: Bool) {
+        self._date = date
+        self.label = label
+        self.isEditing = isEditing
+    }
+
+    public var body: some View {
         if isEditing {
             KFloatingDatePicker(
                 value: $date,

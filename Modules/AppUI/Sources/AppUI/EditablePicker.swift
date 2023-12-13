@@ -8,7 +8,7 @@
 import SwiftUI
 import KamaalUI
 
-struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: View {
+public struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: View {
     @Binding var selection: Item
 
     let label: String
@@ -17,7 +17,7 @@ struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: Vie
     let valueColor: Color
     let pickerItemView: (_ item: Item) -> PickerItemView
 
-    init(
+    public init(
         selection: Binding<Item>,
         label: String,
         isEditing: Bool,
@@ -33,7 +33,7 @@ struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: Vie
         self.pickerItemView = pickerItemView
     }
 
-    var body: some View {
+    public var body: some View {
         if isEditing {
             KTitledPicker(selection: $selection, title: label, items: items) { item in pickerItemView(item) }
         } else {
@@ -42,13 +42,13 @@ struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: Vie
     }
 }
 
-#Preview {
-    EditablePicker(
-        selection: .constant(TransactionTypes.buy),
-        label: "Label",
-        isEditing: true,
-        items: TransactionTypes.allCases
-    ) { item in
-        Text(item.localized)
-    }
-}
+// #Preview {
+//    EditablePicker(
+//        selection: .constant(TransactionTypes.buy),
+//        label: "Label",
+//        isEditing: true,
+//        items: TransactionTypes.allCases
+//    ) { item in
+//        Text(item.localized)
+//    }
+// }

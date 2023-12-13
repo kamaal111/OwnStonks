@@ -8,13 +8,19 @@
 import SwiftUI
 import KamaalUI
 
-struct EditableDecimalText: View {
+public struct EditableDecimalText: View {
     @Binding var text: String
 
     let label: String
     let isEditing: Bool
 
-    var body: some View {
+    public init(text: Binding<String>, label: String, isEditing: Bool) {
+        self._text = text
+        self.label = label
+        self.isEditing = isEditing
+    }
+
+    public var body: some View {
         if isEditing {
             KFloatingDecimalField(
                 value: $text,

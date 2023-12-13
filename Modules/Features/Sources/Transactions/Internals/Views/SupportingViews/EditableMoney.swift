@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 10/12/2023.
 //
 
+import AppUI
 import SwiftUI
 import ForexKit
 import KamaalUI
@@ -15,6 +16,13 @@ struct EditableMoney: View {
 
     let label: String
     let isEditing: Bool
+
+    init(currency: Binding<Currencies>, value: Binding<String>, label: String, isEditing: Bool) {
+        self._currency = currency
+        self._value = value
+        self.label = label
+        self.isEditing = isEditing
+    }
 
     var body: some View {
         if isEditing {
