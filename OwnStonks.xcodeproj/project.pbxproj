@@ -14,6 +14,7 @@
 		2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5266712B113EE3000CD2D5 /* Navigation */; };
 		2CAA42892B26187600D91B3E /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA42882B26187600D91B3E /* PersistentData */; };
 		2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA428A2B26198E00D91B3E /* Transactions */; };
+		2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC33C992B2A32880035ED02 /* UserSettings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */,
 				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
 				2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */,
 				2CAA42892B26187600D91B3E /* PersistentData in Frameworks */,
@@ -140,6 +142,7 @@
 				2C5266712B113EE3000CD2D5 /* Navigation */,
 				2CAA42882B26187600D91B3E /* PersistentData */,
 				2CAA428A2B26198E00D91B3E /* Transactions */,
+				2CC33C992B2A32880035ED02 /* UserSettings */,
 			);
 			productName = OwnStonks;
 			productReference = 2C5266532B112C24000CD2D5 /* OwnStonks.app */;
@@ -169,6 +172,9 @@
 				Base,
 			);
 			mainGroup = 2C52664A2B112C24000CD2D5;
+			packageReferences = (
+				2CC33C7C2B2A30AD0035ED02 /* XCRemoteSwiftPackageReference "KamaalSwift" */,
+			);
 			productRefGroup = 2C5266542B112C24000CD2D5 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -440,6 +446,17 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		2CC33C7C2B2A30AD0035ED02 /* XCRemoteSwiftPackageReference "KamaalSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Kamaalio/KamaalSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.4.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		2C5266712B113EE3000CD2D5 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -452,6 +469,10 @@
 		2CAA428A2B26198E00D91B3E /* Transactions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Transactions;
+		};
+		2CC33C992B2A32880035ED02 /* UserSettings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserSettings;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

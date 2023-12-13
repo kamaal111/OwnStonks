@@ -8,6 +8,7 @@ let package = Package(
     platforms: [.macOS(.v14), .iOS(.v17)],
     products: [
         .library(name: "Transactions", targets: ["Transactions"]),
+        .library(name: "UserSettings", targets: ["UserSettings"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", from: "7.0.0"),
@@ -32,6 +33,13 @@ let package = Package(
             resources: [
                 .process("Internals/Resources"),
             ]
+        ),
+        .target(
+            name: "UserSettings",
+            dependencies: [
+                .product(name: "KamaalSettings", package: "KamaalSwift"),
+            ],
+            resources: []
         ),
         .testTarget(
             name: "TransactionsTests",

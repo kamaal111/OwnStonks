@@ -23,6 +23,7 @@ let package = Package(
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "KamaalPopUp", package: "KamaalSwift"),
                 .product(name: "KamaalNavigation", package: "KamaalSwift"),
+                .product(name: "UserSettings", package: "Features"),
                 .product(name: "Transactions", package: "Features"),
             ],
             resources: [

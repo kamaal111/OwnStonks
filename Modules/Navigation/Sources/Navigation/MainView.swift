@@ -8,6 +8,7 @@
 import SwiftUI
 import KamaalUI
 import KamaalPopUp
+import UserSettings
 import Transactions
 import KamaalNavigation
 
@@ -26,6 +27,7 @@ struct MainView: View {
         KJustStack {
             switch screen {
             case .transactions: TransactionsScreen()
+            case .settings: UserSettingsScreen()
             }
         }
         .ktakeSizeEagerly()

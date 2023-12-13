@@ -4,6 +4,9 @@
     "Scenes" : {
       "extractionState" : "manual"
     },
+    "Settings" : {
+      "extractionState" : "manual"
+    },
     "Toggle Sidebar" : {
       "extractionState" : "manual"
     },
