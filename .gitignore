@@ -54,3 +54,5 @@ node_modules
 yarn-error.log
 
 Brewfile.lock.json
+.env
+.venv

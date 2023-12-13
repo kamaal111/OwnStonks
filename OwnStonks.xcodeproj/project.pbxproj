@@ -30,6 +30,13 @@
 		2C840D7A2B1255850043F850 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
 		2C840D7B2B12695D0043F850 /* AppUI */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AppUI; sourceTree = "<group>"; };
 		2CAE16682B252B0D00F49575 /* PersistentData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PersistentData; sourceTree = "<group>"; };
+		2CC33C9C2B2A4E740035ED02 /* empty.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = empty.py; sourceTree = "<group>"; };
+		2CC33C9D2B2A4E960035ED02 /* make_secrets.py */ = {isa = PBXFileReference; lastKnownFileType = text.script.python; path = make_secrets.py; sourceTree = "<group>"; };
+		2CC33C9E2B2A57400035ED02 /* justfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = justfile; sourceTree = "<group>"; };
+		2CC33C9F2B2A57540035ED02 /* Brewfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Brewfile; sourceTree = "<group>"; };
+		2CC33CA02B2A575D0035ED02 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
+		2CC33CA12B2A57690035ED02 /* pyproject.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyproject.toml; sourceTree = "<group>"; };
+		2CC33CA22B2A576F0035ED02 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +57,11 @@
 		2C52664A2B112C24000CD2D5 = {
 			isa = PBXGroup;
 			children = (
+				2CC33C9F2B2A57540035ED02 /* Brewfile */,
+				2CC33C9E2B2A57400035ED02 /* justfile */,
+				2CC33CA02B2A575D0035ED02 /* package.json */,
+				2CC33CA22B2A576F0035ED02 /* README.md */,
+				2CC33CA12B2A57690035ED02 /* pyproject.toml */,
 				2C5266702B113EE3000CD2D5 /* Frameworks */,
 				2C52666E2B113DE6000CD2D5 /* Modules */,
 				2C5266552B112C24000CD2D5 /* OwnStonks */,
@@ -98,7 +110,9 @@
 		2C52666C2B113019000CD2D5 /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
+				2CC33C9D2B2A4E960035ED02 /* make_secrets.py */,
 				2C52666D2B11302C000CD2D5 /* prebuild.sh */,
+				2CC33C9B2B2A4E740035ED02 /* asserts */,
 			);
 			path = Scripts;
 			sourceTree = "<group>";
@@ -119,6 +133,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CC33C9B2B2A4E740035ED02 /* asserts */ = {
+			isa = PBXGroup;
+			children = (
+				2CC33C9C2B2A4E740035ED02 /* empty.py */,
+			);
+			path = asserts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,6 +381,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -398,6 +421,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;

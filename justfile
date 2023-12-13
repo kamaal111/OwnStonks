@@ -1,4 +1,5 @@
 set export
+set dotenv-load
 
 PROJECT := "OwnStonks.xcodeproj"
 SCHEME := "OwnStonks"
@@ -14,13 +15,33 @@ test-ios destination:
 format:
     swiftformat .
 
-bootstrap: brew-install-bundle install-node-modules
+bootstrap: brew-install-bundle install-node-modules init-python-environment make-secrets
 
 assert-has-no-diffs:
     #!/bin/zsh
 
     DIFFS=$(git diff --name-only origin/main | sed '/^$/d' | awk '{print NR}'| sort -nr | sed -n '1p')
     just assert-empty "$DIFFS"
+
+make-secrets:
+    #!/bin/zsh
+
+    . .venv/bin/activate
+
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/UserSettings/Internals/Resources/Secrets.json" \
+        --github_token ${GITHUB_TOKEN:-""}
+
+[private]
+init-python-environment:
+    #!/bin/zsh
+
+    if [ ! -d .venv ]
+    then
+        python3 -m venv .venv
+    fi
+    . .venv/bin/activate
+    pip install poetry
+    poetry install -n
 
 [private]
 test scheme destination:

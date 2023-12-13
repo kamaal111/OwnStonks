@@ -23,9 +23,11 @@ struct OwnStonksApp: App {
                 .userSettingsEnvironment(userSettings: userSettings)
                 .modelContainer(PersistentData.shared.dataContainer)
         }
+        #if os(macOS)
         Settings {
             UserSettingsScreen()
                 .userSettingsEnvironment(userSettings: userSettings)
         }
+        #endif
     }
 }

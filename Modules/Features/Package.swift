@@ -38,8 +38,12 @@ let package = Package(
             name: "UserSettings",
             dependencies: [
                 .product(name: "KamaalSettings", package: "KamaalSwift"),
+                .product(name: "KamaalUtils", package: "KamaalSwift"),
+                .product(name: "KamaalLogger", package: "KamaalSwift"),
             ],
-            resources: []
+            resources: [
+                .process("Internals/Resources"),
+            ]
         ),
         .testTarget(
             name: "TransactionsTests",
