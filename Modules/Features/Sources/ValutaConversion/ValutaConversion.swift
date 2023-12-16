@@ -23,30 +23,47 @@ public final class ValutaConversion {
 
     private let forexKit: ForexKit
     private let quickStorage: ValutaConversionQuickStoragable
-    private let symbols = Currencies.allCases.filter { currency in !currency.isCryptoCurrency }
-    private let logger = KamaalLogger(from: ValutaConversion.self, failOnError: true)
+    private let symbols: [Currencies]
+    private let logger: KamaalLogger
 
     /// Initializer of ``ValutaConversion/ValutaConversion``.
     public convenience init() {
         let quickStorage = ValutaConversionQuickStorage()
-        self.init(quickStorage: quickStorage)
+        let symbols = Currencies.allCases.filter { currency in !currency.isCryptoCurrency }
+        self.init(
+            symbols: symbols,
+            quickStorage: quickStorage,
+            urlSession: .shared,
+            failOnError: true,
+            skipCaching: false
+        )
     }
 
-    init(quickStorage: ValutaConversionQuickStoragable) {
-        self.forexKit = Self.makeForexKit(withStorage: quickStorage)
+    init(
+        symbols: [Currencies],
+        quickStorage: ValutaConversionQuickStoragable,
+        urlSession: URLSession,
+        failOnError: Bool,
+        skipCaching: Bool
+    ) {
+        self.symbols = symbols
+        self.forexKit = Self.makeForexKit(withStorage: quickStorage, urlSession: urlSession, skipCaching: skipCaching)
         self.quickStorage = quickStorage
+        self.logger = KamaalLogger(from: ValutaConversion.self, failOnError: failOnError)
     }
 
     /// Fetch latest exchange rates based on the given currency.
     /// - Parameter currency: The base currency to get the exchange rates for.
     public func fetchExchangeRates(of currency: Currencies) async throws {
-        var rates = try await forexKit.getLatest(base: currency, symbols: symbols).get()
-        if rates == nil {
-            logger.warning("Failed to fetch latest exchange rates, getting fallback instead")
-            rates = forexKit.getFallback(base: currency, symbols: symbols)
-        } else {
+        var rates: ExchangeRates?
+        do {
+            rates = try await forexKit.getLatest(base: currency, symbols: symbols).get()
             logger.info("Succesfully fetched exchange rates for \(currency.localized)")
+        } catch {
+            logger.error(label: "Failed to fetch latest exchange rates, getting fallback instead", error: error)
+            rates = forexKit.getFallback(base: currency, symbols: symbols)
         }
+
         guard let rates else { throw ValutaConversionErrors.fetchExchangeRatesFailure }
 
         await setRates(rates)
@@ -77,11 +94,24 @@ public final class ValutaConversion {
         self.rates = rates
     }
 
-    private static func makeForexKit(withStorage storage: ValutaConversionQuickStoragable) -> ForexKit {
+    private static func makeForexKit(
+        withStorage storage: ValutaConversionQuickStoragable,
+        urlSession: URLSession,
+        skipCaching: Bool
+    ) -> ForexKit {
         var forexKitConfiguration: ForexKitConfiguration?
         if let forexAPIURL = SecretsJSON.shared.content?.forexAPIURL {
-            forexKitConfiguration = .init(container: storage, forexBaseURL: forexAPIURL)
+            forexKitConfiguration = .init(
+                skipCaching: skipCaching,
+                urlSession: urlSession,
+                container: storage,
+                forexBaseURL: forexAPIURL
+            )
         }
-        return ForexKit(configuration: forexKitConfiguration ?? ForexKitConfiguration(container: storage))
+        return ForexKit(configuration: forexKitConfiguration ?? ForexKitConfiguration(
+            skipCaching: skipCaching,
+            urlSession: urlSession,
+            container: storage
+        ))
     }
 }
