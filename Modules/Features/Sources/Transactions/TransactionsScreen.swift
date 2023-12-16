@@ -34,7 +34,7 @@ public struct TransactionsScreen: View {
                     AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
                 }
                 TransactionsList(
-                    transactions: transactionManager.transactions,
+                    transactions: viewModel.transactions,
                     layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
                     transactionAction: { transaction in viewModel.handleTransactionPress(transaction) }
                 )
@@ -55,6 +55,8 @@ public struct TransactionsScreen: View {
         .sheet(isPresented: $viewModel.showSheet) { presentedSheet }
         .onAppear(perform: handleOnAppear)
         .onChange(of: userSettings.preferredForexCurrency) { _, newValue in handleFetchExchangeRate(of: newValue) }
+        .onChange(of: transactionManager.transactions) { _, newValue in handleTransactionsChange(newValue) }
+        .onChange(of: valutaConversion.rates) { _, _ in handleRatesChange() }
     }
 
     private var toolbarItem: some View {
@@ -108,6 +110,32 @@ public struct TransactionsScreen: View {
         handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
     }
 
+    private func handleTransactionsChange(_ newValue: [AppTransaction]) {
+        viewModel.setTransactions(convertTransactions(newValue))
+    }
+
+    private func handleRatesChange() {
+        viewModel.setTransactions(convertTransactions(viewModel.transactions))
+    }
+
+    private func convertTransactions(_ transactions: [AppTransaction]) -> [AppTransaction] {
+        let preferredCurrency = userSettings.preferredForexCurrency
+        return transactions
+            .map { transaction in
+                let pricePerUnit = valutaConversion.convertMoney(from: transaction.pricePerUnit, to: preferredCurrency)
+                let fees = valutaConversion.convertMoney(from: transaction.fees, to: preferredCurrency)
+                return AppTransaction(
+                    id: transaction.id,
+                    name: transaction.name,
+                    transactionDate: transaction.transactionDate,
+                    transactionType: transaction.transactionType,
+                    amount: transaction.amount,
+                    pricePerUnit: pricePerUnit ?? transaction.pricePerUnit,
+                    fees: fees ?? transaction.fees
+                )
+            }
+    }
+
     private func handleFetchExchangeRate(of currency: Currencies) {
         Task {
             do {
@@ -143,6 +171,8 @@ public struct TransactionsScreen: View {
 extension TransactionsScreen {
     @Observable
     final class ViewModel {
+        private(set) var transactions: [AppTransaction] = []
+
         var showSheet = false {
             didSet { showSheetDidSet() }
         }
@@ -153,10 +183,17 @@ extension TransactionsScreen {
             didSet { shownSheetDidSet() }
         }
 
+        @MainActor
+        func setTransactions(_ transactions: [AppTransaction]) {
+            self.transactions = transactions
+        }
+
+        @MainActor
         func showAddTransactionSheet() {
             shownSheet = .addTransction
         }
 
+        @MainActor
         func handleTransactionPress(_ transaction: AppTransaction) {
             shownSheet = .transactionDetails(transaction)
         }
