@@ -32,9 +32,12 @@ final class TransactionsManager {
     }
 
     var transactions: [AppTransaction] {
-        let transactions = storedTransactions.compactMap(\.appTransaction).reversed()
+        let transactions = storedTransactions
+            .compactMap(\.appTransaction)
+            .reversed()
+            .asArray()
         assert(storedTransactions.count == transactions.count)
-        return transactions.asArray()
+        return transactions
     }
 
     var transactionsAreEmpty: Bool {

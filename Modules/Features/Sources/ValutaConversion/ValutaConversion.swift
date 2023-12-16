@@ -18,7 +18,8 @@ public enum ValutaConversionErrors: Error {
 /// Observable object that manages user valuta exchange rates.
 @Observable
 public final class ValutaConversion {
-    private(set) var rates: ExchangeRates?
+    /// Fetched exchange rates.
+    public private(set) var rates: ExchangeRates?
 
     private let forexKit: ForexKit
     private let quickStorage: ValutaConversionQuickStoragable
@@ -51,7 +52,25 @@ public final class ValutaConversion {
         await setRates(rates)
     }
 
-    public func convertMoney() { }
+    /// Convert given money using the previously fetched exchange rates.
+    /// - Parameters:
+    ///   - base: The money to convert from.
+    ///   - target: The target currency to convert to.
+    /// - Returns: Converted money or nil when something goes wrong.
+    ///
+    /// Things that could go wrong with this method are:
+    ///
+    /// * No rates have been fetched previously.
+    /// * The target currency is not included in the fetched exchange rates.
+    public func convertMoney(from base: Money, to target: Currencies) -> Money? {
+        guard let rates else { return nil }
+
+        guard let convertedMoney = forexKit
+            .convert(from: (base.value, base.currency), to: target, withRatesFrom: rates, reverse: true)
+        else { return nil }
+
+        return Money(value: convertedMoney.amount, currency: convertedMoney.currency)
+    }
 
     @MainActor
     private func setRates(_ rates: ExchangeRates) {

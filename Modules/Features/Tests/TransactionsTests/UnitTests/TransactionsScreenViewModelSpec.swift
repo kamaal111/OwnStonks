@@ -11,7 +11,7 @@ import Foundation
 import SharedModels
 @testable import Transactions
 
-final class TransactionsScreenViewModelSpec: QuickSpec {
+final class TransactionsScreenViewModelSpec: AsyncSpec {
     override class func spec() {
         var viewModel: TransactionsScreen.ViewModel!
 
@@ -22,7 +22,7 @@ final class TransactionsScreenViewModelSpec: QuickSpec {
         describe("ViewModel sheet state") {
             it("should show add transaction sheet") {
                 // When
-                viewModel.showAddTransactionSheet()
+                await viewModel.showAddTransactionSheet()
 
                 // Then
                 expect(viewModel.shownSheet) == .addTransction
@@ -31,10 +31,22 @@ final class TransactionsScreenViewModelSpec: QuickSpec {
 
             it("should open transaction details sheet") {
                 // When
-                viewModel.handleTransactionPress(testTransaction)
+                await viewModel.handleTransactionPress(testTransaction)
 
                 expect(viewModel.shownSheet) == .transactionDetails(testTransaction)
                 expect(viewModel.showSheet) == true
+            }
+
+            it("should reset sheet state from details sheet on sheet dismissal by setting showSheet to false") {
+                // When
+                await viewModel.handleTransactionPress(testTransaction)
+
+                // When
+                viewModel.showSheet = false
+
+                // Then
+                expect(viewModel.shownSheet).to(beNil())
+                expect(viewModel.showSheet) == false
             }
 
             it("should have the correct state by default") {
@@ -44,7 +56,7 @@ final class TransactionsScreenViewModelSpec: QuickSpec {
             }
 
             it("should reset sheet state on sheet dismissal by setting showSheet to false") {
-                viewModel.showAddTransactionSheet()
+                await viewModel.showAddTransactionSheet()
 
                 // When
                 viewModel.showSheet = false
