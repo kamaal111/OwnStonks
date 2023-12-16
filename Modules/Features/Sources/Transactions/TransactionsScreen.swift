@@ -54,9 +54,10 @@ public struct TransactionsScreen: View {
         }
         .sheet(isPresented: $viewModel.showSheet) { presentedSheet }
         .onAppear(perform: handleOnAppear)
-        .onChange(of: userSettings.preferredForexCurrency) { _, newValue in handleFetchExchangeRate(of: newValue) }
-        .onChange(of: transactionManager.transactions) { _, newValue in handleTransactionsChange(newValue) }
-        .onChange(of: valutaConversion.rates) { _, _ in handleRatesChange() }
+        .onChange(of: userSettings.preferredForexCurrency) { _, newValue in
+            Task { await handleFetchExchangeRate(of: newValue) }
+        }
+        .onChange(of: transactionManager.transactions) { _, _ in viewModel.setTransactions(convertTransactions()) }
     }
 
     private var toolbarItem: some View {
@@ -106,21 +107,17 @@ public struct TransactionsScreen: View {
     }
 
     private func handleOnAppear() {
-        handleFetchingTransactions()
-        handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
+        Task {
+            async let fetchTransactionWait: () = handleFetchingTransactions()
+            async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
+            _ = await [fetchTransactionWait, fetchExchangeRateWait]
+            viewModel.setTransactions(convertTransactions())
+        }
     }
 
-    private func handleTransactionsChange(_ newValue: [AppTransaction]) {
-        viewModel.setTransactions(convertTransactions(newValue))
-    }
-
-    private func handleRatesChange() {
-        viewModel.setTransactions(convertTransactions(viewModel.transactions))
-    }
-
-    private func convertTransactions(_ transactions: [AppTransaction]) -> [AppTransaction] {
+    private func convertTransactions() -> [AppTransaction] {
         let preferredCurrency = userSettings.preferredForexCurrency
-        return transactions
+        return transactionManager.transactions
             .map { transaction in
                 let pricePerUnit = valutaConversion.convertMoney(from: transaction.pricePerUnit, to: preferredCurrency)
                 let fees = valutaConversion.convertMoney(from: transaction.fees, to: preferredCurrency)
@@ -136,30 +133,30 @@ public struct TransactionsScreen: View {
             }
     }
 
-    private func handleFetchExchangeRate(of currency: Currencies) {
-        Task {
-            do {
-                try await valutaConversion.fetchExchangeRates(of: currency)
-            } catch {
-                showError(
-                    with: NSLocalizedString("Failed to get exchange rates", bundle: .module, comment: ""),
-                    from: error
-                )
-            }
+    private func handleFetchExchangeRate(of currency: Currencies) async {
+        do {
+            try await valutaConversion.fetchExchangeRates(of: currency)
+        } catch {
+            showError(
+                with: NSLocalizedString("Failed to get exchange rates", bundle: .module, comment: ""),
+                from: error
+            )
+            return
         }
+        viewModel.setTransactions(convertTransactions())
     }
 
-    private func handleFetchingTransactions() {
-        Task {
-            do {
-                try await transactionManager.fetchTransactions()
-            } catch {
-                showError(
-                    with: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
-                    from: error
-                )
-            }
+    private func handleFetchingTransactions() async {
+        do {
+            try await transactionManager.fetchTransactions()
+        } catch {
+            showError(
+                with: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
+                from: error
+            )
+            return
         }
+        viewModel.setTransactions(convertTransactions())
     }
 
     private func showError(with title: String, from error: Error) {
