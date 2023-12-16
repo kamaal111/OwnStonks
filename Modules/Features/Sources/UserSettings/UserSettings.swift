@@ -36,6 +36,10 @@ public final class UserSettings {
         self.quickStorage = quickStorage
     }
 
+    public var preferredForexCurrency: Currencies {
+        Currencies.allCases.find(by: \.id, is: preferredCurrency.id) ?? .EUR
+    }
+
     var configuration: SettingsConfiguration {
         SettingsConfiguration(
             feedback: feedbackConfiguration,

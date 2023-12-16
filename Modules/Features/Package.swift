@@ -48,6 +48,7 @@ let package = Package(
                 "Nimble",
                 "Transactions",
                 "PersistentData",
+                "ForexKit",
             ],
             resources: [
                 .process("../../Sources/Transactions/\(transactionResourcesPath)"),

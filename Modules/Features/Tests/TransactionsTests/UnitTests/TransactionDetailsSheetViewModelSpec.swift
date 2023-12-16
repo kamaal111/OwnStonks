@@ -7,6 +7,7 @@
 
 import Quick
 import Nimble
+import ForexKit
 import Foundation
 @testable import Transactions
 
@@ -54,7 +55,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
             it("should toggle editing off") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .new)
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .new(.BGN))
 
                 // When
                 await viewModel.disableEditing()
@@ -84,13 +85,16 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             context("New context") {
                 it("should set all the right default values") {
                     // Given
-                    let viewModel = TransactionDetailsSheet.ViewModel(context: .new)
+                    let preferredCurrency: Currencies = .CAD
+                    let viewModel = TransactionDetailsSheet.ViewModel(context: .new(preferredCurrency))
 
                     // Then
                     expect(viewModel.transactionIsValid) == false
                     expect(viewModel.transaction).to(beNil())
                     expect(viewModel.title) == NSLocalizedString("Add Transaction", bundle: .module, comment: "")
                     expect(viewModel.isEditing) == true
+                    expect(viewModel.feesCurrency) == preferredCurrency
+                    expect(viewModel.pricePerUnitCurrency) == preferredCurrency
                 }
             }
         }
