@@ -9,6 +9,7 @@ import Quick
 import Nimble
 import ForexKit
 import Foundation
+import SharedModels
 @testable import Transactions
 
 final class TransactionDetailsSheetViewModelSpec: AsyncSpec {

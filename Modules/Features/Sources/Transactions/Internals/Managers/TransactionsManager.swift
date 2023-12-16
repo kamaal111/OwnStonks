@@ -8,6 +8,7 @@
 import Foundation
 import Observation
 import KamaalLogger
+import SharedModels
 import PersistentData
 import KamaalExtensions
 
@@ -79,8 +80,8 @@ final class TransactionsManager {
             transactionDate: transaction.transactionDate,
             transactionType: transaction.transactionType.rawValue,
             amount: transaction.amount,
-            pricePerUnit: (transaction.pricePerUnit.value, transaction.pricePerUnit.currency),
-            fees: (transaction.fees.value, transaction.fees.currency),
+            pricePerUnit: Money(value: transaction.pricePerUnit.value, currency: transaction.pricePerUnit.currency),
+            fees: Money(value: transaction.fees.value, currency: transaction.fees.currency),
             context: persistentData.dataContainerContext
         )
         storedTransactions = storedTransactions.appended(storedTransaction)

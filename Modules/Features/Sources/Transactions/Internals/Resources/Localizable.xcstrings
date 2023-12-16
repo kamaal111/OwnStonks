@@ -34,12 +34,6 @@
     "Fees" : {
       "extractionState" : "manual"
     },
-    "Fix" : {
-      "extractionState" : "manual"
-    },
-    "Invalid value" : {
-      "extractionState" : "manual"
-    },
     "Name" : {
       "extractionState" : "manual"
     },

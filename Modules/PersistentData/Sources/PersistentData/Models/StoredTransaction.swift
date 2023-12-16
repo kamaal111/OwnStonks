@@ -8,6 +8,7 @@
 import ForexKit
 import SwiftData
 import Foundation
+import SharedModels
 import KamaalExtensions
 
 @Model
@@ -30,8 +31,8 @@ public final class StoredTransaction: Identifiable {
         transactionDate: Date,
         transactionType: String,
         amount: Double,
-        pricePerUnit: (value: Double, currency: Currencies),
-        fees: (value: Double, currency: Currencies),
+        pricePerUnit: Money,
+        fees: Money,
         updatedDate: Date = Date(),
         creationDate: Date = Date()
     ) {
@@ -75,8 +76,8 @@ public final class StoredTransaction: Identifiable {
         transactionDate: Date,
         transactionType: String,
         amount: Double,
-        pricePerUnit: (value: Double, currency: Currencies),
-        fees: (value: Double, currency: Currencies),
+        pricePerUnit: Money,
+        fees: Money,
         context: ModelContext
     ) -> StoredTransaction {
         let transaction = StoredTransaction(

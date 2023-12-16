@@ -7,7 +7,7 @@
 
 import Foundation
 import KamaalUtils
-import SharedStuff
+import SharedUtils
 import KamaalSettings
 
 protocol UserSettingsQuickStoragable {

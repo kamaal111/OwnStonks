@@ -15,12 +15,14 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
+        .package(path: "../SharedStuff"),
     ],
     targets: [
         .target(
             name: "PersistentData",
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
+                .product(name: "SharedModels", package: "SharedStuff"),
                 "ForexKit",
             ]
         ),
