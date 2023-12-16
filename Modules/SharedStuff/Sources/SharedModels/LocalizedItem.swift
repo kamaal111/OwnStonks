@@ -7,7 +7,6 @@
 
 import Foundation
 
-// TODO: PUT THIS IN A SHARED MODELS PACKAGE
 public protocol LocalizedItem {
     var localized: String { get }
 }

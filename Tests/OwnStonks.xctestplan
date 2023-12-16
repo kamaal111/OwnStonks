@@ -34,14 +34,6 @@
     {
       "enabled" : false,
       "target" : {
-        "containerPath" : "container:Modules\/AppUI",
-        "identifier" : "AppUITests",
-        "name" : "AppUITests"
-      }
-    },
-    {
-      "enabled" : false,
-      "target" : {
         "containerPath" : "container:Modules\/PersistentData",
         "identifier" : "PersistentDataTests",
         "name" : "PersistentDataTests"
@@ -52,14 +44,6 @@
         "containerPath" : "container:Modules\/Features",
         "identifier" : "UserSettingsTests",
         "name" : "UserSettingsTests"
-      }
-    },
-    {
-      "enabled" : false,
-      "target" : {
-        "containerPath" : "container:Modules\/SharedStuff",
-        "identifier" : "SharedStuffTests",
-        "name" : "SharedStuffTests"
       }
     },
     {

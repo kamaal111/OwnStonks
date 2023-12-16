@@ -9,6 +9,7 @@ let package = Package(
     products: [
         .library(name: "SharedUtils", targets: ["SharedUtils"]),
         .library(name: "SharedModels", targets: ["SharedModels"]),
+        .library(name: "SharedUI", targets: ["SharedUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
@@ -21,6 +22,17 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
                 "ForexKit",
+            ]
+        ),
+        .target(
+            name: "SharedUI",
+            dependencies: [
+                .product(name: "KamaalUI", package: "KamaalSwift"),
+                "SharedModels",
+                "ForexKit",
+            ],
+            resources: [
+                .process("Internals/Resources"),
             ]
         ),
     ]
