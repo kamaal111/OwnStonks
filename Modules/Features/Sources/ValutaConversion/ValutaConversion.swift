@@ -9,6 +9,7 @@ import ForexKit
 import Foundation
 import Observation
 import KamaalLogger
+import SharedModels
 
 public enum ValutaConversionErrors: Error {
     case fetchExchangeRatesFailure
@@ -50,7 +51,7 @@ public final class ValutaConversion {
         await setRates(rates)
     }
 
-//    public func exchangeMoney()
+    public func convertMoney() { }
 
     @MainActor
     private func setRates(_ rates: ExchangeRates) {

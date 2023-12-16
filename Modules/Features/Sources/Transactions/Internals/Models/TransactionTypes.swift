@@ -5,8 +5,8 @@
 //  Created by Kamaal M Farah on 28/11/2023.
 //
 
-import AppUI
 import SwiftUI
+import SharedModels
 
 enum TransactionTypes: String, CaseIterable, LocalizedItem {
     case buy

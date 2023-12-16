@@ -7,6 +7,7 @@
 
 import SwiftUI
 import KamaalUI
+import SharedModels
 
 public struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: View {
     @Binding var selection: Item

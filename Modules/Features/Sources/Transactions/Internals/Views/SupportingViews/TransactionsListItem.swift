@@ -5,8 +5,8 @@
 //  Created by Kamaal M Farah on 10/12/2023.
 //
 
-import AppUI
 import SwiftUI
+import SharedUI
 import KamaalUI
 
 struct TransactionsListItem: View {
