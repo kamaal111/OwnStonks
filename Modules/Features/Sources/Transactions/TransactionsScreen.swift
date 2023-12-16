@@ -8,9 +8,11 @@
 import SwiftUI
 import KamaalUI
 import KamaalPopUp
+import UserSettings
 
 public struct TransactionsScreen: View {
     @Environment(TransactionsManager.self) private var transactionManager
+    @Environment(UserSettings.self) private var userSettings
     @EnvironmentObject private var popUpManager: KPopUpManager
 
     @State private var viewModel = ViewModel()
@@ -64,7 +66,7 @@ public struct TransactionsScreen: View {
             case .addTransction:
                 TransactionDetailsSheet(
                     isShown: $viewModel.showSheet,
-                    context: .new,
+                    context: .new(userSettings.preferredForexCurrency),
                     onDone: onModifyTransactionDone
                 )
             case let .transactionDetails(transaction):

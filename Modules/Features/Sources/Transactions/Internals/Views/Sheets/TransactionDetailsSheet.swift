@@ -12,7 +12,7 @@ import ForexKit
 import KamaalExtensions
 
 enum TransactionDetailsSheetContext: Equatable {
-    case new
+    case new(_ preferredCurrency: Currencies)
     case details(_ transaction: AppTransaction)
 }
 
@@ -145,16 +145,16 @@ extension TransactionDetailsSheet {
 
         convenience init(context: TransactionDetailsSheetContext) {
             switch context {
-            case .new:
+            case let .new(preferredCurrency):
                 self.init(
                     context: context,
                     name: "",
                     transactionDate: Date(),
                     transactionType: .buy,
                     amount: "0.0",
-                    pricePerUnitCurrency: .EUR,
+                    pricePerUnitCurrency: preferredCurrency,
                     pricePerUnit: "0.0",
-                    feesCurrency: .EUR,
+                    feesCurrency: preferredCurrency,
                     fees: "0.0",
                     isEditing: true
                 )
@@ -250,5 +250,5 @@ extension TransactionDetailsSheet {
 }
 
 #Preview {
-    TransactionDetailsSheet(isShown: .constant(true), context: .new, onDone: { _ in })
+    TransactionDetailsSheet(isShown: .constant(true), context: .new(.CAD), onDone: { _ in })
 }
