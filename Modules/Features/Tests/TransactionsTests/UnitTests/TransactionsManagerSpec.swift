@@ -8,6 +8,7 @@
 import Quick
 import Nimble
 import Foundation
+import SharedModels
 @testable import Transactions
 
 final class TransactionsManagerSpec: AsyncSpec {

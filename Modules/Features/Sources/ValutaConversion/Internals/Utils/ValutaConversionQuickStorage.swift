@@ -8,7 +8,7 @@
 import ForexKit
 import Foundation
 import KamaalUtils
-import SharedStuff
+import SharedUtils
 
 protocol ValutaConversionQuickStoragable: CacheContainerable { }
 

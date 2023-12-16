@@ -31,6 +31,7 @@ let package = Package(
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
                 .product(name: "KamaalLogger", package: "KamaalSwift"),
                 .product(name: "KamaalPopUp", package: "KamaalSwift"),
+                .product(name: "SharedModels", package: "SharedStuff"),
                 "ForexKit",
                 "AppUI",
                 "PersistentData",
@@ -44,6 +45,7 @@ let package = Package(
         .testTarget(
             name: "TransactionsTests",
             dependencies: [
+                .product(name: "SharedModels", package: "SharedStuff"),
                 "Quick",
                 "Nimble",
                 "Transactions",
@@ -61,8 +63,8 @@ let package = Package(
                 .product(name: "KamaalUtils", package: "KamaalSwift"),
                 .product(name: "KamaalLogger", package: "KamaalSwift"),
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
+                .product(name: "SharedUtils", package: "SharedStuff"),
                 "ForexKit",
-                "SharedStuff",
             ],
             resources: [
                 .process(userSettingsResourcesPath),
@@ -87,8 +89,8 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalUtils", package: "KamaalSwift"),
                 .product(name: "KamaalLogger", package: "KamaalSwift"),
+                .product(name: "SharedUtils", package: "SharedStuff"),
                 "ForexKit",
-                "SharedStuff",
             ],
             resources: [
                 .process("Internals/Resources"),

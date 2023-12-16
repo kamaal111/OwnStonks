@@ -9,6 +9,7 @@ import AppUI
 import SwiftUI
 import KamaalUI
 import ForexKit
+import SharedModels
 import KamaalExtensions
 
 enum TransactionDetailsSheetContext: Equatable {
@@ -89,6 +90,7 @@ struct TransactionDetailsSheet: View {
                     label: NSLocalizedString("Fees", bundle: .module, comment: ""),
                     isEditing: viewModel.isEditing
                 )
+                .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
             }
             #if os(macOS)
             .padding(.vertical, .medium)
@@ -151,11 +153,9 @@ extension TransactionDetailsSheet {
                     name: "",
                     transactionDate: Date(),
                     transactionType: .buy,
-                    amount: "0.0",
-                    pricePerUnitCurrency: preferredCurrency,
-                    pricePerUnit: "0.0",
-                    feesCurrency: preferredCurrency,
-                    fees: "0.0",
+                    amount: 0,
+                    pricePerUnit: Money(value: 0, currency: preferredCurrency),
+                    fees: Money(value: 0, currency: preferredCurrency),
                     isEditing: true
                 )
             case let .details(transaction):
@@ -164,11 +164,9 @@ extension TransactionDetailsSheet {
                     name: transaction.name,
                     transactionDate: transaction.transactionDate,
                     transactionType: transaction.transactionType,
-                    amount: String(transaction.amount),
-                    pricePerUnitCurrency: transaction.pricePerUnit.currency,
-                    pricePerUnit: String(transaction.pricePerUnit.value),
-                    feesCurrency: transaction.fees.currency,
-                    fees: String(transaction.fees.value),
+                    amount: transaction.amount,
+                    pricePerUnit: transaction.pricePerUnit,
+                    fees: transaction.fees,
                     isEditing: false
                 )
             }
@@ -179,22 +177,20 @@ extension TransactionDetailsSheet {
             name: String,
             transactionDate: Date,
             transactionType: TransactionTypes,
-            amount: String,
-            pricePerUnitCurrency: Currencies,
-            pricePerUnit: String,
-            feesCurrency: Currencies,
-            fees: String,
+            amount: Double,
+            pricePerUnit: Money,
+            fees: Money,
             isEditing: Bool
         ) {
             self.context = context
             self.name = name
             self.transactionDate = transactionDate
             self.transactionType = transactionType
-            self.amount = amount
-            self.pricePerUnitCurrency = pricePerUnitCurrency
-            self.pricePerUnit = pricePerUnit
-            self.feesCurrency = feesCurrency
-            self.fees = fees
+            self.amount = String(amount)
+            self.pricePerUnitCurrency = pricePerUnit.currency
+            self.pricePerUnit = String(pricePerUnit.value)
+            self.feesCurrency = fees.currency
+            self.fees = String(fees.value)
             self.isEditing = isEditing
         }
 

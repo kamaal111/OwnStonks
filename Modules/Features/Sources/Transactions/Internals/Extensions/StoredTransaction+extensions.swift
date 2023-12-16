@@ -7,6 +7,7 @@
 
 import ForexKit
 import Foundation
+import SharedModels
 import PersistentData
 
 extension StoredTransaction {
