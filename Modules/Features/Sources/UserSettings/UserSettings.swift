@@ -60,7 +60,7 @@ public final class UserSettings {
     }
 
     private var feedbackConfiguration: SettingsConfiguration.FeedbackConfiguration? {
-        guard Features.feedback, let feedbackToken = SecretsJSON.shared.content?.githubToken else { return nil }
+        guard let feedbackToken = SecretsJSON.shared.content?.githubToken else { return nil }
 
         #if os(macOS)
         let deviceLabel = "macOS"

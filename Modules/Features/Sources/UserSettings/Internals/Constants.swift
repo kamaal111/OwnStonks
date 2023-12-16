@@ -9,5 +9,5 @@ import Foundation
 
 enum Constants {
     static let repo = (username: "kamaal111", name: "OwnStonks")
-    static let bundleIdentifier = "io.kamaal.OwnStonks.UserSettings"
+    static let bundleIdentifier = "io.kamaal.OwnStonks.Features.UserSettings"
 }

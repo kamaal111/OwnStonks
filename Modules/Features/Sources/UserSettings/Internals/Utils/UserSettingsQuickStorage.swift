@@ -1,5 +1,5 @@
 //
-//  UserDefaults+extensions.swift
+//  UserSettingsQuickStorage.swift
 //
 //
 //  Created by Kamaal M Farah on 16/12/2023.
@@ -14,7 +14,7 @@ protocol UserSettingsQuickStoragable {
     var preferredCurrency: Preference.Option? { get set }
 }
 
-struct UserSettingsQuickStorage: UserSettingsQuickStoragable {
+class UserSettingsQuickStorage: UserSettingsQuickStoragable {
     @UserDefaultsObject(key: makeKey("preferred_currency"), container: UserDefaultsSuite.shared)
     var preferredCurrency: Preference.Option?
 

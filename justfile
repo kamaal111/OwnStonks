@@ -30,6 +30,8 @@ make-secrets:
 
     python3 Scripts/make_secrets.py --output "Modules/Features/Sources/UserSettings/Internals/Resources/Secrets.json" \
         --github_token ${GITHUB_TOKEN:-""}
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/ValutaConversion/Internals/Resources/Secrets.json" \
+        --forex_api_url ${FOREX_API_URL:-""}
 
 [private]
 init-python-environment:
