@@ -10,17 +10,73 @@ import Nimble
 import XCTest
 import ForexKit
 import Foundation
+import SharedModels
 import MockURLProtocol
 import KamaalExtensions
 @testable import ValutaConversion
 
 final class ValutaConversionSpec: AsyncSpec {
     override class func spec() {
-        let urlSession: URLSession = {
-            let configuration = URLSessionConfiguration.default
-            configuration.protocolClasses = [MockURLProtocol.self]
-            return URLSession(configuration: configuration)
-        }()
+        describe("Converting money") {
+            it("should convert money correctly") {
+                // Given
+                try makeRequest(withResponse: JSONEncoder().encode(testExchangeRates), statusCode: 200)
+                let storage = TestQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: storage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: false
+                )
+                try await valutaConversion.fetchExchangeRates(of: .EUR)
+
+                // When
+                let result = valutaConversion.convertMoney(from: Money(value: 3000, currency: .JPY), to: .EUR)
+
+                // Then
+                expect(result?.currency) == .EUR
+                expect(result?.value.int) == 21
+            }
+
+            it("should not be able to convert due to rates being fetched") {
+                // Given
+                let storage = TestQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: storage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: false
+                )
+
+                // When
+                let result = valutaConversion.convertMoney(from: Money(value: 3000, currency: .JPY), to: .EUR)
+
+                // Then
+                expect(result).to(beNil())
+            }
+
+            it("should not be able to convert due to exchange rate for a currency not being available") {
+                // Given
+                try makeRequest(withResponse: JSONEncoder().encode(testExchangeRates), statusCode: 200)
+                let storage = TestQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: storage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: false
+                )
+                try await valutaConversion.fetchExchangeRates(of: .EUR)
+
+                // When
+                let result = valutaConversion.convertMoney(from: Money(value: 420, currency: .PHP), to: .EUR)
+
+                // Then
+                expect(result).to(beNil())
+            }
+        }
 
         describe("Fetching exchange rates") {
             it("should fetch exchange rates successfully") {
@@ -100,6 +156,12 @@ private let testExchangeRates = ExchangeRates(
         .USD: 1.0666,
     ]
 )
+
+private let urlSession: URLSession = {
+    let configuration = URLSessionConfiguration.default
+    configuration.protocolClasses = [MockURLProtocol.self]
+    return URLSession(configuration: configuration)
+}()
 
 private func makeRequest(withResponse responseJSON: Data, statusCode: Int) {
     MockURLProtocol.requestHandler = { _ in

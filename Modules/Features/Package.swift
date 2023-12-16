@@ -101,6 +101,7 @@ let package = Package(
             name: "ValutaConversionTests",
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
+                .product(name: "SharedModels", package: "SharedStuff"),
                 "ValutaConversion",
                 "Quick",
                 "Nimble",
