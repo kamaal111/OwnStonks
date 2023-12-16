@@ -46,6 +46,21 @@
         "identifier" : "PersistentDataTests",
         "name" : "PersistentDataTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features",
+        "identifier" : "UserSettingsTests",
+        "name" : "UserSettingsTests"
+      }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:Modules\/SharedStuff",
+        "identifier" : "SharedStuffTests",
+        "name" : "SharedStuffTests"
+      }
     }
   ],
   "version" : 1

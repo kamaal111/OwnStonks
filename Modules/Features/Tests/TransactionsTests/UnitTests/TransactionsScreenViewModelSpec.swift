@@ -7,7 +7,6 @@
 
 import Quick
 import Nimble
-import XCTest
 @testable import Transactions
 
 final class TransactionsScreenViewModelSpec: QuickSpec {

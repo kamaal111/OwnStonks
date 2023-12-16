@@ -3,6 +3,9 @@
   "strings" : {
     "Default color" : {
       "extractionState" : "manual"
+    },
+    "Preferred currency" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.0"

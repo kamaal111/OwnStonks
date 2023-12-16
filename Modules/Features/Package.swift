@@ -3,6 +3,9 @@
 
 import PackageDescription
 
+let transactionResourcesPath = "Internals/Resources"
+let userSettingsResourcesPath = "Internals/Resources"
+
 let package = Package(
     name: "Features",
     platforms: [.macOS(.v14), .iOS(.v17)],
@@ -17,6 +20,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.1.0")),
         .package(path: "../AppUI"),
         .package(path: "../PersistentData"),
+        .package(path: "../SharedStuff"),
     ],
     targets: [
         .target(
@@ -31,18 +35,7 @@ let package = Package(
                 "PersistentData",
             ],
             resources: [
-                .process("Internals/Resources"),
-            ]
-        ),
-        .target(
-            name: "UserSettings",
-            dependencies: [
-                .product(name: "KamaalSettings", package: "KamaalSwift"),
-                .product(name: "KamaalUtils", package: "KamaalSwift"),
-                .product(name: "KamaalLogger", package: "KamaalSwift"),
-            ],
-            resources: [
-                .process("Internals/Resources"),
+                .process(transactionResourcesPath),
             ]
         ),
         .testTarget(
@@ -54,7 +47,35 @@ let package = Package(
                 "PersistentData",
             ],
             resources: [
-                .process("../../Sources/Transactions/Internals/Resources"),
+                .process("../../Sources/Transactions/\(transactionResourcesPath)"),
+            ]
+        ),
+        .target(
+            name: "UserSettings",
+            dependencies: [
+                .product(name: "KamaalSettings", package: "KamaalSwift"),
+                .product(name: "KamaalUtils", package: "KamaalSwift"),
+                .product(name: "KamaalLogger", package: "KamaalSwift"),
+                .product(name: "KamaalExtensions", package: "KamaalSwift"),
+                "ForexKit",
+                "SharedStuff",
+            ],
+            resources: [
+                .process(userSettingsResourcesPath),
+            ]
+        ),
+        .testTarget(
+            name: "UserSettingsTests",
+            dependencies: [
+                "Quick",
+                "Nimble",
+                "UserSettings",
+                "ForexKit",
+                .product(name: "KamaalSettings", package: "KamaalSwift"),
+                .product(name: "KamaalExtensions", package: "KamaalSwift"),
+            ],
+            resources: [
+                .process("../../Sources/UserSettings/\(userSettingsResourcesPath)"),
             ]
         ),
     ]

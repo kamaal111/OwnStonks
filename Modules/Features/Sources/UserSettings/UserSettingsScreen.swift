@@ -8,12 +8,15 @@
 import SwiftUI
 import KamaalSettings
 
+/// Main ``UserSettings`` screen.
 public struct UserSettingsScreen: View {
     @Environment(UserSettings.self) private var userSettings
 
+    /// Initializer of ``UserSettingsScreen``.
     public init() { }
 
     public var body: some View {
         SettingsScreen(configuration: userSettings.configuration)
+            .onSettingsPreferenceChange { preference in userSettings.onPreferenceChange(preference) }
     }
 }

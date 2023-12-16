@@ -8,6 +8,9 @@
 import SwiftUI
 
 extension View {
+    /// The environment view modifier that gives all the ``UserSettings`` its context.
+    /// - Parameter userSettings: Shared ``UserSettings/UserSettings`` object.
+    /// - Returns: A modified view with the ``UserSettings`` feature context.
     public func userSettingsEnvironment(userSettings: UserSettings) -> some View {
         modifier(UserSettingsEnvironmentModifier(userSettings: userSettings))
     }
