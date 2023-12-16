@@ -61,6 +61,13 @@
         "identifier" : "SharedStuffTests",
         "name" : "SharedStuffTests"
       }
+    },
+    {
+      "target" : {
+        "containerPath" : "container:Modules\/Features",
+        "identifier" : "ValutaConversionTests",
+        "name" : "ValutaConversionTests"
+      }
     }
   ],
   "version" : 1

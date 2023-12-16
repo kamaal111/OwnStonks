@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C080D752B2DF84D0082BAD1 /* ValutaConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 2C080D742B2DF84D0082BAD1 /* ValutaConversion */; };
 		2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */; };
 		2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266582B112C24000CD2D5 /* ContentView.swift */; };
 		2C52665D2B112C24000CD2D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
@@ -45,6 +46,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C080D752B2DF84D0082BAD1 /* ValutaConversion in Frameworks */,
 				2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */,
 				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
 				2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */,
@@ -121,11 +123,11 @@
 		2C52666E2B113DE6000CD2D5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				2C7F5A4F2B2DCE230013A85B /* SharedStuff */,
 				2C840D7B2B12695D0043F850 /* AppUI */,
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
 				2CAE16682B252B0D00F49575 /* PersistentData */,
+				2C7F5A4F2B2DCE230013A85B /* SharedStuff */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -167,6 +169,7 @@
 				2CAA42882B26187600D91B3E /* PersistentData */,
 				2CAA428A2B26198E00D91B3E /* Transactions */,
 				2CC33C992B2A32880035ED02 /* UserSettings */,
+				2C080D742B2DF84D0082BAD1 /* ValutaConversion */,
 			);
 			productName = OwnStonks;
 			productReference = 2C5266532B112C24000CD2D5 /* OwnStonks.app */;
@@ -484,6 +487,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C080D742B2DF84D0082BAD1 /* ValutaConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ValutaConversion;
+		};
 		2C5266712B113EE3000CD2D5 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
