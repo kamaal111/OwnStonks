@@ -7,12 +7,18 @@
 
 import SwiftUI
 import KamaalUI
+import ForexKit
 import KamaalPopUp
 import UserSettings
+import KamaalLogger
+import ValutaConversion
+
+private let logger = KamaalLogger(from: TransactionsScreen.self, failOnError: true)
 
 public struct TransactionsScreen: View {
     @Environment(TransactionsManager.self) private var transactionManager
     @Environment(UserSettings.self) private var userSettings
+    @Environment(ValutaConversion.self) private var valutaConversion
     @EnvironmentObject private var popUpManager: KPopUpManager
 
     @State private var viewModel = ViewModel()
@@ -48,6 +54,7 @@ public struct TransactionsScreen: View {
         }
         .sheet(isPresented: $viewModel.showSheet) { presentedSheet }
         .onAppear(perform: handleOnAppear)
+        .onChange(of: userSettings.preferredForexCurrency) { _, newValue in handleFetchExchangeRate(of: newValue) }
     }
 
     private var toolbarItem: some View {
@@ -87,13 +94,9 @@ public struct TransactionsScreen: View {
             do {
                 try transactionManager.editTransaction(transaction)
             } catch {
-                popUpManager.showPopUp(
-                    style: .bottom(
-                        title: NSLocalizedString("Failed to update transaction", bundle: .module, comment: ""),
-                        type: .error,
-                        description: nil
-                    ),
-                    timeout: 5
+                showError(
+                    with: NSLocalizedString("Failed to update transaction", bundle: .module, comment: ""),
+                    from: error
                 )
             }
         case .none: assertionFailure("Should not be here!")
@@ -101,20 +104,39 @@ public struct TransactionsScreen: View {
     }
 
     private func handleOnAppear() {
+        handleFetchingTransactions()
+        handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
+    }
+
+    private func handleFetchExchangeRate(of currency: Currencies) {
+        Task {
+            do {
+                try await valutaConversion.fetchExchangeRates(of: currency)
+            } catch {
+                showError(
+                    with: NSLocalizedString("Failed to get exchange rates", bundle: .module, comment: ""),
+                    from: error
+                )
+            }
+        }
+    }
+
+    private func handleFetchingTransactions() {
         Task {
             do {
                 try await transactionManager.fetchTransactions()
             } catch {
-                popUpManager.showPopUp(
-                    style: .bottom(
-                        title: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
-                        type: .error,
-                        description: nil
-                    ),
-                    timeout: 5
+                showError(
+                    with: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
+                    from: error
                 )
             }
         }
+    }
+
+    private func showError(with title: String, from error: Error) {
+        logger.error(label: title, error: error)
+        popUpManager.showPopUp(style: .bottom(title: title, type: .error, description: nil), timeout: 5)
     }
 }
 
