@@ -23,6 +23,13 @@ assert-has-no-diffs:
     DIFFS=$(git diff --name-only origin/main | sed '/^$/d' | awk '{print NR}'| sort -nr | sed -n '1p')
     just assert-empty "$DIFFS"
 
+make-acknowledgments:
+    #!/bin/zsh
+
+    . .venv/bin/activate
+
+    xctools acknowledgments --scheme $SCHEME --output Modules/Features/Sources/UserSettings/Internals/Resources
+
 make-secrets:
     #!/bin/zsh
 
