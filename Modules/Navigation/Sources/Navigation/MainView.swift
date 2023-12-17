@@ -11,6 +11,9 @@ import KamaalPopUp
 import UserSettings
 import Transactions
 import KamaalNavigation
+#if DEBUG
+import Playground
+#endif
 
 struct MainView: View {
     @StateObject private var popperUpManager = KPopUpManager(config: .init())
@@ -28,6 +31,9 @@ struct MainView: View {
             switch screen {
             case .transactions: TransactionsScreen()
             case .settings: UserSettingsScreen()
+            #if DEBUG
+            case .playground: PlaygroundScreen()
+            #endif
             }
         }
         .ktakeSizeEagerly()
