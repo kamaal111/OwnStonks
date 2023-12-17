@@ -32,10 +32,7 @@ final class TransactionsManager {
     }
 
     var transactions: [AppTransaction] {
-        let transactions = storedTransactions
-            .compactMap(\.appTransaction)
-            .reversed()
-            .asArray()
+        let transactions = storedTransactions.compactMap(\.appTransaction)
         assert(storedTransactions.count == transactions.count)
         return transactions
     }
@@ -48,10 +45,10 @@ final class TransactionsManager {
     func fetchTransactions() async throws {
         try await withLoading {
             logger.info("Fetching transactions")
-            let transactions: [StoredTransaction] = try persistentData.list()
+            let transactions: [StoredTransaction] = try persistentData
+                .list(sorts: [SortDescriptor(\.updatedDate, order: .reverse)])
             logger.info("Successfully fetched \(transactions.count) transctions")
-            storedTransactions = transactions
-            loading = false
+            setStoredTransactions(transactions)
         }
     }
 
@@ -71,8 +68,9 @@ final class TransactionsManager {
             pricePerUnit: (transaction.pricePerUnit.value, transaction.pricePerUnit.currency),
             fees: (transaction.fees.value, transaction.fees.currency)
         )
-
+        var storedTransactions = storedTransactions
         storedTransactions[storedTransactionIndex] = updatedTransaction
+        setStoredTransactions(storedTransactions)
     }
 
     @MainActor
@@ -87,7 +85,16 @@ final class TransactionsManager {
             fees: Money(value: transaction.fees.value, currency: transaction.fees.currency),
             context: persistentData.dataContainerContext
         )
-        storedTransactions = storedTransactions.appended(storedTransaction)
+        setStoredTransactions(storedTransactions.appended(storedTransaction))
+    }
+
+    @MainActor
+    private func setStoredTransactions(_ transactions: [StoredTransaction]) {
+        let newStoredTransactions = transactions
+            .filter { transaction in transaction.updatedDate != nil }
+            .sorted(by: \.updatedDate!, using: .orderedDescending)
+        assert(transactions.count == newStoredTransactions.count)
+        storedTransactions = newStoredTransactions
     }
 
     private func withLoading<T>(_ completion: () async throws -> T) async rethrows -> T {
