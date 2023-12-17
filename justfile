@@ -26,8 +26,6 @@ assert-has-no-diffs:
 make-acknowledgments:
     #!/bin/zsh
 
-    . .venv/bin/activate
-
     xctools acknowledgments --scheme $SCHEME --output Modules/Features/Sources/UserSettings/Internals/Resources
 
 make-secrets:

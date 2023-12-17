@@ -11,9 +11,6 @@ python = "^3.11"
 kamaalpy = "^0.1.0"
 
 
-[tool.poetry.group.dev.dependencies]
-xctools-kamaalio = "^0.2.0"
-
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
