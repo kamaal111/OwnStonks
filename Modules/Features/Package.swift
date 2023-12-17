@@ -16,11 +16,12 @@ let package = Package(
         .library(name: "Playground", targets: ["Playground"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/Quick/Quick.git", from: "7.0.0"),
-        .package(url: "https://github.com/Quick/Nimble.git", from: "12.0.0"),
+        .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "7.0.0")),
+        .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "12.0.0")),
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/Kamaalio/AppIconGenerator.git", .upToNextMinor(from: "0.2.0")),
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
-        .package(url: "https://github.com/kamaal111/MockURLProtocol.git", "0.1.1" ..< "0.2.0"),
+        .package(url: "https://github.com/kamaal111/MockURLProtocol.git", .upToNextMinor(from: "0.1.1")),
         .package(path: "../PersistentData"),
         .package(path: "../SharedStuff"),
     ],
@@ -116,6 +117,7 @@ let package = Package(
                 .product(name: "KamaalNavigation", package: "KamaalSwift"),
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "SharedUI", package: "SharedStuff"),
+                "AppIconGenerator",
             ],
             resources: [
                 .process("Resources"),
