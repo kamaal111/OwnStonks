@@ -110,6 +110,13 @@ let package = Package(
                 "MockURLProtocol",
             ]
         ),
-        .target(name: "Playground"),
+        .target(
+            name: "Playground",
+            dependencies: [
+                .product(name: "KamaalNavigation", package: "KamaalSwift"),
+                .product(name: "KamaalUI", package: "KamaalSwift"),
+                .product(name: "SharedUI", package: "SharedStuff"),
+            ]
+        ),
     ]
 )

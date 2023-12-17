@@ -7,12 +7,17 @@
 
 #if DEBUG
 import SwiftUI
+import KamaalNavigation
 
 public struct PlaygroundScreen: View {
     public init() { }
 
     public var body: some View {
-        Text("Hello")
+        NavigationStackView(
+            stackWithoutNavigationStack: [PlaygroundScreens](),
+            root: { screen in PlaygroundMainView(screen: screen) },
+            subView: { screen in PlaygroundMainView(screen: screen) }
+        )
     }
 }
 #endif
