@@ -116,6 +116,9 @@ let package = Package(
                 .product(name: "KamaalNavigation", package: "KamaalSwift"),
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "SharedUI", package: "SharedStuff"),
+            ],
+            resources: [
+                .process("Resources"),
             ]
         ),
     ]
