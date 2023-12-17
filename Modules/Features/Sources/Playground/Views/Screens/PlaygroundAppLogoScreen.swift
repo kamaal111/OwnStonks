@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import AppIconGenerator
 
 struct PlaygroundAppLogoScreen: View {
     var body: some View {
