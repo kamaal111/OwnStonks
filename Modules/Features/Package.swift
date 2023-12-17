@@ -13,6 +13,7 @@ let package = Package(
         .library(name: "Transactions", targets: ["Transactions"]),
         .library(name: "UserSettings", targets: ["UserSettings"]),
         .library(name: "ValutaConversion", targets: ["ValutaConversion"]),
+        .library(name: "Playground", targets: ["Playground"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", from: "7.0.0"),
@@ -109,5 +110,6 @@ let package = Package(
                 "MockURLProtocol",
             ]
         ),
+        .target(name: "Playground"),
     ]
 )

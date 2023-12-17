@@ -25,6 +25,7 @@ let package = Package(
                 .product(name: "KamaalNavigation", package: "KamaalSwift"),
                 .product(name: "UserSettings", package: "Features"),
                 .product(name: "Transactions", package: "Features"),
+                .product(name: "Playground", package: "Features"),
             ],
             resources: [
                 .process("Resources"),
