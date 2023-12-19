@@ -6,11 +6,155 @@
 //
 
 import SwiftUI
+import KamaalUI
+import SharedUI
+import KamaalUtils
 import AppIconGenerator
 
 struct PlaygroundAppLogoScreen: View {
+    @State private var viewModel = ViewModel()
+
     var body: some View {
-        Text("App logo")
+        KScrollableForm {
+            KJustStack {
+                logoSection
+                customizationSection
+            }
+            #if os(macOS)
+            .padding(.all, .medium)
+            .ktakeSizeEagerly(alignment: .topLeading)
+            #endif
+        }
+    }
+
+    private var logoSection: some View {
+        KSection(header: "Logo") {
+            HStack(alignment: .top) {
+                viewModel.previewLogoView
+                Spacer()
+                VStack(alignment: .leading) {
+                    HStack {
+                        KFloatingTextField(
+                            text: $viewModel.exportLogoSize,
+                            title: "Export logo size",
+                            textFieldType: .numbers
+                        )
+                        HStack {
+                            Button(action: { Task { await viewModel.setRecommendedLogoSize() } }) {
+                                Text("Logo size")
+                                    .foregroundColor(.accentColor)
+                            }
+                            .disabled(viewModel.disableLogoSizeButton)
+                            Button(action: { Task { await viewModel.setRecommendedAppIconSize() } }) {
+                                Text("Icon size")
+                                    .foregroundColor(.accentColor)
+                            }
+                            .disabled(viewModel.disableAppIconSizeButton)
+                        }
+                        .padding(.bottom, -(AppSizes.small.rawValue))
+                    }
+                    #if os(macOS)
+                    HStack {
+                        Button(action: viewModel.exportLogo) {
+                            Text("Export logo")
+                                .foregroundColor(.accentColor)
+                        }
+                        Button(action: viewModel.exportLogoAsIconSet) {
+                            Text("Export logo as IconSet")
+                                .foregroundColor(.accentColor)
+                        }
+                    }
+                    #endif
+                }
+            }
+        }
+    }
+
+    private var customizationSection: some View {
+        KSection(header: "Customization") {
+            AppLogoColorFormRow(title: "Has a background") {
+                Toggle(viewModel.hasABackground ? "Yup" : "Nope", isOn: $viewModel.hasABackground)
+            }
+            .padding(.bottom, .medium)
+            .padding(.vertical, .small)
+        }
+    }
+}
+
+extension PlaygroundAppLogoScreen {
+    @Observable
+    final class ViewModel {
+        var hasCurves = true
+        var curvedCornersSize: CGFloat = 16
+        var hasABackground = true
+        var backgroundColor: Color = .red
+        var exportLogoSize = "400" {
+            didSet { exportLogoSizeDidSet() }
+        }
+
+        private let previewLogoSize: CGFloat = 150
+        private let recommendedLogoSize = "400"
+        private let recommendedAppIconSize = "800"
+
+        var previewLogoView: some View {
+            logoView(size: previewLogoSize, cornerRadius: hasCurves ? curvedCornersSize : 0)
+        }
+
+        var disableLogoSizeButton: Bool {
+            exportLogoSize == recommendedLogoSize
+        }
+
+        var disableAppIconSizeButton: Bool {
+            exportLogoSize == recommendedAppIconSize
+        }
+
+        @MainActor
+        func setRecommendedLogoSize() {
+            withAnimation { exportLogoSize = recommendedLogoSize }
+        }
+
+        @MainActor
+        func setRecommendedAppIconSize() {
+            withAnimation { exportLogoSize = recommendedAppIconSize }
+        }
+
+        #if os(macOS)
+        func exportLogo() {
+            Task {
+                let logoViewData = await AppIconGenerator.transformViewToPNG(logoToExport)
+                let logoName = "logo.png"
+                let saveResult = await SavePanel.save(filename: logoName)
+                switch saveResult {
+                case let .failure(failure): break
+                case let .success(panel): break
+                }
+            }
+        }
+
+        func exportLogoAsIconSet() {
+            fatalError("Unimplemented")
+        }
+        #endif
+
+        private var logoToExport: some View {
+            let size = Double(exportLogoSize)!.cgFloat
+            return logoView(size: size, cornerRadius: hasCurves ? curvedCornersSize * (size / previewLogoSize) : 0)
+        }
+
+        private func logoView(size: CGFloat, cornerRadius: CGFloat) -> some View {
+            AppLogo(
+                size: size,
+                curvedCornersSize: cornerRadius,
+                backgroundColor: hasABackground ? backgroundColor : .white.opacity(0)
+            )
+        }
+
+        private func exportLogoSizeDidSet() {
+            let filteredExportLogoSize = exportLogoSize.filter(\.isNumber)
+            if exportLogoSize != filteredExportLogoSize {
+                exportLogoSize = filteredExportLogoSize
+            }
+        }
     }
 }
 
