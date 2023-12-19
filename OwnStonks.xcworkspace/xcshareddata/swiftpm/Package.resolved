@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kamaalio/AppIconGenerator.git",
       "state" : {
-        "revision" : "3e4ff2c5d2207308db25252b0f7d2a4b5fe53b31",
-        "version" : "0.2.0"
+        "revision" : "afdfe7e49ce034ec3909fb8a945489550e276f73",
+        "version" : "0.5.0"
       }
     },
     {
