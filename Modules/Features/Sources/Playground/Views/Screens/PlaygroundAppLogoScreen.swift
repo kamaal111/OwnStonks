@@ -9,9 +9,12 @@ import SwiftUI
 import KamaalUI
 import SharedUI
 import KamaalUtils
+import KamaalPopUp
 import AppIconGenerator
 
 struct PlaygroundAppLogoScreen: View {
+    @EnvironmentObject private var kPopUpManager: KPopUpManager
+
     @State private var viewModel = ViewModel()
 
     var body: some View {
@@ -40,12 +43,12 @@ struct PlaygroundAppLogoScreen: View {
                             textFieldType: .numbers
                         )
                         HStack {
-                            Button(action: { Task { await viewModel.setRecommendedLogoSize() } }) {
+                            Button(action: { viewModel.setRecommendedLogoSize() }) {
                                 Text("Logo size")
                                     .foregroundColor(.accentColor)
                             }
                             .disabled(viewModel.disableLogoSizeButton)
-                            Button(action: { Task { await viewModel.setRecommendedAppIconSize() } }) {
+                            Button(action: { viewModel.setRecommendedAppIconSize() }) {
                                 Text("Icon size")
                                     .foregroundColor(.accentColor)
                             }
@@ -55,11 +58,31 @@ struct PlaygroundAppLogoScreen: View {
                     }
                     #if os(macOS)
                     HStack {
-                        Button(action: viewModel.exportLogo) {
+                        Button(action: {
+                            Task {
+                                await viewModel.exportLogo()
+                                kPopUpManager.showPopUp(
+                                    style: .bottom(title: "Saved logo successfully", type: .success, description: nil),
+                                    timeout: 3
+                                )
+                            }
+                        }) {
                             Text("Export logo")
                                 .foregroundColor(.accentColor)
                         }
-                        Button(action: viewModel.exportLogoAsIconSet) {
+                        Button(action: {
+                            Task {
+                                await viewModel.exportLogoAsIconSet()
+                                kPopUpManager.showPopUp(
+                                    style: .bottom(
+                                        title: "Saved AppIconSet successfully",
+                                        type: .success,
+                                        description: nil
+                                    ),
+                                    timeout: 3
+                                )
+                            }
+                        }) {
                             Text("Export logo as IconSet")
                                 .foregroundColor(.accentColor)
                         }
@@ -95,6 +118,7 @@ extension PlaygroundAppLogoScreen {
         private let previewLogoSize: CGFloat = 150
         private let recommendedLogoSize = "400"
         private let recommendedAppIconSize = "800"
+        private let fileManager = FileManager.default
 
         var previewLogoView: some View {
             logoView(size: previewLogoSize, cornerRadius: hasCurves ? curvedCornersSize : 0)
@@ -119,20 +143,32 @@ extension PlaygroundAppLogoScreen {
         }
 
         #if os(macOS)
-        func exportLogo() {
-            Task {
-                let logoViewData = await AppIconGenerator.transformViewToPNG(logoToExport)
-                let logoName = "logo.png"
-                let saveResult = await SavePanel.save(filename: logoName)
-                switch saveResult {
-                case let .failure(failure): break
-                case let .success(panel): break
-                }
+        func exportLogo() async {
+            let logoViewData = await AppIconGenerator.transformViewToPNG(logoToExport)!
+            let logoName = "logo.png"
+            let panel = try! await SavePanel.save(filename: logoName).get()
+            let saveURL = await panel.url!
+            if fileManager.fileExists(atPath: saveURL.path) {
+                try! fileManager.removeItem(at: saveURL)
             }
+            try! logoViewData.write(to: saveURL)
         }
 
-        func exportLogoAsIconSet() {
-            fatalError("Unimplemented")
+        func exportLogoAsIconSet() async {
+            let temporaryDirectory = fileManager.temporaryDirectory
+            let appIconSet = try! await AppIconGenerator.makeAppIconSet(to: temporaryDirectory, outOf: logoToExport)
+                .get()
+            assert(!appIconSet.images.isEmpty)
+            let iconSetURL = appIconSet.url!
+            defer { try? fileManager.removeItem(atPath: iconSetURL.absoluteString) }
+
+            assert(!((try? fileManager.contentsOfDirectory(atPath: iconSetURL.absoluteString)) ?? []).isEmpty)
+            let panel = try! await SavePanel.save(filename: iconSetURL.lastPathComponent).get()
+            let saveURL = await panel.url!
+            if fileManager.fileExists(atPath: saveURL.path(percentEncoded: true)) {
+                try! fileManager.removeItem(at: saveURL)
+            }
+            try! fileManager.moveItem(atPath: iconSetURL.absoluteString, toPath: saveURL.path(percentEncoded: true))
         }
         #endif
 

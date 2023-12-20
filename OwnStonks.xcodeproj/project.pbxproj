@@ -13,6 +13,15 @@
 		2C52665D2B112C24000CD2D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
 		2C5266612B112C24000CD2D5 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */; };
 		2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C5266712B113EE3000CD2D5 /* Navigation */; };
+		2C76E5782B33731000C5F9A4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266582B112C24000CD2D5 /* ContentView.swift */; };
+		2C76E5792B33731000C5F9A4 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */; };
+		2C76E57B2B33731000C5F9A4 /* ValutaConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5752B33731000C5F9A4 /* ValutaConversion */; };
+		2C76E57C2B33731000C5F9A4 /* UserSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5742B33731000C5F9A4 /* UserSettings */; };
+		2C76E57D2B33731000C5F9A4 /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5732B33731000C5F9A4 /* Transactions */; };
+		2C76E57E2B33731000C5F9A4 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5712B33731000C5F9A4 /* Navigation */; };
+		2C76E57F2B33731000C5F9A4 /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5722B33731000C5F9A4 /* PersistentData */; };
+		2C76E5812B33731000C5F9A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */; };
+		2C76E5822B33731000C5F9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
 		2CAA42892B26187600D91B3E /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA42882B26187600D91B3E /* PersistentData */; };
 		2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA428A2B26198E00D91B3E /* Transactions */; };
 		2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC33C992B2A32880035ED02 /* UserSettings */; };
@@ -27,6 +36,9 @@
 		2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C52666A2B112E5E000CD2D5 /* OwnStonks.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OwnStonks.xctestplan; sourceTree = "<group>"; };
 		2C52666D2B11302C000CD2D5 /* prebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = prebuild.sh; sourceTree = "<group>"; };
+		2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonksDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonksDev.entitlements; sourceTree = "<group>"; };
+		2C76E5882B3373DE00C5F9A4 /* OwnStonksDev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OwnStonksDev.xctestplan; sourceTree = "<group>"; };
 		2C7F5A4F2B2DCE230013A85B /* SharedStuff */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedStuff; sourceTree = "<group>"; };
 		2C840D792B1255190043F850 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		2C840D7A2B1255850043F850 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
@@ -50,6 +62,18 @@
 				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
 				2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */,
 				2CAA42892B26187600D91B3E /* PersistentData in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C76E57A2B33731000C5F9A4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C76E57B2B33731000C5F9A4 /* ValutaConversion in Frameworks */,
+				2C76E57C2B33731000C5F9A4 /* UserSettings in Frameworks */,
+				2C76E57D2B33731000C5F9A4 /* Transactions in Frameworks */,
+				2C76E57E2B33731000C5F9A4 /* Navigation in Frameworks */,
+				2C76E57F2B33731000C5F9A4 /* PersistentData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				2C5266532B112C24000CD2D5 /* OwnStonks.app */,
+				2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				2C52665E2B112C24000CD2D5 /* OwnStonks.entitlements */,
+				2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */,
 				2C5266582B112C24000CD2D5 /* ContentView.swift */,
 				2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */,
 				2C52665C2B112C24000CD2D5 /* Assets.xcassets */,
@@ -105,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				2C52666A2B112E5E000CD2D5 /* OwnStonks.xctestplan */,
+				2C76E5882B3373DE00C5F9A4 /* OwnStonksDev.xctestplan */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -173,6 +200,31 @@
 			productReference = 2C5266532B112C24000CD2D5 /* OwnStonks.app */;
 			productType = "com.apple.product-type.application";
 		};
+		2C76E5702B33731000C5F9A4 /* OwnStonksDev */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2C76E5832B33731000C5F9A4 /* Build configuration list for PBXNativeTarget "OwnStonksDev" */;
+			buildPhases = (
+				2C76E5762B33731000C5F9A4 /* Pre Build */,
+				2C76E5772B33731000C5F9A4 /* Sources */,
+				2C76E57A2B33731000C5F9A4 /* Frameworks */,
+				2C76E5802B33731000C5F9A4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OwnStonksDev;
+			packageProductDependencies = (
+				2C76E5712B33731000C5F9A4 /* Navigation */,
+				2C76E5722B33731000C5F9A4 /* PersistentData */,
+				2C76E5732B33731000C5F9A4 /* Transactions */,
+				2C76E5742B33731000C5F9A4 /* UserSettings */,
+				2C76E5752B33731000C5F9A4 /* ValutaConversion */,
+			);
+			productName = OwnStonks;
+			productReference = 2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -205,6 +257,7 @@
 			projectRoot = "";
 			targets = (
 				2C5266522B112C24000CD2D5 /* OwnStonks */,
+				2C76E5702B33731000C5F9A4 /* OwnStonksDev */,
 			);
 		};
 /* End PBXProject section */
@@ -219,10 +272,38 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		2C76E5802B33731000C5F9A4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C76E5812B33731000C5F9A4 /* Preview Assets.xcassets in Resources */,
+				2C76E5822B33731000C5F9A4 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
 		2C52666B2B112FE3000CD2D5 /* Pre Build */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Pre Build";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh Scripts/prebuild.sh\n";
+		};
+		2C76E5762B33731000C5F9A4 /* Pre Build */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 12;
@@ -250,6 +331,15 @@
 			files = (
 				2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */,
 				2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C76E5772B33731000C5F9A4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2C76E5782B33731000C5F9A4 /* ContentView.swift in Sources */,
+				2C76E5792B33731000C5F9A4 /* OwnStonksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -450,6 +540,86 @@
 			};
 			name = Release;
 		};
+		2C76E5842B33731000C5F9A4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.OwnStonks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2C76E5852B33731000C5F9A4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
+				DEVELOPMENT_TEAM = DXUKH9VF73;
+				ENABLE_HARDENED_RUNTIME = YES;
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphoneos*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphonesimulator*]" = YES;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphoneos*]" = UIStatusBarStyleDefault;
+				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = io.kamaal.OwnStonks;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -467,6 +637,15 @@
 			buildConfigurations = (
 				2C5266652B112C24000CD2D5 /* Debug */,
 				2C5266662B112C24000CD2D5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2C76E5832B33731000C5F9A4 /* Build configuration list for PBXNativeTarget "OwnStonksDev" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2C76E5842B33731000C5F9A4 /* Debug */,
+				2C76E5852B33731000C5F9A4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -492,6 +671,26 @@
 		2C5266712B113EE3000CD2D5 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
+		};
+		2C76E5712B33731000C5F9A4 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
+		};
+		2C76E5722B33731000C5F9A4 /* PersistentData */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = PersistentData;
+		};
+		2C76E5732B33731000C5F9A4 /* Transactions */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Transactions;
+		};
+		2C76E5742B33731000C5F9A4 /* UserSettings */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserSettings;
+		};
+		2C76E5752B33731000C5F9A4 /* ValutaConversion */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ValutaConversion;
 		};
 		2CAA42882B26187600D91B3E /* PersistentData */ = {
 			isa = XCSwiftPackageProductDependency;
