@@ -43,8 +43,7 @@ opt_in_rules:
   - unused_import
   - yoda_condition
 excluded:
-  - Old
-  - Modules/Features/Tests
+  - Modules/Features/Sources/Playground
 type_name:
   min_length:
     warning: 2
