@@ -48,7 +48,10 @@ archive-ios:
     ARCHIVE_PATH="$APP_NAME-iOS.xcarchive"
 
     just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
-    just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH" 
+    just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
+
+bump-version number:
+    xctools bump-version --build-number {{number}}
 
 [private]
 export-archive export-options archive:
