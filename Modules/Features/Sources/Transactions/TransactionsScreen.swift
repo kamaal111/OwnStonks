@@ -217,14 +217,14 @@ extension TransactionsScreen {
 
         @MainActor
         func onDefiniteTransactionDelete() {
-            guard let transactionToDelete,
-                  let transactionToDeleteIndex = transactions.findIndex(by: \.id, is: transactionToDelete.id) else {
+            guard let transactionToDeleteID = transactionToDelete?.id,
+                  let transactionToDeleteIndex = transactions.findIndex(by: \.id, is: transactionToDeleteID) else {
                 assertionFailure("Should have transction to delete at this point")
                 return
             }
 
             withAnimation { setTransactions(transactions.removed(at: transactionToDeleteIndex)) }
-            self.transactionToDelete = nil
+            transactionToDelete = nil
         }
 
         @MainActor

@@ -44,24 +44,34 @@ final class TransactionsManager {
     @MainActor
     func fetchTransactions() async throws {
         try await withLoading {
-            logger.info("Fetching transactions")
             let transactions: [StoredTransaction] = try persistentData
                 .list(sorts: [SortDescriptor(\.updatedDate, order: .reverse)])
-            logger.info("Successfully fetched \(transactions.count) transctions")
             setStoredTransactions(transactions)
+            logger.info("Successfully fetched \(transactions.count) transctions")
         }
     }
 
+    @MainActor
     func deleteTransaction(_ transaction: AppTransaction) {
-        print("deleting \(transaction)")
+        guard let transactionID = transaction.id,
+              let storedTransactionIndex = storedTransactions.findIndex(by: \.id, is: transactionID) else {
+            assertionFailure("Should have transaction here")
+            return
+        }
+
+        let storedTransaction = storedTransactions[storedTransactionIndex]
+        storedTransaction.delete()
+        setStoredTransactions(storedTransactions.removed(at: storedTransactionIndex))
+        logger.info("Deleting transaction with ID \(transactionID)")
     }
 
     @MainActor
     func editTransaction(_ transaction: AppTransaction) throws {
-        assert(transaction.id != nil)
-        assert(storedTransactions.contains(where: { $0.id == transaction.id }))
         guard let transactionID = transaction.id,
-              let storedTransactionIndex = storedTransactions.findIndex(by: \.id, is: transactionID) else { return }
+              let storedTransactionIndex = storedTransactions.findIndex(by: \.id, is: transactionID) else {
+            assertionFailure("Should have transaction here")
+            return
+        }
 
         let storedTransaction = storedTransactions[storedTransactionIndex]
         let updatedTransaction = try storedTransaction.update(
@@ -75,6 +85,7 @@ final class TransactionsManager {
         var storedTransactions = storedTransactions
         storedTransactions[storedTransactionIndex] = updatedTransaction
         setStoredTransactions(storedTransactions)
+        logger.info("Edited transaction with ID \(transactionID)")
     }
 
     @MainActor
@@ -90,6 +101,7 @@ final class TransactionsManager {
             context: persistentData.dataContainerContext
         )
         setStoredTransactions(storedTransactions.appended(storedTransaction))
+        logger.info("Created transaction successfully")
     }
 
     @MainActor
