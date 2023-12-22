@@ -45,7 +45,7 @@ test destination:
 upload-macos:
     #!/bin/zsh
 
-    echo "UPLOAD MACOS"
+    just upload-app macos $APP_NAME.pkg
 
 upload-ios:
     #!/bin/zsh
@@ -55,7 +55,10 @@ upload-ios:
 archive-macos:
     #!/bin/zsh
 
-    echo "ARCHIVE MACOS"
+    ARCHIVE_PATH="$APP_NAME-macOS.xcarchive"
+
+    just archive "macosx" "platform=macOS" "$ARCHIVE_PATH"
+    just export-archive "ExportOptions/MacOS.plist" "$ARCHIVE_PATH"
 
 archive-ios:
     #!/bin/zsh
@@ -63,7 +66,6 @@ archive-ios:
     ARCHIVE_PATH="$APP_NAME-iOS.xcarchive"
 
     just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
-    ls
     just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
 
 bump-version number:
