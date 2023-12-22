@@ -15,6 +15,7 @@ jobs:
     name: Test
     timeout-minutes: 20
     runs-on: macos-13
+    if: github.ref != 'refs/heads/main'
     strategy:
       matrix:
         destination: [
@@ -51,6 +52,7 @@ jobs:
     name: Deploy
     timeout-minutes: 20
     runs-on: macos-13
+    if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
         include:
