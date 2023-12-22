@@ -57,3 +57,4 @@ Brewfile.lock.json
 .env
 .venv
 Gemfile.lock
+*.xcarchive

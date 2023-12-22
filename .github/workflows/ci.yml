@@ -17,7 +17,11 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        destination: ["platform=iOS Simulator,name=iPhone 15 Pro Max"]
+        destination: [
+            "platform=iOS Simulator,name=iPhone 15 Pro Max",
+            # Can't use platform macOS yet, because macOS 14 is not supported yet on  GitHub actions
+            # "platform=macOS"
+          ]
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v3
@@ -42,3 +46,36 @@ jobs:
 
       - name: Check diff
         run: just assert-has-no-diffs
+
+  deployIOS:
+    name: Deploy iOS
+    timeout-minutes: 20
+    runs-on: macos-13
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
+          submodules: recursive
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Select Xcode version
+        run: |
+          ls -d /Applications/Xcode*
+          sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
+
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Make env
+        run: |
+          rm -rf .env
+          touch .env
+          echo "GITHUB_TOKEN=\"${{ secrets.FEEDBACK_GITHUB_TOKEN }}\"" >> .env
+          echo "FOREX_API_URL=\"${{ secrets.FOREX_API_URL }}\"" >> .env
+
+      - name: Bootstrap project
+        run: just bootstrap
+
+      - name: Archive
+        run: just archive-ios
