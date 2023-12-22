@@ -19,6 +19,9 @@
     "Close" : {
       "extractionState" : "manual"
     },
+    "Delete" : {
+      "extractionState" : "manual"
+    },
     "Delete this transaction" : {
       "extractionState" : "manual"
     },
