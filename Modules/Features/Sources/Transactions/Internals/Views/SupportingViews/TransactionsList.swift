@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KamaalUI
 
 enum TransactionsListLayouts {
     case medium
@@ -25,6 +26,7 @@ struct TransactionsList: View {
                 layout: layout,
                 action: { transactionAction(transaction) }
             )
+            .contextMenu { buildContextMenu(for: transaction) }
             .focusable()
             .onKeyPress { keyPress in handleKeyPress(keyPress, transaction: transaction) }
             #if os(macOS)
@@ -35,6 +37,19 @@ struct TransactionsList: View {
                 Divider()
             }
             #endif
+        }
+    }
+
+    private func buildContextMenu(for transaction: AppTransaction) -> some View {
+        KJustStack {
+            Button(action: { transactionDelete(transaction) }) {
+                HStack {
+                    Image(systemName: "trash")
+                    Text("Delete", bundle: .module)
+                }
+                .foregroundColor(.accentColor)
+            }
+            .buttonStyle(.plain)
         }
     }
 
