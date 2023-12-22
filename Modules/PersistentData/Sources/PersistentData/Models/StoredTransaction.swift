@@ -50,6 +50,10 @@ public final class StoredTransaction: Identifiable {
         self.creationDate = creationDate
     }
 
+    public func delete() {
+        modelContext?.delete(self)
+    }
+
     public func update(
         name: String,
         transactionDate: Date,
