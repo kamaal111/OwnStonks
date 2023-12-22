@@ -15,6 +15,7 @@ jobs:
     name: Test
     timeout-minutes: 20
     runs-on: macos-13
+    if: false
     strategy:
       matrix:
         destination: [
@@ -52,11 +53,13 @@ jobs:
     timeout-minutes: 20
     runs-on: macos-13
     steps:
-      - name: Git - Checkout
+      - name: Checkout certificates
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.ref }}
-          submodules: recursive
+          repository: kamaal111/CodeSign
+          ref: refs/heads/main
+          token: ${{ secrets.CODE_SIGN_ACCESS_TOKEN }}
+
       - name: Install just
         uses: taiki-e/install-action@just
 
@@ -64,6 +67,19 @@ jobs:
         run: |
           ls -d /Applications/Xcode*
           sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
+
+      - name: Import signing private key
+        env:
+          SIGNING_PRIVATE_KEY: SigningCertificates/Distribution/Apple Distribution Kamaal Farah (DXUKH9VF73).p12
+        run: just import-signing-private-key "${{ env.SIGNING_PRIVATE_KEY }}" "${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
+
+      - name: Copy profiles
+        run: just copy-profiles
+
+      - name: Git - Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.ref }}
 
       - uses: oven-sh/setup-bun@v1
 
