@@ -36,7 +36,8 @@ public struct TransactionsScreen: View {
                 TransactionsList(
                     transactions: viewModel.transactions,
                     layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
-                    transactionAction: { transaction in viewModel.handleTransactionPress(transaction) }
+                    transactionAction: { transaction in viewModel.handleTransactionPress(transaction) },
+                    transactionDelete: { transaction in transactionManager.deleteTransaction(transaction) }
                 )
             }
             .kBindToFrameSize($viewModel.transactionsSectionSize)

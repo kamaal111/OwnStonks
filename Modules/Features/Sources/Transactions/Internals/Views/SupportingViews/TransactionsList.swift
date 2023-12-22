@@ -16,6 +16,7 @@ struct TransactionsList: View {
     let transactions: [AppTransaction]
     let layout: TransactionsListLayouts
     let transactionAction: (_ transaction: AppTransaction) -> Void
+    let transactionDelete: (_ transaction: AppTransaction) -> Void
 
     var body: some View {
         ForEach(transactions) { transaction in
@@ -24,15 +25,31 @@ struct TransactionsList: View {
                 layout: layout,
                 action: { transactionAction(transaction) }
             )
+            .focusable()
+            .onDeleteCommand(perform: { transactionDelete(transaction) })
+            .onKeyPress { keyPress in handleKeyPress(keyPress, transaction: transaction) }
             #if os(macOS)
             if transactions.last != transaction {
                 Divider()
             }
             #endif
         }
+        .onDelete { indices in
+            for index in indices {
+                transactionDelete(transactions[index])
+            }
+        }
+    }
+
+    private func handleKeyPress(_ keyPress: KeyPress, transaction: AppTransaction) -> KeyPress.Result {
+        if keyPress.key == .return {
+            transactionAction(transaction)
+            return .handled
+        }
+        return .ignored
     }
 }
 
 #Preview {
-    TransactionsList(transactions: [], layout: .large, transactionAction: { _ in })
+    TransactionsList(transactions: [], layout: .large, transactionAction: { _ in }, transactionDelete: { _ in })
 }
