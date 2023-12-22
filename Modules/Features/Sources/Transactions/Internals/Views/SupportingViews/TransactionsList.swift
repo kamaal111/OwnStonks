@@ -26,26 +26,26 @@ struct TransactionsList: View {
                 action: { transactionAction(transaction) }
             )
             .focusable()
-            .onDeleteCommand(perform: { transactionDelete(transaction) })
             .onKeyPress { keyPress in handleKeyPress(keyPress, transaction: transaction) }
+            #if os(macOS)
+                .onDeleteCommand(perform: { transactionDelete(transaction) })
+            #endif
             #if os(macOS)
             if transactions.last != transaction {
                 Divider()
             }
             #endif
         }
-        .onDelete { indices in
-            for index in indices {
-                transactionDelete(transactions[index])
-            }
-        }
     }
 
     private func handleKeyPress(_ keyPress: KeyPress, transaction: AppTransaction) -> KeyPress.Result {
-        if keyPress.key == .return {
+        switch keyPress.key {
+        case .return:
             transactionAction(transaction)
             return .handled
+        default: break
         }
+
         return .ignored
     }
 }

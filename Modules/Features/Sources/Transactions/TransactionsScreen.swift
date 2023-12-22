@@ -8,6 +8,7 @@
 import SwiftUI
 import KamaalUI
 import ForexKit
+import SharedUI
 import KamaalPopUp
 import UserSettings
 import KamaalLogger
@@ -37,7 +38,7 @@ public struct TransactionsScreen: View {
                     transactions: viewModel.transactions,
                     layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
                     transactionAction: { transaction in viewModel.handleTransactionPress(transaction) },
-                    transactionDelete: { transaction in transactionManager.deleteTransaction(transaction) }
+                    transactionDelete: { transaction in onTransactionDelete(transaction) }
                 )
             }
             .kBindToFrameSize($viewModel.transactionsSectionSize)
@@ -84,11 +85,17 @@ public struct TransactionsScreen: View {
                 TransactionDetailsSheet(
                     isShown: $viewModel.showSheet,
                     context: .details(transaction),
-                    onDone: onModifyTransactionDone
+                    onDone: onModifyTransactionDone,
+                    onDelete: { onTransactionDelete(transaction) }
                 )
             case .none: EmptyView()
             }
         }
+    }
+
+    private func onTransactionDelete(_ transaction: AppTransaction) {
+        viewModel.onTransactionDelete(transaction)
+        transactionManager.deleteTransaction(transaction)
     }
 
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
@@ -170,7 +177,6 @@ extension TransactionsScreen {
     @Observable
     final class ViewModel {
         private(set) var transactions: [AppTransaction] = []
-
         var showSheet = false {
             didSet { showSheetDidSet() }
         }
@@ -179,6 +185,10 @@ extension TransactionsScreen {
 
         private(set) var shownSheet: Sheets? {
             didSet { shownSheetDidSet() }
+        }
+
+        func onTransactionDelete(_ transaction: AppTransaction) {
+            print("Deleting view model \(transaction)")
         }
 
         @MainActor
