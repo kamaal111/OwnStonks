@@ -56,3 +56,4 @@ yarn-error.log
 Brewfile.lock.json
 .env
 .venv
+Gemfile.lock

@@ -39,7 +39,7 @@ jobs:
         run: just bootstrap
 
       - name: Test
-        run: just test "${{ matrix.destination }}"
+        run: just test OwnStonks "${{ matrix.destination }}"
 
       - name: Check diff
         run: just assert-has-no-diffs
