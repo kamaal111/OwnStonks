@@ -65,9 +65,9 @@ archive sdk destination archive-path:
 
     CONFIGURATION="Release"
 
-    set -o pipefail && xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
+    xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
-        --workspace $WORKSPACE | xcpretty
+        --workspace $WORKSPACE
 
 [private]
 install-gems:

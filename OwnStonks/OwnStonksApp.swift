@@ -6,10 +6,8 @@
 //
 
 import SwiftUI
-import SwiftData
 import UserSettings
 import Transactions
-import PersistentData
 import ValutaConversion
 
 @main
@@ -23,7 +21,6 @@ struct OwnStonksApp: App {
                 .transactionEnvironment()
                 .userSettingsEnvironment(userSettings: userSettings)
                 .valutaConversionEnvironment()
-                .modelContainer(PersistentData.shared.dataContainer)
         }
         #if os(macOS)
         Settings {

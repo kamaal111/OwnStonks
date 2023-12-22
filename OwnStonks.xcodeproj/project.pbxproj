@@ -19,10 +19,8 @@
 		2C76E57C2B33731000C5F9A4 /* UserSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5742B33731000C5F9A4 /* UserSettings */; };
 		2C76E57D2B33731000C5F9A4 /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5732B33731000C5F9A4 /* Transactions */; };
 		2C76E57E2B33731000C5F9A4 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5712B33731000C5F9A4 /* Navigation */; };
-		2C76E57F2B33731000C5F9A4 /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2C76E5722B33731000C5F9A4 /* PersistentData */; };
 		2C76E5812B33731000C5F9A4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */; };
 		2C76E5822B33731000C5F9A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
-		2CAA42892B26187600D91B3E /* PersistentData in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA42882B26187600D91B3E /* PersistentData */; };
 		2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */ = {isa = PBXBuildFile; productRef = 2CAA428A2B26198E00D91B3E /* Transactions */; };
 		2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */ = {isa = PBXBuildFile; productRef = 2CC33C992B2A32880035ED02 /* UserSettings */; };
 /* End PBXBuildFile section */
@@ -61,7 +59,6 @@
 				2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */,
 				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
 				2C5266722B113EE3000CD2D5 /* Navigation in Frameworks */,
-				2CAA42892B26187600D91B3E /* PersistentData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,7 +70,6 @@
 				2C76E57C2B33731000C5F9A4 /* UserSettings in Frameworks */,
 				2C76E57D2B33731000C5F9A4 /* Transactions in Frameworks */,
 				2C76E57E2B33731000C5F9A4 /* Navigation in Frameworks */,
-				2C76E57F2B33731000C5F9A4 /* PersistentData in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +187,6 @@
 			name = OwnStonks;
 			packageProductDependencies = (
 				2C5266712B113EE3000CD2D5 /* Navigation */,
-				2CAA42882B26187600D91B3E /* PersistentData */,
 				2CAA428A2B26198E00D91B3E /* Transactions */,
 				2CC33C992B2A32880035ED02 /* UserSettings */,
 				2C080D742B2DF84D0082BAD1 /* ValutaConversion */,
@@ -216,7 +211,6 @@
 			name = OwnStonksDev;
 			packageProductDependencies = (
 				2C76E5712B33731000C5F9A4 /* Navigation */,
-				2C76E5722B33731000C5F9A4 /* PersistentData */,
 				2C76E5732B33731000C5F9A4 /* Transactions */,
 				2C76E5742B33731000C5F9A4 /* UserSettings */,
 				2C76E5752B33731000C5F9A4 /* ValutaConversion */,
@@ -684,10 +678,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
 		};
-		2C76E5722B33731000C5F9A4 /* PersistentData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PersistentData;
-		};
 		2C76E5732B33731000C5F9A4 /* Transactions */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Transactions;
@@ -699,10 +689,6 @@
 		2C76E5752B33731000C5F9A4 /* ValutaConversion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ValutaConversion;
-		};
-		2CAA42882B26187600D91B3E /* PersistentData */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = PersistentData;
 		};
 		2CAA428A2B26198E00D91B3E /* Transactions */ = {
 			isa = XCSwiftPackageProductDependency;
