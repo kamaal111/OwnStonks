@@ -34,6 +34,7 @@
 		2C5266602B112C24000CD2D5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		2C52666A2B112E5E000CD2D5 /* OwnStonks.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OwnStonks.xctestplan; sourceTree = "<group>"; };
 		2C52666D2B11302C000CD2D5 /* prebuild.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = prebuild.sh; sourceTree = "<group>"; };
+		2C6B8FB42B36421900190FEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonksDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonksDev.entitlements; sourceTree = "<group>"; };
 		2C76E5882B3373DE00C5F9A4 /* OwnStonksDev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OwnStonksDev.xctestplan; sourceTree = "<group>"; };
@@ -107,6 +108,7 @@
 			children = (
 				2C52665E2B112C24000CD2D5 /* OwnStonks.entitlements */,
 				2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */,
+				2C6B8FB42B36421900190FEB /* Info.plist */,
 				2C5266582B112C24000CD2D5 /* ContentView.swift */,
 				2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */,
 				2C52665C2B112C24000CD2D5 /* Assets.xcassets */,
@@ -469,6 +471,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OwnStonks/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -512,6 +515,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = OwnStonks/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.finance";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

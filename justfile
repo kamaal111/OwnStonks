@@ -53,6 +53,7 @@ archive-ios:
     ARCHIVE_PATH="$APP_NAME-iOS.xcarchive"
 
     just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
+    ls
     just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
 
 bump-version number:
@@ -62,7 +63,7 @@ bump-version number:
 export-archive export-options archive:
     #!/bin/zsh
 
-    set -o pipefail && xctools export-archive --archive-path "{{ archive }}" --export-options "{{ export-options }}" | xcpretty
+    xctools export-archive --archive-path "{{ archive }}" --export-options "{{ export-options }}"
 
 [private]
 archive sdk destination archive-path:
