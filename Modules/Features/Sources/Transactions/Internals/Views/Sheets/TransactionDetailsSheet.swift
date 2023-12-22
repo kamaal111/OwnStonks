@@ -23,15 +23,18 @@ struct TransactionDetailsSheet: View {
     @Binding var isShown: Bool
 
     let onDone: (_ transaction: AppTransaction) -> Void
+    let onDelete: () -> Void
 
     init(
         isShown: Binding<Bool>,
         context: TransactionDetailsSheetContext,
-        onDone: @escaping (_: AppTransaction) -> Void
+        onDone: @escaping (_: AppTransaction) -> Void,
+        onDelete: @escaping () -> Void = { }
     ) {
         self._isShown = isShown
         self._viewModel = State(initialValue: ViewModel(context: context))
         self.onDone = onDone
+        self.onDelete = onDelete
     }
 
     var body: some View {
@@ -91,14 +94,42 @@ struct TransactionDetailsSheet: View {
                     isEditing: viewModel.isEditing
                 )
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
+                if viewModel.isEditing {
+                    Button(action: { viewModel.handleDelete() }) {
+                        HStack {
+                            Image(systemName: "trash.fill")
+                            Text("Delete this transaction", bundle: .module)
+                        }
+                        .foregroundColor(.red)
+                    }
+                    .padding(.top, .small)
+                    .ktakeWidthEagerly(alignment: .center)
+                }
             }
             #if os(macOS)
             .padding(.vertical, .medium)
             #endif
         }
         .padding(.vertical, .medium)
+        .alert(
+            NSLocalizedString("Deletion warning", bundle: .module, comment: ""),
+            isPresented: $viewModel.deletingTransaction,
+            actions: {
+                Button(role: .destructive, action: {
+                    close()
+                    onDelete()
+                }) {
+                    Text("Sure", bundle: .module)
+                }
+                Button(role: .cancel, action: { }) {
+                    Text("No", bundle: .module)
+                }
+            }, message: {
+                Text("Are you sure you want to delete this transaction?", bundle: .module)
+            }
+        )
         #if os(macOS)
-            .frame(minWidth: 320, minHeight: viewModel.isEditing ? 380 : 260)
+        .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
     }
 
@@ -134,6 +165,7 @@ extension TransactionDetailsSheet {
         var transactionDate: Date
         var transactionType: TransactionTypes
         var amount: String
+        var deletingTransaction = false
         var pricePerUnitCurrency: Currencies {
             didSet { pricePerUnitCurrencyDidSet() }
         }
@@ -228,6 +260,11 @@ extension TransactionDetailsSheet {
         }
 
         @MainActor
+        func handleDelete() {
+            deletingTransaction = true
+        }
+
+        @MainActor
         func enableEditing() {
             withAnimation { isEditing = true }
         }
@@ -246,5 +283,5 @@ extension TransactionDetailsSheet {
 }
 
 #Preview {
-    TransactionDetailsSheet(isShown: .constant(true), context: .new(.CAD), onDone: { _ in })
+    TransactionDetailsSheet(isShown: .constant(true), context: .new(.CAD), onDone: { _ in }, onDelete: { })
 }
