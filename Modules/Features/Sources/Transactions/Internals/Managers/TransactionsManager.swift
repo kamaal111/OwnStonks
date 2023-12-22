@@ -52,6 +52,10 @@ final class TransactionsManager {
         }
     }
 
+    func deleteTransaction(_ transaction: AppTransaction) {
+        print("deleting \(transaction)")
+    }
+
     @MainActor
     func editTransaction(_ transaction: AppTransaction) throws {
         assert(transaction.id != nil)
