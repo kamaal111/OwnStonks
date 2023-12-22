@@ -42,6 +42,11 @@ test destination:
     set -o pipefail && xctools test --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty
 
+upload-ios:
+    #!/bin/zsh
+
+    just upload-app ios $APP_NAME.ipa
+
 archive-ios:
     #!/bin/zsh
 
@@ -68,6 +73,11 @@ archive sdk destination archive-path:
     xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
         --workspace $WORKSPACE
+
+[private]
+upload-app target binary-name:
+    xctools upload --file {{ binary-name }} --target {{ target }} --username kamaal.f1@gmail.com \
+        --password $APP_STORE_CONNECT_PASSWORD
 
 [private]
 install-gems:

@@ -98,3 +98,6 @@ jobs:
 
       - name: Archive
         run: just archive-ios
+
+      - name: Upload
+        run: just upload-ios
