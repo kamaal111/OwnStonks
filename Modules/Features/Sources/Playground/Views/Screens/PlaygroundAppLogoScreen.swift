@@ -13,6 +13,13 @@ import KamaalPopUp
 import KamaalExtensions
 import AppIconGenerator
 
+let PLAYGROUND_SELECTABLE_COLORS: [Color] = [
+    .green,
+    .white,
+    Color("SecondaryLogoBackgroundColor", bundle: .module),
+    .black,
+]
+
 struct PlaygroundAppLogoScreen: View {
     @EnvironmentObject private var kPopUpManager: KPopUpManager
 
@@ -100,7 +107,26 @@ struct PlaygroundAppLogoScreen: View {
                 Toggle(viewModel.hasABackground ? "Yup" : "Nope", isOn: $viewModel.hasABackground)
             }
             .padding(.bottom, .medium)
-            .padding(.vertical, .small)
+            .padding(.top, .small)
+            AppLogoColorSelector(color: $viewModel.primaryBackgroundColor, title: "Primary background color")
+                .disabled(!viewModel.hasABackground)
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.secondaryBackgroundColor, title: "Secondary background color")
+                .disabled(!viewModel.hasABackground)
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.chartColor, title: "Chart color")
+                .padding(.bottom, .medium)
+            AppLogoColorSelector(color: $viewModel.dollarColor, title: "Dollar color")
+                .padding(.bottom, .medium)
+            AppLogoColorFormRow(title: "Has curves") {
+                Toggle(viewModel.hasCurves ? "Yup" : "Nope", isOn: $viewModel.hasCurves)
+            }
+            .padding(.bottom, .medium)
+            .disabled(!viewModel.hasABackground)
+            AppLogoColorFormRow(title: "Curve size") {
+                Stepper("\(Int(viewModel.curvedCornersSize))", value: $viewModel.curvedCornersSize)
+            }
+            .disabled(!viewModel.hasABackground || !viewModel.hasCurves)
         }
     }
 }
@@ -111,11 +137,11 @@ extension PlaygroundAppLogoScreen {
         var hasCurves = true
         var curvedCornersSize: CGFloat = 16
         var hasABackground = true
-        var primaryBackgroundColor: Color = .red
-        var secondaryBackgroundColor: Color = .yellow
-        var chartColor: Color = .black
-        var dollarColor: Color = .green
-        var exportLogoSize = "400" {
+        var primaryBackgroundColor = PLAYGROUND_SELECTABLE_COLORS[1]
+        var secondaryBackgroundColor = PLAYGROUND_SELECTABLE_COLORS[2]
+        var chartColor = PLAYGROUND_SELECTABLE_COLORS[0]
+        var dollarColor = PLAYGROUND_SELECTABLE_COLORS[3]
+        var exportLogoSize: String {
             didSet { exportLogoSizeDidSet() }
         }
 
@@ -124,8 +150,12 @@ extension PlaygroundAppLogoScreen {
         private let recommendedAppIconSize = "800"
         private let fileManager = FileManager.default
 
+        init() {
+            self.exportLogoSize = recommendedAppIconSize
+        }
+
         var previewLogoView: some View {
-            logoView(size: previewLogoSize, cornerRadius: hasCurves ? curvedCornersSize : 0)
+            logoView(size: previewLogoSize, cornerRadius: curvedCornersSize)
         }
 
         var disableLogoSizeButton: Bool {
@@ -150,7 +180,8 @@ extension PlaygroundAppLogoScreen {
         func exportLogo() async {
             let logoViewData = await AppIconGenerator.transformViewToPNG(logoToExport)!
             let logoName = "logo.png"
-            let panel = try! await SavePanel.save(filename: logoName).get()
+            guard let panel = try? await SavePanel.save(filename: logoName).get() else { return }
+
             let saveURL = await panel.url!
             if fileManager.fileExists(atPath: saveURL.path) {
                 try! fileManager.removeItem(at: saveURL)
@@ -167,7 +198,8 @@ extension PlaygroundAppLogoScreen {
             defer { try? fileManager.removeItem(atPath: iconSetURL.absoluteString) }
 
             assert(!((try? fileManager.contentsOfDirectory(atPath: iconSetURL.absoluteString)) ?? []).isEmpty)
-            let panel = try! await SavePanel.save(filename: iconSetURL.lastPathComponent).get()
+            guard let panel = try? await SavePanel.save(filename: iconSetURL.lastPathComponent).get() else { return }
+
             let saveURL = await panel.url!
             if fileManager.fileExists(atPath: saveURL.path(percentEncoded: true)) {
                 try! fileManager.removeItem(at: saveURL)
