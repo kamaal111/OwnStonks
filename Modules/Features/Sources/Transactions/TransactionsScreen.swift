@@ -13,6 +13,7 @@ import KamaalPopUp
 import UserSettings
 import KamaalLogger
 import ValutaConversion
+import KamaalExtensions
 
 private let logger = KamaalLogger(from: TransactionsScreen.self, failOnError: true)
 
@@ -38,7 +39,7 @@ public struct TransactionsScreen: View {
                     transactions: viewModel.transactions,
                     layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
                     transactionAction: { transaction in viewModel.handleTransactionPress(transaction) },
-                    transactionDelete: { transaction in onTransactionDelete(transaction) }
+                    transactionDelete: { transaction in viewModel.onTransactionDelete(transaction) }
                 )
             }
             .kBindToFrameSize($viewModel.transactionsSectionSize)
@@ -55,6 +56,20 @@ public struct TransactionsScreen: View {
             #endif
         }
         .sheet(isPresented: $viewModel.showSheet) { presentedSheet }
+        .alert(
+            NSLocalizedString("Deletion warning", bundle: .module, comment: ""),
+            isPresented: $viewModel.deletingTransaction,
+            actions: {
+                Button(role: .destructive, action: { onDefiniteTransactionDelete() }) {
+                    Text("Sure", bundle: .module)
+                }
+                Button(role: .cancel, action: { }) {
+                    Text("No", bundle: .module)
+                }
+            }, message: {
+                Text("Are you sure you want to delete this transaction?", bundle: .module)
+            }
+        )
         .onAppear(perform: handleOnAppear)
         .onChange(of: userSettings.preferredForexCurrency) { _, newValue in
             Task { await handleFetchExchangeRate(of: newValue) }
@@ -86,16 +101,21 @@ public struct TransactionsScreen: View {
                     isShown: $viewModel.showSheet,
                     context: .details(transaction),
                     onDone: onModifyTransactionDone,
-                    onDelete: { onTransactionDelete(transaction) }
+                    onDelete: { viewModel.onTransactionDelete(transaction) }
                 )
             case .none: EmptyView()
             }
         }
     }
 
-    private func onTransactionDelete(_ transaction: AppTransaction) {
-        viewModel.onTransactionDelete(transaction)
-        transactionManager.deleteTransaction(transaction)
+    private func onDefiniteTransactionDelete() {
+        guard let transactionToDelete = viewModel.transactionToDelete else {
+            assertionFailure("Should have a transction to delete")
+            return
+        }
+
+        transactionManager.deleteTransaction(transactionToDelete)
+        viewModel.onDefiniteTransactionDelete()
     }
 
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
@@ -181,6 +201,9 @@ extension TransactionsScreen {
             didSet { showSheetDidSet() }
         }
 
+        var deletingTransaction = false
+        private(set) var transactionToDelete: AppTransaction?
+
         var transactionsSectionSize: CGSize = .zero
 
         private(set) var shownSheet: Sheets? {
@@ -188,7 +211,20 @@ extension TransactionsScreen {
         }
 
         func onTransactionDelete(_ transaction: AppTransaction) {
-            print("Deleting view model \(transaction)")
+            transactionToDelete = transaction
+            deletingTransaction = true
+        }
+
+        @MainActor
+        func onDefiniteTransactionDelete() {
+            guard let transactionToDelete,
+                  let transactionToDeleteIndex = transactions.findIndex(by: \.id, is: transactionToDelete.id) else {
+                assertionFailure("Should have transction to delete at this point")
+                return
+            }
+
+            withAnimation { setTransactions(transactions.removed(at: transactionToDeleteIndex)) }
+            self.transactionToDelete = nil
         }
 
         @MainActor

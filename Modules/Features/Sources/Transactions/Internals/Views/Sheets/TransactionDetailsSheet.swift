@@ -95,7 +95,7 @@ struct TransactionDetailsSheet: View {
                 )
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 if viewModel.isEditing {
-                    Button(action: { viewModel.handleDelete() }) {
+                    Button(action: handleDelete) {
                         HStack {
                             Image(systemName: "trash.fill")
                             Text("Delete this transaction", bundle: .module)
@@ -111,25 +111,8 @@ struct TransactionDetailsSheet: View {
             #endif
         }
         .padding(.vertical, .medium)
-        .alert(
-            NSLocalizedString("Deletion warning", bundle: .module, comment: ""),
-            isPresented: $viewModel.deletingTransaction,
-            actions: {
-                Button(role: .destructive, action: {
-                    close()
-                    onDelete()
-                }) {
-                    Text("Sure", bundle: .module)
-                }
-                Button(role: .cancel, action: { }) {
-                    Text("No", bundle: .module)
-                }
-            }, message: {
-                Text("Are you sure you want to delete this transaction?", bundle: .module)
-            }
-        )
         #if os(macOS)
-        .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
+            .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
     }
 
@@ -153,6 +136,11 @@ struct TransactionDetailsSheet: View {
         }
     }
 
+    func handleDelete() {
+        close()
+        onDelete()
+    }
+
     private func close() {
         isShown = false
     }
@@ -165,7 +153,6 @@ extension TransactionDetailsSheet {
         var transactionDate: Date
         var transactionType: TransactionTypes
         var amount: String
-        var deletingTransaction = false
         var pricePerUnitCurrency: Currencies {
             didSet { pricePerUnitCurrencyDidSet() }
         }
@@ -257,11 +244,6 @@ extension TransactionDetailsSheet {
                 pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
                 fees: Money(value: fees, currency: feesCurrency)
             )
-        }
-
-        @MainActor
-        func handleDelete() {
-            deletingTransaction = true
         }
 
         @MainActor
