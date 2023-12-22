@@ -10,6 +10,7 @@ import KamaalUI
 import SharedUI
 import KamaalUtils
 import KamaalPopUp
+import KamaalExtensions
 import AppIconGenerator
 
 struct PlaygroundAppLogoScreen: View {
@@ -110,7 +111,10 @@ extension PlaygroundAppLogoScreen {
         var hasCurves = true
         var curvedCornersSize: CGFloat = 16
         var hasABackground = true
-        var backgroundColor: Color = .red
+        var primaryBackgroundColor: Color = .red
+        var secondaryBackgroundColor: Color = .yellow
+        var chartColor: Color = .black
+        var dollarColor: Color = .green
         var exportLogoSize = "400" {
             didSet { exportLogoSizeDidSet() }
         }
@@ -174,14 +178,21 @@ extension PlaygroundAppLogoScreen {
 
         private var logoToExport: some View {
             let size = Double(exportLogoSize)!.cgFloat
-            return logoView(size: size, cornerRadius: hasCurves ? curvedCornersSize * (size / previewLogoSize) : 0)
+            return logoView(size: size, cornerRadius: curvedCornersSize * (size / previewLogoSize))
+        }
+
+        private var backgroundColors: [Color] {
+            guard hasABackground else { return [] }
+            return [primaryBackgroundColor, secondaryBackgroundColor]
         }
 
         private func logoView(size: CGFloat, cornerRadius: CGFloat) -> some View {
             AppLogo(
                 size: size,
-                curvedCornersSize: cornerRadius,
-                backgroundColor: hasABackground ? backgroundColor : .white.opacity(0)
+                curvedCornersSize: hasCurves ? cornerRadius : 0,
+                backgroundColors: backgroundColors,
+                chartColor: chartColor,
+                dollarColor: dollarColor
             )
         }
 
