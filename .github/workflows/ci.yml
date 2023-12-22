@@ -15,7 +15,6 @@ jobs:
     name: Test
     timeout-minutes: 20
     runs-on: macos-13
-    if: false
     strategy:
       matrix:
         destination: [
@@ -48,10 +47,18 @@ jobs:
       - name: Check diff
         run: just assert-has-no-diffs
 
-  deployIOS:
-    name: Deploy iOS
+  deploy:
+    name: Deploy
     timeout-minutes: 20
     runs-on: macos-13
+    strategy:
+      matrix:
+        include:
+          - archive-command: archive-ios
+            upload-command: upload-ios
+          # Can't deploy macOS yet, because macOS 14 is not supported yet on  GitHub actions
+          # - archive-command: archive-macos
+          #   upload-command: upload-macos
     steps:
       - name: Checkout certificates
         uses: actions/checkout@v3
@@ -97,9 +104,9 @@ jobs:
         run: just bump-version ${{ github.run_number }}
 
       - name: Archive
-        run: just archive-ios
+        run: just ${{ matrix.archive-command }}
 
       - name: Upload
         env:
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
-        run: just upload-ios
+        run: just ${{ matrix.upload-command }}

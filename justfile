@@ -42,10 +42,20 @@ test destination:
     set -o pipefail && xctools test --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty
 
+upload-macos:
+    #!/bin/zsh
+
+    echo "UPLOAD MACOS"
+
 upload-ios:
     #!/bin/zsh
 
     just upload-app ios $APP_NAME.ipa
+
+archive-macos:
+    #!/bin/zsh
+
+    echo "ARCHIVE MACOS"
 
 archive-ios:
     #!/bin/zsh

@@ -511,6 +511,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DXUKH9VF73;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -536,6 +537,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = "OwnStonks iOS";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = "OwnStonks macOS";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
 				SWIFT_EMIT_LOC_STRINGS = YES;
