@@ -33,13 +33,13 @@ make-secrets:
     python3 Scripts/make_secrets.py --output "Modules/Features/Sources/ValutaConversion/Internals/Resources/Secrets.json" \
         --forex_api_url ${FOREX_API_URL:-""}
 
-test scheme destination:
+test destination:
     #!/bin/zsh
 
     CONFIGURATION="Debug"
 
-    xctools test --configuration $CONFIGURATION --scheme "{{ scheme }}" \
-        --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty && exit ${PIPESTATUS[0]}
+    set -o pipefail && xctools test --configuration $CONFIGURATION --scheme $SCHEME \
+        --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty
 
 [private]
 install-gems:
