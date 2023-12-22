@@ -3,6 +3,7 @@ set dotenv-load
 
 WORKSPACE := "OwnStonks.xcworkspace"
 SCHEME := "OwnStonks"
+APP_NAME := "$SCHEME"
 
 default:
     just --list
@@ -40,6 +41,21 @@ test destination:
 
     set -o pipefail && xctools test --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty
+
+archive-ios:
+    #!/bin/zsh
+
+    just archive "iphoneos" "platform=iOS" "$APP_NAME-iOS.xcarchive"
+
+[private]
+archive sdk destination archive-path:
+    #!/bin/zsh
+
+    CONFIGURATION="Release"
+
+    set -o pipefail && xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
+        --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
+        --workspace $WORKSPACE | xcpretty
 
 [private]
 install-gems:
