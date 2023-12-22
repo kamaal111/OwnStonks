@@ -55,7 +55,8 @@ upload-ios:
 archive-macos:
     #!/bin/zsh
 
-    ARCHIVE_PATH="$APP_NAME-macOS.xcarchive"
+    ARCHIVE_PATH="$APP_NAME.xcarchive"
+    rm -rf $ARCHIVE_PATH
 
     just archive "macosx" "platform=macOS" "$ARCHIVE_PATH"
     just export-archive "ExportOptions/MacOS.plist" "$ARCHIVE_PATH"
@@ -63,7 +64,8 @@ archive-macos:
 archive-ios:
     #!/bin/zsh
 
-    ARCHIVE_PATH="$APP_NAME-iOS.xcarchive"
+    ARCHIVE_PATH="$APP_NAME.xcarchive"
+    rm -rf $ARCHIVE_PATH
 
     just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
     just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
@@ -83,9 +85,11 @@ archive sdk destination archive-path:
 
     CONFIGURATION="Release"
 
-    xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
-        --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
-        --workspace $WORKSPACE
+    xcodebuild archive -scheme "$SCHEME" -configuration "$CONFIGURATION" -destination "{{ destination }}" \
+        -sdk "{{ sdk }}" -archivePath "{{ archive-path }}" -workspace "$WORKSPACE"
+    # xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
+    #     --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
+    #     --workspace $WORKSPACE
     ls
 
 [private]
