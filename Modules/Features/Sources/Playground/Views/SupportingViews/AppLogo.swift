@@ -72,7 +72,7 @@ private struct PlotItem: Identifiable {
     }
 
     var yValue: PlottableValue<Double> {
-        .value("Y", point.y)
+        .value("Y", Double(point.y))
     }
 }
 
