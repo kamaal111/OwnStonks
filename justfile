@@ -45,7 +45,16 @@ test destination:
 archive-ios:
     #!/bin/zsh
 
-    just archive "iphoneos" "platform=iOS" "$APP_NAME-iOS.xcarchive"
+    ARCHIVE_PATH="$APP_NAME-iOS.xcarchive"
+
+    just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
+    just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH" 
+
+[private]
+export-archive export-options archive:
+    #!/bin/zsh
+
+    set -o pipefail && xctools export-archive --archive-path "{{ archive }}" --export-options "{{ export-options }}" | xcpretty
 
 [private]
 archive sdk destination archive-path:

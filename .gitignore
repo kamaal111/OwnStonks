@@ -58,3 +58,6 @@ Brewfile.lock.json
 .venv
 Gemfile.lock
 *.xcarchive
+ExportOptions.plist
+DistributionSummary.plist
+Packaging.log
