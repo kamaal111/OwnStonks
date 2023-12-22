@@ -86,6 +86,7 @@ archive sdk destination archive-path:
     xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
         --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
         --workspace $WORKSPACE
+    ls
 
 [private]
 upload-app target binary-name:
