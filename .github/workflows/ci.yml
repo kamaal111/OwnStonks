@@ -17,7 +17,8 @@ jobs:
     runs-on: macos-13
     strategy:
       matrix:
-        device: ["platform=iOS Simulator,name=iPhone 15 Pro Max"]
+        destination:
+          ["platform=iOS Simulator,name=iPhone 15 Pro Max", "platform=macOS"]
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v3
@@ -38,7 +39,7 @@ jobs:
         run: just bootstrap
 
       - name: Test
-        run: just test-ios "${{ matrix.device }}"
+        run: just test "${{ matrix.destination }}"
 
       - name: Check diff
         run: just assert-has-no-diffs
