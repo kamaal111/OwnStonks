@@ -100,4 +100,6 @@ jobs:
         run: just archive-ios
 
       - name: Upload
+        env:
+          APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
         run: just upload-ios
