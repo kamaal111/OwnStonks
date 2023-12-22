@@ -8,7 +8,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  XCODE_APP_NAME: Xcode_15.0.1.app
+  XCODE_APP_NAME: Xcode_15.1.app
 
 jobs:
   test:
