@@ -21,6 +21,20 @@ final class TransactionsManagerSpec: AsyncSpec {
             manager = TransactionsManager(persistentData: persistentData)
         }
 
+        describe("Deleting transactions") {
+            it("should delete transaction from storage") {
+                // Given
+                await manager.createTransaction(testTransaction)
+                let storedTransaction = manager.transactions[0]
+
+                // When
+                await manager.deleteTransaction(storedTransaction)
+
+                // Then
+                expect(manager.transactionsAreEmpty) == true
+            }
+        }
+
         describe("Edit transactions") {
             it("should edit transaction") {
                 // Given

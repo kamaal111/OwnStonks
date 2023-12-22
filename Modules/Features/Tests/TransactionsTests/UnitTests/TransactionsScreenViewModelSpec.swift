@@ -19,6 +19,34 @@ final class TransactionsScreenViewModelSpec: AsyncSpec {
             viewModel = TransactionsScreen.ViewModel()
         }
 
+        describe("deleting transactions") {
+            it("should set the right transaction to delete") {
+                // Given
+                await viewModel.setTransactions([testTransaction])
+
+                // When
+                await viewModel.onTransactionDelete(testTransaction)
+
+                // Then
+                expect(viewModel.deletingTransaction) == true
+                expect(viewModel.transactionToDelete) == testTransaction
+            }
+
+            it("should remove definitly deleted transaction") {
+                // Given
+                await viewModel.setTransactions([testTransaction])
+                await viewModel.onTransactionDelete(testTransaction)
+
+                // When
+                await viewModel.onDefiniteTransactionDelete()
+
+                // Then
+                expect(viewModel.deletingTransaction) == false
+                expect(viewModel.transactionToDelete) == nil
+                expect(viewModel.transactions.isEmpty) == true
+            }
+        }
+
         describe("ViewModel sheet state") {
             it("should show add transaction sheet") {
                 // When

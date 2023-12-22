@@ -210,6 +210,7 @@ extension TransactionsScreen {
             didSet { shownSheetDidSet() }
         }
 
+        @MainActor
         func onTransactionDelete(_ transaction: AppTransaction) {
             transactionToDelete = transaction
             deletingTransaction = true
@@ -225,6 +226,7 @@ extension TransactionsScreen {
 
             withAnimation { setTransactions(transactions.removed(at: transactionToDeleteIndex)) }
             transactionToDelete = nil
+            deletingTransaction = false
         }
 
         @MainActor
