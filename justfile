@@ -1,16 +1,11 @@
 set export
 set dotenv-load
 
-PROJECT := "OwnStonks.xcodeproj"
+WORKSPACE := "OwnStonks.xcworkspace"
 SCHEME := "OwnStonks"
 
 default:
     just --list
-
-test-ios destination:
-    #!/bin/zsh
-
-    just test $SCHEME "{{ destination }}"
 
 format:
     swiftformat .
@@ -50,14 +45,13 @@ init-python-environment:
     pip install poetry
     poetry install -n
 
-[private]
 test scheme destination:
     #!/bin/zsh
 
     CONFIGURATION="Debug"
 
     xctools test --configuration $CONFIGURATION --scheme "{{ scheme }}" \
-        --destination "{{ destination }}" --project $PROJECT
+        --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty && exit ${PIPESTATUS[0]}
 
 [private]
 brew-install-bundle:
