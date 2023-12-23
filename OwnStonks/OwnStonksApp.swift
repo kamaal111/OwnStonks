@@ -12,6 +12,12 @@ import ValutaConversion
 
 @main
 struct OwnStonksApp: App {
+    #if os(macOS)
+    @NSApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    #else
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    #endif
+
     @State private var userSettings = UserSettings()
 
     var body: some Scene {
