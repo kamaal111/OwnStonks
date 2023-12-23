@@ -83,7 +83,7 @@ jobs:
         run: just import-signing-private-key "${{ env.SIGNING_PRIVATE_KEY }}" "${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
 
       - name: Copy profiles
-        run: just copy-profiles
+        run: just copy-profiles OwnStonks
 
       - name: Git - Checkout
         uses: actions/checkout@v3
