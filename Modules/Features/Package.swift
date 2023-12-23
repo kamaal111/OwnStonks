@@ -35,6 +35,7 @@ let package = Package(
                 .product(name: "KamaalPopUp", package: "KamaalSwift"),
                 .product(name: "SharedModels", package: "SharedStuff"),
                 .product(name: "SharedUI", package: "SharedStuff"),
+                .product(name: "SharedUtils", package: "SharedStuff"),
                 "ForexKit",
                 "PersistentData",
                 "ValutaConversion",

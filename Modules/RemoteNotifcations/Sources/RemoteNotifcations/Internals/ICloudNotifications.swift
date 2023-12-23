@@ -15,7 +15,7 @@ final class ICloudNotifications {
         databaseType: .private
     )
     private let subscriptionsWanted = [
-        "CD_StoredTransaction",
+        "CD_StoredTransaction-changes",
     ]
     private let logger = KamaalLogger(from: ICloudNotifications.self, failOnError: true)
 
@@ -27,10 +27,13 @@ final class ICloudNotifications {
             .compactMap { query in (query as? CKQuerySubscription)?.recordType }
         let subscriptionsToSubscribeTo = subscriptionsWanted
             .filter { subscription in !fetchedSubscriptionsAsRecordTypes.contains(subscription) }
+            .map { subscription in subscription.split(separator: "-").dropLast().joined(separator: "-") }
         let subscribedSubsctiptions = await subscribeToChanges(subscriptionsToSubscribeTo)
         let subscriptions = fetchedSubscriptions + subscribedSubsctiptions
         self.subscriptions = subscriptions
-        logger.info("Subscribed iCloud subscriptions; \(subscriptions)")
+        logger.info(
+            "Subscribed iCloud subscriptions; \(subscriptions.map { subscription in subscription.subscriptionID })"
+        )
     }
 
     private func subscribeToChanges(_ subscriptionsToSubscribeTo: [String]) async -> [CKSubscription] {

@@ -21,7 +21,6 @@ let package = Package(
             name: "SharedModels",
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
-                .product(name: "KamaalLogger", package: "KamaalSwift"),
                 "ForexKit",
             ]
         ),
