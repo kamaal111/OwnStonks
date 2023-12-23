@@ -29,7 +29,7 @@ extension PersistentDatable {
     @MainActor
     public func filter<T: PersistentModel>(predicate: Predicate<T>?, sorts: [SortDescriptor<T>] = []) throws -> [T] {
         var fetch = FetchDescriptor<T>(predicate: predicate)
-        fetch.includePendingChanges = true
+        fetch.includePendingChanges = false
         fetch.sortBy = sorts
         return try dataContainerContext.fetch(fetch)
     }
