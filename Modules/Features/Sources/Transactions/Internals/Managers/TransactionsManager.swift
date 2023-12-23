@@ -5,7 +5,9 @@
 //  Created by Kamaal M Farah on 09/12/2023.
 //
 
+import CloudKit
 import Foundation
+import SharedUtils
 import Observation
 import KamaalLogger
 import SharedModels
@@ -20,6 +22,9 @@ final class TransactionsManager {
     private(set) var loading: Bool
 
     private let persistentData: PersistentDatable
+    private let events: [LocalNotificationEvents] = [
+        .iCloudChanges,
+    ]
 
     convenience init() {
         self.init(persistentData: PersistentData.shared)
@@ -29,6 +34,16 @@ final class TransactionsManager {
         self.storedTransactions = []
         self.loading = true
         self.persistentData = persistentData
+
+        LocalNotifications.shared.observe(
+            to: events,
+            selector: #selector(handleNotification),
+            from: self
+        )
+    }
+
+    deinit {
+        LocalNotifications.shared.removeObservers(events, from: self)
     }
 
     var transactions: [AppTransaction] {
@@ -111,6 +126,26 @@ final class TransactionsManager {
             .sorted(by: \.updatedDate!, using: .orderedDescending)
         assert(transactions.count == newStoredTransactions.count)
         storedTransactions = newStoredTransactions
+    }
+
+    @objc
+    private func handleNotification(_ notification: Notification) {
+        let event = events.find(by: \.notificationName, is: notification.name)
+        switch event {
+        case .iCloudChanges:
+            let object = notification.object as? CKNotification
+            guard let object else {
+                assertionFailure("Expected object to be CKNotification")
+                return
+            }
+
+            Task { try? await fetchTransactions() }
+            logger.info("Received notification \(notification)")
+        default:
+            let loggingMessage = "Invalid event of \(notification.name) emitted to TransactionsManager"
+            logger.warning(loggingMessage)
+            assertionFailure(loggingMessage)
+        }
     }
 
     private func withLoading<T>(_ completion: () async throws -> T) async rethrows -> T {

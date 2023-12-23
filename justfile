@@ -86,7 +86,7 @@ archive sdk destination archive-path:
     CONFIGURATION="Release"
 
     xcodebuild archive -scheme "$SCHEME" -configuration "$CONFIGURATION" -destination "{{ destination }}" \
-        -sdk "{{ sdk }}" -archivePath "{{ archive-path }}" -workspace "$WORKSPACE"
+        -sdk "{{ sdk }}" -archivePath "{{ archive-path }}" -workspace "$WORKSPACE" || exit 1
     # xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
     #     --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
     #     --workspace $WORKSPACE
