@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		2C080D752B2DF84D0082BAD1 /* ValutaConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 2C080D742B2DF84D0082BAD1 /* ValutaConversion */; };
+		2C1AC2DF2B371CE30092BFB5 /* RemoteNotifcations in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1AC2DE2B371CE30092BFB5 /* RemoteNotifcations */; };
+		2C1AC2E12B371CEA0092BFB5 /* RemoteNotifcations in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1AC2E02B371CEA0092BFB5 /* RemoteNotifcations */; };
+		2C1AC2E32B3725C40092BFB5 /* AppDelegate_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1AC2E22B3725C40092BFB5 /* AppDelegate_macOS.swift */; };
+		2C1AC2E42B3725C40092BFB5 /* AppDelegate_macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1AC2E22B3725C40092BFB5 /* AppDelegate_macOS.swift */; };
+		2C1AC2E62B3725D40092BFB5 /* AppDelegate_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1AC2E52B3725D40092BFB5 /* AppDelegate_iOS.swift */; };
+		2C1AC2E72B3725D40092BFB5 /* AppDelegate_iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1AC2E52B3725D40092BFB5 /* AppDelegate_iOS.swift */; };
+		2C1AC2ED2B37293F0092BFB5 /* SharedUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1AC2EC2B37293F0092BFB5 /* SharedUtils */; };
+		2C1AC2EF2B3729550092BFB5 /* SharedUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 2C1AC2EE2B3729550092BFB5 /* SharedUtils */; };
 		2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */; };
 		2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C5266582B112C24000CD2D5 /* ContentView.swift */; };
 		2C52665D2B112C24000CD2D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C52665C2B112C24000CD2D5 /* Assets.xcassets */; };
@@ -26,6 +34,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C1AC2DD2B371BF70092BFB5 /* RemoteNotifcations */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemoteNotifcations; sourceTree = "<group>"; };
+		2C1AC2E22B3725C40092BFB5 /* AppDelegate_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_macOS.swift; sourceTree = "<group>"; };
+		2C1AC2E52B3725D40092BFB5 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
 		2C5266532B112C24000CD2D5 /* OwnStonks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C5266582B112C24000CD2D5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -56,6 +67,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1AC2ED2B37293F0092BFB5 /* SharedUtils in Frameworks */,
+				2C1AC2DF2B371CE30092BFB5 /* RemoteNotifcations in Frameworks */,
 				2C080D752B2DF84D0082BAD1 /* ValutaConversion in Frameworks */,
 				2CC33C9A2B2A32880035ED02 /* UserSettings in Frameworks */,
 				2CAA428B2B26198E00D91B3E /* Transactions in Frameworks */,
@@ -67,6 +80,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1AC2EF2B3729550092BFB5 /* SharedUtils in Frameworks */,
+				2C1AC2E12B371CEA0092BFB5 /* RemoteNotifcations in Frameworks */,
 				2C76E57B2B33731000C5F9A4 /* ValutaConversion in Frameworks */,
 				2C76E57C2B33731000C5F9A4 /* UserSettings in Frameworks */,
 				2C76E57D2B33731000C5F9A4 /* Transactions in Frameworks */,
@@ -109,6 +124,8 @@
 				2C52665E2B112C24000CD2D5 /* OwnStonks.entitlements */,
 				2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */,
 				2C6B8FB42B36421900190FEB /* Info.plist */,
+				2C1AC2E52B3725D40092BFB5 /* AppDelegate_iOS.swift */,
+				2C1AC2E22B3725C40092BFB5 /* AppDelegate_macOS.swift */,
 				2C5266582B112C24000CD2D5 /* ContentView.swift */,
 				2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */,
 				2C52665C2B112C24000CD2D5 /* Assets.xcassets */,
@@ -150,6 +167,7 @@
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
 				2CAE16682B252B0D00F49575 /* PersistentData */,
+				2C1AC2DD2B371BF70092BFB5 /* RemoteNotifcations */,
 				2C7F5A4F2B2DCE230013A85B /* SharedStuff */,
 			);
 			path = Modules;
@@ -192,6 +210,8 @@
 				2CAA428A2B26198E00D91B3E /* Transactions */,
 				2CC33C992B2A32880035ED02 /* UserSettings */,
 				2C080D742B2DF84D0082BAD1 /* ValutaConversion */,
+				2C1AC2DE2B371CE30092BFB5 /* RemoteNotifcations */,
+				2C1AC2EC2B37293F0092BFB5 /* SharedUtils */,
 			);
 			productName = OwnStonks;
 			productReference = 2C5266532B112C24000CD2D5 /* OwnStonks.app */;
@@ -216,6 +236,8 @@
 				2C76E5732B33731000C5F9A4 /* Transactions */,
 				2C76E5742B33731000C5F9A4 /* UserSettings */,
 				2C76E5752B33731000C5F9A4 /* ValutaConversion */,
+				2C1AC2E02B371CEA0092BFB5 /* RemoteNotifcations */,
+				2C1AC2EE2B3729550092BFB5 /* SharedUtils */,
 			);
 			productName = OwnStonks;
 			productReference = 2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */;
@@ -325,7 +347,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1AC2E32B3725C40092BFB5 /* AppDelegate_macOS.swift in Sources */,
 				2C5266592B112C24000CD2D5 /* ContentView.swift in Sources */,
+				2C1AC2E62B3725D40092BFB5 /* AppDelegate_iOS.swift in Sources */,
 				2C5266572B112C24000CD2D5 /* OwnStonksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,7 +358,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1AC2E42B3725C40092BFB5 /* AppDelegate_macOS.swift in Sources */,
 				2C76E5782B33731000C5F9A4 /* ContentView.swift in Sources */,
+				2C1AC2E72B3725D40092BFB5 /* AppDelegate_iOS.swift in Sources */,
 				2C76E5792B33731000C5F9A4 /* OwnStonksApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -675,6 +701,22 @@
 		2C080D742B2DF84D0082BAD1 /* ValutaConversion */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = ValutaConversion;
+		};
+		2C1AC2DE2B371CE30092BFB5 /* RemoteNotifcations */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemoteNotifcations;
+		};
+		2C1AC2E02B371CEA0092BFB5 /* RemoteNotifcations */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemoteNotifcations;
+		};
+		2C1AC2EC2B37293F0092BFB5 /* SharedUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUtils;
+		};
+		2C1AC2EE2B3729550092BFB5 /* SharedUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SharedUtils;
 		};
 		2C5266712B113EE3000CD2D5 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;

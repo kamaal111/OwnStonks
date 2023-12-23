@@ -52,6 +52,14 @@
         "identifier" : "PersistentDataTests",
         "name" : "PersistentDataTests"
       }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:Modules\/RemoteNotifcations",
+        "identifier" : "RemoteNotifcationsTests",
+        "name" : "RemoteNotifcationsTests"
+      }
     }
   ],
   "version" : 1
