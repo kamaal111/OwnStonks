@@ -139,8 +139,11 @@ final class TransactionsManager {
                 return
             }
 
-            Task { try? await fetchTransactions() }
-            logger.info("Received notification \(notification)")
+            let fetchTransactionsTimeout: TimeInterval = 7
+            DispatchQueue.main.asyncAfter(deadline: .now() + fetchTransactionsTimeout) { [weak self] in
+                Task { try? await self?.fetchTransactions() }
+            }
+            logger.info("Received notification \(object)")
         default:
             let loggingMessage = "Invalid event of \(notification.name) emitted to TransactionsManager"
             logger.warning(loggingMessage)

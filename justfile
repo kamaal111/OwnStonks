@@ -11,7 +11,19 @@ default:
 format:
     swiftformat .
 
-bootstrap: brew-install-bundle install-node-modules init-python-environment install-gems make-secrets
+generate: make-secrets make-acknowledgments
+
+bootstrap: brew-install-bundle install-node-modules init-python-environment install-gems generate
+
+deploy-all: deploy-macos deploy-ios
+
+deploy-macos: archive-macos upload-macos
+
+deploy-ios: archive-ios upload-ios
+
+test-all:
+    just test "platform=iOS Simulator,name=iPhone 15 Pro Max"
+    just test "platform=macOS"
 
 assert-has-no-diffs:
     #!/bin/zsh
@@ -67,7 +79,7 @@ archive-ios:
     ARCHIVE_PATH="$APP_NAME.xcarchive"
     rm -rf $ARCHIVE_PATH
 
-    just archive "iphoneos" "platform=iOS" "$ARCHIVE_PATH"
+    just archive "iphoneos" "generic/platform=iOS" "$ARCHIVE_PATH"
     just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
 
 bump-version number:
@@ -85,12 +97,9 @@ archive sdk destination archive-path:
 
     CONFIGURATION="Release"
 
-    xcodebuild archive -scheme "$SCHEME" -configuration "$CONFIGURATION" -destination "{{ destination }}" \
-        -sdk "{{ sdk }}" -archivePath "{{ archive-path }}" -workspace "$WORKSPACE" || exit 1
-    # xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
-    #     --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
-    #     --workspace $WORKSPACE
-    ls
+    set -o pipefail && xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
+        --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
+        --workspace $WORKSPACE | xcpretty
 
 [private]
 upload-app target binary-name:
