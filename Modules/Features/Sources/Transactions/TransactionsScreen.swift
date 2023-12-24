@@ -38,8 +38,14 @@ public struct TransactionsScreen: View {
                 TransactionsList(
                     transactions: viewModel.transactions,
                     layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
-                    transactionAction: { transaction in viewModel.handleTransactionPress(transaction) },
-                    transactionDelete: { transaction in viewModel.onTransactionDelete(transaction) }
+                    transactionAction: { transaction in
+                        viewModel.handleTransactionPress(transaction)
+                    },
+                    transactionDelete: { transaction in
+                        guard transactionManager.transactionIsNotPendingInTheCloud(transaction) else { return }
+
+                        viewModel.onTransactionDelete(transaction)
+                    }
                 )
             }
             .kBindToFrameSize($viewModel.transactionsSectionSize)
@@ -94,12 +100,14 @@ public struct TransactionsScreen: View {
                 TransactionDetailsSheet(
                     isShown: $viewModel.showSheet,
                     context: .new(userSettings.preferredForexCurrency),
+                    isNotPendingInTheCloud: true,
                     onDone: onModifyTransactionDone
                 )
             case let .transactionDetails(transaction):
                 TransactionDetailsSheet(
                     isShown: $viewModel.showSheet,
                     context: .details(transaction),
+                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction),
                     onDone: onModifyTransactionDone,
                     onDelete: { viewModel.onTransactionDelete(transaction) }
                 )

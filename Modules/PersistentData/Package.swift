@@ -22,7 +22,9 @@ let package = Package(
             name: "PersistentData",
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
+                .product(name: "KamaalCloud", package: "KamaalSwift"),
                 .product(name: "SharedModels", package: "SharedStuff"),
+                .product(name: "SharedUtils", package: "SharedStuff"),
                 "ForexKit",
             ]
         ),

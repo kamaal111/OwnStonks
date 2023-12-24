@@ -7,18 +7,76 @@
 
 import Quick
 import Nimble
+import XCTest
+import CloudKit
 import Foundation
+import SharedUtils
 import SharedModels
+import PersistentData
+import KamaalExtensions
 @testable import Transactions
 
 final class TransactionsManagerSpec: AsyncSpec {
     override class func spec() {
         var persistentData: TestPersistentData!
+        var quickStorage: TestTransactionsQuickStorage!
         var manager: TransactionsManager!
 
         beforeEach {
             persistentData = try TestPersistentData()
-            manager = TransactionsManager(persistentData: persistentData)
+            quickStorage = TestTransactionsQuickStorage()
+            manager = TransactionsManager(persistentData: persistentData, quickStorage: quickStorage)
+        }
+
+        describe("Handle iCloud changes") {
+            it("should have a manager with pending cloud storage changes set to false by default") {
+                // Then
+                expect(quickStorage.pendingCloudChanges) == false
+            }
+
+            it("should set pending cloud changes to true after notification received") {
+                // Given
+                let testTransaction = testTransaction.setID(UUID())
+                persistentData.cloudResponse = [testTransaction.asRecord]
+
+                // When
+                LocalNotifications.shared.emit(.iCloudChanges)
+
+                // Then
+                let conditionMet = retryUntilConditionMet { quickStorage.pendingCloudChanges }
+                expect(conditionMet) == true
+            }
+
+            it("should handle iCloud changes accordingly") {
+                // Given
+                let testTransactionID = UUID()
+                let testTransaction = testTransaction.setID(testTransactionID)
+                persistentData.cloudResponse = [testTransaction.asRecord]
+
+                // When
+                LocalNotifications.shared.emit(.iCloudChanges)
+
+                // Then
+                let conditionMet = retryUntilConditionMet { manager.transactions.count == 1 }
+                expect(conditionMet) == true
+                expect(quickStorage.pendingCloudChanges) == true
+                expect(manager.transactions.first?.id) == testTransactionID
+            }
+
+            it("should set pending cloud chages to false when cloud changes are the same as stored changes") {
+                // Given
+                await manager.createTransaction(testTransaction)
+                expect(manager.transactions.count) == 1
+                let transaction = try XCTUnwrap(manager.transactions.first)
+                persistentData.cloudResponse = [transaction.asRecord]
+
+                // When
+                LocalNotifications.shared.emit(.iCloudChanges)
+
+                // Then
+                let conditionMet = retryUntilConditionMet { !quickStorage.pendingCloudChanges }
+                expect(conditionMet) == true
+            }
         }
 
         describe("Deleting transactions") {
@@ -128,7 +186,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                 expect(manager.transactions.count) == 1
 
                 // When
-                manager = TransactionsManager(persistentData: persistentData)
+                manager = TransactionsManager(persistentData: persistentData, quickStorage: quickStorage)
                 try await manager.fetchTransactions()
 
                 // Then
@@ -159,4 +217,32 @@ extension AppTransaction {
             fees: fees
         )
     }
+
+    fileprivate var asRecord: CKRecord {
+        let record = CKRecord(recordType: StoredTransaction.recordName)
+        record["CD_id"] = id?.uuidString
+        record["CD_name"] = name
+        record["CD_transactionDate"] = transactionDate
+        record["CD_transactionType"] = transactionType.rawValue
+        record["CD_amount"] = amount
+        record["CD_pricePerUnit"] = pricePerUnit.value
+        record["CD_pricePerUnitCurrency"] = pricePerUnit.currency.rawValue
+        record["CD_fees"] = fees.value
+        record["CD_feesCurrency"] = fees.currency.rawValue
+        return record
+    }
+}
+
+private func retryUntilConditionMet(_ predicate: () -> Bool, timeout: TimeInterval = 2) -> Bool {
+    var result = predicate()
+    let timeoutDate = Date(timeIntervalSinceNow: timeout)
+    repeat {
+        result = predicate()
+    } while !result && Date().compare(timeoutDate) == .orderedAscending
+
+    if !result {
+        XCTFail("Failed to meet condition")
+    }
+
+    return result
 }

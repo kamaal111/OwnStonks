@@ -13,6 +13,7 @@ struct TransactionsListItem: View {
     let transaction: AppTransaction
     let layout: TransactionsListLayouts
     let action: () -> Void
+    let onDelete: () -> Void
 
     var body: some View {
         Button(action: action) {
@@ -51,6 +52,18 @@ struct TransactionsListItem: View {
             .kInvisibleFill()
         }
         .buttonStyle(.plain)
+        .contextMenu {
+            KJustStack {
+                Button(action: { onDelete() }) {
+                    HStack {
+                        Image(systemName: "trash")
+                        Text("Delete", bundle: .module)
+                    }
+                    .foregroundColor(.accentColor)
+                }
+                .buttonStyle(.plain)
+            }
+        }
     }
 
     private func informationLabel(
@@ -98,5 +111,5 @@ private enum InformationDataKeys: CaseIterable {
 }
 
 #Preview {
-    TransactionsListItem(transaction: .preview, layout: .large, action: { })
+    TransactionsListItem(transaction: .preview, layout: .large, action: { }, onDelete: { })
 }

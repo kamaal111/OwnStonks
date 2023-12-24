@@ -5,9 +5,11 @@
 //  Created by Kamaal M Farah on 03/12/2023.
 //
 
+import CloudKit
 import ForexKit
 import Foundation
 import SharedModels
+import PersistentData
 import KamaalExtensions
 
 struct AppTransaction: Hashable, Identifiable {
@@ -18,6 +20,7 @@ struct AppTransaction: Hashable, Identifiable {
     let amount: Double
     let pricePerUnit: Money
     let fees: Money
+    var recordID: CKRecord.ID?
 
     init(
         id: UUID? = nil,
@@ -26,7 +29,8 @@ struct AppTransaction: Hashable, Identifiable {
         transactionType: TransactionTypes,
         amount: Double,
         pricePerUnit: Money,
-        fees: Money
+        fees: Money,
+        recordID: CKRecord.ID? = nil
     ) {
         self.id = id
         self.name = name
@@ -35,6 +39,36 @@ struct AppTransaction: Hashable, Identifiable {
         self.amount = amount
         self.pricePerUnit = pricePerUnit
         self.fees = fees
+        self.recordID = recordID
+    }
+
+    static func fromCKRecord(_ record: CKRecord) -> AppTransaction? {
+        guard let id = record["CD_id"] as? String, let id = UUID(uuidString: id) else { return nil }
+        guard let name = record["CD_name"] as? String else { return nil }
+        guard let transactionDate = record["CD_transactionDate"] as? Date else { return nil }
+        guard let transactionType = record["CD_transactionType"] as? String,
+              let transactionType = TransactionTypes(rawValue: transactionType) else { return nil }
+        guard let amount = record["CD_amount"] as? Double else { return nil }
+        guard let pricePerUnitValue = record["CD_pricePerUnit"] as? Double,
+              let pricePerUnitCurrency = record["CD_pricePerUnitCurrency"] as? String,
+              let pricePerUnitCurrency = Currencies(rawValue: pricePerUnitCurrency) else { return nil }
+        guard let feesValue = record["CD_fees"] as? Double,
+              let feesCurrency = record["CD_feesCurrency"] as? String,
+              let feesCurrency = Currencies(rawValue: feesCurrency) else { return nil }
+
+        let pricePerUnit = Money(value: pricePerUnitValue, currency: pricePerUnitCurrency)
+        let fees = Money(value: feesValue, currency: feesCurrency)
+
+        return AppTransaction(
+            id: id,
+            name: name,
+            transactionDate: transactionDate,
+            transactionType: transactionType,
+            amount: amount,
+            pricePerUnit: pricePerUnit,
+            fees: fees,
+            recordID: record.recordID
+        )
     }
 
     static let preview = AppTransaction(

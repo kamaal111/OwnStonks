@@ -5,13 +5,19 @@
 //  Created by Kamaal M Farah on 10/12/2023.
 //
 
+import CloudKit
 import SwiftData
 import Foundation
+import KamaalCloud
+import SharedUtils
 
 /// Utility class to rfetch, insert, and delete models.
 public final class PersistentData: PersistentDatable {
-    /// An object that manages an app’s schema and model storage configuration.
     public let dataContainer: ModelContainer
+    public let cloudContainer: KamaalCloud? = KamaalCloud(
+        containerID: SharedConfig.iCloudContainerID,
+        databaseType: .private
+    )
 
     private init() {
         let schema = Schema([StoredTransaction.self])
@@ -29,4 +35,19 @@ public final class PersistentData: PersistentDatable {
 
     /// Main shared instance of ``PersistentData/PersistentData``.
     public static let shared = PersistentData()
+
+    public func filterICloud(
+        of record: CloudQueryable.Type,
+        by predicate: NSPredicate,
+        limit: Int? = nil
+    ) async throws -> [CKRecord] {
+        guard let cloudContainer else {
+            assertionFailure("Expected cloud container not to be nil")
+            return []
+        }
+
+        return try await cloudContainer.objects
+            .filter(ofType: record.recordName, by: predicate, limit: limit)
+            .get()
+    }
 }

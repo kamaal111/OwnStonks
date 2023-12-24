@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 10/12/2023.
 //
 
+import CloudKit
 import ForexKit
 import SwiftData
 import Foundation
@@ -12,7 +13,7 @@ import SharedModels
 import KamaalExtensions
 
 @Model
-public final class StoredTransaction: Identifiable {
+public final class StoredTransaction: Identifiable, CloudQueryable {
     public let id: UUID?
     public private(set) var name: String?
     public private(set) var transactionDate: Date?
@@ -25,6 +26,9 @@ public final class StoredTransaction: Identifiable {
     public private(set) var updatedDate: Date?
     public let creationDate: Date?
 
+    @Transient
+    public private(set) var recordID: CKRecord.ID?
+
     init(
         id: UUID,
         name: String,
@@ -34,7 +38,8 @@ public final class StoredTransaction: Identifiable {
         pricePerUnit: Money,
         fees: Money,
         updatedDate: Date = Date(),
-        creationDate: Date = Date()
+        creationDate: Date = Date(),
+        recordID: CKRecord.ID? = nil
     ) {
         assert(!name.trimmingByWhitespacesAndNewLines.isEmpty)
         self.id = id
@@ -48,7 +53,10 @@ public final class StoredTransaction: Identifiable {
         self.feesCurrency = fees.currency.rawValue
         self.updatedDate = updatedDate
         self.creationDate = creationDate
+        self.recordID = recordID
     }
+
+    public static let recordName = "CD_StoredTransaction"
 
     public func delete() {
         modelContext?.delete(self)

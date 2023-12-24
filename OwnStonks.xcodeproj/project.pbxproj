@@ -49,8 +49,8 @@
 		2C6B8FB42B36421900190FEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		2C76E5862B33731000C5F9A4 /* OwnStonksDev.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonksDev.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C76E5872B3373AB00C5F9A4 /* OwnStonksDev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OwnStonksDev.entitlements; sourceTree = "<group>"; };
-		2C76E5882B3373DE00C5F9A4 /* OwnStonksDev.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = OwnStonksDev.xctestplan; sourceTree = "<group>"; };
 		2C7F5A4F2B2DCE230013A85B /* SharedStuff */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedStuff; sourceTree = "<group>"; };
+		2C80EAF22B3885C60037488E /* Transactions.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = Transactions.xctestplan; sourceTree = "<group>"; };
 		2C840D792B1255190043F850 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		2C840D7A2B1255850043F850 /* Features */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Features; sourceTree = "<group>"; };
 		2CAE16682B252B0D00F49575 /* PersistentData */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PersistentData; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				2C52666A2B112E5E000CD2D5 /* OwnStonks.xctestplan */,
-				2C76E5882B3373DE00C5F9A4 /* OwnStonksDev.xctestplan */,
+				2C80EAF22B3885C60037488E /* Transactions.xctestplan */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -492,7 +492,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonks.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -535,7 +535,7 @@
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonks.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = DXUKH9VF73;
@@ -582,7 +582,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -624,7 +624,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 50;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
 				ENABLE_HARDENED_RUNTIME = YES;
