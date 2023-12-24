@@ -22,17 +22,20 @@ struct TransactionDetailsSheet: View {
 
     @Binding var isShown: Bool
 
+    let isNotPendingInTheCloud: Bool
     let onDone: (_ transaction: AppTransaction) -> Void
     let onDelete: () -> Void
 
     init(
         isShown: Binding<Bool>,
         context: TransactionDetailsSheetContext,
+        isNotPendingInTheCloud: Bool,
         onDone: @escaping (_: AppTransaction) -> Void,
         onDelete: @escaping () -> Void = { }
     ) {
         self._isShown = isShown
         self._viewModel = State(initialValue: ViewModel(context: context))
+        self.isNotPendingInTheCloud = isNotPendingInTheCloud
         self.onDone = onDone
         self.onDelete = onDelete
     }
@@ -43,7 +46,9 @@ struct TransactionDetailsSheet: View {
             leadingNavigationButton: { navigationButton(label: "Close", action: close) },
             trailingNavigationButton: {
                 KJustStack {
-                    if viewModel.isEditing {
+                    if !isNotPendingInTheCloud {
+                        Text("")
+                    } else if viewModel.isEditing {
                         navigationButton(label: "Done", action: handleDone).disabled(!viewModel.transactionIsValid)
                     } else {
                         navigationButton(label: "Edit", action: { viewModel.enableEditing() })
@@ -94,7 +99,7 @@ struct TransactionDetailsSheet: View {
                     isEditing: viewModel.isEditing
                 )
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
-                if viewModel.isEditing {
+                if viewModel.isEditing, !viewModel.isNew {
                     Button(action: handleDelete) {
                         HStack {
                             Image(systemName: "trash.fill")
@@ -163,6 +168,7 @@ extension TransactionDetailsSheet {
         private(set) var isEditing: Bool
 
         let context: TransactionDetailsSheetContext
+        let isNew: Bool
 
         convenience init(context: TransactionDetailsSheetContext) {
             switch context {
@@ -175,7 +181,8 @@ extension TransactionDetailsSheet {
                     amount: 0,
                     pricePerUnit: Money(value: 0, currency: preferredCurrency),
                     fees: Money(value: 0, currency: preferredCurrency),
-                    isEditing: true
+                    isEditing: true,
+                    isNew: true
                 )
             case let .details(transaction):
                 self.init(
@@ -186,7 +193,8 @@ extension TransactionDetailsSheet {
                     amount: transaction.amount,
                     pricePerUnit: transaction.pricePerUnit,
                     fees: transaction.fees,
-                    isEditing: false
+                    isEditing: false,
+                    isNew: false
                 )
             }
         }
@@ -199,7 +207,8 @@ extension TransactionDetailsSheet {
             amount: Double,
             pricePerUnit: Money,
             fees: Money,
-            isEditing: Bool
+            isEditing: Bool,
+            isNew: Bool
         ) {
             self.context = context
             self.name = name
@@ -211,6 +220,7 @@ extension TransactionDetailsSheet {
             self.feesCurrency = fees.currency
             self.fees = String(fees.value)
             self.isEditing = isEditing
+            self.isNew = isNew
         }
 
         var transactionIsValid: Bool {
@@ -265,5 +275,11 @@ extension TransactionDetailsSheet {
 }
 
 #Preview {
-    TransactionDetailsSheet(isShown: .constant(true), context: .new(.CAD), onDone: { _ in }, onDelete: { })
+    TransactionDetailsSheet(
+        isShown: .constant(true),
+        context: .new(.CAD),
+        isNotPendingInTheCloud: true,
+        onDone: { _ in },
+        onDelete: { }
+    )
 }

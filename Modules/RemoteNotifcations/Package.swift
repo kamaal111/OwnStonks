@@ -14,6 +14,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
+        .package(path: "../SharedStuff"),
     ],
     targets: [
         .target(
@@ -21,6 +22,7 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalCloud", package: "KamaalSwift"),
                 .product(name: "KamaalLogger", package: "KamaalSwift"),
+                .product(name: "SharedUtils", package: "SharedStuff"),
             ]
         ),
         .testTarget(

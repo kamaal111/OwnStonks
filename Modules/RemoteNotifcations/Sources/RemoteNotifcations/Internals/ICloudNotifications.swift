@@ -6,12 +6,14 @@
 //
 
 import CloudKit
+import SwiftData
 import KamaalCloud
 import KamaalLogger
+import SharedUtils
 
 final class ICloudNotifications {
     private let cloud = KamaalCloud(
-        containerID: "iCloud.com.io.kamaal.OwnStonks",
+        containerID: SharedConfig.iCloudContainerID,
         databaseType: .private
     )
     private let subscriptionsWanted = [

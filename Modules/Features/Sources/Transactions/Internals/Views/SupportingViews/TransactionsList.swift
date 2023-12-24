@@ -24,9 +24,9 @@ struct TransactionsList: View {
             TransactionsListItem(
                 transaction: transaction,
                 layout: layout,
-                action: { transactionAction(transaction) }
+                action: { transactionAction(transaction) },
+                onDelete: { transactionDelete(transaction) }
             )
-            .contextMenu { buildContextMenu(for: transaction) }
             .focusable()
             .onKeyPress { keyPress in handleKeyPress(keyPress, transaction: transaction) }
             #if os(macOS)
@@ -37,19 +37,6 @@ struct TransactionsList: View {
                 Divider()
             }
             #endif
-        }
-    }
-
-    private func buildContextMenu(for transaction: AppTransaction) -> some View {
-        KJustStack {
-            Button(action: { transactionDelete(transaction) }) {
-                HStack {
-                    Image(systemName: "trash")
-                    Text("Delete", bundle: .module)
-                }
-                .foregroundColor(.accentColor)
-            }
-            .buttonStyle(.plain)
         }
     }
 
