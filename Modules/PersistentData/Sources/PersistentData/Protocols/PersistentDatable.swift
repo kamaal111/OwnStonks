@@ -14,9 +14,16 @@ import KamaalCloud
 public protocol PersistentDatable {
     /// An object that manages an app’s schema and model storage configuration.
     var dataContainer: ModelContainer { get }
+
     /// An object that manages the iCloud objects.
     var cloudContainer: KamaalCloud? { get }
 
+    /// Fetching and filtering iCloud objects.
+    /// - Parameters:
+    ///   - record: The ``CloudQueryable`` object to fetch for.
+    ///   - predicate: The query to filter on.
+    ///   - limit: The amount of items limit the response on.
+    /// - Returns: A array of `CKRecord` containing the filtered on objects.
     func filterICloud(
         of record: CloudQueryable.Type,
         by predicate: NSPredicate,
@@ -52,6 +59,9 @@ extension PersistentDatable {
         try filter(predicate: nil, sorts: sorts)
     }
 
+    /// List iCloud objects.
+    /// - Parameter record: The ``CloudQueryable`` object to fetch for.
+    /// - Returns: A array of `CKRecord` containing the filtered on objects.
     public func listICloud(of record: CloudQueryable.Type) async throws -> [CKRecord] {
         let predicate = NSPredicate(value: true)
         return try await filterICloud(of: record, by: predicate, limit: nil)

@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// A configuration enum with shared configuration.
 public enum SharedConfig {
+    /// The shared iCloud container ID.
     public static let iCloudContainerID = "iCloud.com.io.kamaal.OwnStonks"
 }
