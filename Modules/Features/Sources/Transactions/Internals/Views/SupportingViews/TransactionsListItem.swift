@@ -14,6 +14,7 @@ struct TransactionsListItem: View {
     let layout: TransactionsListLayouts
     let action: () -> Void
     let onDelete: () -> Void
+    let onEdit: () -> Void
 
     var body: some View {
         Button(action: action) {
@@ -54,14 +55,18 @@ struct TransactionsListItem: View {
         .buttonStyle(.plain)
         .contextMenu {
             KJustStack {
-                Button(action: { onDelete() }) {
+                Button(action: { onEdit() }) {
+                    HStack {
+                        Image(systemName: "pencil")
+                        Text("Edit", bundle: .module)
+                    }
+                }
+                Button(role: .destructive, action: { onDelete() }) {
                     HStack {
                         Image(systemName: "trash")
                         Text("Delete", bundle: .module)
                     }
-                    .foregroundColor(.accentColor)
                 }
-                .buttonStyle(.plain)
             }
         }
     }
@@ -111,5 +116,5 @@ private enum InformationDataKeys: CaseIterable {
 }
 
 #Preview {
-    TransactionsListItem(transaction: .preview, layout: .large, action: { }, onDelete: { })
+    TransactionsListItem(transaction: .preview, layout: .large, action: { }, onDelete: { }, onEdit: { })
 }

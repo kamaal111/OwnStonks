@@ -18,6 +18,7 @@ struct TransactionsList: View {
     let layout: TransactionsListLayouts
     let transactionAction: (_ transaction: AppTransaction) -> Void
     let transactionDelete: (_ transaction: AppTransaction) -> Void
+    let transactionEdit: (_ transaction: AppTransaction) -> Void
 
     var body: some View {
         ForEach(transactions) { transaction in
@@ -25,7 +26,8 @@ struct TransactionsList: View {
                 transaction: transaction,
                 layout: layout,
                 action: { transactionAction(transaction) },
-                onDelete: { transactionDelete(transaction) }
+                onDelete: { transactionDelete(transaction) },
+                onEdit: { transactionEdit(transaction) }
             )
             .focusable()
             .onKeyPress { keyPress in handleKeyPress(keyPress, transaction: transaction) }
@@ -53,5 +55,11 @@ struct TransactionsList: View {
 }
 
 #Preview {
-    TransactionsList(transactions: [], layout: .large, transactionAction: { _ in }, transactionDelete: { _ in })
+    TransactionsList(
+        transactions: [],
+        layout: .large,
+        transactionAction: { _ in },
+        transactionDelete: { _ in },
+        transactionEdit: { _ in }
+    )
 }

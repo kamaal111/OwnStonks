@@ -15,6 +15,7 @@ import KamaalExtensions
 enum TransactionDetailsSheetContext: Equatable {
     case new(_ preferredCurrency: Currencies)
     case details(_ transaction: AppTransaction)
+    case edit(_ transaction: AppTransaction)
 }
 
 struct TransactionDetailsSheet: View {
@@ -198,6 +199,18 @@ extension TransactionDetailsSheet {
                     isEditing: false,
                     isNew: false
                 )
+            case let .edit(transaction):
+                self.init(
+                    context: context,
+                    name: transaction.name,
+                    transactionDate: transaction.transactionDate,
+                    transactionType: transaction.transactionType,
+                    amount: transaction.amount,
+                    pricePerUnit: transaction.pricePerUnit,
+                    fees: transaction.fees,
+                    isEditing: true,
+                    isNew: false
+                )
             }
         }
 
@@ -233,6 +246,7 @@ extension TransactionDetailsSheet {
             switch context {
             case .new: NSLocalizedString("Add Transaction", bundle: .module, comment: "")
             case let .details(transaction): transaction.name
+            case let .edit(transaction): transaction.name
             }
         }
 

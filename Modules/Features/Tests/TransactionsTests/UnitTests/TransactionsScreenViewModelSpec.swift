@@ -61,7 +61,17 @@ final class TransactionsScreenViewModelSpec: AsyncSpec {
                 // When
                 await viewModel.handleTransactionPress(testTransaction)
 
+                // Then
                 expect(viewModel.shownSheet) == .transactionDetails(testTransaction)
+                expect(viewModel.showSheet) == true
+            }
+
+            it("should open transaction detail sheet, but directly in edit mode") {
+                // When
+                await viewModel.handleTransactionEditSelect(testTransaction)
+
+                // Then
+                expect(viewModel.shownSheet) == .transactionEdit(testTransaction)
                 expect(viewModel.showSheet) == true
             }
 
