@@ -143,7 +143,9 @@ struct TransactionDetailsSheet: View {
 
     func handleDelete() {
         close()
-        onDelete()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            onDelete()
+        }
     }
 
     private func close() {
