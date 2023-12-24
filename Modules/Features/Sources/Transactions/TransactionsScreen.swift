@@ -45,6 +45,9 @@ public struct TransactionsScreen: View {
                         guard transactionManager.transactionIsNotPendingInTheCloud(transaction) else { return }
 
                         viewModel.onTransactionDelete(transaction)
+                    },
+                    transactionEdit: { transaction in
+                        viewModel.handleTransactionEditSelect(transaction)
                     }
                 )
             }
@@ -97,23 +100,47 @@ public struct TransactionsScreen: View {
         KJustStack {
             switch viewModel.shownSheet {
             case .addTransction:
-                TransactionDetailsSheet(
-                    isShown: $viewModel.showSheet,
+                makeTransactionDetailsSheet(
                     context: .new(userSettings.preferredForexCurrency),
-                    isNotPendingInTheCloud: true,
-                    onDone: onModifyTransactionDone
+                    transaction: nil,
+                    isNotPendingInTheCloud: true
                 )
             case let .transactionDetails(transaction):
-                TransactionDetailsSheet(
-                    isShown: $viewModel.showSheet,
+                makeTransactionDetailsSheet(
                     context: .details(transaction),
-                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction),
-                    onDone: onModifyTransactionDone,
-                    onDelete: { viewModel.onTransactionDelete(transaction) }
+                    transaction: transaction,
+                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction)
+                )
+            case let .transactionEdit(transaction):
+                makeTransactionDetailsSheet(
+                    context: .edit(transaction),
+                    transaction: transaction,
+                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction)
                 )
             case .none: EmptyView()
             }
         }
+    }
+
+    private func makeTransactionDetailsSheet(
+        context: TransactionDetailsSheetContext,
+        transaction: AppTransaction?,
+        isNotPendingInTheCloud: Bool
+    ) -> some View {
+        TransactionDetailsSheet(
+            isShown: $viewModel.showSheet,
+            context: context,
+            isNotPendingInTheCloud: isNotPendingInTheCloud,
+            onDone: onModifyTransactionDone,
+            onDelete: {
+                guard let transaction else {
+                    assertionFailure("Should not be deleting if transaction is not present for some reason")
+                    return
+                }
+
+                viewModel.onTransactionDelete(transaction)
+            }
+        )
     }
 
     private func onDefiniteTransactionDelete() {
@@ -129,7 +156,7 @@ public struct TransactionsScreen: View {
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
         switch viewModel.shownSheet {
         case .addTransction: transactionManager.createTransaction(transaction)
-        case .transactionDetails:
+        case .transactionDetails, .transactionEdit:
             do {
                 try transactionManager.editTransaction(transaction)
             } catch {
@@ -252,6 +279,11 @@ extension TransactionsScreen {
             shownSheet = .transactionDetails(transaction)
         }
 
+        @MainActor
+        func handleTransactionEditSelect(_ transaction: AppTransaction) {
+            shownSheet = .transactionEdit(transaction)
+        }
+
         private func shownSheetDidSet() {
             if shownSheet == nil, showSheet {
                 showSheet = false
@@ -270,6 +302,7 @@ extension TransactionsScreen {
     enum Sheets: Equatable {
         case addTransction
         case transactionDetails(_ transaction: AppTransaction)
+        case transactionEdit(_ transaction: AppTransaction)
     }
 }
 
