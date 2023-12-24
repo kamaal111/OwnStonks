@@ -63,14 +63,13 @@ final class TransactionsManager {
         return storedTransactionsIDs.contains(transactionID)
     }
 
-    @MainActor
     func fetchTransactions() async throws {
         try await withLoading {
-            let storedTransactions: [StoredTransaction] = try persistentData
+            let storedTransactions: [StoredTransaction] = try await persistentData
                 .list(sorts: [SortDescriptor(\.updatedDate, order: .reverse)])
 
             if !quickStorage.pendingCloudChanges {
-                setStoredTransactions(storedTransactions)
+                await setStoredTransactions(storedTransactions)
                 return
             }
 
@@ -87,12 +86,12 @@ final class TransactionsManager {
             if fetchedRecordIDs == transactionsIDs {
                 logger.info("Fetched from iCloud and no more changes pending")
                 quickStorage.pendingCloudChanges = false
-                setStoredTransactions(storedTransactions)
+                await setStoredTransactions(storedTransactions)
                 return
             }
 
             logger.info("Fetched from iCloud directly and still changes are still pending")
-            setTransactions(fetchedCloudRecordsTransctions)
+            await setTransactions(fetchedCloudRecordsTransctions)
         }
 
         logger.info("Successfully fetched \(transactions.count) transctions")
