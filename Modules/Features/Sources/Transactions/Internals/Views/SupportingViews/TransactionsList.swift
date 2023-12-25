@@ -15,7 +15,6 @@ enum TransactionsListLayouts {
 
 struct TransactionsList: View {
     let transactions: [AppTransaction]
-    let layout: TransactionsListLayouts
     let transactionAction: (_ transaction: AppTransaction) -> Void
     let transactionDelete: (_ transaction: AppTransaction) -> Void
     let transactionEdit: (_ transaction: AppTransaction) -> Void
@@ -24,7 +23,6 @@ struct TransactionsList: View {
         ForEach(transactions) { transaction in
             TransactionsListItem(
                 transaction: transaction,
-                layout: layout,
                 action: { transactionAction(transaction) },
                 onDelete: { transactionDelete(transaction) },
                 onEdit: { transactionEdit(transaction) }
@@ -57,7 +55,6 @@ struct TransactionsList: View {
 #Preview {
     TransactionsList(
         transactions: [],
-        layout: .large,
         transactionAction: { _ in },
         transactionDelete: { _ in },
         transactionEdit: { _ in }

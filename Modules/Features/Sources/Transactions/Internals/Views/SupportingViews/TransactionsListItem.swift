@@ -8,10 +8,10 @@
 import SwiftUI
 import SharedUI
 import KamaalUI
+import SharedModels
 
 struct TransactionsListItem: View {
     let transaction: AppTransaction
-    let layout: TransactionsListLayouts
     let action: () -> Void
     let onDelete: () -> Void
     let onEdit: () -> Void
@@ -29,24 +29,8 @@ struct TransactionsListItem: View {
                     )
                 }
                 .padding(.trailing, .medium)
-                if layout == .medium {
-                    VStack(alignment: .leading) {
-                        ForEach(InformationDataKeys.allCases, id: \.self) { key in
-                            informationLabel(key.localizedStringKey, value: informationData[key]!)
-                        }
-                    }
-                } else {
-                    VStack(alignment: .leading) {
-                        ForEach([InformationDataKeys.transactionDate, InformationDataKeys.amount], id: \.self) { key in
-                            informationLabel(key.localizedStringKey, value: informationData[key]!)
-                        }
-                    }
-                    .padding(.trailing, .medium)
-                    VStack(alignment: .leading) {
-                        ForEach([InformationDataKeys.pricePerUnit, InformationDataKeys.fees], id: \.self) { key in
-                            informationLabel(key.localizedStringKey, value: informationData[key]!)
-                        }
-                    }
+                VStack(alignment: .leading) {
+                    informationLabel("Price", value: totalPrice)
                 }
             }
             .ktakeWidthEagerly(alignment: .leading)
@@ -83,13 +67,16 @@ struct TransactionsListItem: View {
         )
     }
 
-    private var informationData: [InformationDataKeys: String] {
-        [
-            .transactionDate: Self.dateFormatter.string(from: transaction.transactionDate),
-            .amount: String(transaction.amount),
-            .pricePerUnit: transaction.pricePerUnit.localized,
-            .fees: transaction.fees.localized,
-        ]
+    private var totalPrice: String {
+        let totalPriceExcludingFees = transaction.totalPriceExcludingFees
+        let fees = transaction.fees
+        if totalPriceExcludingFees.currency == fees.currency {
+            let totalPriceValue = totalPriceExcludingFees.value + fees.value
+            let totalPriceMoney = Money(value: totalPriceValue, currency: totalPriceExcludingFees.currency)
+            return totalPriceMoney.localized
+        }
+
+        return "\(totalPriceExcludingFees.localized) + \(fees.localized)"
     }
 
     private static let dateFormatter: DateFormatter = {
@@ -99,22 +86,6 @@ struct TransactionsListItem: View {
     }()
 }
 
-private enum InformationDataKeys: CaseIterable {
-    case transactionDate
-    case amount
-    case pricePerUnit
-    case fees
-
-    var localizedStringKey: String {
-        switch self {
-        case .transactionDate: "Transaction Date"
-        case .amount: "Amount"
-        case .pricePerUnit: "Price per unit"
-        case .fees: "Fees"
-        }
-    }
-}
-
 #Preview {
-    TransactionsListItem(transaction: .preview, layout: .large, action: { }, onDelete: { }, onEdit: { })
+    TransactionsListItem(transaction: .preview, action: { }, onDelete: { }, onEdit: { })
 }
