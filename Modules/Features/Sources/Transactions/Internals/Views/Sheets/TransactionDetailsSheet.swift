@@ -112,9 +112,7 @@ struct TransactionDetailsSheet: View {
                     .ktakeWidthEagerly(alignment: .center)
                 }
             }
-            #if os(macOS)
             .padding(.vertical, .medium)
-            #endif
         }
         .padding(.vertical, .medium)
         #if os(macOS)
