@@ -13,7 +13,7 @@ import SharedModels
 import KamaalExtensions
 
 @Model
-public final class StoredTransaction: Identifiable, CloudQueryable {
+public final class StoredTransaction: Identifiable {
     public let id: UUID?
     public private(set) var name: String?
     public private(set) var transactionDate: Date?
@@ -55,8 +55,6 @@ public final class StoredTransaction: Identifiable, CloudQueryable {
         self.creationDate = creationDate
         self.recordID = recordID
     }
-
-    public static let recordName = "CD_StoredTransaction"
 
     public func delete() {
         modelContext?.delete(self)

@@ -73,7 +73,7 @@ final class TransactionsManager {
                 return
             }
 
-            let fetchedCloudRecords = try await persistentData.listICloud(of: StoredTransaction.self)
+            let fetchedCloudRecords = try await persistentData.listICloud(of: AppTransaction.self)
             let fetchedCloudRecordsTransctions = fetchedCloudRecords
                 .compactMap(AppTransaction.fromCKRecord(_:))
             assert(fetchedCloudRecords.count == fetchedCloudRecordsTransctions.count)

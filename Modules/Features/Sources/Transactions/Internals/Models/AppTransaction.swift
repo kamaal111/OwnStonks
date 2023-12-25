@@ -12,7 +12,7 @@ import SharedModels
 import PersistentData
 import KamaalExtensions
 
-struct AppTransaction: Hashable, Identifiable {
+struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     let id: UUID?
     let name: String
     let transactionDate: Date
@@ -46,18 +46,44 @@ struct AppTransaction: Hashable, Identifiable {
         Money(value: pricePerUnit.value * amount, currency: pricePerUnit.currency)
     }
 
+    var asCKRecord: CKRecord {
+        let initialRecord = if let recordID {
+            CKRecord(recordType: Self.recordName, recordID: recordID)
+        } else {
+            CKRecord(recordType: Self.recordName)
+        }
+        return AppTransactionCloudKeys.allCases.reduce(initialRecord) { record, key in
+            let ckRecordKey = key.ckRecordKey
+            switch key {
+            case .id: record[ckRecordKey] = id?.uuidString
+            case .name: record[ckRecordKey] = name
+            case .transactionDate: record[ckRecordKey] = transactionDate
+            case .transactionType: record[ckRecordKey] = transactionType.rawValue
+            case .amount: record[ckRecordKey] = amount
+            case .pricePerUnit: record[ckRecordKey] = pricePerUnit.value
+            case .pricePerUnitCurrency: record[ckRecordKey] = pricePerUnit.currency.rawValue
+            case .fees: record[ckRecordKey] = fees.value
+            case .feesCurrency: record[ckRecordKey] = fees.currency.rawValue
+            case .updatedDate, .creationDate: break
+            }
+            return record
+        }
+    }
+
+    static let recordName = "CD_StoredTransaction"
+
     static func fromCKRecord(_ record: CKRecord) -> AppTransaction? {
-        guard let id = record["CD_id"] as? String, let id = UUID(uuidString: id) else { return nil }
-        guard let name = record["CD_name"] as? String else { return nil }
-        guard let transactionDate = record["CD_transactionDate"] as? Date else { return nil }
-        guard let transactionType = record["CD_transactionType"] as? String,
+        guard let id = record[.id] as? String, let id = UUID(uuidString: id) else { return nil }
+        guard let name = record[.name] as? String else { return nil }
+        guard let transactionDate = record[.transactionDate] as? Date else { return nil }
+        guard let transactionType = record[.transactionType] as? String,
               let transactionType = TransactionTypes(rawValue: transactionType) else { return nil }
-        guard let amount = record["CD_amount"] as? Double else { return nil }
-        guard let pricePerUnitValue = record["CD_pricePerUnit"] as? Double,
-              let pricePerUnitCurrency = record["CD_pricePerUnitCurrency"] as? String,
+        guard let amount = record[.amount] as? Double else { return nil }
+        guard let pricePerUnitValue = record[.pricePerUnit] as? Double,
+              let pricePerUnitCurrency = record[.pricePerUnitCurrency] as? String,
               let pricePerUnitCurrency = Currencies(rawValue: pricePerUnitCurrency) else { return nil }
-        guard let feesValue = record["CD_fees"] as? Double,
-              let feesCurrency = record["CD_feesCurrency"] as? String,
+        guard let feesValue = record[.fees] as? Double,
+              let feesCurrency = record[.feesCurrency] as? String,
               let feesCurrency = Currencies(rawValue: feesCurrency) else { return nil }
 
         let pricePerUnit = Money(value: pricePerUnitValue, currency: pricePerUnitCurrency)
@@ -83,4 +109,28 @@ struct AppTransaction: Hashable, Identifiable {
         pricePerUnit: Money(value: 100, currency: .USD),
         fees: Money(value: 1, currency: .EUR)
     )
+}
+
+private enum AppTransactionCloudKeys: String, CaseIterable {
+    case id
+    case name
+    case transactionDate
+    case transactionType
+    case amount
+    case pricePerUnit
+    case pricePerUnitCurrency
+    case fees
+    case feesCurrency
+    case updatedDate
+    case creationDate
+
+    var ckRecordKey: String {
+        "CD_\(rawValue)"
+    }
+}
+
+extension CKRecord {
+    fileprivate subscript(key: AppTransactionCloudKeys) -> Any? {
+        self[key.ckRecordKey]
+    }
 }
