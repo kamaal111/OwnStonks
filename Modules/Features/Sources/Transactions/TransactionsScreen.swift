@@ -36,7 +36,7 @@ public struct TransactionsScreen: View {
                     AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
                 }
                 TransactionsList(
-                    transactions: viewModel.transactions,
+                    transactions: viewModel.convertedTransactions,
                     transactionAction: handleTransactionAction,
                     transactionDelete: handleTransactionDelete,
                     transactionEdit: handleTransactionEdit
@@ -73,7 +73,9 @@ public struct TransactionsScreen: View {
         .onChange(of: userSettings.preferredForexCurrency) { _, newValue in
             Task { await handleFetchExchangeRate(of: newValue) }
         }
-        .onChange(of: transactionManager.transactions) { _, _ in viewModel.setTransactions(convertTransactions()) }
+        .onChange(of: transactionManager.transactions) { _, _ in
+            viewModel.setConvertedTransactions(convertTransactions())
+        }
     }
 
     private var toolbarItem: some View {
@@ -200,7 +202,7 @@ public struct TransactionsScreen: View {
             async let fetchTransactionWait: () = handleFetchingTransactions()
             async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
             _ = await [fetchTransactionWait, fetchExchangeRateWait]
-            viewModel.setTransactions(convertTransactions())
+            viewModel.setConvertedTransactions(convertTransactions())
         }
     }
 
@@ -232,7 +234,7 @@ public struct TransactionsScreen: View {
             )
             return
         }
-        viewModel.setTransactions(convertTransactions())
+        viewModel.setConvertedTransactions(convertTransactions())
     }
 
     private func handleFetchingTransactions() async {
@@ -245,7 +247,7 @@ public struct TransactionsScreen: View {
             )
             return
         }
-        viewModel.setTransactions(convertTransactions())
+        viewModel.setConvertedTransactions(convertTransactions())
     }
 
     private func showError(with title: String, from error: Error) {
@@ -257,7 +259,7 @@ public struct TransactionsScreen: View {
 extension TransactionsScreen {
     @Observable
     final class ViewModel {
-        private(set) var transactions: [AppTransaction] = []
+        private(set) var convertedTransactions: [AppTransaction] = []
         var showSheet = false {
             didSet { showSheetDidSet() }
         }
@@ -278,19 +280,20 @@ extension TransactionsScreen {
         @MainActor
         func onDefiniteTransactionDelete() {
             guard let transactionToDeleteID = transactionToDelete?.id,
-                  let transactionToDeleteIndex = transactions.findIndex(by: \.id, is: transactionToDeleteID) else {
+                  let transactionToDeleteIndex = convertedTransactions.findIndex(by: \.id, is: transactionToDeleteID)
+            else {
                 assertionFailure("Should have transction to delete at this point")
                 return
             }
 
-            withAnimation { setTransactions(transactions.removed(at: transactionToDeleteIndex)) }
+            withAnimation { setConvertedTransactions(convertedTransactions.removed(at: transactionToDeleteIndex)) }
             transactionToDelete = nil
             deletingTransaction = false
         }
 
         @MainActor
-        func setTransactions(_ transactions: [AppTransaction]) {
-            self.transactions = transactions
+        func setConvertedTransactions(_ transactions: [AppTransaction]) {
+            convertedTransactions = transactions
         }
 
         @MainActor
