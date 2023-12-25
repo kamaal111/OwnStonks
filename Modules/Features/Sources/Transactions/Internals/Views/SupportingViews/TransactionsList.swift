@@ -8,11 +8,6 @@
 import SwiftUI
 import KamaalUI
 
-enum TransactionsListLayouts {
-    case medium
-    case large
-}
-
 struct TransactionsList: View {
     let transactions: [AppTransaction]
     let transactionAction: (_ transaction: AppTransaction) -> Void

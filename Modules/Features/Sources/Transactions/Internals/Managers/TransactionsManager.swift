@@ -105,6 +105,8 @@ final class TransactionsManager {
             return
         }
 
+        assert(transactionIsNotPendingInTheCloud(transaction))
+
         let storedTransaction = storedTransactions[storedTransactionIndex]
         storedTransaction.delete()
         setStoredTransactions(storedTransactions.removed(at: storedTransactionIndex))

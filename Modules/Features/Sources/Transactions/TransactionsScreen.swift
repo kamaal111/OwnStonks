@@ -37,17 +37,9 @@ public struct TransactionsScreen: View {
                 }
                 TransactionsList(
                     transactions: viewModel.transactions,
-                    transactionAction: { transaction in
-                        viewModel.handleTransactionPress(transaction)
-                    },
-                    transactionDelete: { transaction in
-                        guard transactionManager.transactionIsNotPendingInTheCloud(transaction) else { return }
-
-                        viewModel.onTransactionDelete(transaction)
-                    },
-                    transactionEdit: { transaction in
-                        viewModel.handleTransactionEditSelect(transaction)
-                    }
+                    transactionAction: handleTransactionAction,
+                    transactionDelete: handleTransactionDelete,
+                    transactionEdit: handleTransactionEdit
                 )
             }
             #if os(macOS)
@@ -139,6 +131,42 @@ public struct TransactionsScreen: View {
                 viewModel.onTransactionDelete(transaction)
             }
         )
+    }
+
+    private func withOriginalTransaction(
+        _ transaction: AppTransaction,
+        _ completion: (_ transaction: AppTransaction) -> Void
+    ) {
+        guard let transaction = transactionManager.transactions.find(by: \.id, is: transaction.id)
+        else {
+            assertionFailure("Expected transaction to be present")
+            return
+        }
+
+        completion(transaction)
+    }
+
+    private func handleTransactionAction(_ transaction: AppTransaction) {
+        withOriginalTransaction(transaction) { transaction in
+            viewModel.handleTransactionPress(transaction)
+        }
+    }
+
+    private func handleTransactionDelete(_ transaction: AppTransaction) {
+        guard transactionManager.transactionIsNotPendingInTheCloud(transaction) else {
+            assertionFailure("Should not be able to delete pending iCloud transaction")
+            return
+        }
+
+        withOriginalTransaction(transaction) { transaction in
+            viewModel.onTransactionDelete(transaction)
+        }
+    }
+
+    private func handleTransactionEdit(_ transaction: AppTransaction) {
+        withOriginalTransaction(transaction) { transaction in
+            viewModel.handleTransactionEditSelect(transaction)
+        }
     }
 
     private func onDefiniteTransactionDelete() {
