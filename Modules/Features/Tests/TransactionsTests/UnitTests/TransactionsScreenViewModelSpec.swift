@@ -22,7 +22,7 @@ final class TransactionsScreenViewModelSpec: AsyncSpec {
         describe("deleting transactions") {
             it("should set the right transaction to delete") {
                 // Given
-                await viewModel.setTransactions([testTransaction])
+                await viewModel.setConvertedTransactions([testTransaction])
 
                 // When
                 await viewModel.onTransactionDelete(testTransaction)
@@ -34,7 +34,7 @@ final class TransactionsScreenViewModelSpec: AsyncSpec {
 
             it("should remove definitly deleted transaction") {
                 // Given
-                await viewModel.setTransactions([testTransaction])
+                await viewModel.setConvertedTransactions([testTransaction])
                 await viewModel.onTransactionDelete(testTransaction)
 
                 // When
@@ -43,7 +43,7 @@ final class TransactionsScreenViewModelSpec: AsyncSpec {
                 // Then
                 expect(viewModel.deletingTransaction) == false
                 expect(viewModel.transactionToDelete) == nil
-                expect(viewModel.transactions.isEmpty) == true
+                expect(viewModel.convertedTransactions.isEmpty) == true
             }
         }
 
