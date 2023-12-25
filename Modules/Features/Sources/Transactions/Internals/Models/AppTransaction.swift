@@ -42,6 +42,10 @@ struct AppTransaction: Hashable, Identifiable {
         self.recordID = recordID
     }
 
+    var totalPriceExcludingFees: Money {
+        Money(value: pricePerUnit.value * amount, currency: pricePerUnit.currency)
+    }
+
     static func fromCKRecord(_ record: CKRecord) -> AppTransaction? {
         guard let id = record["CD_id"] as? String, let id = UUID(uuidString: id) else { return nil }
         guard let name = record["CD_name"] as? String else { return nil }

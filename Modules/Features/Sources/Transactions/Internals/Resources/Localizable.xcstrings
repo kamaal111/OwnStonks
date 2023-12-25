@@ -55,6 +55,9 @@
     "Open new transaction sheet" : {
       "extractionState" : "manual"
     },
+    "Price" : {
+      "extractionState" : "manual"
+    },
     "Price per unit" : {
       "extractionState" : "manual"
     },

@@ -21,11 +21,15 @@ public final class PersistentData: PersistentDatable {
 
     private init() {
         let schema = Schema([StoredTransaction.self])
+        #if targetEnvironment(simulator)
+        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        #else
         let modelConfiguration = ModelConfiguration(
             schema: schema,
             isStoredInMemoryOnly: false,
             cloudKitDatabase: .automatic
         )
+        #endif
         do {
             self.dataContainer = try ModelContainer(for: schema, configurations: [modelConfiguration])
         } catch {

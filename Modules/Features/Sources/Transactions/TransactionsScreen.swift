@@ -37,7 +37,6 @@ public struct TransactionsScreen: View {
                 }
                 TransactionsList(
                     transactions: viewModel.transactions,
-                    layout: viewModel.transactionsSectionSize.width < 500 ? .medium : .large,
                     transactionAction: { transaction in
                         viewModel.handleTransactionPress(transaction)
                     },
@@ -51,9 +50,8 @@ public struct TransactionsScreen: View {
                     }
                 )
             }
-            .kBindToFrameSize($viewModel.transactionsSectionSize)
             #if os(macOS)
-                .padding(.horizontal, .medium)
+            .padding(.horizontal, .medium)
             #endif
         }
         .padding(.vertical, .medium)
@@ -238,8 +236,6 @@ extension TransactionsScreen {
 
         var deletingTransaction = false
         private(set) var transactionToDelete: AppTransaction?
-
-        var transactionsSectionSize: CGSize = .zero
 
         private(set) var shownSheet: Sheets? {
             didSet { shownSheetDidSet() }
