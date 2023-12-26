@@ -21,6 +21,8 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     let pricePerUnit: Money
     let fees: Money
     var recordID: CKRecord.ID?
+    let updatedDate: Date?
+    let creationDate: Date?
 
     init(
         id: UUID? = nil,
@@ -30,8 +32,12 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         amount: Double,
         pricePerUnit: Money,
         fees: Money,
+        updatedDate: Date?,
+        creationDate: Date?,
         recordID: CKRecord.ID? = nil
     ) {
+        assert(updatedDate != nil)
+        assert(creationDate != nil)
         self.id = id
         self.name = name
         self.transactionDate = transactionDate
@@ -39,6 +45,8 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         self.amount = amount
         self.pricePerUnit = pricePerUnit
         self.fees = fees
+        self.updatedDate = updatedDate
+        self.creationDate = creationDate
         self.recordID = recordID
     }
 
@@ -64,10 +72,39 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             case .pricePerUnitCurrency: record[ckRecordKey] = pricePerUnit.currency.rawValue
             case .fees: record[ckRecordKey] = fees.value
             case .feesCurrency: record[ckRecordKey] = fees.currency.rawValue
-            case .updatedDate, .creationDate: break
+            case .updatedDate: record[ckRecordKey] = updatedDate
+            case .creationDate: record[ckRecordKey] = creationDate
             }
             return record
         }
+    }
+
+    func setUpdatedDate(_ updatedDate: Date) -> AppTransaction {
+        AppTransaction(
+            id: id,
+            name: name,
+            transactionDate: transactionDate,
+            transactionType: transactionType,
+            amount: amount,
+            pricePerUnit: pricePerUnit,
+            fees: fees,
+            updatedDate: updatedDate,
+            creationDate: creationDate
+        )
+    }
+
+    func setCreationDate(_ creationDate: Date) -> AppTransaction {
+        AppTransaction(
+            id: id,
+            name: name,
+            transactionDate: transactionDate,
+            transactionType: transactionType,
+            amount: amount,
+            pricePerUnit: pricePerUnit,
+            fees: fees,
+            updatedDate: updatedDate,
+            creationDate: creationDate
+        )
     }
 
     static let recordName = "CD_StoredTransaction"
@@ -97,6 +134,8 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
+            updatedDate: record[.updatedDate] as? Date,
+            creationDate: record[.creationDate] as? Date,
             recordID: record.recordID
         )
     }
@@ -107,7 +146,9 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         transactionType: .buy,
         amount: 25,
         pricePerUnit: Money(value: 100, currency: .USD),
-        fees: Money(value: 1, currency: .EUR)
+        fees: Money(value: 1, currency: .EUR),
+        updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
+        creationDate: Date(timeIntervalSince1970: 1_702_233_813)
     )
 }
 
