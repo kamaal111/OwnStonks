@@ -109,5 +109,7 @@ private let testTransaction = AppTransaction(
     transactionType: .sell,
     amount: 100,
     pricePerUnit: Money(value: 500, currency: .USD),
-    fees: Money(value: 3.2, currency: .EUR)
+    fees: Money(value: 3.2, currency: .EUR),
+    updatedDate: Date(timeIntervalSince1970: 1_702_328_316),
+    creationDate: Date(timeIntervalSince1970: 1_702_328_316)
 )

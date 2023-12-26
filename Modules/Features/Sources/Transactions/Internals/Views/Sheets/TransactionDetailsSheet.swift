@@ -255,8 +255,14 @@ extension TransactionDetailsSheet {
             guard let fees = Double(fees) else { return nil }
 
             var id: UUID?
-            if case let .details(transaction) = context {
+            var creationDate: Date?
+            var updatedDate: Date?
+            switch context {
+            case .new: break
+            case let .details(transaction), let .edit(transaction):
                 id = transaction.id
+                creationDate = transaction.creationDate
+                updatedDate = transaction.updatedDate
             }
 
             return AppTransaction(
@@ -266,7 +272,9 @@ extension TransactionDetailsSheet {
                 transactionType: transactionType,
                 amount: amount,
                 pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
-                fees: Money(value: fees, currency: feesCurrency)
+                fees: Money(value: fees, currency: feesCurrency),
+                updatedDate: updatedDate,
+                creationDate: creationDate
             )
         }
 

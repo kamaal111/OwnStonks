@@ -26,9 +26,6 @@ public final class StoredTransaction: Identifiable {
     public private(set) var updatedDate: Date?
     public let creationDate: Date?
 
-    @Transient
-    public private(set) var recordID: CKRecord.ID?
-
     init(
         id: UUID,
         name: String,
@@ -38,8 +35,7 @@ public final class StoredTransaction: Identifiable {
         pricePerUnit: Money,
         fees: Money,
         updatedDate: Date = Date(),
-        creationDate: Date = Date(),
-        recordID: CKRecord.ID? = nil
+        creationDate: Date = Date()
     ) {
         assert(!name.trimmingByWhitespacesAndNewLines.isEmpty)
         self.id = id
@@ -53,7 +49,6 @@ public final class StoredTransaction: Identifiable {
         self.feesCurrency = fees.currency.rawValue
         self.updatedDate = updatedDate
         self.creationDate = creationDate
-        self.recordID = recordID
     }
 
     public func delete() {

@@ -69,7 +69,7 @@ final class TransactionsManager {
                 .list(sorts: [SortDescriptor(\.updatedDate, order: .reverse)])
 
             if !quickStorage.pendingCloudChanges {
-                await setStoredTransactions(storedTransactions)
+                await setStoredTransactions(storedTransactions, sort: false)
                 return
             }
 
@@ -86,12 +86,12 @@ final class TransactionsManager {
             if fetchedRecordIDs == transactionsIDs {
                 logger.info("Fetched from iCloud and no more changes pending")
                 quickStorage.pendingCloudChanges = false
-                await setStoredTransactions(storedTransactions)
+                await setStoredTransactions(storedTransactions, sort: true)
                 return
             }
 
             logger.info("Fetched from iCloud directly and still changes are still pending")
-            await setTransactions(fetchedCloudRecordsTransctions)
+            await setTransactions(fetchedCloudRecordsTransctions, sort: true)
         }
 
         logger.info("Successfully fetched \(transactions.count) transctions")
@@ -109,7 +109,7 @@ final class TransactionsManager {
 
         let storedTransaction = storedTransactions[storedTransactionIndex]
         storedTransaction.delete()
-        setStoredTransactions(storedTransactions.removed(at: storedTransactionIndex))
+        setStoredTransactions(storedTransactions.removed(at: storedTransactionIndex), sort: true)
         logger.info("Deleting transaction with ID \(transactionID)")
     }
 
@@ -132,7 +132,7 @@ final class TransactionsManager {
         )
         var storedTransactions = storedTransactions
         storedTransactions[storedTransactionIndex] = updatedTransaction
-        setStoredTransactions(storedTransactions)
+        setStoredTransactions(storedTransactions, sort: true)
         logger.info("Edited transaction with ID \(transactionID)")
     }
 
@@ -148,23 +148,41 @@ final class TransactionsManager {
             fees: Money(value: transaction.fees.value, currency: transaction.fees.currency),
             context: persistentData.dataContainerContext
         )
-        setStoredTransactions(storedTransactions.appended(storedTransaction))
+        setStoredTransactions(storedTransactions.appended(storedTransaction), sort: true)
         logger.info("Created transaction successfully")
     }
 
     @MainActor
-    private func setStoredTransactions(_ transactions: [StoredTransaction]) {
-        let newStoredTransactions = transactions
-            .filter { transaction in transaction.updatedDate != nil }
-            .sorted(by: \.updatedDate!, using: .orderedDescending)
+    private func setStoredTransactions(_ transactions: [StoredTransaction], sort: Bool) {
+        if sort {
+            let sortedTransactions = transactions
+                .filter { transaction in transaction.updatedDate != nil }
+                .sorted(by: \.updatedDate!, using: .orderedDescending)
+            let appTransactions = sortedTransactions.compactMap(\.appTransaction)
+            assert(sortedTransactions.count == transactions.count)
+            assert(sortedTransactions.count == appTransactions.count)
+            storedTransactions = sortedTransactions
+            setTransactions(appTransactions, sort: false)
+            return
+        }
 
-        storedTransactions = newStoredTransactions
-        setTransactions(newStoredTransactions.compactMap(\.appTransaction))
-        assert(newStoredTransactions.count == transactions.count)
+        let appTransactions = transactions.compactMap(\.appTransaction)
+        assert(transactions.count == appTransactions.count)
+        storedTransactions = transactions
+        setTransactions(appTransactions, sort: false)
     }
 
     @MainActor
-    private func setTransactions(_ transactions: [AppTransaction]) {
+    private func setTransactions(_ transactions: [AppTransaction], sort: Bool) {
+        if sort {
+            let sortedTransactions = transactions
+                .filter { transaction in transaction.updatedDate != nil }
+                .sorted(by: \.updatedDate!, using: .orderedDescending)
+            assert(sortedTransactions.count == transactions.count)
+            self.transactions = sortedTransactions
+            return
+        }
+
         self.transactions = transactions
     }
 

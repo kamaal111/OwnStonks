@@ -29,7 +29,9 @@ extension StoredTransaction {
             transactionType: transactionType,
             amount: amount,
             pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
-            fees: Money(value: fees, currency: feesCurrency)
+            fees: Money(value: fees, currency: feesCurrency),
+            updatedDate: updatedDate,
+            creationDate: creationDate
         )
     }
 }

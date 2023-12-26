@@ -105,7 +105,9 @@ final class TransactionsManagerSpec: AsyncSpec {
                     transactionType: .sell,
                     amount: 22,
                     pricePerUnit: Money(value: 44, currency: .CAD),
-                    fees: Money(value: 1, currency: .BGN)
+                    fees: Money(value: 1, currency: .BGN),
+                    updatedDate: storedTransaction.updatedDate,
+                    creationDate: storedTransaction.creationDate
                 )
 
                 // Sanity
@@ -117,6 +119,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                 // Then
                 expect(manager.transactions.count) == 1
                 expect(manager.transactions[0]) == transactionWithChanges
+                    .setUpdatedDate(manager.transactions[0].updatedDate!)
             }
 
             it("should keep stored transaction changes in memory after fetch") {
@@ -130,7 +133,9 @@ final class TransactionsManagerSpec: AsyncSpec {
                     transactionType: .sell,
                     amount: 22,
                     pricePerUnit: Money(value: 44, currency: .CAD),
-                    fees: Money(value: 1, currency: .BGN)
+                    fees: Money(value: 1, currency: .BGN),
+                    updatedDate: storedTransaction.updatedDate,
+                    creationDate: storedTransaction.creationDate
                 )
                 try await manager.editTransaction(transactionWithChanges)
 
@@ -140,6 +145,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                 // Then
                 expect(manager.transactions.count) == 1
                 expect(manager.transactions[0]) == transactionWithChanges
+                    .setUpdatedDate(manager.transactions[0].updatedDate!)
             }
         }
 
@@ -150,8 +156,12 @@ final class TransactionsManagerSpec: AsyncSpec {
 
                 // Then
                 expect(manager.transactions.count) == 1
-                let expectedTransaction = testTransaction.setID(manager.transactions.first!.id!)
-                expect(manager.transactions.first) == expectedTransaction
+                let firstTransactionInManager = manager.transactions[0]
+                let expectedTransaction = testTransaction
+                    .setID(firstTransactionInManager.id!)
+                    .setUpdatedDate(firstTransactionInManager.updatedDate!)
+                    .setCreationDate(firstTransactionInManager.creationDate!)
+                expect(firstTransactionInManager) == expectedTransaction
             }
 
             it("should create and store transaction and keep in memory when fetched") {
@@ -161,8 +171,12 @@ final class TransactionsManagerSpec: AsyncSpec {
 
                 // Then
                 expect(manager.transactions.count) == 1
-                let expectedTransaction = testTransaction.setID(manager.transactions.first!.id!)
-                expect(manager.transactions.first) == expectedTransaction
+                let firstTransactionInManager = manager.transactions[0]
+                let expectedTransaction = testTransaction
+                    .setID(firstTransactionInManager.id!)
+                    .setUpdatedDate(firstTransactionInManager.updatedDate!)
+                    .setCreationDate(firstTransactionInManager.creationDate!)
+                expect(firstTransactionInManager) == expectedTransaction
             }
         }
 
@@ -202,7 +216,9 @@ private let testTransaction = AppTransaction(
     transactionType: .buy,
     amount: 25,
     pricePerUnit: Money(value: 100, currency: .USD),
-    fees: Money(value: 1, currency: .EUR)
+    fees: Money(value: 1, currency: .EUR),
+    updatedDate: Date(),
+    creationDate: Date()
 )
 
 extension AppTransaction {
@@ -214,7 +230,9 @@ extension AppTransaction {
             transactionType: transactionType,
             amount: amount,
             pricePerUnit: pricePerUnit,
-            fees: fees
+            fees: fees,
+            updatedDate: updatedDate,
+            creationDate: creationDate
         )
     }
 }
