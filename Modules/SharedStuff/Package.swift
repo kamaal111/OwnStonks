@@ -22,6 +22,9 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
                 "ForexKit",
+            ],
+            resources: [
+                .process("Internals/Resources"),
             ]
         ),
         .target(

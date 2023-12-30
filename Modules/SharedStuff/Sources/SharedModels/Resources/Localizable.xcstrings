@@ -1,0 +1,12 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "Buy" : {
+      "extractionState" : "manual"
+    },
+    "Sell" : {
+      "extractionState" : "manual"
+    }
+  },
+  "version" : "1.0"
+}
