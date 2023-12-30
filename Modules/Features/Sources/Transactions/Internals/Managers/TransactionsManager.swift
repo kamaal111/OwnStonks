@@ -122,14 +122,15 @@ final class TransactionsManager {
         }
 
         let storedTransaction = storedTransactions[storedTransactionIndex]
-        let updatedTransaction = try storedTransaction.update(
+        let updatedTransaction = try storedTransaction.update(payload: .init(
             name: transaction.name,
             transactionDate: transaction.transactionDate,
-            transactionType: transaction.transactionType.rawValue,
+            transactionType: transaction.transactionType,
             amount: transaction.amount,
-            pricePerUnit: (transaction.pricePerUnit.value, transaction.pricePerUnit.currency),
-            fees: (transaction.fees.value, transaction.fees.currency)
-        )
+            pricePerUnit: transaction.pricePerUnit,
+            fees: transaction.fees,
+            assetDataSource: nil
+        ))
         var storedTransactions = storedTransactions
         storedTransactions[storedTransactionIndex] = updatedTransaction
         setStoredTransactions(storedTransactions, sort: true)
@@ -140,12 +141,14 @@ final class TransactionsManager {
     func createTransaction(_ transaction: AppTransaction) {
         assert(!transaction.name.trimmingByWhitespacesAndNewLines.isEmpty)
         let storedTransaction = StoredTransaction.create(
-            name: transaction.name,
-            transactionDate: transaction.transactionDate,
-            transactionType: transaction.transactionType.rawValue,
-            amount: transaction.amount,
-            pricePerUnit: Money(value: transaction.pricePerUnit.value, currency: transaction.pricePerUnit.currency),
-            fees: Money(value: transaction.fees.value, currency: transaction.fees.currency),
+            payload: .init(
+                name: transaction.name,
+                transactionDate: transaction.transactionDate,
+                transactionType: transaction.transactionType,
+                amount: transaction.amount,
+                pricePerUnit: transaction.pricePerUnit,
+                fees: transaction.fees, assetDataSource: nil
+            ),
             context: persistentData.dataContainerContext
         )
         setStoredTransactions(storedTransactions.appended(storedTransaction), sort: true)
