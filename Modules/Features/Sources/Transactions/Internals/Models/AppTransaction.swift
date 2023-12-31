@@ -36,8 +36,6 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         creationDate: Date?,
         recordID: CKRecord.ID? = nil
     ) {
-        assert(updatedDate != nil)
-        assert(creationDate != nil)
         self.id = id
         self.name = name
         self.transactionDate = transactionDate

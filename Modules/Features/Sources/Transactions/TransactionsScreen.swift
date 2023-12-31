@@ -183,7 +183,15 @@ public struct TransactionsScreen: View {
 
     private func onModifyTransactionDone(_ transaction: AppTransaction) {
         switch viewModel.shownSheet {
-        case .addTransction: transactionManager.createTransaction(transaction)
+        case .addTransction:
+            do {
+                try transactionManager.createTransaction(transaction)
+            } catch {
+                showError(
+                    with: NSLocalizedString("Failed to create transaction", bundle: .module, comment: ""),
+                    from: error
+                )
+            }
         case .transactionDetails, .transactionEdit:
             do {
                 try transactionManager.editTransaction(transaction)

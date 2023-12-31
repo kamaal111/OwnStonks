@@ -65,7 +65,7 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should set pending cloud chages to false when cloud changes are the same as stored changes") {
                 // Given
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
                 expect(manager.transactions.count) == 1
                 let transaction = try XCTUnwrap(manager.transactions.first)
                 persistentData.cloudResponse = [transaction.asCKRecord]
@@ -82,7 +82,7 @@ final class TransactionsManagerSpec: AsyncSpec {
         describe("Deleting transactions") {
             it("should delete transaction from storage") {
                 // Given
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
                 let storedTransaction = manager.transactions[0]
 
                 // When
@@ -96,7 +96,7 @@ final class TransactionsManagerSpec: AsyncSpec {
         describe("Edit transactions") {
             it("should edit transaction") {
                 // Given
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
                 let storedTransaction = manager.transactions[0]
                 let transactionWithChanges = AppTransaction(
                     id: storedTransaction.id!,
@@ -124,7 +124,7 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should keep stored transaction changes in memory after fetch") {
                 // Given
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
                 let storedTransaction = manager.transactions[0]
                 let transactionWithChanges = AppTransaction(
                     id: storedTransaction.id!,
@@ -152,7 +152,7 @@ final class TransactionsManagerSpec: AsyncSpec {
         describe("Creating transactions") {
             it("should create and store transaction") {
                 // When
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
 
                 // Then
                 expect(manager.transactions.count) == 1
@@ -166,7 +166,7 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should create and store transaction and keep in memory when fetched") {
                 // When
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
                 try await manager.fetchTransactions()
 
                 // Then
@@ -194,7 +194,7 @@ final class TransactionsManagerSpec: AsyncSpec {
 
             it("should fetch stored transactions") {
                 // Given
-                await manager.createTransaction(testTransaction)
+                try await manager.createTransaction(testTransaction)
 
                 // Sanity
                 expect(manager.transactions.count) == 1
