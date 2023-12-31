@@ -15,6 +15,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
+        .package(url: "https://github.com/kamaal111/swift-builder.git", .upToNextMinor(from: "0.1.0")),
         .package(path: "../SharedStuff"),
     ],
     targets: [
@@ -25,6 +26,7 @@ let package = Package(
                 .product(name: "KamaalCloud", package: "KamaalSwift"),
                 .product(name: "SharedModels", package: "SharedStuff"),
                 .product(name: "SharedUtils", package: "SharedStuff"),
+                .product(name: "SwiftBuilder", package: "swift-builder"),
                 "ForexKit",
             ]
         ),

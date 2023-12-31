@@ -138,9 +138,9 @@ final class TransactionsManager {
     }
 
     @MainActor
-    func createTransaction(_ transaction: AppTransaction) {
+    func createTransaction(_ transaction: AppTransaction) throws {
         assert(!transaction.name.trimmingByWhitespacesAndNewLines.isEmpty)
-        let storedTransaction = StoredTransaction.create(
+        let storedTransaction = try StoredTransaction.create(
             payload: .init(
                 name: transaction.name,
                 transactionDate: transaction.transactionDate,

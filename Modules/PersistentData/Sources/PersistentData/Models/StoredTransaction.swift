@@ -10,10 +10,12 @@ import ForexKit
 import SwiftData
 import Foundation
 import SharedModels
+import SwiftBuilder
 import KamaalExtensions
 
+@Builder
 @Model
-public final class StoredTransaction: Identifiable {
+public final class StoredTransaction: Identifiable, Buildable {
     public let id: UUID?
     public private(set) var name: String?
     public private(set) var transactionDate: Date?
@@ -31,7 +33,7 @@ public final class StoredTransaction: Identifiable {
         id: UUID,
         name: String,
         transactionDate: Date,
-        transactionType: String,
+        transactionType: TransactionTypes,
         amount: Double,
         pricePerUnit: Money,
         fees: Money,
@@ -39,11 +41,10 @@ public final class StoredTransaction: Identifiable {
         updatedDate: Date = Date(),
         creationDate: Date = Date()
     ) {
-        assert(!name.trimmingByWhitespacesAndNewLines.isEmpty)
         self.id = id
         self.name = name
         self.transactionDate = transactionDate
-        self.transactionType = transactionType
+        self.transactionType = transactionType.rawValue
         self.amount = amount
         self.pricePerUnit = pricePerUnit.value
         self.pricePerUnitCurrency = pricePerUnit.currency.rawValue
@@ -52,6 +53,60 @@ public final class StoredTransaction: Identifiable {
         self.assetDataSource = assetDataSource?.rawValue
         self.updatedDate = updatedDate
         self.creationDate = creationDate
+    }
+
+    public static func validate(_ container: [BuildableProperties: Any]) -> Bool {
+        for property in BuildableProperties.allCases {
+            switch property {
+            case .id,
+                 .transactionDate,
+                 .transactionType,
+                 .amount,
+                 .pricePerUnit,
+                 .pricePerUnitCurrency,
+                 .fees,
+                 .feesCurrency,
+                 .updatedDate,
+                 .creationDate:
+                if container[property] == nil {
+                    return false
+                }
+            case .name:
+                guard let value = container[property] as? String else { return false }
+                if value.trimmingByWhitespacesAndNewLines.isEmpty {
+                    return false
+                }
+            case .assetDataSource: break
+            }
+        }
+
+        return true
+    }
+
+    public static func build(_ container: [BuildableProperties: Any]) -> StoredTransaction {
+        var assetDataSource: AssetDataSources?
+        if let assetDataSourceFromContainer = container[.assetDataSource] as? String {
+            assetDataSource = AssetDataSources(rawValue: assetDataSourceFromContainer)
+        }
+
+        return StoredTransaction(
+            id: container[.id] as! UUID,
+            name: container[.name] as! String,
+            transactionDate: container[.transactionDate] as! Date,
+            transactionType: TransactionTypes(rawValue: container[.transactionType] as! String)!,
+            amount: container[.amount] as! Double,
+            pricePerUnit: Money(
+                value: container[.pricePerUnit] as! Double,
+                currency: Currencies(rawValue: container[.pricePerUnitCurrency] as! String)!
+            ),
+            fees: Money(
+                value: container[.fees] as! Double,
+                currency: Currencies(rawValue: container[.feesCurrency] as! String)!
+            ),
+            assetDataSource: assetDataSource,
+            updatedDate: container[.updatedDate] as! Date,
+            creationDate: container[.creationDate] as! Date
+        )
     }
 
     public func delete() {
@@ -75,17 +130,23 @@ public final class StoredTransaction: Identifiable {
         return self
     }
 
-    public static func create(payload: Payload, context: ModelContext) -> StoredTransaction {
-        let transaction = StoredTransaction(
-            id: UUID(),
-            name: payload.name,
-            transactionDate: payload.transactionDate,
-            transactionType: payload.transactionType.rawValue,
-            amount: payload.amount,
-            pricePerUnit: payload.pricePerUnit,
-            fees: payload.fees,
-            assetDataSource: payload.assetDataSource
-        )
+    public static func create(payload: Payload, context: ModelContext) throws -> StoredTransaction {
+        let transaction = try StoredTransaction
+            .Builder()
+            .setId(UUID())
+            .setName(payload.name)
+            .setTransactionDate(payload.transactionDate)
+            .setTransactionType(payload.transactionType.rawValue)
+            .setAmount(payload.amount)
+            .setPricePerUnit(payload.pricePerUnit.value)
+            .setPricePerUnitCurrency(payload.pricePerUnit.currency.rawValue)
+            .setFees(payload.fees.value)
+            .setFeesCurrency(payload.fees.currency.rawValue)
+            .setAssetDataSource(payload.assetDataSource?.rawValue)
+            .setUpdatedDate(Date())
+            .setCreationDate(Date())
+            .build()
+            .get()
         context.insert(transaction)
         return transaction
     }
