@@ -228,6 +228,7 @@ public struct TransactionsScreen: View {
                     amount: transaction.amount,
                     pricePerUnit: pricePerUnit ?? transaction.pricePerUnit,
                     fees: fees ?? transaction.fees,
+                    assetDataSource: transaction.assetDataSource,
                     updatedDate: transaction.updatedDate,
                     creationDate: transaction.creationDate
                 )

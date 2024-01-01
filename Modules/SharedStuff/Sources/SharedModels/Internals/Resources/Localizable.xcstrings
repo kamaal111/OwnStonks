@@ -6,6 +6,9 @@
     },
     "Sell" : {
       "extractionState" : "manual"
+    },
+    "Stocks" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.0"

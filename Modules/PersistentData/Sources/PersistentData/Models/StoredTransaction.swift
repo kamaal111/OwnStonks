@@ -55,6 +55,30 @@ public final class StoredTransaction: Identifiable, Buildable {
         self.creationDate = creationDate
     }
 
+    public var assetDataSourceFormatted: AssetDataSources? {
+        guard let assetDataSource else { return nil }
+        return AssetDataSources(rawValue: assetDataSource)
+    }
+
+    public var pricePerUnitFormatted: Money? {
+        guard let pricePerUnit,
+              let pricePerUnitCurrency,
+              let pricePerUnitCurrency = Currencies(rawValue: pricePerUnitCurrency) else { return nil }
+        return Money(value: pricePerUnit, currency: pricePerUnitCurrency)
+    }
+
+    public var feesFormatted: Money? {
+        guard let fees,
+              let feesCurrency,
+              let feesCurrency = Currencies(rawValue: feesCurrency) else { return nil }
+        return Money(value: fees, currency: feesCurrency)
+    }
+
+    public var transactionTypeFormatted: TransactionTypes? {
+        guard let transactionType else { return nil }
+        return TransactionTypes(rawValue: transactionType)
+    }
+
     public static func validate(_ container: [BuildableProperties: Any]) -> Bool {
         for property in BuildableProperties.allCases {
             switch property {
