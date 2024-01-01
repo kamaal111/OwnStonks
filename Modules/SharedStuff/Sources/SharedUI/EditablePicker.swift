@@ -10,7 +10,7 @@ import KamaalUI
 import SharedModels
 
 public struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: View>: View {
-    @Binding var selection: Item
+    @Binding var selection: Item?
 
     let label: String
     let isEditing: Bool
@@ -19,7 +19,7 @@ public struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: Vie
     let pickerItemView: (_ item: Item) -> PickerItemView
 
     public init(
-        selection: Binding<Item>,
+        selection: Binding<Item?>,
         label: String,
         isEditing: Bool,
         items: [Item],
@@ -36,9 +36,11 @@ public struct EditablePicker<Item: Hashable & LocalizedItem, PickerItemView: Vie
 
     public var body: some View {
         if isEditing {
-            KTitledPicker(selection: $selection, title: label, items: items) { item in pickerItemView(item) }
+            KTitledPicker(selection: $selection, title: label, items: items) { item in
+                pickerItemView(item)
+            }
         } else {
-            AppLabel(title: label, value: selection.localized, valueColor: valueColor)
+            AppLabel(title: label, value: selection?.localized ?? "", valueColor: valueColor)
         }
     }
 }

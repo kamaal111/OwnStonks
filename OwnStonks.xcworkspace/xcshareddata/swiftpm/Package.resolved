@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kamaalio/KamaalSwift.git",
       "state" : {
-        "revision" : "c3057a0f8f265d6c42c19842c2b4a98339268b8c",
-        "version" : "1.5.0"
+        "revision" : "ee694b53f57e76ae7c6872fd149899ebbb820bf4",
+        "version" : "1.6.0"
       }
     },
     {
@@ -86,8 +86,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/kamaal111/swift-builder.git",
       "state" : {
-        "revision" : "2421c7606bc86dffefdbc52b7a1cedefd69ebcc7",
-        "version" : "0.1.0"
+        "revision" : "571ab2f1f91ca20132bcf5d32d92490918d7bda5",
+        "version" : "0.1.1"
       }
     },
     {

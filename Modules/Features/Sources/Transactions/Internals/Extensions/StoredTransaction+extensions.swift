@@ -15,12 +15,10 @@ extension StoredTransaction {
         guard let id else { return nil }
         guard let name, !name.trimmingByWhitespacesAndNewLines.isEmpty else { return nil }
         guard let transactionDate else { return nil }
-        guard let transactionType, let transactionType = TransactionTypes(rawValue: transactionType) else { return nil }
+        guard let transactionType = transactionTypeFormatted else { return nil }
         guard let amount else { return nil }
-        guard let pricePerUnit,
-              let pricePerUnitCurrency,
-              let pricePerUnitCurrency = Currencies(rawValue: pricePerUnitCurrency) else { return nil }
-        guard let fees, let feesCurrency, let feesCurrency = Currencies(rawValue: feesCurrency) else { return nil }
+        guard let pricePerUnit = pricePerUnitFormatted else { return nil }
+        guard let fees = feesFormatted else { return nil }
 
         return AppTransaction(
             id: id,
@@ -28,8 +26,9 @@ extension StoredTransaction {
             transactionDate: transactionDate,
             transactionType: transactionType,
             amount: amount,
-            pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
-            fees: Money(value: fees, currency: feesCurrency),
+            pricePerUnit: pricePerUnit,
+            fees: fees,
+            assetDataSource: assetDataSourceFormatted,
             updatedDate: updatedDate,
             creationDate: creationDate
         )
