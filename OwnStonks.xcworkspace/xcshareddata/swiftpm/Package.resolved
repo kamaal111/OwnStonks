@@ -50,8 +50,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Kamaalio/KamaalSwift.git",
       "state" : {
-        "revision" : "695d84ba97544a3dbcd61ca6c80cf3438d7967a7",
-        "version" : "1.4.1"
+        "revision" : "c3057a0f8f265d6c42c19842c2b4a98339268b8c",
+        "version" : "1.5.0"
       }
     },
     {

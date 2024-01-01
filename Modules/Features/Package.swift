@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Quick/Quick.git", .upToNextMajor(from: "7.0.0")),
         .package(url: "https://github.com/Quick/Nimble.git", .upToNextMajor(from: "12.0.0")),
-        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.4.1")),
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.5.0")),
         .package(url: "https://github.com/Kamaalio/AppIconGenerator.git", .upToNextMinor(from: "0.7.0")),
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
         .package(url: "https://github.com/kamaal111/MockURLProtocol.git", .upToNextMinor(from: "0.1.1")),
