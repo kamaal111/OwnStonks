@@ -106,6 +106,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                     amount: 22,
                     pricePerUnit: Money(value: 44, currency: .CAD),
                     fees: Money(value: 1, currency: .BGN),
+                    dataSource: nil,
                     updatedDate: storedTransaction.updatedDate,
                     creationDate: storedTransaction.creationDate
                 )
@@ -134,6 +135,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                     amount: 22,
                     pricePerUnit: Money(value: 44, currency: .CAD),
                     fees: Money(value: 1, currency: .BGN),
+                    dataSource: nil,
                     updatedDate: storedTransaction.updatedDate,
                     creationDate: storedTransaction.creationDate
                 )
@@ -217,6 +219,7 @@ private let testTransaction = AppTransaction(
     amount: 25,
     pricePerUnit: Money(value: 100, currency: .USD),
     fees: Money(value: 1, currency: .EUR),
+    dataSource: nil,
     updatedDate: Date(),
     creationDate: Date()
 )
@@ -231,6 +234,7 @@ extension AppTransaction {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
+            dataSource: nil,
             updatedDate: updatedDate,
             creationDate: creationDate
         )

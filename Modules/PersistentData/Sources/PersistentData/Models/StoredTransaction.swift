@@ -25,7 +25,8 @@ public final class StoredTransaction: Identifiable, Buildable {
     public private(set) var pricePerUnitCurrency: String?
     public private(set) var fees: Double?
     public private(set) var feesCurrency: String?
-    public private(set) var assetDataSource: String?
+    @Relationship(deleteRule: .cascade, inverse: \StoredTransactionDataSource.transaction)
+    public private(set) var dataSource: StoredTransactionDataSource?
     public private(set) var updatedDate: Date?
     public let creationDate: Date?
 
@@ -37,7 +38,7 @@ public final class StoredTransaction: Identifiable, Buildable {
         amount: Double,
         pricePerUnit: Money,
         fees: Money,
-        assetDataSource: AssetDataSources?,
+        dataSource: StoredTransactionDataSource?,
         updatedDate: Date = Date(),
         creationDate: Date = Date()
     ) {
@@ -50,14 +51,9 @@ public final class StoredTransaction: Identifiable, Buildable {
         self.pricePerUnitCurrency = pricePerUnit.currency.rawValue
         self.fees = fees.value
         self.feesCurrency = fees.currency.rawValue
-        self.assetDataSource = assetDataSource?.rawValue
+        self.dataSource = dataSource
         self.updatedDate = updatedDate
         self.creationDate = creationDate
-    }
-
-    public var assetDataSourceFormatted: AssetDataSources? {
-        guard let assetDataSource else { return nil }
-        return AssetDataSources(rawValue: assetDataSource)
     }
 
     public var pricePerUnitFormatted: Money? {
@@ -100,7 +96,7 @@ public final class StoredTransaction: Identifiable, Buildable {
                 if value.trimmingByWhitespacesAndNewLines.isEmpty {
                     return false
                 }
-            case .assetDataSource: break
+            case .dataSource: break
             }
         }
 
@@ -108,12 +104,7 @@ public final class StoredTransaction: Identifiable, Buildable {
     }
 
     public static func build(_ container: [BuildableProperties: Any]) -> StoredTransaction {
-        var assetDataSource: AssetDataSources?
-        if let assetDataSourceFromContainer = container[.assetDataSource] as? String {
-            assetDataSource = AssetDataSources(rawValue: assetDataSourceFromContainer)
-        }
-
-        return StoredTransaction(
+        StoredTransaction(
             id: container[.id] as! UUID,
             name: container[.name] as! String,
             transactionDate: container[.transactionDate] as! Date,
@@ -127,7 +118,7 @@ public final class StoredTransaction: Identifiable, Buildable {
                 value: container[.fees] as! Double,
                 currency: Currencies(rawValue: container[.feesCurrency] as! String)!
             ),
-            assetDataSource: assetDataSource,
+            dataSource: container[.dataSource] as? StoredTransactionDataSource,
             updatedDate: container[.updatedDate] as! Date,
             creationDate: container[.creationDate] as! Date
         )
@@ -139,6 +130,10 @@ public final class StoredTransaction: Identifiable, Buildable {
     }
 
     public func update(payload: Payload) throws -> StoredTransaction {
+        guard let context = modelContext else {
+            assertionFailure("Expected context to exist at this point")
+            return self
+        }
         name = payload.name
         transactionDate = payload.transactionDate
         transactionType = payload.transactionType.rawValue
@@ -146,15 +141,15 @@ public final class StoredTransaction: Identifiable, Buildable {
         pricePerUnit = payload.pricePerUnit.value
         pricePerUnitCurrency = payload.pricePerUnit.currency.rawValue
         fees = payload.fees.value
-        assetDataSource = payload.assetDataSource?.rawValue
         feesCurrency = payload.fees.currency.rawValue
         updatedDate = Date()
-        assert(modelContext != nil)
-        try modelContext?.save()
+        dataSource = try Self.updatedDataSource(self, with: payload.dataSource, context: context)
+        try context.save()
         return self
     }
 
     public static func create(payload: Payload, context: ModelContext) throws -> StoredTransaction {
+        let dataSource = try updatedDataSource(nil, with: payload.dataSource, context: nil)
         let transaction = try StoredTransaction
             .Builder()
             .setId(UUID())
@@ -166,13 +161,37 @@ public final class StoredTransaction: Identifiable, Buildable {
             .setPricePerUnitCurrency(payload.pricePerUnit.currency.rawValue)
             .setFees(payload.fees.value)
             .setFeesCurrency(payload.fees.currency.rawValue)
-            .setAssetDataSource(payload.assetDataSource?.rawValue)
+            .setDataSource(dataSource)
             .setUpdatedDate(Date())
             .setCreationDate(Date())
             .build()
             .get()
         context.insert(transaction)
+
         return transaction
+    }
+
+    private static func updatedDataSource(
+        _ transaction: StoredTransaction?,
+        with dataSource: StoredTransactionDataSource.Payload?,
+        context: ModelContext?
+    ) throws -> StoredTransactionDataSource? {
+        if let dataSource {
+            if let storedDataSource = transaction?.dataSource {
+                let updatedDataSource = try storedDataSource.update(payload: dataSource)
+                return updatedDataSource
+            }
+
+            let newDataSource = try StoredTransactionDataSource.create(payload: dataSource, context: context)
+            return newDataSource
+        }
+
+        if let storedDataSource = transaction?.dataSource {
+            storedDataSource.delete()
+            return nil
+        }
+
+        return nil
     }
 
     public struct Payload {
@@ -182,7 +201,7 @@ public final class StoredTransaction: Identifiable, Buildable {
         public let amount: Double
         public let pricePerUnit: Money
         public let fees: Money
-        public let assetDataSource: AssetDataSources?
+        public let dataSource: StoredTransactionDataSource.Payload?
 
         public init(
             name: String,
@@ -191,7 +210,7 @@ public final class StoredTransaction: Identifiable, Buildable {
             amount: Double,
             pricePerUnit: Money,
             fees: Money,
-            assetDataSource: AssetDataSources?
+            dataSource: StoredTransactionDataSource.Payload?
         ) {
             self.name = name
             self.transactionDate = transactionDate
@@ -199,7 +218,7 @@ public final class StoredTransaction: Identifiable, Buildable {
             self.amount = amount
             self.pricePerUnit = pricePerUnit
             self.fees = fees
-            self.assetDataSource = assetDataSource
+            self.dataSource = dataSource
         }
     }
 }

@@ -70,6 +70,9 @@
     "Sure" : {
       "extractionState" : "manual"
     },
+    "Ticker" : {
+      "extractionState" : "manual"
+    },
     "Transaction Date" : {
       "extractionState" : "manual"
     },

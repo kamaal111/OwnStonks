@@ -110,6 +110,7 @@ private let testTransaction = AppTransaction(
     amount: 100,
     pricePerUnit: Money(value: 500, currency: .USD),
     fees: Money(value: 3.2, currency: .EUR),
+    dataSource: nil,
     updatedDate: Date(timeIntervalSince1970: 1_702_328_316),
     creationDate: Date(timeIntervalSince1970: 1_702_328_316)
 )
