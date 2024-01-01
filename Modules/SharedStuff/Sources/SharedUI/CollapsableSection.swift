@@ -24,14 +24,20 @@ public struct CollapsableSection<Content: View>: View {
             Section(header: header) {
                 if !isCollapsed {
                     content()
-                        .transition(.move(edge: .top))
+                        .transition(.asymmetric(insertion: .move(edge: .top), removal: .opacity))
                 }
             }
         }
     }
 
     private var header: some View {
-        Button(action: { withAnimation { isCollapsed.toggle() } }) {
+        Button(action: {
+            if isCollapsed {
+                withAnimation { isCollapsed = false }
+            } else {
+                withAnimation(.easeOut(duration: 0.2)) { isCollapsed = true }
+            }
+        }) {
             HStack {
                 Text(title)
                     .foregroundStyle(.secondary)
