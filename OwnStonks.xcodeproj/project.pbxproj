@@ -61,6 +61,7 @@
 		2CC33CA02B2A575D0035ED02 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CC33CA12B2A57690035ED02 /* pyproject.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyproject.toml; sourceTree = "<group>"; };
 		2CC33CA22B2A576F0035ED02 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		2CE9B1182B4326BF00603BF1 /* swift-stonks-api */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-stonks-api"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +167,7 @@
 		2C52666E2B113DE6000CD2D5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				2CE9B1182B4326BF00603BF1 /* swift-stonks-api */,
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
 				2CAE16682B252B0D00F49575 /* PersistentData */,
@@ -494,7 +496,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonks.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
@@ -538,7 +540,7 @@
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonks.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution: Kamaal Farah (DXUKH9VF73)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -586,7 +588,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;
@@ -629,7 +631,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = OwnStonks/OwnStonksDev.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"OwnStonks/Preview Content\"";
 				DEVELOPMENT_TEAM = DXUKH9VF73;

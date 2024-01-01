@@ -52,10 +52,16 @@
     "Fees" : {
       "extractionState" : "manual"
     },
+    "Invalid ticker provided" : {
+      "extractionState" : "manual"
+    },
     "Name" : {
       "extractionState" : "manual"
     },
     "No" : {
+      "extractionState" : "manual"
+    },
+    "OK" : {
       "extractionState" : "manual"
     },
     "Open new transaction sheet" : {

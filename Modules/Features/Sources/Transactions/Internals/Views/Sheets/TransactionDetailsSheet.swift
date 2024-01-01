@@ -9,6 +9,8 @@ import SwiftUI
 import SharedUI
 import KamaalUI
 import ForexKit
+import StonksAPI
+import KamaalLogger
 import SharedModels
 import KamaalExtensions
 
@@ -17,6 +19,8 @@ enum TransactionDetailsSheetContext: Equatable {
     case details(_ transaction: AppTransaction)
     case edit(_ transaction: AppTransaction)
 }
+
+private let logger = KamaalLogger(from: TransactionDetailsSheet.self, failOnError: true)
 
 struct TransactionDetailsSheet: View {
     @State private var viewModel: ViewModel
@@ -50,7 +54,8 @@ struct TransactionDetailsSheet: View {
                     if !isNotPendingInTheCloud {
                         Text("")
                     } else if viewModel.isEditing {
-                        navigationButton(label: "Done", action: handleDone).disabled(!viewModel.transactionIsValid)
+                        navigationButton(label: "Done", action: handleDone)
+                            .disabled(!viewModel.transactionIsValid)
                     } else {
                         navigationButton(label: "Edit", action: { viewModel.enableEditing() })
                     }
@@ -140,6 +145,16 @@ struct TransactionDetailsSheet: View {
             .padding(.vertical, .medium)
         }
         .padding(.vertical, .medium)
+        .alert(
+            NSLocalizedString("Invalid ticker provided", bundle: .module, comment: ""),
+            isPresented: $viewModel.showErrorSavingAlert,
+            actions: {
+                Button(role: .cancel, action: { }) {
+                    Text("OK", bundle: .module)
+                }
+            }
+        )
+        .disabled(viewModel.finalizingEditing)
         #if os(macOS)
             .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
@@ -154,14 +169,10 @@ struct TransactionDetailsSheet: View {
     }
 
     private func handleDone() {
-        assert(viewModel.transactionIsValid)
-        guard let transaction = viewModel.transaction else { return }
-
-        onDone(transaction)
-        if case .details = viewModel.context {
-            Task { await viewModel.disableEditing() }
-        } else {
-            close()
+        Task {
+            await viewModel.finalizeEditing(close: { close() }, done: { transaction in
+                onDone(transaction)
+            })
         }
     }
 
@@ -195,9 +206,12 @@ extension TransactionDetailsSheet {
         var assetDataSource: AssetDataSources
         var autoTrackAsset: Bool
         var assetTicker: String
+        var showErrorSavingAlert = false
+        var finalizingEditing = false
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
+        private let stonksAPI = StonksAPI()
 
         convenience init(context: TransactionDetailsSheetContext) {
             switch context {
@@ -280,7 +294,7 @@ extension TransactionDetailsSheet {
         }
 
         var transactionIsValid: Bool {
-            transaction != nil && ((autoTrackAsset && validatedAssetDataSource != nil) || !autoTrackAsset)
+            transaction != nil && ((autoTrackAsset && validAssetDataSource != nil) || !autoTrackAsset)
         }
 
         var title: String {
@@ -316,19 +330,42 @@ extension TransactionDetailsSheet {
                 amount: amount,
                 pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
                 fees: Money(value: fees, currency: feesCurrency),
-                dataSource: validatedAssetDataSource,
+                dataSource: validAssetDataSource,
                 updatedDate: updatedDate,
                 creationDate: creationDate
             )
         }
 
-        private var validatedAssetDataSource: AppTransactionDataSource? {
-            #warning("Validate with api if is valid")
+        private var validAssetDataSource: AppTransactionDataSource? {
             guard autoTrackAsset,
-                  assetTicker.trimmingByWhitespacesAndNewLines == assetTicker,
+                  assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil,
                   !assetTicker.isEmpty else { return nil }
 
             return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker)
+        }
+
+        func finalizeEditing(
+            close: @escaping () -> Void,
+            done: @escaping (_ transaction: AppTransaction) -> Void
+        ) async {
+            await withFinalizeEditing { [weak self] in
+                guard let self else { return }
+
+                assert(transactionIsValid)
+                guard let transaction else { return }
+
+                let tickerIsValid = await validateTicker()
+                guard tickerIsValid else {
+                    await openSavingAlert()
+                    return
+                }
+                done(transaction)
+                if case .details = context {
+                    await disableEditing()
+                } else {
+                    close()
+                }
+            }
         }
 
         @MainActor
@@ -339,6 +376,39 @@ extension TransactionDetailsSheet {
         @MainActor
         func disableEditing() {
             isEditing = false
+        }
+
+        @MainActor
+        private func openSavingAlert() {
+            showErrorSavingAlert = true
+        }
+
+        private func validateTicker() async -> Bool {
+            guard let validAssetDataSource else {
+                assertionFailure("Expected data source to be valid")
+                return false
+            }
+
+            let result = await stonksAPI.tickers.tickerIsValid(validAssetDataSource.ticker)
+            switch result {
+            case let .failure(failure):
+                logger.error(label: "Failed to know whether ticker is valid or not", error: failure)
+                return false
+            case let .success(success): return success
+            }
+        }
+
+        private func withFinalizeEditing(completion: @escaping () async -> Void) async {
+            await setFinalizeEditing(true)
+            await completion()
+            await setFinalizeEditing(false)
+        }
+
+        @MainActor
+        private func setFinalizeEditing(_ value: Bool) {
+            if value != finalizingEditing {
+                finalizingEditing = value
+            }
         }
 
         private func pricePerUnitCurrencyDidSet() {
