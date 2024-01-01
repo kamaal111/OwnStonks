@@ -21,7 +21,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     let pricePerUnit: Money
     let fees: Money
     var recordID: CKRecord.ID?
-    let assetDataSource: AssetDataSources?
+    let dataSource: AppTransactionDataSource?
     let updatedDate: Date?
     let creationDate: Date?
 
@@ -33,7 +33,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         amount: Double,
         pricePerUnit: Money,
         fees: Money,
-        assetDataSource: AssetDataSources?,
+        dataSource: AppTransactionDataSource?,
         updatedDate: Date?,
         creationDate: Date?,
         recordID: CKRecord.ID? = nil
@@ -48,7 +48,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         self.updatedDate = updatedDate
         self.creationDate = creationDate
         self.recordID = recordID
-        self.assetDataSource = assetDataSource
+        self.dataSource = dataSource
     }
 
     var totalPriceExcludingFees: Money {
@@ -56,7 +56,6 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     }
 
     var asCKRecord: CKRecord {
-        assert(recordID != nil)
         let initialRecord = if let recordID {
             CKRecord(recordType: Self.recordName, recordID: recordID)
         } else {
@@ -76,7 +75,6 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             case .feesCurrency: record[ckRecordKey] = fees.currency.rawValue
             case .updatedDate: record[ckRecordKey] = updatedDate
             case .creationDate: record[ckRecordKey] = creationDate
-            case .assetDataSource: record[ckRecordKey] = assetDataSource?.rawValue
             }
             return record
         }
@@ -91,7 +89,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
-            assetDataSource: assetDataSource,
+            dataSource: dataSource,
             updatedDate: updatedDate,
             creationDate: creationDate
         )
@@ -106,7 +104,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
-            assetDataSource: assetDataSource,
+            dataSource: dataSource,
             updatedDate: updatedDate,
             creationDate: creationDate
         )
@@ -130,10 +128,8 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
 
         let pricePerUnit = Money(value: pricePerUnitValue, currency: pricePerUnitCurrency)
         let fees = Money(value: feesValue, currency: feesCurrency)
-        var assetDataSource: AssetDataSources?
-        if let assetDataSourceString = record[.assetDataSource] as? String {
-            assetDataSource = AssetDataSources(rawValue: assetDataSourceString)
-        }
+        var dataSource: AppTransactionDataSource?
+        #warning("How do I fetch this from iCloud???")
 
         return AppTransaction(
             id: id,
@@ -143,7 +139,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
-            assetDataSource: assetDataSource,
+            dataSource: dataSource,
             updatedDate: record[.updatedDate] as? Date,
             creationDate: record[.creationDate] as? Date,
             recordID: record.recordID
@@ -157,7 +153,11 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         amount: 25,
         pricePerUnit: Money(value: 100, currency: .USD),
         fees: Money(value: 1, currency: .EUR),
-        assetDataSource: .stocks,
+        dataSource: .init(
+            id: UUID(uuidString: "d8613b54-8a45-4b43-a90c-c068b0f8f077")!,
+            sourceType: .stocks,
+            ticker: "AAPL"
+        ),
         updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
         creationDate: Date(timeIntervalSince1970: 1_702_233_813)
     )
@@ -175,7 +175,6 @@ private enum AppTransactionCloudKeys: String, CaseIterable {
     case feesCurrency
     case updatedDate
     case creationDate
-    case assetDataSource
 
     var ckRecordKey: String {
         "CD_\(rawValue)"

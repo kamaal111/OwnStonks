@@ -122,6 +122,14 @@ final class TransactionsManager {
         }
 
         let storedTransaction = storedTransactions[storedTransactionIndex]
+        var dataSourcePayload: StoredTransactionDataSource.Payload?
+        if let dataSource = transaction.dataSource {
+            dataSourcePayload = .init(
+                transaction: storedTransaction,
+                sourceType: dataSource.sourceType,
+                ticker: dataSource.ticker
+            )
+        }
         let updatedTransaction = try storedTransaction.update(payload: .init(
             name: transaction.name,
             transactionDate: transaction.transactionDate,
@@ -129,7 +137,7 @@ final class TransactionsManager {
             amount: transaction.amount,
             pricePerUnit: transaction.pricePerUnit,
             fees: transaction.fees,
-            assetDataSource: nil
+            dataSource: dataSourcePayload
         ))
         var storedTransactions = storedTransactions
         storedTransactions[storedTransactionIndex] = updatedTransaction
@@ -140,6 +148,10 @@ final class TransactionsManager {
     @MainActor
     func createTransaction(_ transaction: AppTransaction) throws {
         assert(!transaction.name.trimmingByWhitespacesAndNewLines.isEmpty)
+        var dataSourcePayload: StoredTransactionDataSource.Payload?
+        if let dataSource = transaction.dataSource {
+            dataSourcePayload = .init(transaction: nil, sourceType: dataSource.sourceType, ticker: dataSource.ticker)
+        }
         let storedTransaction = try StoredTransaction.create(
             payload: .init(
                 name: transaction.name,
@@ -147,7 +159,8 @@ final class TransactionsManager {
                 transactionType: transaction.transactionType,
                 amount: transaction.amount,
                 pricePerUnit: transaction.pricePerUnit,
-                fees: transaction.fees, assetDataSource: nil
+                fees: transaction.fees,
+                dataSource: dataSourcePayload
             ),
             context: persistentData.dataContainerContext
         )

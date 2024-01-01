@@ -75,7 +75,7 @@ struct TransactionDetailsSheet: View {
                     label: NSLocalizedString("Type", bundle: .module, comment: ""),
                     isEditing: viewModel.isEditing,
                     items: TransactionTypes.allCases,
-                    valueColor: viewModel.transactionType?.color ?? .secondary
+                    valueColor: viewModel.transactionType.color
                 ) { item in
                     Text(item.localized)
                 }
@@ -106,6 +106,13 @@ struct TransactionDetailsSheet: View {
                     })
                     .disabled(!viewModel.isEditing)
                     if viewModel.autoTrackAsset {
+                        EditableText(
+                            text: $viewModel.assetTicker,
+                            label: NSLocalizedString("Ticker", bundle: .module, comment: ""),
+                            isEditing: viewModel.isEditing,
+                            textCase: .none
+                        )
+                        .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                         EditablePicker(
                             selection: $viewModel.assetDataSource,
                             label: NSLocalizedString("Asset type", bundle: .module, comment: ""),
@@ -175,7 +182,7 @@ extension TransactionDetailsSheet {
     final class ViewModel {
         var name: String
         var transactionDate: Date
-        var transactionType: TransactionTypes?
+        var transactionType: TransactionTypes
         var amount: String
         var pricePerUnitCurrency: Currencies {
             didSet { pricePerUnitCurrencyDidSet() }
@@ -185,8 +192,9 @@ extension TransactionDetailsSheet {
         var feesCurrency: Currencies
         var fees: String
         private(set) var isEditing: Bool
-        var assetDataSource: AssetDataSources?
+        var assetDataSource: AssetDataSources
         var autoTrackAsset: Bool
+        var assetTicker: String
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
@@ -204,7 +212,9 @@ extension TransactionDetailsSheet {
                     fees: Money(value: 0, currency: preferredCurrency),
                     isEditing: true,
                     isNew: true,
-                    autoTrackAsset: false
+                    autoTrackAsset: false,
+                    assetDataSource: .stocks,
+                    assetTicker: ""
                 )
             case let .details(transaction):
                 self.init(
@@ -217,7 +227,9 @@ extension TransactionDetailsSheet {
                     fees: transaction.fees,
                     isEditing: false,
                     isNew: false,
-                    autoTrackAsset: transaction.assetDataSource != nil
+                    autoTrackAsset: transaction.dataSource != nil,
+                    assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
+                    assetTicker: transaction.dataSource?.ticker ?? ""
                 )
             case let .edit(transaction):
                 self.init(
@@ -230,7 +242,9 @@ extension TransactionDetailsSheet {
                     fees: transaction.fees,
                     isEditing: true,
                     isNew: false,
-                    autoTrackAsset: transaction.assetDataSource != nil
+                    autoTrackAsset: transaction.dataSource != nil,
+                    assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
+                    assetTicker: transaction.dataSource?.ticker ?? ""
                 )
             }
         }
@@ -245,7 +259,9 @@ extension TransactionDetailsSheet {
             fees: Money,
             isEditing: Bool,
             isNew: Bool,
-            autoTrackAsset: Bool
+            autoTrackAsset: Bool,
+            assetDataSource: AssetDataSources,
+            assetTicker: String
         ) {
             self.context = context
             self.name = name
@@ -259,10 +275,12 @@ extension TransactionDetailsSheet {
             self.isEditing = isEditing
             self.isNew = isNew
             self.autoTrackAsset = autoTrackAsset
+            self.assetDataSource = assetDataSource
+            self.assetTicker = assetTicker
         }
 
         var transactionIsValid: Bool {
-            transaction != nil
+            transaction != nil && ((autoTrackAsset && validatedAssetDataSource != nil) || !autoTrackAsset)
         }
 
         var title: String {
@@ -278,10 +296,6 @@ extension TransactionDetailsSheet {
             guard let amount = Double(amount) else { return nil }
             guard let pricePerUnit = Double(pricePerUnit) else { return nil }
             guard let fees = Double(fees) else { return nil }
-            guard let transactionType else {
-                assertionFailure("Expected transaction type at this point")
-                return nil
-            }
 
             var id: UUID?
             var creationDate: Date?
@@ -302,15 +316,19 @@ extension TransactionDetailsSheet {
                 amount: amount,
                 pricePerUnit: Money(value: pricePerUnit, currency: pricePerUnitCurrency),
                 fees: Money(value: fees, currency: feesCurrency),
-                assetDataSource: validatedAssetDataSource,
+                dataSource: validatedAssetDataSource,
                 updatedDate: updatedDate,
                 creationDate: creationDate
             )
         }
 
-        private var validatedAssetDataSource: AssetDataSources? {
-            #warning("Validate with api if is validated")
-            return assetDataSource
+        private var validatedAssetDataSource: AppTransactionDataSource? {
+            #warning("Validate with api if is valid")
+            guard autoTrackAsset,
+                  assetTicker.trimmingByWhitespacesAndNewLines == assetTicker,
+                  !assetTicker.isEmpty else { return nil }
+
+            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker)
         }
 
         @MainActor

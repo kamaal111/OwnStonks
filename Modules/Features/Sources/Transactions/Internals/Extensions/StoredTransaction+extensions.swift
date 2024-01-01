@@ -28,7 +28,7 @@ extension StoredTransaction {
             amount: amount,
             pricePerUnit: pricePerUnit,
             fees: fees,
-            assetDataSource: assetDataSourceFormatted,
+            dataSource: dataSource?.appTransactionDataSource,
             updatedDate: updatedDate,
             creationDate: creationDate
         )
