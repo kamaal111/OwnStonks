@@ -341,7 +341,7 @@ extension TransactionDetailsSheet {
                   assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil,
                   !assetTicker.isEmpty else { return nil }
 
-            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker)
+            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker, recordID: nil)
         }
 
         func finalizeEditing(

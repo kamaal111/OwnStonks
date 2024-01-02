@@ -60,6 +60,14 @@
         "identifier" : "RemoteNotifcationsTests",
         "name" : "RemoteNotifcationsTests"
       }
+    },
+    {
+      "enabled" : false,
+      "target" : {
+        "containerPath" : "container:Modules\/swift-stonks-api",
+        "identifier" : "SwiftStonksAPITests",
+        "name" : "SwiftStonksAPITests"
+      }
     }
   ],
   "version" : 1

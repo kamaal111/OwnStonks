@@ -19,7 +19,7 @@ extension AppDelegate: NSApplicationDelegate {
 
         application.registerForRemoteNotifications()
 
-        Task { await RemoteNotifcations.shared.subscripeToAll() }
+//        Task { await RemoteNotifcations.shared.subscripeToAll() }
     }
 
     func application(_: NSApplication, didReceiveRemoteNotification userInfo: [String: Any]) {

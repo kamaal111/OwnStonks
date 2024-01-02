@@ -23,7 +23,7 @@ extension AppDelegate: UIApplicationDelegate {
         application.registerForRemoteNotifications()
 
         #if !targetEnvironment(simulator)
-        Task { await RemoteNotifcations.shared.subscripeToAll() }
+//        Task { await RemoteNotifcations.shared.subscripeToAll() }
         #endif
 
         return true
