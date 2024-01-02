@@ -14,6 +14,7 @@ struct PlaygroundMainView: View {
         switch screen {
         case .root: PlaygroundRootScreen()
         case .appLogo: PlaygroundAppLogoScreen()
+        case .cloudDatabase: PlaygroundCloudDatabaseScreen()
         }
     }
 }

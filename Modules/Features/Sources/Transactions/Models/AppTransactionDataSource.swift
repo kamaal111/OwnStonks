@@ -10,8 +10,8 @@ import Foundation
 import SharedModels
 import PersistentData
 
-struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
-    let id: UUID?
+public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
+    public let id: UUID?
     let sourceType: AssetDataSources
     let ticker: String
     let recordID: CKRecord.ID?
@@ -23,7 +23,7 @@ struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
         self.recordID = recordID
     }
 
-    static var recordName = "CD_StoredTransactionDataSource"
+    public static var recordName = "CD_StoredTransactionDataSource"
 
     static func fromCKRecord(_ record: CKRecord) -> AppTransactionDataSource? {
         guard let id = record[.id] as? String, let id = UUID(uuidString: id) else { return nil }
@@ -33,23 +33,19 @@ struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
 
         return AppTransactionDataSource(id: id, sourceType: sourceType, ticker: ticker, recordID: record.recordID)
     }
-}
 
-private enum AppTransactionDataSourceCloudKeys: String, CaseIterable {
-    case id
-    case sourceType
-    case ticker
-    case updatedDate
-    case creationDate
-    case transaction
-
-    var ckRecordKey: String {
-        "CD_\(rawValue)"
+    public enum CloudKeys: String, CloudKeyEnumable {
+        case id
+        case sourceType
+        case ticker
+        case updatedDate
+        case creationDate
+        case transaction
     }
 }
 
 extension CKRecord {
-    fileprivate subscript(key: AppTransactionDataSourceCloudKeys) -> Any? {
+    fileprivate subscript(key: AppTransactionDataSource.CloudKeys) -> Any? {
         self[key.ckRecordKey]
     }
 }

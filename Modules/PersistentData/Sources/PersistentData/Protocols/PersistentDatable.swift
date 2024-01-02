@@ -25,7 +25,7 @@ public protocol PersistentDatable {
     ///   - limit: The amount of items limit the response on.
     /// - Returns: A array of `CKRecord` containing the filtered on objects.
     func filterICloud(
-        of record: CloudQueryable.Type,
+        of record: any CloudQueryable.Type,
         by predicate: NSPredicate,
         limit: Int?
     ) async throws -> [CKRecord]
@@ -62,7 +62,7 @@ extension PersistentDatable {
     /// List iCloud objects.
     /// - Parameter record: The ``CloudQueryable`` object to fetch for.
     /// - Returns: A array of `CKRecord` containing the filtered on objects.
-    public func listICloud(of record: CloudQueryable.Type) async throws -> [CKRecord] {
+    public func listICloud(of record: any CloudQueryable.Type) async throws -> [CKRecord] {
         let predicate = NSPredicate(value: true)
         return try await filterICloud(of: record, by: predicate, limit: nil)
     }

@@ -128,6 +128,8 @@ let package = Package(
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
                 .product(name: "SharedUI", package: "SharedStuff"),
                 "AppIconGenerator",
+                "Transactions",
+                "PersistentData",
             ],
             resources: [
                 .process("Resources"),
