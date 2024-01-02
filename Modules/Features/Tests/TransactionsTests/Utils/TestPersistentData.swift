@@ -23,7 +23,7 @@ final class TestPersistentData: PersistentDatable {
     }
 
     func filterICloud(
-        of _: CloudQueryable.Type,
+        of _: any CloudQueryable.Type,
         by _: NSPredicate,
         limit _: Int? = nil
     ) async throws -> [CKRecord] {

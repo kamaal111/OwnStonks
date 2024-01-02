@@ -10,6 +10,7 @@ import KamaalNavigation
 enum PlaygroundScreens: NavigatorStackValue {
     case root
     case appLogo
+    case cloudDatabase
 
     var isTabItem: Bool { false }
 
@@ -19,6 +20,7 @@ enum PlaygroundScreens: NavigatorStackValue {
         switch self {
         case .root: "Playground"
         case .appLogo: "App logo"
+        case .cloudDatabase: "Cloud database"
         }
     }
 }

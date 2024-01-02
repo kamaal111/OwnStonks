@@ -20,6 +20,10 @@ struct PlaygroundRootScreen: View {
             }
             .padding(.top, .medium)
             .padding(.horizontal, .medium)
+            KSection(header: "Data", content: {
+                PlaygroundNavigationButton(title: "Cloud database", destination: .cloudDatabase)
+            })
+            .padding(.horizontal, .medium)
         }
     }
 }

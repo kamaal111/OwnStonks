@@ -12,8 +12,8 @@ import SharedModels
 import PersistentData
 import KamaalExtensions
 
-struct AppTransaction: Hashable, Identifiable, CloudQueryable {
-    let id: UUID?
+public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
+    public let id: UUID?
     let name: String
     let transactionDate: Date
     let transactionType: TransactionTypes
@@ -61,7 +61,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         } else {
             CKRecord(recordType: Self.recordName)
         }
-        return AppTransactionCloudKeys.allCases.reduce(initialRecord) { record, key in
+        return CloudKeys.allCases.reduce(initialRecord) { record, key in
             let ckRecordKey = key.ckRecordKey
             switch key {
             case .id: record[ckRecordKey] = id?.uuidString
@@ -114,7 +114,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         )
     }
 
-    static let recordName = "CD_StoredTransaction"
+    public static let recordName = "CD_StoredTransaction"
 
     static func fromCKRecord(_ record: CKRecord, dataSourceRecord: CKRecord?) -> AppTransaction? {
         guard let id = record[.id] as? String, let id = UUID(uuidString: id) else { return nil }
@@ -169,29 +169,25 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
         creationDate: Date(timeIntervalSince1970: 1_702_233_813)
     )
-}
 
-private enum AppTransactionCloudKeys: String, CaseIterable {
-    case id
-    case name
-    case transactionDate
-    case transactionType
-    case amount
-    case pricePerUnit
-    case pricePerUnitCurrency
-    case fees
-    case feesCurrency
-    case updatedDate
-    case creationDate
-    case dataSource
-
-    var ckRecordKey: String {
-        "CD_\(rawValue)"
+    public enum CloudKeys: String, CloudKeyEnumable {
+        case id
+        case name
+        case transactionDate
+        case transactionType
+        case amount
+        case pricePerUnit
+        case pricePerUnitCurrency
+        case fees
+        case feesCurrency
+        case updatedDate
+        case creationDate
+        case dataSource
     }
 }
 
 extension CKRecord {
-    fileprivate subscript(key: AppTransactionCloudKeys) -> Any? {
+    fileprivate subscript(key: AppTransaction.CloudKeys) -> Any? {
         self[key.ckRecordKey]
     }
 }

@@ -41,7 +41,7 @@ public final class PersistentData: PersistentDatable {
     public static let shared = PersistentData()
 
     public func filterICloud(
-        of record: CloudQueryable.Type,
+        of record: any CloudQueryable.Type,
         by predicate: NSPredicate,
         limit: Int? = nil
     ) async throws -> [CKRecord] {
