@@ -15,6 +15,6 @@ extension StoredTransactionDataSource {
         guard let sourceType, let sourceType = AssetDataSources(rawValue: sourceType) else { return nil }
         guard let ticker else { return nil }
 
-        return AppTransactionDataSource(id: id, sourceType: sourceType, ticker: ticker)
+        return AppTransactionDataSource(id: id, sourceType: sourceType, ticker: ticker, recordID: nil)
     }
 }

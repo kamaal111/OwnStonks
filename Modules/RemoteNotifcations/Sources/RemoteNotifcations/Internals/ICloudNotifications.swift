@@ -18,6 +18,7 @@ final class ICloudNotifications {
     )
     private let subscriptionsWanted = [
         "CD_StoredTransaction-changes",
+        "CD_StoredTransactionDataSource-changes",
     ]
     private let logger = KamaalLogger(from: ICloudNotifications.self, failOnError: true)
 

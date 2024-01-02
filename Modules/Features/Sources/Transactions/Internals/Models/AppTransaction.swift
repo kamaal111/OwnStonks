@@ -75,6 +75,10 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             case .feesCurrency: record[ckRecordKey] = fees.currency.rawValue
             case .updatedDate: record[ckRecordKey] = updatedDate
             case .creationDate: record[ckRecordKey] = creationDate
+            case .dataSource:
+                if let dataSourceRecordID = dataSource?.recordID {
+                    record[ckRecordKey] = dataSourceRecordID.recordName
+                }
             }
             return record
         }
@@ -112,7 +116,7 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
 
     static let recordName = "CD_StoredTransaction"
 
-    static func fromCKRecord(_ record: CKRecord) -> AppTransaction? {
+    static func fromCKRecord(_ record: CKRecord, dataSourceRecord: CKRecord?) -> AppTransaction? {
         guard let id = record[.id] as? String, let id = UUID(uuidString: id) else { return nil }
         guard let name = record[.name] as? String else { return nil }
         guard let transactionDate = record[.transactionDate] as? Date else { return nil }
@@ -129,7 +133,10 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         let pricePerUnit = Money(value: pricePerUnitValue, currency: pricePerUnitCurrency)
         let fees = Money(value: feesValue, currency: feesCurrency)
         var dataSource: AppTransactionDataSource?
-        #warning("How do I fetch this from iCloud???")
+        if let dataSourceRecord {
+            dataSource = AppTransactionDataSource.fromCKRecord(dataSourceRecord)
+            assert(dataSource != nil)
+        }
 
         return AppTransaction(
             id: id,
@@ -156,7 +163,8 @@ struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         dataSource: .init(
             id: UUID(uuidString: "d8613b54-8a45-4b43-a90c-c068b0f8f077")!,
             sourceType: .stocks,
-            ticker: "AAPL"
+            ticker: "AAPL",
+            recordID: nil
         ),
         updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
         creationDate: Date(timeIntervalSince1970: 1_702_233_813)
@@ -175,6 +183,7 @@ private enum AppTransactionCloudKeys: String, CaseIterable {
     case feesCurrency
     case updatedDate
     case creationDate
+    case dataSource
 
     var ckRecordKey: String {
         "CD_\(rawValue)"
