@@ -23,6 +23,8 @@ struct PlaygroundCloudDatabaseTable: View {
                         ForEach(keys, id: \.self) { key in
                             HStack {
                                 Text(key)
+                                    .font(.headline)
+                                    .bold()
                                 if keys.last != key {
                                     Spacer()
                                     RoundedRectangle(cornerSize: .squared(4))
