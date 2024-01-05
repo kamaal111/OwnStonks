@@ -26,7 +26,5 @@ final class TestPersistentData: PersistentDatable {
         of _: any CloudQueryable.Type,
         by _: NSPredicate,
         limit _: Int? = nil
-    ) async throws -> [CKRecord] {
-        cloudResponse
-    }
+    ) async throws -> [CKRecord] { cloudResponse }
 }
