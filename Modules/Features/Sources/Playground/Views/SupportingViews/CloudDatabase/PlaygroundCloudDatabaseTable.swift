@@ -20,12 +20,12 @@ struct PlaygroundCloudDatabaseTable: View {
             HStack {
                 ScrollView(.horizontal) {
                     LazyVGrid(columns: columns, spacing: 20) {
-                        ForEach(keys, id: \.self) { key in
+                        ForEach(keysWithRecordID, id: \.self) { key in
                             HStack {
                                 Text(key)
                                     .font(.headline)
                                     .bold()
-                                if keys.last != key {
+                                if keysWithRecordID.last != key {
                                     Spacer()
                                     RoundedRectangle(cornerSize: .squared(4))
                                         .frame(width: 2)
@@ -34,7 +34,7 @@ struct PlaygroundCloudDatabaseTable: View {
                             .background(content: { Color.secondary.opacity(0.4) })
                         }
                         ForEach(records, id: \.self) { record in
-                            PlaygroundCloudDatabaseDataRow(keys: keys, record: record)
+                            PlaygroundCloudDatabaseDataRow(keys: keysWithRecordID, record: record)
                         }
                     }
                 }
@@ -45,8 +45,12 @@ struct PlaygroundCloudDatabaseTable: View {
         }
     }
 
+    private var keysWithRecordID: [String] {
+        ["recordName"].concat(keys)
+    }
+
     private var columns: [GridItem] {
-        (0 ..< keys.count)
+        (0 ..< keysWithRecordID.count)
             .map { _ in
                 GridItem(.flexible(minimum: 100))
             }

@@ -74,9 +74,10 @@ final class TransactionsManager {
             }
 
             let fetchedCloudRecords = try await persistentData.listICloud(of: AppTransaction.self)
-            let fetchedDataSourceIDS = fetchedCloudRecords
-                .compactMap { record in record["CD_dataSource"] as? String }
-            let dataSourcesQuery = NSPredicate(format: "Name in %@", fetchedDataSourceIDS)
+            let recordsWithDataSourcesIDs = fetchedCloudRecords
+                .filter { record in (record["CD_dataSource"] as? String) != nil }
+                .map { record in record["CD_id"] }
+            let dataSourcesQuery = NSPredicate(format: "CD_transaction in %@", recordsWithDataSourcesIDs)
             let fetchedDataSources = try await persistentData
                 .filterICloud(of: AppTransactionDataSource.self, by: dataSourcesQuery, limit: nil)
             let fetchedCloudRecordsTransctions = fetchedCloudRecords
