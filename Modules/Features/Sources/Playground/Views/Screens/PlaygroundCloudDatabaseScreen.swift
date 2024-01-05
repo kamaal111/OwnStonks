@@ -9,25 +9,33 @@ import SwiftUI
 import SharedUI
 import CloudKit
 import KamaalUI
+import KamaalPopUp
 import Transactions
 import SharedModels
 import PersistentData
 
 struct PlaygroundCloudDatabaseScreen: View {
+    @EnvironmentObject private var kPopUpManager: KPopUpManager
+
     @State private var selectedCloudModel: CloudModels = .transaction
     @State private var fetchedRecords: [CKRecord] = []
     @State private var loading = false
+    @State private var filterQuery = ""
 
     var body: some View {
         KScrollableForm {
-            HStack {
+            VStack {
                 KTitledPicker(selection: $selectedCloudModel, title: "Model", items: CloudModels.allCases) { item in
                     Text(item.recordName)
                 }
-                Button(action: { Task { await fetchData() } }, label: {
-                    Text("Fetch")
-                })
-                .padding(.top, 20)
+                HStack {
+                    KFloatingTextField(text: $filterQuery, title: "Filter query")
+                    Button(action: { fetchData() }, label: {
+                        Text("Fetch")
+                    })
+                    .onSubmit { fetchData() }
+                    .padding(.top, 12)
+                }
             }
             .disabled(loading)
             .padding(.horizontal, .medium)
@@ -35,14 +43,43 @@ struct PlaygroundCloudDatabaseScreen: View {
                 .padding(.horizontal, .medium)
         }
         .padding(.vertical, .medium)
-        .onChange(of: selectedCloudModel) { _, _ in
-            fetchedRecords = []
+        .onChange(of: selectedCloudModel) { _, _ in resetRecords() }
+    }
+
+    private func fetchData() {
+        guard !loading else { return }
+
+        Task {
+            await withLoading {
+                let filterQuery = filterQuery.trimmingByWhitespacesAndNewLines
+
+                do {
+                    if filterQuery.isEmpty {
+                        fetchedRecords = try await PersistentData.shared.listICloud(of: selectedCloudModel.model)
+                    } else {
+                        fetchedRecords = try await PersistentData.shared.filterICloud(
+                            of: selectedCloudModel.model,
+                            by: NSPredicate(format: filterQuery)
+                        )
+                    }
+                } catch {
+                    kPopUpManager.showPopUp(
+                        style: .bottom(title: error.localizedDescription, type: .error, description: nil),
+                        timeout: 4
+                    )
+                }
+            }
         }
     }
 
-    private func fetchData() async {
+    private func resetRecords() {
+        fetchedRecords = []
+        filterQuery = ""
+    }
+
+    private func withLoading(completion: () async -> Void) async {
         loading = true
-        fetchedRecords = try! await PersistentData.shared.listICloud(of: selectedCloudModel.model)
+        await completion()
         loading = false
     }
 }
