@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "Transactions"
-               BuildableName = "Transactions"
-               BlueprintName = "Transactions"
+               BlueprintIdentifier = "Playground"
+               BuildableName = "Playground"
+               BlueprintName = "Playground"
                ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,13 +26,8 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
-      <TestPlans>
-         <TestPlanReference
-            reference = "container:../../Tests/Transactions.xctestplan"
-            default = "YES">
-         </TestPlanReference>
-      </TestPlans>
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      shouldAutocreateTestPlan = "YES">
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -54,9 +49,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "Transactions"
-            BuildableName = "Transactions"
-            BlueprintName = "Transactions"
+            BlueprintIdentifier = "Playground"
+            BuildableName = "Playground"
+            BlueprintName = "Playground"
             ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
