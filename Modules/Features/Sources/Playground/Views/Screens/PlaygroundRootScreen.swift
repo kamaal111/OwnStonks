@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 17/12/2023.
 //
 
+#if DEBUG
 import SwiftUI
 import KamaalUI
 import SharedUI
@@ -31,3 +32,4 @@ struct PlaygroundRootScreen: View {
 #Preview {
     PlaygroundRootScreen()
 }
+#endif
