@@ -4,14 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "swift-stonks-api",
+    name: "StonksKit",
     platforms: [
         .macOS(.v13), .iOS(.v16),
     ],
     products: [
         .library(
-            name: "StonksAPI",
-            targets: ["StonksAPI"]
+            name: "StonksKit",
+            targets: ["StonksKit"]
         ),
     ],
     dependencies: [
@@ -19,7 +19,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "StonksAPI",
+            name: "StonksKit",
             dependencies: [
                 .product(name: "KamaalNetworker", package: "KamaalSwift"),
                 .product(name: "KamaalExtensions", package: "KamaalSwift"),
@@ -27,8 +27,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "SwiftStonksAPITests",
-            dependencies: ["StonksAPI"]
+            name: "StonksKitTests",
+            dependencies: ["StonksKit"]
         ),
     ]
 )

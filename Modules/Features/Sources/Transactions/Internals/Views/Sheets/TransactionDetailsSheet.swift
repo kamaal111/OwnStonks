@@ -9,7 +9,7 @@ import SwiftUI
 import SharedUI
 import KamaalUI
 import ForexKit
-import StonksAPI
+import StonksKit
 import KamaalLogger
 import SharedModels
 import KamaalExtensions
@@ -211,7 +211,7 @@ extension TransactionDetailsSheet {
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
-        private let stonksAPI = StonksAPI()
+        private let stonksKit = StonksKit()
 
         convenience init(context: TransactionDetailsSheetContext) {
             switch context {
@@ -389,7 +389,7 @@ extension TransactionDetailsSheet {
                 return false
             }
 
-            let result = await stonksAPI.tickers.tickerIsValid(validAssetDataSource.ticker)
+            let result = await stonksKit.tickers.tickerIsValid(validAssetDataSource.ticker)
             switch result {
             case let .failure(failure):
                 logger.error(label: "Failed to know whether ticker is valid or not", error: failure)

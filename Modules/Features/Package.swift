@@ -24,7 +24,7 @@ let package = Package(
         .package(url: "https://github.com/kamaal111/MockURLProtocol.git", .upToNextMinor(from: "0.1.1")),
         .package(path: "../PersistentData"),
         .package(path: "../SharedStuff"),
-        .package(path: "../swift-stonks-api"),
+        .package(path: "../StonksKit"),
     ],
     targets: [
         .target(
@@ -38,7 +38,7 @@ let package = Package(
                 .product(name: "SharedModels", package: "SharedStuff"),
                 .product(name: "SharedUI", package: "SharedStuff"),
                 .product(name: "SharedUtils", package: "SharedStuff"),
-                .product(name: "StonksAPI", package: "swift-stonks-api"),
+                "StonksKit",
                 "ForexKit",
                 "PersistentData",
                 "ValutaConversion",

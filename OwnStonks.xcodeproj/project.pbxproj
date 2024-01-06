@@ -60,7 +60,7 @@
 		2CC33CA02B2A575D0035ED02 /* package.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = package.json; sourceTree = "<group>"; };
 		2CC33CA12B2A57690035ED02 /* pyproject.toml */ = {isa = PBXFileReference; lastKnownFileType = text; path = pyproject.toml; sourceTree = "<group>"; };
 		2CC33CA22B2A576F0035ED02 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		2CE9B1182B4326BF00603BF1 /* swift-stonks-api */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = "swift-stonks-api"; sourceTree = "<group>"; };
+		2CDBC42F2B499DA50057FBBE /* StonksKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = StonksKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,12 +165,12 @@
 		2C52666E2B113DE6000CD2D5 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				2CE9B1182B4326BF00603BF1 /* swift-stonks-api */,
 				2C840D7A2B1255850043F850 /* Features */,
 				2C840D792B1255190043F850 /* Navigation */,
 				2CAE16682B252B0D00F49575 /* PersistentData */,
 				2C1AC2DD2B371BF70092BFB5 /* RemoteNotifcations */,
 				2C7F5A4F2B2DCE230013A85B /* SharedStuff */,
+				2CDBC42F2B499DA50057FBBE /* StonksKit */,
 			);
 			path = Modules;
 			sourceTree = "<group>";

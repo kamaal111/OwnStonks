@@ -1,5 +1,5 @@
 //
-//  StonksAPI.swift
+//  StonksKit.swift
 //
 //
 //  Created by Kamaal M Farah on 01/01/2024.
@@ -8,7 +8,7 @@
 import Foundation
 import KamaalNetworker
 
-public struct StonksAPI {
+public struct StonksKit {
     public let health: StonksHealth
     public let tickers: StonksTickers
 

@@ -64,9 +64,9 @@
     {
       "enabled" : false,
       "target" : {
-        "containerPath" : "container:Modules\/swift-stonks-api",
-        "identifier" : "SwiftStonksAPITests",
-        "name" : "SwiftStonksAPITests"
+        "containerPath" : "container:Modules\/StonksKit",
+        "identifier" : "StonksKitTests",
+        "name" : "StonksKitTests"
       }
     }
   ],
