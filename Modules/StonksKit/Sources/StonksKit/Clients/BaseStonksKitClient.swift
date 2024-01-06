@@ -1,5 +1,5 @@
 //
-//  BaseStonksAPIClient.swift
+//  BaseStonksKitClient.swift
 //
 //
 //  Created by Kamaal M Farah on 01/01/2024.
@@ -10,7 +10,7 @@ import KamaalUtils
 import KamaalNetworker
 import KamaalExtensions
 
-public class BaseStonksAPIClient {
+public class BaseStonksKitClient {
     private let networker: KamaalNetworker
 
     static let BASE_URL = URL(staticString: "http://127.0.0.1:8000")

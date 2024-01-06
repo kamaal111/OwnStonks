@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class StonksHealth: BaseStonksAPIClient {
+public class StonksHealth: BaseStonksKitClient {
     public func ping() async -> Result<StonksHealthPingResponse, StonksHealthErrors> {
         let url = clientURL
             .appending(path: "ping")

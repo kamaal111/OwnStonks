@@ -9,9 +9,11 @@ import Foundation
 import KamaalUtils
 import KamaalExtensions
 
-public class StonksTickers: BaseStonksAPIClient {
-    public func info(for ticker: String,
-                     closeDate: Date) async -> Result<StonksTickersInfoResponse, StonksTickersErrors> {
+public class StonksTickers: BaseStonksKitClient {
+    public func info(
+        for ticker: String,
+        closeDate: Date
+    ) async -> Result<StonksTickersInfoResponse, StonksTickersErrors> {
         let url = clientURL
             .appending(path: "info")
             .appending(path: ticker)
