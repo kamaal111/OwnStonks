@@ -46,6 +46,9 @@
     "Failed to get transactions" : {
       "extractionState" : "manual"
     },
+    "Failed to sync price" : {
+      "extractionState" : "manual"
+    },
     "Failed to update transaction" : {
       "extractionState" : "manual"
     },

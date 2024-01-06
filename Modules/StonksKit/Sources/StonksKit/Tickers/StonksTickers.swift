@@ -18,7 +18,7 @@ public class StonksTickers: StonksKitClient {
             .appending(path: "info")
             .appending(path: ticker)
             .appending(queryItems: [
-                .init(name: "date", value: Self.dateFormatter.string(from: date)),
+                .init(name: "date", value: formatDate(date)),
             ])
         return await get(url: url, enableCaching: true)
             .mapError(StonksTickersErrors.fromNetworker(_:))
@@ -29,7 +29,7 @@ public class StonksTickers: StonksKitClient {
             .appending(path: "closes")
             .appending(path: ticker)
             .appending(queryItems: [
-                .init(name: "start_date", value: Self.dateFormatter.string(from: startDate)),
+                .init(name: "start_date", value: formatDate(startDate)),
             ])
         return await get(url: url, enableCaching: false)
             .mapError(StonksTickersErrors.fromNetworker(_:))
@@ -49,6 +49,10 @@ public class StonksTickers: StonksKitClient {
         return .success(isFound)
     }
 
+    private func formatDate(_ date: Date) -> String {
+        Self.dateFormatter.string(from: date)
+    }
+
     private var clientURL: URL {
         Self.BASE_URL
             .appending(path: "tickers")
@@ -56,8 +60,7 @@ public class StonksTickers: StonksKitClient {
 
     private static let dateFormatter: DateFormatter = {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.locale = Locale(identifier: "en_UK")
+        dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter
     }()
 }
