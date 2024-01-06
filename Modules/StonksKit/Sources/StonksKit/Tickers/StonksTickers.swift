@@ -9,27 +9,25 @@ import Foundation
 import KamaalUtils
 import KamaalExtensions
 
-public class StonksTickers: BaseStonksKitClient {
+public class StonksTickers: StonksKitClient {
     public func info(
         for ticker: String,
-        closeDate: Date
+        date: Date
     ) async -> Result<StonksTickersInfoResponse, StonksTickersErrors> {
         let url = clientURL
             .appending(path: "info")
             .appending(path: ticker)
             .appending(queryItems: [
-                .init(name: "date", value: String(closeDate.beginningOfDay.toIsoString().split(separator: "T")[0])),
+                .init(name: "date", value: String(date.beginningOfDay.toIsoString().split(separator: "T")[0])),
             ])
-        return await get(url: url)
+        return await get(url: url, enableCaching: true)
             .mapError(StonksTickersErrors.fromNetworker(_:))
     }
 
-    public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
-        if let isValid = UserDefaults.isValidTickerCache?[ticker] {
-            return .success(isValid)
-        }
+//    public func closes(for ticker: String)
 
-        let result = await info(for: ticker, closeDate: Date())
+    public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
+        let result = await info(for: ticker, date: Date())
         let isFound: Bool
         switch result {
         case let .failure(failure):
@@ -39,11 +37,6 @@ public class StonksTickers: BaseStonksKitClient {
             case .general: return .failure(failure)
             }
         case .success: isFound = true
-        }
-        if UserDefaults.isValidTickerCache == nil {
-            UserDefaults.isValidTickerCache = [ticker: isFound]
-        } else {
-            UserDefaults.isValidTickerCache?[ticker] = isFound
         }
         return .success(isFound)
     }
@@ -64,9 +57,4 @@ extension Date {
 
         return hashedDate
     }
-}
-
-extension UserDefaults {
-    @UserDefaultsObject(key: "io.kamaal.swift-stonks-api.is_valid_ticker_cache")
-    fileprivate static var isValidTickerCache: [String: Bool]?
 }

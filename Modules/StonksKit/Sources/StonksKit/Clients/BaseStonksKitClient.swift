@@ -6,27 +6,26 @@
 //
 
 import Foundation
-import KamaalUtils
 import KamaalNetworker
 import KamaalExtensions
 
+public typealias StonksKitClient = BaseStonksKitClient & StonkKitClientable
+
+public protocol StonkKitClientable { }
+
 public class BaseStonksKitClient {
     private let networker: KamaalNetworker
+    private var cacheStorage: CacheStorable
 
     static let BASE_URL = URL(staticString: "http://127.0.0.1:8000")
 
-    init(networker: KamaalNetworker) {
+    init(networker: KamaalNetworker, cacheStorage: CacheStorable) {
         self.networker = networker
+        self.cacheStorage = cacheStorage
     }
 
-    var defaultHeader: [String: String] {
-        [:]
-    }
-
-    func get<T: Codable>(url: URL) async -> Result<T, KamaalNetworker.Errors> {
-        if let stonksAPIGetCache = UserDefaults.stonksAPIGetCache,
-           let cachedResult = stonksAPIGetCache[url],
-           let cachedResponse = try? JSONDecoder().decode(T.self, from: cachedResult) {
+    func get<T: Codable>(url: URL, enableCaching: Bool) async -> Result<T, KamaalNetworker.Errors> {
+        if enableCaching, let cachedResponse = try? cacheStorage.getStonksAPIGetCache(from: url, ofType: T.self) {
             return .success(cachedResponse)
         }
 
@@ -38,18 +37,13 @@ public class BaseStonksKitClient {
         case let .success(success): successfulResponse = success
         }
 
-        if let responseData = try? JSONEncoder().encode(successfulResponse) {
-            if UserDefaults.stonksAPIGetCache == nil {
-                UserDefaults.stonksAPIGetCache = [url: responseData]
-            } else {
-                UserDefaults.stonksAPIGetCache?[url] = responseData
-            }
+        if enableCaching {
+            try? cacheStorage.setStonksAPIGetCache(on: url, data: successfulResponse)
         }
         return .success(successfulResponse)
     }
-}
 
-extension UserDefaults {
-    @UserDefaultsObject(key: "io.kamaal.swift-stonks-api.get_cache")
-    fileprivate static var stonksAPIGetCache: [URL: Data]?
+    private var defaultHeader: [String: String] {
+        [:]
+    }
 }
