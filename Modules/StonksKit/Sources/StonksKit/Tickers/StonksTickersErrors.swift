@@ -9,24 +9,22 @@ import Foundation
 import KamaalNetworker
 
 public enum StonksTickersErrors: Error {
-    case notFound
-    case badRequest
+    case notFound(context: Error)
+    case badRequest(context: Error)
     case general(context: Error)
 
     static func fromNetworker(_ error: KamaalNetworker.Errors) -> StonksTickersErrors {
         switch error {
-        case let .generalError(error): return .general(context: error)
-        case let .responseError(message, code):
-            if code == 404 {
-                return .notFound
+        case let .generalError(error): .general(context: error)
+        case let .responseError(_, code):
+            switch code {
+            case 400: .badRequest(context: error)
+            case 404: .notFound(context: error)
+            default: .general(context: error)
             }
-            if code == 400 {
-                return .badRequest
-            }
-            return .general(context: error)
-        case .notAValidJSON: return .general(context: error)
-        case let .parsingError(error): return .general(context: error)
-        case let .invalidURL(url): return .general(context: error)
+        case .notAValidJSON: .general(context: error)
+        case let .parsingError(error): .general(context: error)
+        case .invalidURL: .general(context: error)
         }
     }
 }
