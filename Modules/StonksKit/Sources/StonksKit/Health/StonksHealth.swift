@@ -7,11 +7,11 @@
 
 import Foundation
 
-public class StonksHealth: BaseStonksKitClient {
+public class StonksHealth: StonksKitClient {
     public func ping() async -> Result<StonksHealthPingResponse, StonksHealthErrors> {
         let url = clientURL
             .appending(path: "ping")
-        return await get(url: url)
+        return await get(url: url, enableCaching: true)
             .mapError(StonksHealthErrors.fromNetworker(_:))
     }
 

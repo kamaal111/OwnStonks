@@ -13,7 +13,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/kamaal111/ForexKit.git", .upToNextMajor(from: "3.2.1")),
-        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.6.1")),
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.8.1")),
     ],
     targets: [
         .target(name: "SharedUtils"),
