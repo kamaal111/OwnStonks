@@ -73,28 +73,12 @@ final class TransactionsManager {
                 return
             }
 
-            let fetchedCloudRecords = try await persistentData.listICloud(of: AppTransaction.self)
-            let recordsWithDataSourcesIDs = fetchedCloudRecords
-                .filter { record in (record["CD_dataSource"] as? String) != nil }
-                .map { record in record["CD_id"] }
-            let dataSourcesQuery = NSPredicate(format: "CD_transaction in %@", recordsWithDataSourcesIDs)
-            let fetchedDataSources = try await persistentData
-                .filterICloud(of: AppTransactionDataSource.self, by: dataSourcesQuery, limit: nil)
-            let fetchedCloudRecordsTransctions = fetchedCloudRecords
-                .compactMap { record in
-                    let dataSourceID = record["CD_dataSource"] as? String
-                    let dataSourceRecord = fetchedDataSources
-                        .find(where: { record in record.recordID.recordName == dataSourceID })
-                    return AppTransaction.fromCKRecord(record, dataSourceRecord: dataSourceRecord)
-                }
-            assert(fetchedCloudRecords.count == fetchedCloudRecordsTransctions.count)
-            let fetchedRecordIDs = fetchedCloudRecordsTransctions
-                .compactMap(\.id)
-                .sorted(by: \.uuidString, using: .orderedAscending)
-            let transactionsIDs = transactions
-                .compactMap(\.id)
-                .sorted(by: \.uuidString, using: .orderedAscending)
-            if fetchedRecordIDs == transactionsIDs {
+            let fetchedCloudRecordsTransctions = try await fetchPendingICloudChanges()
+            let transactinosArePendingInICloud = checkIfTransactionsArePendingInICloud(
+                storedTransactions: storedTransactions,
+                iCloudTransactions: fetchedCloudRecordsTransctions
+            )
+            if !transactinosArePendingInICloud {
                 logger.info("Fetched from iCloud and no more changes pending")
                 quickStorage.pendingCloudChanges = false
                 await setStoredTransactions(storedTransactions, sort: true)
@@ -211,6 +195,38 @@ final class TransactionsManager {
         }
 
         self.transactions = transactions
+    }
+
+    private func checkIfTransactionsArePendingInICloud(
+        storedTransactions: [StoredTransaction],
+        iCloudTransactions: [AppTransaction]
+    ) -> Bool {
+        let fetchedRecordIDs = iCloudTransactions
+            .compactMap(\.id)
+            .sorted(by: \.uuidString, using: .orderedAscending)
+        let transactionsIDs = storedTransactions
+            .compactMap(\.id)
+            .sorted(by: \.uuidString, using: .orderedAscending)
+        return fetchedRecordIDs != transactionsIDs
+    }
+
+    private func fetchPendingICloudChanges() async throws -> [AppTransaction] {
+        let fetchedCloudRecords = try await persistentData.listICloud(of: AppTransaction.self)
+        let recordsWithDataSourcesIDs = fetchedCloudRecords
+            .compactMap { record in record[AppTransaction.CloudKeys.dataSource.ckRecordKey] as? String }
+        let dataSourcesQuery = NSPredicate(format: "recordName in %@", recordsWithDataSourcesIDs)
+        let fetchedDataSources = try await persistentData
+            .filterICloud(of: AppTransactionDataSource.self, by: dataSourcesQuery, limit: nil)
+        let fetchedCloudRecordsTransctions = fetchedCloudRecords
+            .compactMap { record in
+                let dataSourceID = record[AppTransaction.CloudKeys.dataSource.ckRecordKey] as? String
+                let dataSourceRecord = fetchedDataSources
+                    .find(where: { record in record.recordID.recordName == dataSourceID })
+                return AppTransaction.fromCKRecord(record, dataSourceRecord: dataSourceRecord)
+            }
+        assert(fetchedCloudRecords.count == fetchedCloudRecordsTransctions.count)
+
+        return fetchedCloudRecordsTransctions
     }
 
     @objc
