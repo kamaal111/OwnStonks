@@ -12,6 +12,7 @@ import ForexKit
 import StonksKit
 import KamaalLogger
 import SharedModels
+import ValutaConversion
 import KamaalExtensions
 
 enum TransactionDetailsSheetContext: Equatable {
@@ -23,6 +24,8 @@ enum TransactionDetailsSheetContext: Equatable {
 private let logger = KamaalLogger(from: TransactionDetailsSheet.self, failOnError: true)
 
 struct TransactionDetailsSheet: View {
+    @Environment(ValutaConversion.self) private var valutaConversion
+
     @State private var viewModel: ViewModel
 
     @Binding var isShown: Bool
@@ -98,8 +101,10 @@ struct TransactionDetailsSheet: View {
                         label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
                         isEditing: viewModel.isEditing
                     )
-                    if viewModel.autoTrackAsset, viewModel.isEditing {
-                        Button(action: { Task { await viewModel.fetchPricePerUnit() } }, label: {
+                    if viewModel.autoTrackAsset, viewModel.isEditing, viewModel.transactionIsValid {
+                        Button(action: {
+                            Task { await viewModel.fetchPricePerUnit(valutaConversion: valutaConversion) }
+                        }, label: {
                             Image(systemName: "arrow.triangle.2.circlepath")
                                 .kBold()
                                 .foregroundColor(.accentColor)
@@ -344,7 +349,7 @@ extension TransactionDetailsSheet {
             )
         }
 
-        func fetchPricePerUnit() async {
+        func fetchPricePerUnit(valutaConversion: ValutaConversion) async {
             await withLoading { [weak self] in
                 guard let self else { return }
 
@@ -365,8 +370,12 @@ extension TransactionDetailsSheet {
 
                 guard let currency = info.currency, let currency = Currencies(rawValue: currency) else { return }
 
-                // TODO: CONVERT VALUTA
-                await setPricePerUnit(Money(value: info.close, currency: currency))
+                let close = Money(value: info.close, currency: currency)
+                if let convertedClose = valutaConversion.convertMoney(from: close, to: pricePerUnitCurrency) {
+                    await setPricePerUnit(convertedClose)
+                } else {
+                    await setPricePerUnit(close)
+                }
             }
         }
 
@@ -468,4 +477,5 @@ extension TransactionDetailsSheet {
         onDone: { _ in },
         onDelete: { }
     )
+    .environment(ValutaConversion())
 }
