@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 17/12/2023.
 //
 
+#if DEBUG
 import SwiftUI
 import KamaalUI
 import KamaalNavigation
@@ -33,3 +34,4 @@ struct PlaygroundNavigationButton: View {
 #Preview {
     PlaygroundNavigationButton(title: "Titler", destination: .appLogo)
 }
+#endif

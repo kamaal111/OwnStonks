@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 02/01/2024.
 //
 
+#if DEBUG
 import SwiftUI
 import SharedUI
 import CloudKit
@@ -110,3 +111,4 @@ private enum CloudModels: CaseIterable {
 #Preview {
     PlaygroundCloudDatabaseScreen()
 }
+#endif

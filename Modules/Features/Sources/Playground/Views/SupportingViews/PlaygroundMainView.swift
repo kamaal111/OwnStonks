@@ -5,6 +5,7 @@
 //  Created by Kamaal M Farah on 17/12/2023.
 //
 
+#if DEBUG
 import SwiftUI
 
 struct PlaygroundMainView: View {
@@ -22,3 +23,4 @@ struct PlaygroundMainView: View {
 #Preview {
     PlaygroundMainView(screen: .root)
 }
+#endif
