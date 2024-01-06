@@ -91,12 +91,22 @@ struct TransactionDetailsSheet: View {
                     isEditing: viewModel.isEditing
                 )
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
-                EditableMoney(
-                    currency: $viewModel.pricePerUnitCurrency,
-                    value: $viewModel.pricePerUnit,
-                    label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
-                    isEditing: viewModel.isEditing
-                )
+                HStack {
+                    EditableMoney(
+                        currency: $viewModel.pricePerUnitCurrency,
+                        value: $viewModel.pricePerUnit,
+                        label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
+                        isEditing: viewModel.isEditing
+                    )
+                    if viewModel.autoTrackAsset, viewModel.isEditing {
+                        Button(action: { Task { await viewModel.fetchPricePerUnit() } }, label: {
+                            Image(systemName: "arrow.triangle.2.circlepath")
+                                .kBold()
+                                .foregroundColor(.accentColor)
+                        })
+                        .buttonStyle(.plain)
+                    }
+                }
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 EditableMoney(
                     currency: $viewModel.feesCurrency,
@@ -145,16 +155,12 @@ struct TransactionDetailsSheet: View {
             .padding(.vertical, .medium)
         }
         .padding(.vertical, .medium)
-        .alert(
-            NSLocalizedString("Invalid ticker provided", bundle: .module, comment: ""),
-            isPresented: $viewModel.showErrorSavingAlert,
-            actions: {
-                Button(role: .cancel, action: { }) {
-                    Text("OK", bundle: .module)
-                }
+        .alert(viewModel.errorAlertTitle, isPresented: $viewModel.showErrorAlert, actions: {
+            Button(role: .cancel, action: { }) {
+                Text("OK", bundle: .module)
             }
-        )
-        .disabled(viewModel.finalizingEditing)
+        })
+        .disabled(viewModel.loading)
         #if os(macOS)
             .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
@@ -178,6 +184,7 @@ struct TransactionDetailsSheet: View {
 
     func handleDelete() {
         close()
+        // Delete is not triggered on iOS unless there is a small delay calling onDelete
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             onDelete()
         }
@@ -206,8 +213,9 @@ extension TransactionDetailsSheet {
         var assetDataSource: AssetDataSources
         var autoTrackAsset: Bool
         var assetTicker: String
-        var showErrorSavingAlert = false
-        var finalizingEditing = false
+        var showErrorAlert = false
+        var errorAlertTitle = ""
+        var loading = false
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
@@ -336,19 +344,37 @@ extension TransactionDetailsSheet {
             )
         }
 
-        private var validAssetDataSource: AppTransactionDataSource? {
-            guard autoTrackAsset,
-                  assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil,
-                  !assetTicker.isEmpty else { return nil }
+        func fetchPricePerUnit() async {
+            await withLoading { [weak self] in
+                guard let self else { return }
 
-            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker, recordID: nil)
+                guard let validAssetDataSource else {
+                    assertionFailure("Expected data source to be valid")
+                    return
+                }
+
+                let infoResult = await stonksKit.tickers.info(for: validAssetDataSource.ticker, date: transactionDate)
+                let info: StonksTickersInfoResponse
+                switch infoResult {
+                case let .failure(failure):
+                    await openAlert(title: NSLocalizedString("Failed to sync price", bundle: .module, comment: ""))
+                    logger.warning("Failed to sync price; error='\(failure)'")
+                    return
+                case let .success(success): info = success
+                }
+
+                guard let currency = info.currency, let currency = Currencies(rawValue: currency) else { return }
+
+                // TODO: CONVERT VALUTA
+                await setPricePerUnit(Money(value: info.close, currency: currency))
+            }
         }
 
         func finalizeEditing(
             close: @escaping () -> Void,
             done: @escaping (_ transaction: AppTransaction) -> Void
         ) async {
-            await withFinalizeEditing { [weak self] in
+            await withLoading { [weak self] in
                 guard let self else { return }
 
                 assert(transactionIsValid)
@@ -356,7 +382,7 @@ extension TransactionDetailsSheet {
 
                 let tickerIsValid = await validateTicker()
                 guard tickerIsValid else {
-                    await openSavingAlert()
+                    await openAlert(title: NSLocalizedString("Invalid ticker provided", bundle: .module, comment: ""))
                     return
                 }
                 done(transaction)
@@ -378,9 +404,24 @@ extension TransactionDetailsSheet {
             isEditing = false
         }
 
+        private var validAssetDataSource: AppTransactionDataSource? {
+            guard autoTrackAsset,
+                  assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil,
+                  !assetTicker.isEmpty else { return nil }
+
+            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker, recordID: nil)
+        }
+
         @MainActor
-        private func openSavingAlert() {
-            showErrorSavingAlert = true
+        private func setPricePerUnit(_ money: Money) {
+            pricePerUnit = String(money.value)
+            pricePerUnitCurrency = money.currency
+        }
+
+        @MainActor
+        private func openAlert(title: String) {
+            showErrorAlert = true
+            errorAlertTitle = title
         }
 
         private func validateTicker() async -> Bool {
@@ -398,16 +439,16 @@ extension TransactionDetailsSheet {
             }
         }
 
-        private func withFinalizeEditing(completion: @escaping () async -> Void) async {
-            await setFinalizeEditing(true)
+        private func withLoading(completion: @escaping () async -> Void) async {
+            await setLoading(true)
             await completion()
-            await setFinalizeEditing(false)
+            await setLoading(false)
         }
 
         @MainActor
-        private func setFinalizeEditing(_ value: Bool) {
-            if value != finalizingEditing {
-                finalizingEditing = value
+        private func setLoading(_ value: Bool) {
+            if value != loading {
+                loading = value
             }
         }
 
@@ -422,7 +463,7 @@ extension TransactionDetailsSheet {
 #Preview {
     TransactionDetailsSheet(
         isShown: .constant(true),
-        context: .new(.CAD),
+        context: .edit(.preview),
         isNotPendingInTheCloud: true,
         onDone: { _ in },
         onDelete: { }
