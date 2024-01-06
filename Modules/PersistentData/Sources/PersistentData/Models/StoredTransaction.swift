@@ -15,7 +15,7 @@ import KamaalExtensions
 
 @Builder
 @Model
-public final class StoredTransaction: Identifiable, Buildable {
+public final class StoredTransaction: Identifiable, Buildable, PersistentStorable {
     public let id: UUID?
     public private(set) var name: String?
     public private(set) var transactionDate: Date?
@@ -124,11 +124,6 @@ public final class StoredTransaction: Identifiable, Buildable {
         )
     }
 
-    public func delete() {
-        assert(modelContext != nil)
-        modelContext?.delete(self)
-    }
-
     public func update(payload: Payload) throws -> StoredTransaction {
         guard let context = modelContext else {
             assertionFailure("Expected context to exist at this point")
@@ -148,7 +143,12 @@ public final class StoredTransaction: Identifiable, Buildable {
         return self
     }
 
-    public static func create(payload: Payload, context: ModelContext) throws -> StoredTransaction {
+    public static func create(payload: Payload, context: ModelContext?) throws -> StoredTransaction {
+        guard let context else {
+            assertionFailure("Context should be present")
+            throw StoredTransactionErrors.creationFailure
+        }
+
         let dataSource = try updatedDataSource(nil, with: payload.dataSource, context: nil)
         let transaction = try StoredTransaction
             .Builder()
@@ -221,4 +221,8 @@ public final class StoredTransaction: Identifiable, Buildable {
             self.dataSource = dataSource
         }
     }
+}
+
+public enum StoredTransactionErrors: Error {
+    case creationFailure
 }

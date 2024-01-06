@@ -12,7 +12,7 @@ import SwiftBuilder
 
 @Builder
 @Model
-public final class StoredTransactionDataSource: Identifiable, Buildable {
+public final class StoredTransactionDataSource: Identifiable, Buildable, PersistentStorable {
     public let id: UUID?
     public private(set) var transaction: StoredTransaction?
     public private(set) var sourceType: String?
@@ -34,11 +34,6 @@ public final class StoredTransactionDataSource: Identifiable, Buildable {
         self.ticker = ticker
         self.updatedDate = updatedDate
         self.creationDate = creationDate
-    }
-
-    public func delete() {
-        assert(modelContext != nil)
-        modelContext?.delete(self)
     }
 
     public func update(payload: Payload) throws -> StoredTransactionDataSource {
