@@ -13,12 +13,13 @@ public struct StonksKit {
     public let tickers: StonksTickers
 
     public init() {
-        let networker = KamaalNetworker()
-        let cacheStorage = CacheStorage()
-        self.init(networker: networker, cacheStorage: cacheStorage)
+        let urlSession = URLSession.shared
+        let cacheStorage = StonksKitCacheStorage()
+        self.init(urlSession: urlSession, cacheStorage: cacheStorage)
     }
 
-    init(networker: KamaalNetworker, cacheStorage: CacheStorable) {
+    public init(urlSession: URLSession, cacheStorage: StonksKitCacheStorable) {
+        let networker = KamaalNetworker(urlSession: urlSession)
         self.health = .init(networker: networker, cacheStorage: cacheStorage)
         self.tickers = .init(networker: networker, cacheStorage: cacheStorage)
     }

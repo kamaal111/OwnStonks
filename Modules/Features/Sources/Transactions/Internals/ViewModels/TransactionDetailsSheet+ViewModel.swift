@@ -37,10 +37,15 @@ extension TransactionDetailsSheet {
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
-        private let stonksKit = StonksKit()
+        private let stonksKit: StonksKit
         private let logger = KamaalLogger(from: TransactionDetailsSheet.self, failOnError: true)
 
         convenience init(context: TransactionDetailsSheetContext) {
+            let stonksKit = StonksKit()
+            self.init(context: context, stonksKit: stonksKit)
+        }
+
+        convenience init(context: TransactionDetailsSheetContext, stonksKit: StonksKit) {
             switch context {
             case let .new(preferredCurrency):
                 self.init(
@@ -55,7 +60,8 @@ extension TransactionDetailsSheet {
                     isNew: true,
                     autoTrackAsset: false,
                     assetDataSource: .stocks,
-                    assetTicker: ""
+                    assetTicker: "",
+                    stonksKit: stonksKit
                 )
             case let .details(transaction):
                 self.init(
@@ -70,7 +76,8 @@ extension TransactionDetailsSheet {
                     isNew: false,
                     autoTrackAsset: transaction.dataSource != nil,
                     assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
-                    assetTicker: transaction.dataSource?.ticker ?? ""
+                    assetTicker: transaction.dataSource?.ticker ?? "",
+                    stonksKit: stonksKit
                 )
             case let .edit(transaction):
                 self.init(
@@ -85,7 +92,8 @@ extension TransactionDetailsSheet {
                     isNew: false,
                     autoTrackAsset: transaction.dataSource != nil,
                     assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
-                    assetTicker: transaction.dataSource?.ticker ?? ""
+                    assetTicker: transaction.dataSource?.ticker ?? "",
+                    stonksKit: stonksKit
                 )
             }
         }
@@ -102,7 +110,8 @@ extension TransactionDetailsSheet {
             isNew: Bool,
             autoTrackAsset: Bool,
             assetDataSource: AssetDataSources,
-            assetTicker: String
+            assetTicker: String,
+            stonksKit: StonksKit
         ) {
             self.context = context
             self.name = name
@@ -118,6 +127,7 @@ extension TransactionDetailsSheet {
             self.autoTrackAsset = autoTrackAsset
             self.assetDataSource = assetDataSource
             self.assetTicker = assetTicker
+            self.stonksKit = stonksKit
         }
 
         var transactionIsValid: Bool {
@@ -200,8 +210,10 @@ extension TransactionDetailsSheet {
             await withLoading { [weak self] in
                 guard let self else { return }
 
-                assert(transactionIsValid)
-                guard let transaction else { return }
+                guard let transaction else {
+                    assertionFailure("Expected transaction to be valid here")
+                    return
+                }
 
                 let tickerIsValid = await validateTicker()
                 guard tickerIsValid else {
