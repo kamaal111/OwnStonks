@@ -30,6 +30,6 @@ extension CacheStorable {
 }
 
 struct CacheStorage: CacheStorable {
-    @UserDefaultsObject(key: "io.kamaal.swift-stonks-api.get_cache")
+    @UserDefaultsObject(key: "io.kamaal.StonksKit.get_cache")
     var stonksAPIGetCache: [URL: Data]?
 }
