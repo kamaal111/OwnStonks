@@ -1,5 +1,5 @@
 //
-//  CacheStorage.swift
+//  StonksKitCacheStorage.swift
 //
 //
 //  Created by Kamaal M Farah on 06/01/2024.
@@ -8,11 +8,11 @@
 import Foundation
 import KamaalUtils
 
-protocol CacheStorable {
+public protocol StonksKitCacheStorable {
     var stonksAPIGetCache: [URL: Data]? { get set }
 }
 
-extension CacheStorable {
+extension StonksKitCacheStorable {
     func getStonksAPIGetCache<T: Decodable>(from url: URL, ofType type: T.Type) throws -> T? {
         guard let cachedValue = stonksAPIGetCache?[url] else { return nil }
 
@@ -29,7 +29,7 @@ extension CacheStorable {
     }
 }
 
-struct CacheStorage: CacheStorable {
+struct StonksKitCacheStorage: StonksKitCacheStorable {
     @UserDefaultsObject(key: "io.kamaal.StonksKit.get_cache")
     var stonksAPIGetCache: [URL: Data]?
 }

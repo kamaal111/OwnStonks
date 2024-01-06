@@ -59,6 +59,8 @@ let package = Package(
                 "Transactions",
                 "PersistentData",
                 "ForexKit",
+                "StonksKit",
+                "MockURLProtocol",
             ],
             resources: [
                 .process("../../Sources/Transactions/\(transactionResourcesPath)"),
