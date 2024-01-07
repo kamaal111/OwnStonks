@@ -13,10 +13,133 @@ import StonksKit
 import Foundation
 import SharedModels
 import MockURLProtocol
+import KamaalExtensions
+import ValutaConversion
 @testable import Transactions
 
 final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
     override class func spec() {
+        let url = URL(staticString: "https://kamaal.io")
+
+        describe("Fetch price per unit") {
+            it("should fetch price per unit and convert price") {
+                // Given
+                let expectedTicker = "MSFT"
+                let infoResponse = StonksTickersInfoResponse(
+                    name: "MicroShaft",
+                    close: 200,
+                    currency: Currencies.USD.rawValue,
+                    symbol: expectedTicker,
+                    closeDate: nil
+                )
+                try MockURLProtocol.makeRequests(with: [
+                    .init(data: JSONEncoder().encode(testExchangeRates), statusCode: 200, url: url),
+                    .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
+                ])
+                let cacheStorage = TestTransactionsQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: cacheStorage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: true
+                )
+                try await valutaConversion.fetchExchangeRates(of: .EUR)
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .edit(testTransaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
+                viewModel.pricePerUnitCurrency = .EUR
+                viewModel.pricePerUnit = String(0.0)
+                viewModel.autoTrackAsset = true
+                viewModel.assetTicker = expectedTicker
+
+                // When
+                await viewModel.fetchPricePerUnit(valutaConversion: valutaConversion)
+
+                // Then
+                expect(viewModel.pricePerUnitCurrency) == .EUR
+                expect(Double(viewModel.pricePerUnit)?.toFixed(2)) == "187.51"
+            }
+
+            it("should fetch price per unit but fail to convert price") {
+                // Given
+                let expectedTicker = "GHRD"
+                let infoResponse = StonksTickersInfoResponse(
+                    name: "GigaHard",
+                    close: 200,
+                    currency: Currencies.USD.rawValue,
+                    symbol: expectedTicker,
+                    closeDate: nil
+                )
+                try MockURLProtocol.makeRequests(with: [
+                    .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
+                ])
+                let cacheStorage = TestTransactionsQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: cacheStorage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: true
+                )
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .edit(testTransaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
+                viewModel.pricePerUnitCurrency = .EUR
+                viewModel.pricePerUnit = String(0.0)
+                viewModel.autoTrackAsset = true
+                viewModel.assetTicker = expectedTicker
+
+                // When
+                await viewModel.fetchPricePerUnit(valutaConversion: valutaConversion)
+
+                // Then
+                expect(viewModel.pricePerUnitCurrency) == .USD
+                expect(Double(viewModel.pricePerUnit)?.toFixed(2)) == "200.00"
+            }
+
+            it("should fail to fetch price per unit") {
+                // Given
+                MockURLProtocol.makeRequests(with: [
+                    .init(
+                        data: #"{"message": "Oh no we failed, well you're just unlucky 🤷‍♂️"}"#.data(using: .utf8)!,
+                        statusCode: 500,
+                        url: url
+                    ),
+                ])
+                let cacheStorage = TestTransactionsQuickStorage()
+                let valutaConversion = ValutaConversion(
+                    symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                    quickStorage: cacheStorage,
+                    urlSession: urlSession,
+                    failOnError: true,
+                    skipCaching: true
+                )
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .edit(testTransaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
+                viewModel.autoTrackAsset = true
+                viewModel.assetTicker = "YES"
+
+                // When
+                await viewModel.fetchPricePerUnit(valutaConversion: valutaConversion)
+
+                // Then
+                expect(viewModel.showErrorAlert) == true
+                expect(viewModel.errorAlertTitle) == NSLocalizedString(
+                    "Failed to sync price",
+                    bundle: .module,
+                    comment: ""
+                )
+            }
+        }
+
         describe("Finalize editing") {
             it("should validate ticker correctly when in edit context") {
                 // Given
@@ -28,7 +151,8 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     symbol: expectedTicker,
                     closeDate: nil
                 )
-                try makeRequest(withResponse: response, statusCode: 200)
+                try MockURLProtocol
+                    .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
                 let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
                     context: .edit(testTransaction),
@@ -62,7 +186,8 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     symbol: expectedTicker,
                     closeDate: nil
                 )
-                try makeRequest(withResponse: response, statusCode: 200)
+                try MockURLProtocol
+                    .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
                 let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
                     context: .details(testTransaction),
@@ -87,7 +212,11 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
             it("should alert due to ticker not being valid") {
                 // Given
-                makeRequest(withResponseData: #"{"message": "Oh nooo we failed"}"#.data(using: .utf8)!, statusCode: 404)
+                MockURLProtocol.makeRequest(
+                    withResponseJSONString: #"{"message": "Oh nooo we failed"}"#,
+                    statusCode: 404,
+                    url: URL(staticString: "https://kamaal.io")
+                )
                 let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
                     context: .edit(testTransaction),
@@ -273,23 +402,17 @@ private let urlSession: URLSession = {
     return URLSession(configuration: configuration)
 }()
 
-private func makeRequest(withResponse responseJSON: some Encodable, statusCode: Int) throws {
-    let data = try JSONEncoder().encode(responseJSON)
-    makeRequest(withResponseData: data, statusCode: statusCode)
-}
-
-private func makeRequest(withResponseData responseJSON: Data, statusCode: Int) {
-    MockURLProtocol.requestHandler = { _ in
-        let response = HTTPURLResponse(
-            url: URL(string: "https://kamaal.io")!,
-            statusCode: statusCode,
-            httpVersion: nil,
-            headerFields: nil
-        )!
-
-        return (response, responseJSON)
-    }
-}
+private let testExchangeRates = ExchangeRates(
+    base: .EUR,
+    date: Date(timeIntervalSince1970: 1_672_358_400),
+    rates: [
+        .CAD: 1.444,
+        .GBP: 0.88693,
+        .JPY: 140.66,
+        .TRY: 19.9649,
+        .USD: 1.0666,
+    ]
+)
 
 private let testTransaction = AppTransaction(
     id: UUID(uuidString: "7d28a378-6c12-4d92-8843-baf2e2a9bcdc")!,
