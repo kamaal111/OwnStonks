@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import CloudKit
 import ForexKit
 import StonksKit
 import SharedModels
@@ -102,7 +103,7 @@ extension TransactionDetailsSheet {
             }
         }
 
-        init(
+        private init(
             context: TransactionDetailsSheetContext,
             name: String,
             transactionDate: Date,
@@ -155,12 +156,15 @@ extension TransactionDetailsSheet {
             var id: UUID?
             var creationDate: Date?
             var updatedDate: Date?
+            var recordID: CKRecord.ID?
             switch context {
             case .new: break
             case let .details(transaction), let .edit(transaction):
+                assert(transaction.id != nil && transaction.creationDate != nil && transaction.updatedDate != nil)
                 id = transaction.id
                 creationDate = transaction.creationDate
                 updatedDate = transaction.updatedDate
+                recordID = transaction.recordID
             }
 
             return AppTransaction(
@@ -173,7 +177,8 @@ extension TransactionDetailsSheet {
                 fees: Money(value: fees, currency: feesCurrency),
                 dataSource: validAssetDataSource,
                 updatedDate: updatedDate,
-                creationDate: creationDate
+                creationDate: creationDate,
+                recordID: recordID
             )
         }
 
@@ -186,14 +191,14 @@ extension TransactionDetailsSheet {
                     return
                 }
 
-                let infoResult = await stonksKit.tickers.info(for: validAssetDataSource.ticker, date: transactionDate)
                 let info: StonksTickersInfoResponse
-                switch infoResult {
-                case let .failure(failure):
+                do {
+                    info = try await stonksKit.tickers.info(for: validAssetDataSource.ticker, date: transactionDate)
+                        .get()
+                } catch {
                     await openAlert(title: NSLocalizedString("Failed to sync price", bundle: .module, comment: ""))
-                    logger.warning("Failed to sync price; error='\(failure)'")
+                    logger.warning("Failed to sync price; error='\(error)'")
                     return
-                case let .success(success): info = success
                 }
 
                 guard let currency = info.currency, let currency = Currencies(rawValue: currency) else { return }
@@ -244,9 +249,9 @@ extension TransactionDetailsSheet {
         }
 
         private var validAssetDataSource: AppTransactionDataSource? {
-            guard autoTrackAsset,
-                  assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil,
-                  !assetTicker.isEmpty else { return nil }
+            guard autoTrackAsset else { return nil }
+            guard assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil else { return nil }
+            guard !assetTicker.isEmpty else { return nil }
 
             return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker, recordID: nil)
         }
