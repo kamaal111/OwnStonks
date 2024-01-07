@@ -38,6 +38,7 @@ extension TransactionDetailsSheet {
         var showErrorAlert = false
         var errorAlertTitle = ""
         var loading = false
+        var closes: [Date: Double] = [:]
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
@@ -254,8 +255,24 @@ extension TransactionDetailsSheet {
         func fetchCloses() async {
             guard !isEditing else { return }
             guard case .details = context else { return }
+            guard validAssetDataSource != nil else { return }
 
-            print("🐸🐸🐸 fetch closes")
+            await withLoading { [weak self] in
+                guard let self else { return }
+
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "YYYY-MM-dd'T'hh:mm:ss"
+                let closes: [Date: Double]
+                let closesResult = await stonksKit.tickers.closes(for: assetTicker, startDate: transactionDate)
+                switch closesResult {
+                case .failure:
+                    logger.warning("Failed to fetch closes")
+                    return
+                case let .success(success): closes = success
+                }
+
+                await setCloses(closes)
+            }
         }
 
         private var validAssetDataSource: AppTransactionDataSource? {
@@ -278,6 +295,11 @@ extension TransactionDetailsSheet {
                 ticker: assetTicker,
                 recordID: recordID
             )
+        }
+
+        @MainActor
+        private func setCloses(_ closes: [Date: Double]) {
+            withAnimation { self.closes = closes }
         }
 
         @MainActor

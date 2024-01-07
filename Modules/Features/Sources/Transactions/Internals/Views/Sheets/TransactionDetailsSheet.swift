@@ -140,8 +140,8 @@ struct TransactionDetailsSheet: View {
                     }
                 }
                 .padding(.top, .small)
-                if !viewModel.isEditing, viewModel.transaction?.dataSource != nil {
-                    StonksPerformanceChart()
+                if !viewModel.isEditing, !viewModel.closes.isEmpty {
+                    StonksPerformanceChart(closes: viewModel.closes)
                 }
                 if viewModel.isEditing, !viewModel.isNew {
                     Button(action: handleDelete) {

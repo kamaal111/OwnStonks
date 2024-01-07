@@ -15,7 +15,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.8.1")),
+        .package(url: "https://github.com/Kamaalio/KamaalSwift", .upToNextMajor(from: "1.8.1")),
     ],
     targets: [
         .target(
@@ -28,7 +28,9 @@ let package = Package(
         ),
         .testTarget(
             name: "StonksKitTests",
-            dependencies: ["StonksKit"]
+            dependencies: [
+                "StonksKit",
+            ]
         ),
     ]
 )

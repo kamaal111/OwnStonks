@@ -21,6 +21,9 @@ class TransactionsQuickStorage: TransactionsQuickStoragable {
     @UserDefaultsObject(key: makeKey("stonks_api_get_cache"), container: UserDefaultsSuite.shared)
     var stonksAPIGetCache: [URL: Data]?
 
+    @UserDefaultsObject(key: makeKey("stonks_api_closes_cache"), container: UserDefaultsSuite.shared)
+    var closesCache: [Date: [String: [Date: Double]]]?
+
     private init() { }
 
     var pendingCloudChanges: Bool {

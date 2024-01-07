@@ -9,7 +9,7 @@ import Foundation
 import KamaalUtils
 import KamaalExtensions
 
-public class StonksTickers: StonksKitClient {
+public final class StonksTickers: StonksKitClient {
     public func info(
         for ticker: String,
         date: Date
@@ -24,15 +24,46 @@ public class StonksTickers: StonksKitClient {
             .mapError(StonksTickersErrors.fromNetworker(_:))
     }
 
-    public func closes(for ticker: String, startDate: Date) async -> Result<[String: Double], StonksTickersErrors> {
+    public func closes(for ticker: String, startDate: Date) async -> Result<[Date: Double], StonksTickersErrors> {
+        let endDate = Date()
+        if let cachedValue = cacheStorage.getStonksTickerClosesCache(
+            ticker: ticker,
+            startDate: startDate,
+            endDate: endDate
+        ) {
+            return .success(cachedValue)
+        }
         let url = clientURL
             .appending(path: "closes")
             .appending(path: ticker)
             .appending(queryItems: [
                 .init(name: "start_date", value: formatDate(startDate)),
+                .init(name: "end_date", value: formatDate(endDate)),
             ])
         return await get(url: url, enableCaching: false)
             .mapError(StonksTickersErrors.fromNetworker(_:))
+            .map { (success: [String: Double]) in
+                let closes = success.reduce([Date: Double]()) { result, dict in
+                    guard let dateString = dict.key.split(separator: "T").first else {
+                        assertionFailure("Should pass this")
+                        return result
+                    }
+                    guard let date = Self.dateFormatter.date(from: String(dateString)) else {
+                        assertionFailure("Should pass this")
+                        return result
+                    }
+
+                    return result.merged(with: [date: dict.value])
+                }
+
+                cacheStorage.setStonksTickerClosesCache(
+                    ticker: ticker,
+                    startDate: startDate,
+                    endDate: endDate,
+                    closes: closes
+                )
+                return closes
+            }
     }
 
     public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
