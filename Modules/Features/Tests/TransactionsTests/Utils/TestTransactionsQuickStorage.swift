@@ -11,6 +11,7 @@ import Foundation
 import ValutaConversion
 
 class TestTransactionsQuickStorage: TransactionsQuickStoragable, ValutaConversionQuickStoragable {
+    var closesCache: [Date: [String: [Date: Double]]]?
     var exchangeRates: [Date: [ExchangeRates]]?
     var stonksAPIGetCache: [URL: Data]?
     var pendingCloudChanges = false

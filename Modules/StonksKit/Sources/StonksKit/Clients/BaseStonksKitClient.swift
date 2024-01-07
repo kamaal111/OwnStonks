@@ -15,7 +15,7 @@ public protocol StonkKitClientable { }
 
 public class BaseStonksKitClient {
     private let networker: KamaalNetworker
-    private(set) var cacheStorage: StonksKitCacheStorable
+    var cacheStorage: StonksKitCacheStorable
 
     static let BASE_URL = URL(staticString: "http://127.0.0.1:8000")
 
@@ -29,8 +29,12 @@ public class BaseStonksKitClient {
             return .success(cachedResponse)
         }
 
-        let result: Result<T, KamaalNetworker.Errors> = await networker.request(from: url, headers: defaultHeader)
-            .map { success in success.data }
+        let result: Result<T, KamaalNetworker.Errors> = await networker.request(
+            from: url,
+            headers: defaultHeader,
+            config: .init(kowalskiAnalysis: false)
+        )
+        .map { success in success.data }
         let successfulResponse: T
         switch result {
         case .failure: return result
