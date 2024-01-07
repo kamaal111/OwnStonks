@@ -10,7 +10,7 @@ import Foundation
 import KamaalUtils
 import SharedUtils
 
-protocol ValutaConversionQuickStoragable: CacheContainerable { }
+public protocol ValutaConversionQuickStoragable: CacheContainerable { }
 
 class ValutaConversionQuickStorage: ValutaConversionQuickStoragable {
     @UserDefaultsObject(key: makeKey("exchange_rates"), container: UserDefaultsSuite.shared)

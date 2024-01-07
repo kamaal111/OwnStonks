@@ -39,7 +39,7 @@ public final class ValutaConversion {
         )
     }
 
-    init(
+    public init(
         symbols: [Currencies],
         quickStorage: ValutaConversionQuickStoragable,
         urlSession: URLSession,
