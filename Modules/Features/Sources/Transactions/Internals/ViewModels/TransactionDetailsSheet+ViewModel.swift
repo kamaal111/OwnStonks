@@ -28,7 +28,10 @@ extension TransactionDetailsSheet {
         var pricePerUnit: String
         var feesCurrency: Currencies
         var fees: String
-        private(set) var isEditing: Bool
+        private(set) var isEditing: Bool {
+            didSet { isEditingDidSet() }
+        }
+
         var assetDataSource: AssetDataSources
         var autoTrackAsset: Bool
         var assetTicker: String
@@ -248,12 +251,33 @@ extension TransactionDetailsSheet {
             isEditing = false
         }
 
+        func fetchCloses() async {
+            guard !isEditing else { return }
+            guard case .details = context else { return }
+
+            print("🐸🐸🐸 fetch closes")
+        }
+
         private var validAssetDataSource: AppTransactionDataSource? {
             guard autoTrackAsset else { return nil }
             guard assetTicker.rangeOfCharacter(from: .whitespacesAndNewlines) == nil else { return nil }
             guard !assetTicker.isEmpty else { return nil }
 
-            return AppTransactionDataSource(sourceType: assetDataSource, ticker: assetTicker, recordID: nil)
+            var recordID: CKRecord.ID?
+            var id: UUID?
+            switch context {
+            case let .edit(transaction), let .details(transaction):
+                id = transaction.dataSource?.id
+                recordID = transaction.dataSource?.recordID
+            case .new: break
+            }
+
+            return AppTransactionDataSource(
+                id: id,
+                sourceType: assetDataSource,
+                ticker: assetTicker,
+                recordID: recordID
+            )
         }
 
         @MainActor
@@ -281,6 +305,12 @@ extension TransactionDetailsSheet {
                 return false
             case let .success(success): return success
             }
+        }
+
+        private func isEditingDidSet() {
+            guard !isEditing else { return }
+
+            Task { await fetchCloses() }
         }
 
         private func withLoading(completion: @escaping () async -> Void) async {

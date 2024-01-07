@@ -36,6 +36,11 @@ public class StonksTickers: StonksKitClient {
     }
 
     public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
+        if let cachePath = getAnyInfoCacheKey(forTicker: ticker),
+           (try? cacheStorage.getStonksAPIGetCache(from: cachePath, ofType: StonksTickersInfoResponse.self)) != nil {
+            return .success(true)
+        }
+
         let result = await info(for: ticker, date: Date())
         let isFound: Bool
         switch result {
@@ -47,6 +52,29 @@ public class StonksTickers: StonksKitClient {
         case .success: isFound = true
         }
         return .success(isFound)
+    }
+
+    private func getAnyInfoCacheKey(forTicker ticker: String) -> URL? {
+        cacheStorage.stonksAPIGetCache?
+            .keys
+            .first(where: { key in
+                var path = key.absoluteString
+                    .split(separator: "/")
+                    .suffix(3)
+                    .joined(separator: "/")
+                guard path.starts(with: "tickers/info") else { return false }
+
+                if path.contains("?") {
+                    path = path
+                        .split(separator: "?")
+                        .dropLast()
+                        .joined(separator: "?")
+                }
+
+                guard let symbol = path.split(separator: "/").last else { return false }
+
+                return symbol == ticker
+            })
     }
 
     private func formatDate(_ date: Date) -> String {
