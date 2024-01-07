@@ -38,6 +38,7 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
 
     public func update(payload: Payload) throws -> StoredTransactionDataSource {
         sourceType = payload.sourceType.rawValue
+        ticker = payload.ticker
         updatedDate = Date()
         assert(modelContext != nil)
         try modelContext?.save()
@@ -83,11 +84,13 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
     }
 
     public struct Payload {
+        public let id: UUID?
         public let transaction: StoredTransaction?
         public let sourceType: AssetDataSources
         public let ticker: String
 
-        public init(transaction: StoredTransaction?, sourceType: AssetDataSources, ticker: String) {
+        public init(id: UUID?, transaction: StoredTransaction?, sourceType: AssetDataSources, ticker: String) {
+            self.id = id
             self.transaction = transaction
             self.sourceType = sourceType
             self.ticker = ticker

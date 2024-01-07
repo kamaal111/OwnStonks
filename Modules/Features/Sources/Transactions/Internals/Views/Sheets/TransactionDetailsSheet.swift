@@ -140,6 +140,9 @@ struct TransactionDetailsSheet: View {
                     }
                 }
                 .padding(.top, .small)
+                if !viewModel.isEditing, viewModel.transaction?.dataSource != nil {
+                    StonksPerformanceChart()
+                }
                 if viewModel.isEditing, !viewModel.isNew {
                     Button(action: handleDelete) {
                         HStack {
@@ -161,6 +164,7 @@ struct TransactionDetailsSheet: View {
             }
         })
         .disabled(viewModel.loading)
+        .onAppear(perform: { Task { await viewModel.fetchCloses() } })
         #if os(macOS)
             .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif

@@ -120,6 +120,7 @@ final class TransactionsManager {
         var dataSourcePayload: StoredTransactionDataSource.Payload?
         if let dataSource = transaction.dataSource {
             dataSourcePayload = .init(
+                id: dataSource.id,
                 transaction: storedTransaction,
                 sourceType: dataSource.sourceType,
                 ticker: dataSource.ticker
@@ -145,7 +146,12 @@ final class TransactionsManager {
         assert(!transaction.name.trimmingByWhitespacesAndNewLines.isEmpty)
         var dataSourcePayload: StoredTransactionDataSource.Payload?
         if let dataSource = transaction.dataSource {
-            dataSourcePayload = .init(transaction: nil, sourceType: dataSource.sourceType, ticker: dataSource.ticker)
+            dataSourcePayload = .init(
+                id: dataSource.id,
+                transaction: nil,
+                sourceType: dataSource.sourceType,
+                ticker: dataSource.ticker
+            )
         }
         let storedTransaction = try StoredTransaction.create(
             payload: .init(
