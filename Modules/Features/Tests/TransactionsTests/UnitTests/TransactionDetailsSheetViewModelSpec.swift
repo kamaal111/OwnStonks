@@ -29,9 +29,12 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     closeDate: nil
                 )
                 try makeRequest(withResponse: response, statusCode: 200)
-                let stonksKitStorage = TestTransactionsQuickStorage()
-                let stonksKit = StonksKit(urlSession: urlSession, cacheStorage: stonksKitStorage)
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction), stonksKit: stonksKit)
+                let cacheStorage = TestTransactionsQuickStorage()
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .edit(testTransaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = expectedTicker
 
@@ -60,11 +63,11 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     closeDate: nil
                 )
                 try makeRequest(withResponse: response, statusCode: 200)
-                let stonksKitStorage = TestTransactionsQuickStorage()
-                let stonksKit = StonksKit(urlSession: urlSession, cacheStorage: stonksKitStorage)
+                let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
                     context: .details(testTransaction),
-                    stonksKit: stonksKit
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
                 )
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = expectedTicker
@@ -85,9 +88,12 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             it("should alert due to ticker not being valid") {
                 // Given
                 makeRequest(withResponseData: #"{"message": "Oh nooo we failed"}"#.data(using: .utf8)!, statusCode: 404)
-                let stonksKitStorage = TestTransactionsQuickStorage()
-                let stonksKit = StonksKit(urlSession: urlSession, cacheStorage: stonksKitStorage)
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction), stonksKit: stonksKit)
+                let cacheStorage = TestTransactionsQuickStorage()
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .edit(testTransaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = "GOOG"
 

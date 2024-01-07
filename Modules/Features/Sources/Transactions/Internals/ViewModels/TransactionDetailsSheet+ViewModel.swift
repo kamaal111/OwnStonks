@@ -41,11 +41,15 @@ extension TransactionDetailsSheet {
         private let logger = KamaalLogger(from: TransactionDetailsSheet.self, failOnError: true)
 
         convenience init(context: TransactionDetailsSheetContext) {
-            let stonksKit = StonksKit()
-            self.init(context: context, stonksKit: stonksKit)
+            self.init(context: context, urlSession: .shared, cacheStorage: TransactionsQuickStorage.shared)
         }
 
-        convenience init(context: TransactionDetailsSheetContext, stonksKit: StonksKit) {
+        convenience init(
+            context: TransactionDetailsSheetContext,
+            urlSession: URLSession,
+            cacheStorage: TransactionsQuickStoragable
+        ) {
+            let stonksKit = StonksKit(urlSession: urlSession, cacheStorage: cacheStorage)
             switch context {
             case let .new(preferredCurrency):
                 self.init(
