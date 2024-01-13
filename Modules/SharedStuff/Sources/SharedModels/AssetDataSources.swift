@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum AssetDataSources: String, CaseIterable, LocalizedItem {
+public enum AssetDataSources: String, CaseIterable, LocalizedItem, Equatable {
     case stocks
 
     public var localized: String {

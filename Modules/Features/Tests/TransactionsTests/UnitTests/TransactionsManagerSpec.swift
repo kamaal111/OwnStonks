@@ -37,7 +37,7 @@ final class TransactionsManagerSpec: AsyncSpec {
             it("should set pending cloud changes to true after notification received") {
                 // Given
                 let testTransaction = testTransaction.setID(UUID())
-                persistentData.cloudResponse = [testTransaction.asCKRecord]
+                persistentData.cloudResponse = [[testTransaction.asCKRecord]]
 
                 // When
                 LocalNotifications.shared.emit(.iCloudChanges)
@@ -51,7 +51,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                 // Given
                 let testTransactionID = UUID()
                 let testTransaction = testTransaction.setID(testTransactionID)
-                persistentData.cloudResponse = [testTransaction.asCKRecord]
+                persistentData.cloudResponse = [[testTransaction.asCKRecord]]
 
                 // When
                 LocalNotifications.shared.emit(.iCloudChanges)
@@ -68,7 +68,7 @@ final class TransactionsManagerSpec: AsyncSpec {
                 try await manager.createTransaction(testTransaction)
                 expect(manager.transactions.count) == 1
                 let transaction = try XCTUnwrap(manager.transactions.first)
-                persistentData.cloudResponse = [transaction.asCKRecord]
+                persistentData.cloudResponse = [[transaction.asCKRecord]]
 
                 // When
                 LocalNotifications.shared.emit(.iCloudChanges)

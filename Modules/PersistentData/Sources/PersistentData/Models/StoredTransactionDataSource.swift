@@ -36,6 +36,11 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
         self.creationDate = creationDate
     }
 
+    public var sourceTypeFormatted: AssetDataSources? {
+        guard let sourceType else { return nil }
+        return AssetDataSources(rawValue: sourceType)
+    }
+
     public func update(payload: Payload) throws -> StoredTransactionDataSource {
         sourceType = payload.sourceType.rawValue
         ticker = payload.ticker

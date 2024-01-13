@@ -315,10 +315,16 @@ extension TransactionDetailsSheet {
 
             var recordID: CKRecord.ID?
             var id: UUID?
+            var updatedDate: Date?
+            var creationDate: Date?
+            var transactionRecordID: CKRecord.ID?
             switch context {
             case let .edit(transaction), let .details(transaction):
                 id = transaction.dataSource?.id
                 recordID = transaction.dataSource?.recordID
+                updatedDate = transaction.dataSource?.updatedDate
+                creationDate = transaction.dataSource?.creationDate
+                transactionRecordID = transaction.recordID
             case .new: break
             }
 
@@ -326,6 +332,9 @@ extension TransactionDetailsSheet {
                 id: id,
                 sourceType: assetDataSource,
                 ticker: assetTicker,
+                updatedDate: updatedDate,
+                creationDate: creationDate,
+                transactionRecordID: transactionRecordID,
                 recordID: recordID
             )
         }

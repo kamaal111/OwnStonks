@@ -134,7 +134,7 @@ public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         let fees = Money(value: feesValue, currency: feesCurrency)
         var dataSource: AppTransactionDataSource?
         if let dataSourceRecord {
-            dataSource = AppTransactionDataSource.fromCKRecord(dataSourceRecord)
+            dataSource = AppTransactionDataSource.fromCKRecord(dataSourceRecord, transactionRecordID: record.recordID)
             assert(dataSource != nil)
         }
 
@@ -164,6 +164,9 @@ public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             id: UUID(uuidString: "d8613b54-8a45-4b43-a90c-c068b0f8f077")!,
             sourceType: .stocks,
             ticker: "AAPL",
+            updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
+            creationDate: Date(timeIntervalSince1970: 1_702_233_813),
+            transactionRecordID: nil,
             recordID: nil
         ),
         updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
