@@ -213,7 +213,27 @@ final class TransactionsManager {
         let transactionsIDs = storedTransactions
             .compactMap(\.id)
             .sorted(by: \.uuidString, using: .orderedAscending)
-        return fetchedRecordIDs != transactionsIDs
+        guard fetchedRecordIDs == transactionsIDs else { return true }
+
+        let storedTransactionsMappedByID = storedTransactions.mappedByID
+        for (id, iCloudTransaction) in iCloudTransactions.mappedByID {
+            guard let id else {
+                assertionFailure("Should have ID at this point")
+                return true
+            }
+
+            guard let storedTransaction = storedTransactionsMappedByID[id] else {
+                assertionFailure("Should definitly have storedTransaction at this point")
+                return true
+            }
+
+            guard iCloudTransaction.name == storedTransaction.name else { return true }
+            guard iCloudTransaction.fees == storedTransaction.feesFormatted else { return true }
+            guard iCloudTransaction.pricePerUnit == storedTransaction.pricePerUnitFormatted else { return true }
+            guard iCloudTransaction.transactionDate == storedTransaction.transactionDate else { return true }
+            guard iCloudTransaction.amount == storedTransaction.amount else { return true }
+        }
+        return false
     }
 
     private func fetchPendingICloudChanges() async throws -> [AppTransaction] {

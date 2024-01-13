@@ -39,8 +39,8 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
         pricePerUnit: Money,
         fees: Money,
         dataSource: StoredTransactionDataSource?,
-        updatedDate: Date = Date(),
-        creationDate: Date = Date()
+        updatedDate: Date,
+        creationDate: Date
     ) {
         self.id = id
         self.name = name
