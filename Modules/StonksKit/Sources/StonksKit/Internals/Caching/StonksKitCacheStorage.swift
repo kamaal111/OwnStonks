@@ -11,7 +11,7 @@ import KamaalExtensions
 
 public protocol StonksKitCacheStorable {
     var stonksAPIGetCache: [URL: Data]? { get set }
-    var closesCache: [Date: [String: [Date: Double]]]? { get set }
+    var closesCache: [Date: [String: StonksTickersClosesResponse]]? { get set }
 }
 
 extension StonksKitCacheStorable {
@@ -30,13 +30,18 @@ extension StonksKitCacheStorable {
         }
     }
 
-    func getStonksTickerClosesCache(ticker: String, startDate: Date, endDate: Date) -> [Date: Double]? {
+    func getStonksTickerClosesCache(ticker: String, startDate: Date, endDate: Date) -> StonksTickersClosesResponse? {
         guard let closes = closesCache?[stonksTickerClosesMainKey(endDate: endDate)] else { return nil }
 
         return closes[stonksTickerClosesKey(ticker: ticker, startDate: startDate)]
     }
 
-    mutating func setStonksTickerClosesCache(ticker: String, startDate: Date, endDate: Date, closes: [Date: Double]) {
+    mutating func setStonksTickerClosesCache(
+        ticker: String,
+        startDate: Date,
+        endDate: Date,
+        closes: StonksTickersClosesResponse
+    ) {
         let mainKey = stonksTickerClosesMainKey(endDate: endDate)
         if closesCache?[mainKey] == nil {
             closesCache = [
@@ -63,8 +68,8 @@ struct StonksKitCacheStorage: StonksKitCacheStorable {
     @UserDefaultsObject(key: "io.kamaal.StonksKit.get_cache")
     var stonksAPIGetCache: [URL: Data]?
 
-    @UserDefaultsObject(key: "io.kamaal.StonksKit.ticker_closes_cache")
-    var closesCache: [Date: [String: [Date: Double]]]?
+    @UserDefaultsObject(key: "io.kamaal.StonksKit.ticker_closes")
+    var closesCache: [Date: [String: StonksTickersClosesResponse]]?
 }
 
 extension Date {

@@ -22,7 +22,7 @@ class TransactionsQuickStorage: TransactionsQuickStoragable {
     var stonksAPIGetCache: [URL: Data]?
 
     @UserDefaultsObject(key: makeKey("stonks_api_closes_cache"), container: UserDefaultsSuite.shared)
-    var closesCache: [Date: [String: [Date: Double]]]?
+    var closesCache: [Date: [String: StonksTickersClosesResponse]]?
 
     private init() { }
 

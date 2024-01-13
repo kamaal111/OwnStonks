@@ -7,6 +7,7 @@
 
 import Foundation
 import KamaalUtils
+import KamaalNetworker
 import KamaalExtensions
 
 public final class StonksTickers: StonksKitClient {
@@ -24,7 +25,10 @@ public final class StonksTickers: StonksKitClient {
             .mapError(StonksTickersErrors.fromNetworker(_:))
     }
 
-    public func closes(for ticker: String, startDate: Date) async -> Result<[Date: Double], StonksTickersErrors> {
+    public func closes(
+        for ticker: String,
+        startDate: Date
+    ) async -> Result<StonksTickersClosesResponse, StonksTickersErrors> {
         let endDate = Date()
         if let cachedValue = cacheStorage.getStonksTickerClosesCache(
             ticker: ticker,
@@ -40,30 +44,23 @@ public final class StonksTickers: StonksKitClient {
                 .init(name: "start_date", value: formatDate(startDate)),
                 .init(name: "end_date", value: formatDate(endDate)),
             ])
-        return await get(url: url, enableCaching: false)
-            .mapError(StonksTickersErrors.fromNetworker(_:))
-            .map { (success: [String: Double]) in
-                let closes = success.reduce([Date: Double]()) { result, dict in
-                    guard let dateString = dict.key.split(separator: "T").first else {
-                        assertionFailure("Should pass this")
-                        return result
-                    }
-                    guard let date = Self.dateFormatter.date(from: String(dateString)) else {
-                        assertionFailure("Should pass this")
-                        return result
-                    }
+        let result: Result<StonksTickersClosesResponse, KamaalNetworker.Errors> = await get(
+            url: url,
+            enableCaching: false
+        )
+        let closes: StonksTickersClosesResponse
+        switch result {
+        case let .failure(failure): return .failure(.fromNetworker(failure))
+        case let .success(success): closes = success
+        }
+        cacheStorage.setStonksTickerClosesCache(
+            ticker: ticker,
+            startDate: startDate,
+            endDate: endDate,
+            closes: closes
+        )
 
-                    return result.merged(with: [date: dict.value])
-                }
-
-                cacheStorage.setStonksTickerClosesCache(
-                    ticker: ticker,
-                    startDate: startDate,
-                    endDate: endDate,
-                    closes: closes
-                )
-                return closes
-            }
+        return .success(closes)
     }
 
     public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
