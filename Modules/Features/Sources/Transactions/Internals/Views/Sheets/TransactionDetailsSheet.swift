@@ -140,8 +140,13 @@ struct TransactionDetailsSheet: View {
                     }
                 }
                 .padding(.top, .small)
-                if !viewModel.isEditing, !viewModel.closes.isEmpty {
-                    StonksPerformanceChart(closes: viewModel.closes, price: Double(viewModel.pricePerUnit)!)
+                if !viewModel.isEditing, let closes = viewModel.closes, !closes.data.isEmpty {
+                    StonksPerformanceChart(
+                        closes: closes,
+                        purchasedPrice: closes.currency == viewModel.pricePerUnitCurrency
+                            ? Double(viewModel.pricePerUnit)
+                            : nil
+                    )
                 }
                 if viewModel.isEditing, !viewModel.isNew {
                     Button(action: handleDelete) {
@@ -165,6 +170,7 @@ struct TransactionDetailsSheet: View {
         })
         .disabled(viewModel.loading)
         .onAppear(perform: { Task { await viewModel.fetchCloses() } })
+        .onChange(of: viewModel.closesNeedConverting, handleClosesNeedConvertingChange)
         #if os(macOS)
             .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
@@ -186,7 +192,12 @@ struct TransactionDetailsSheet: View {
         }
     }
 
-    func handleDelete() {
+    private func handleClosesNeedConvertingChange(_: Bool, _ newValue: Bool) {
+        guard newValue else { return }
+        Task { await viewModel.convertCloses(valutaConversion: valutaConversion) }
+    }
+
+    private func handleDelete() {
         close()
         // Delete is not triggered on iOS unless there is a small delay calling onDelete
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
