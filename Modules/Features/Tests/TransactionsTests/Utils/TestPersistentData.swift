@@ -14,7 +14,8 @@ final class TestPersistentData: PersistentDatable {
     var dataContainer: ModelContainer
     var cloudContainer: KamaalCloud?
 
-    var cloudResponse: [CKRecord] = []
+    var cloudResponse: [[CKRecord]] = []
+    var responses = 0
 
     init() throws {
         let schema = Schema([StoredTransaction.self])
@@ -26,5 +27,11 @@ final class TestPersistentData: PersistentDatable {
         of _: any CloudQueryable.Type,
         by _: NSPredicate,
         limit _: Int? = nil
-    ) async throws -> [CKRecord] { cloudResponse }
+    ) async throws -> [CKRecord] {
+        guard responses < cloudResponse.count else { return [] }
+
+        let response = cloudResponse[responses]
+        responses += 1
+        return response
+    }
 }

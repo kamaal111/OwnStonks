@@ -232,6 +232,13 @@ final class TransactionsManager {
             guard iCloudTransaction.pricePerUnit == storedTransaction.pricePerUnitFormatted else { return true }
             guard iCloudTransaction.transactionDate == storedTransaction.transactionDate else { return true }
             guard iCloudTransaction.amount == storedTransaction.amount else { return true }
+            if iCloudTransaction.dataSource?.ticker != storedTransaction.dataSource?.ticker ||
+                iCloudTransaction.dataSource?.sourceType != storedTransaction.dataSource?.sourceTypeFormatted {
+                logger.warning("There are changes in the data source")
+            }
+//            guard iCloudTransaction.dataSource?.ticker == storedTransaction.dataSource?.ticker else { return true }
+//            guard iCloudTransaction.dataSource?.sourceType == storedTransaction.dataSource?.sourceTypeFormatted
+//            else { return true }
         }
         return false
     }
