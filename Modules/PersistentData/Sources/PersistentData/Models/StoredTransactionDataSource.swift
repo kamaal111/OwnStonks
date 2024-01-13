@@ -25,8 +25,8 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
         transaction: StoredTransaction?,
         sourceType: AssetDataSources,
         ticker: String,
-        updatedDate: Date = Date(),
-        creationDate: Date = Date()
+        updatedDate: Date,
+        creationDate: Date
     ) {
         self.id = id
         self.sourceType = sourceType.rawValue
