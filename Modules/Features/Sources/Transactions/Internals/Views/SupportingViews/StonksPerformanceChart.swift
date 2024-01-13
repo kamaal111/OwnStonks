@@ -15,13 +15,12 @@ struct StonksPerformanceChart: View {
     let purchasedPrice: Double?
 
     var body: some View {
-        Chart {
-            ForEach(plots) { plot in
-                LineMark(x: plot.xValue, y: plot.yValue)
-            }
+        Chart(plots, id: \.id) { plot in
+            LineMark(x: plot.xValue, y: plot.yValue)
         }
         .foregroundColor(chartColor)
         .chartXAxis(.hidden)
+        .chartYScale(domain: [yMin, yMax])
         .ktakeWidthEagerly()
     }
 
@@ -36,6 +35,28 @@ struct StonksPerformanceChart: View {
         }
 
         return .red
+    }
+
+    private var yMax: Double {
+        var maxValue = 0.0
+        for (_, value) in closes.data {
+            maxValue = max(maxValue, value)
+        }
+        if let purchasedPrice {
+            maxValue = max(maxValue, purchasedPrice)
+        }
+        return maxValue
+    }
+
+    private var yMin: Double {
+        var maxValue = Double.greatestFiniteMagnitude
+        for (_, value) in closes.data {
+            maxValue = min(maxValue, value)
+        }
+        if let purchasedPrice {
+            maxValue = min(maxValue, purchasedPrice)
+        }
+        return maxValue
     }
 
     private var plots: [PlotItem] {
