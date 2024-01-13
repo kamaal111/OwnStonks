@@ -38,7 +38,8 @@ extension TransactionDetailsSheet {
         var showErrorAlert = false
         var errorAlertTitle = ""
         var loading = false
-        var closes: [Date: Double] = [:]
+        var closes: ClosesData?
+        private(set) var closesNeedConverting = false
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
@@ -263,17 +264,48 @@ extension TransactionDetailsSheet {
 
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "YYYY-MM-dd'T'hh:mm:ss"
-                let closes: [Date: Double]
+                let closes: ClosesData?
                 let closesResult = await stonksKit.tickers.closes(for: assetTicker, startDate: transactionDate)
+                    .map { success -> ClosesData? in
+                        let closesMappedByDates = success.closesMappedByDates
+                        guard !closesMappedByDates.isEmpty else { return nil }
+
+                        let currency = success.currency
+                        guard let currency = Currencies(rawValue: currency) else { return nil }
+                        return ClosesData(currency: currency, data: closesMappedByDates)
+                    }
                 switch closesResult {
                 case .failure:
                     logger.warning("Failed to fetch closes")
                     return
-                case let .success(success): closes = success.closesMappedByDates
+                case let .success(success): closes = success
                 }
+                guard let closes else { return }
 
                 await setCloses(closes)
             }
+        }
+
+        func convertCloses(valutaConversion: ValutaConversion) async {
+            guard let closes else {
+                assertionFailure("Should have closes when this function is called")
+                return
+            }
+
+            var convertedCloses: [Date: Double] = [:]
+            for (date, close) in closes.data {
+                let convertedValue = valutaConversion.convertMoney(
+                    from: .init(value: close, currency: closes.currency),
+                    to: pricePerUnitCurrency
+                )
+                guard let convertedValue else { continue }
+
+                convertedCloses[date] = convertedValue.value
+            }
+            guard !convertedCloses.isEmpty else { return }
+
+            let newCloses = ClosesData(currency: pricePerUnitCurrency, data: convertedCloses)
+            await setCloses(newCloses, closesNeedConverting: false)
         }
 
         private var validAssetDataSource: AppTransactionDataSource? {
@@ -299,8 +331,9 @@ extension TransactionDetailsSheet {
         }
 
         @MainActor
-        private func setCloses(_ closes: [Date: Double]) {
+        private func setCloses(_ closes: ClosesData, closesNeedConverting: Bool = true) {
             withAnimation { self.closes = closes }
+            self.closesNeedConverting = closesNeedConverting
         }
 
         @MainActor

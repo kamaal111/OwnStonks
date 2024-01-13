@@ -11,8 +11,8 @@ import KamaalUI
 import KamaalExtensions
 
 struct StonksPerformanceChart: View {
-    let closes: [Date: Double]
-    let price: Double
+    let closes: ClosesData
+    let purchasedPrice: Double?
 
     var body: some View {
         Chart {
@@ -26,17 +26,31 @@ struct StonksPerformanceChart: View {
     }
 
     private var chartColor: Color {
-        .green
+        let sortedCloseDates = sortedCloseDates
+        guard sortedCloseDates.count > 1 else { return .green }
+
+        let lastClose = closes.data[sortedCloseDates.last!]!
+        let firstClose = if let purchasedPrice { purchasedPrice } else { closes.data[sortedCloseDates[0]]! }
+        if firstClose < lastClose {
+            return .green
+        }
+
+        return .red
     }
 
     private var plots: [PlotItem] {
-        closes.keys
-            .sorted(by: { date1, date2 in date1.compare(date2) == .orderedAscending })
+        sortedCloseDates
             .compactMap { date in
-                guard let close = closes[date] else { return nil }
+                guard let close = closes.data[date] else { return nil }
 
                 return PlotItem(id: date, value: close)
             }
+    }
+
+    private var sortedCloseDates: [Date] {
+        closes.data
+            .keys
+            .sorted(by: { date1, date2 in date1.compare(date2) == .orderedAscending })
     }
 }
 
@@ -60,5 +74,5 @@ private struct PlotItem: Identifiable {
 }
 
 #Preview {
-    StonksPerformanceChart(closes: [:], price: 22)
+    StonksPerformanceChart(closes: ClosesData(currency: .AUD, data: [:]), purchasedPrice: 22)
 }
