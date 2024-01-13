@@ -205,7 +205,8 @@ extension TransactionDetailsSheet {
                     return
                 }
 
-                guard let currency = info.currency, let currency = Currencies(rawValue: currency) else { return }
+                let currency = info.currency
+                guard let currency = Currencies(rawValue: currency) else { return }
 
                 let close = Money(value: info.close, currency: currency)
                 if let convertedClose = valutaConversion.convertMoney(from: close, to: pricePerUnitCurrency) {
@@ -268,7 +269,7 @@ extension TransactionDetailsSheet {
                 case .failure:
                     logger.warning("Failed to fetch closes")
                     return
-                case let .success(success): closes = success
+                case let .success(success): closes = success.closesMappedByDates
                 }
 
                 await setCloses(closes)

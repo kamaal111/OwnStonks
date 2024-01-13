@@ -141,7 +141,7 @@ struct TransactionDetailsSheet: View {
                 }
                 .padding(.top, .small)
                 if !viewModel.isEditing, !viewModel.closes.isEmpty {
-                    StonksPerformanceChart(closes: viewModel.closes)
+                    StonksPerformanceChart(closes: viewModel.closes, price: Double(viewModel.pricePerUnit)!)
                 }
                 if viewModel.isEditing, !viewModel.isNew {
                     Button(action: handleDelete) {
