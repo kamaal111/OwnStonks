@@ -8,6 +8,7 @@
 import Charts
 import SwiftUI
 import KamaalUI
+import SharedModels
 import KamaalExtensions
 
 struct StonksPerformanceChart: View {
@@ -15,13 +16,35 @@ struct StonksPerformanceChart: View {
     let purchasedPrice: Double?
 
     var body: some View {
+        VStack {
+            if let lastClose = closes.lastClose {
+                profitView(lastClose: lastClose)
+            }
+            chartsView
+        }
+        .ktakeWidthEagerly()
+    }
+
+    private var chartsView: some View {
         Chart(plots, id: \.id) { plot in
             LineMark(x: plot.xValue, y: plot.yValue)
         }
         .foregroundColor(chartColor)
         .chartXAxis(.hidden)
-        .chartYScale(domain: [yMin, yMax])
-        .ktakeWidthEagerly()
+        .chartYScale(domain: [minClose, maxClose])
+    }
+
+    private func profitView(lastClose: Double) -> some View {
+        HStack {
+            Text(Money(value: lastClose, currency: closes.currency).localized)
+                .foregroundColor(chartColor)
+            if let profitPercentage {
+                Text("\(profitPercentage.toFixed(2))%")
+                    .foregroundColor(.secondary)
+                    .font(.callout)
+            }
+        }
+        .ktakeWidthEagerly(alignment: .trailing)
     }
 
     private var chartColor: Color {
@@ -37,26 +60,32 @@ struct StonksPerformanceChart: View {
         return .red
     }
 
-    private var yMax: Double {
-        var maxValue = 0.0
-        for (_, value) in closes.data {
-            maxValue = max(maxValue, value)
+    private var profitPercentage: Double? {
+        guard let purchasedPrice else { return nil }
+        guard let lastClose = closes.lastClose else {
+            assertionFailure("Should have last close at this point")
+            return nil
         }
-        if let purchasedPrice {
-            maxValue = max(maxValue, purchasedPrice)
-        }
-        return maxValue
+
+        return ((lastClose - purchasedPrice) / lastClose) * 100
     }
 
-    private var yMin: Double {
-        var maxValue = Double.greatestFiniteMagnitude
-        for (_, value) in closes.data {
-            maxValue = min(maxValue, value)
-        }
+    private var maxClose: Double {
+        assert(closes.highestClose != nil)
+        let highestClose = closes.highestClose ?? 0
         if let purchasedPrice {
-            maxValue = min(maxValue, purchasedPrice)
+            return max(highestClose, purchasedPrice)
         }
-        return maxValue
+        return highestClose
+    }
+
+    private var minClose: Double {
+        assert(closes.lowestClose != nil)
+        let lowestClose = closes.lowestClose ?? .greatestFiniteMagnitude
+        if let purchasedPrice {
+            return min(lowestClose, purchasedPrice)
+        }
+        return lowestClose
     }
 
     private var plots: [PlotItem] {

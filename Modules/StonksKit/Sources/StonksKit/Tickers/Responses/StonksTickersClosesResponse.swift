@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KamaalExtensions
 
 public struct StonksTickersClosesResponse: Codable {
     public let closes: [String: Double]
@@ -17,20 +18,19 @@ public struct StonksTickersClosesResponse: Codable {
     }
 
     public var closesMappedByDates: [Date: Double] {
-        var closesMappedByDates: [Date: Double] = [:]
-        for (key, close) in closes {
-            guard let dateString = key.split(separator: "T").first else {
-                assertionFailure("Should pass this")
-                continue
-            }
+        closes
+            .reduce([:]) { result, dict in
+                guard let dateString = dict.key.split(separator: "T").first else {
+                    assertionFailure("Should pass this")
+                    return result
+                }
 
-            guard let date = Self.dateFormatter.date(from: String(dateString)) else {
-                assertionFailure("Should pass this")
-                continue
+                guard let date = Self.dateFormatter.date(from: String(dateString)) else {
+                    assertionFailure("Should pass this")
+                    return result
+                }
+                return result.merged(with: [date: dict.value])
             }
-            closesMappedByDates[date] = close
-        }
-        return closesMappedByDates
     }
 
     private static let dateFormatter: DateFormatter = {

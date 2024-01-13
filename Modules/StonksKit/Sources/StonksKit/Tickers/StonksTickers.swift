@@ -85,7 +85,7 @@ public final class StonksTickers: StonksKitClient {
     private func getAnyInfoCacheKey(forTicker ticker: String) -> URL? {
         cacheStorage.stonksAPIGetCache?
             .keys
-            .first(where: { key in
+            .find(where: { key in
                 var path = key.absoluteString
                     .split(separator: "/")
                     .suffix(3)
