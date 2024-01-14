@@ -24,11 +24,7 @@ public class BaseStonksKitClient {
         self.cacheStorage = cacheStorage
     }
 
-    func get<T: Codable>(url: URL, enableCaching: Bool) async -> Result<T, KamaalNetworker.Errors> {
-        if enableCaching, let cachedResponse = try? cacheStorage.getStonksAPIGetCache(from: url, ofType: T.self) {
-            return .success(cachedResponse)
-        }
-
+    func get<T: Codable>(url: URL) async -> Result<T, KamaalNetworker.Errors> {
         let result: Result<T, KamaalNetworker.Errors> = await networker.request(
             from: url,
             headers: defaultHeader,
@@ -41,18 +37,11 @@ public class BaseStonksKitClient {
         case let .success(success): successfulResponse = success
         }
 
-        if enableCaching {
-            try? cacheStorage.setStonksAPIGetCache(on: url, data: successfulResponse)
-        }
         return .success(successfulResponse)
     }
 
-    func get<T: Codable>(
-        url: URL,
-        enableCaching: Bool,
-        ofType _: T.Type
-    ) async -> Result<T, KamaalNetworker.Errors> {
-        await get(url: url, enableCaching: enableCaching)
+    func get<T: Codable>(url: URL, ofType _: T.Type) async -> Result<T, KamaalNetworker.Errors> {
+        await get(url: url)
     }
 
     private var defaultHeader: [String: String] {

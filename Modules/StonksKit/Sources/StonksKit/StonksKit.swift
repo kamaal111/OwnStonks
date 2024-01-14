@@ -9,7 +9,6 @@ import Foundation
 import KamaalNetworker
 
 public struct StonksKit {
-    public let health: StonksHealth
     public let tickers: StonksTickers
 
     public init() {
@@ -20,7 +19,6 @@ public struct StonksKit {
 
     public init(urlSession: URLSession, cacheStorage: StonksKitCacheStorable) {
         let networker = KamaalNetworker(urlSession: urlSession)
-        self.health = .init(networker: networker, cacheStorage: cacheStorage)
         self.tickers = .init(networker: networker, cacheStorage: cacheStorage)
     }
 }
