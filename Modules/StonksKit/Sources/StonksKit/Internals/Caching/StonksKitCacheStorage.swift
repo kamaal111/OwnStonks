@@ -10,26 +10,11 @@ import KamaalUtils
 import KamaalExtensions
 
 public protocol StonksKitCacheStorable {
-    var stonksAPIGetCache: [URL: Data]? { get set }
+    var infoCache: [Date: [String: StonksTickersInfoResponse]]? { get set }
     var closesCache: [Date: [String: StonksTickersClosesResponse]]? { get set }
 }
 
 extension StonksKitCacheStorable {
-    func getStonksAPIGetCache<T: Decodable>(from url: URL, ofType type: T.Type) throws -> T? {
-        guard let cachedValue = stonksAPIGetCache?[url] else { return nil }
-
-        return try JSONDecoder().decode(type, from: cachedValue)
-    }
-
-    mutating func setStonksAPIGetCache(on url: URL, data: some Encodable) throws {
-        let data = try JSONEncoder().encode(data)
-        if stonksAPIGetCache == nil {
-            stonksAPIGetCache = [url: data]
-        } else {
-            stonksAPIGetCache![url] = data
-        }
-    }
-
     mutating func withStonksClosesCache(
         tickers: [String],
         startDate: Date,
@@ -65,12 +50,31 @@ extension StonksKitCacheStorable {
             }
     }
 
+    func getStonksInfoCache(ticker: String, date: Date?) -> StonksTickersInfoResponse? {
+        guard let infoCache else { return nil }
+
+        if let date {
+            return infoCache[rootKey(date: date)]?[ticker]
+        }
+
+        return infoCache.first(where: { value in (value.value[ticker]) != nil })?.value[ticker]
+    }
+
+    mutating func setStonksInfoCache(ticker: String, date: Date, info: StonksTickersInfoResponse) {
+        let rootKey = rootKey(date: date)
+        if infoCache?[rootKey] == nil {
+            infoCache = [rootKey: [ticker: info]]
+        } else {
+            infoCache![rootKey]![ticker] = info
+        }
+    }
+
     private func getStonksTickerClosesCache(
         ticker: String,
         startDate: Date,
         endDate: Date
     ) -> StonksTickersClosesResponse? {
-        guard let closes = closesCache?[stonksTickerClosesMainKey(endDate: endDate)] else { return nil }
+        guard let closes = closesCache?[rootKey(date: endDate)] else { return nil }
 
         return closes[stonksTickerClosesKey(ticker: ticker, startDate: startDate)]
     }
@@ -81,15 +85,15 @@ extension StonksKitCacheStorable {
         endDate: Date,
         closes: StonksTickersClosesResponse
     ) {
-        let mainKey = stonksTickerClosesMainKey(endDate: endDate)
-        if closesCache?[mainKey] == nil {
+        let rootKey = rootKey(date: endDate)
+        if closesCache?[rootKey] == nil {
             closesCache = [
-                mainKey: [stonksTickerClosesKey(ticker: ticker, startDate: startDate): closes],
+                rootKey: [stonksTickerClosesKey(ticker: ticker, startDate: startDate): closes],
             ]
         } else {
-            closesCache![mainKey]![stonksTickerClosesKey(ticker: ticker, startDate: startDate)] = closes
+            closesCache![rootKey]![stonksTickerClosesKey(ticker: ticker, startDate: startDate)] = closes
         }
-        for key in closesCache?.keys.asArray() ?? [] where key != mainKey {
+        for key in closesCache?.keys.asArray() ?? [] where key != rootKey {
             closesCache?[key] = nil
         }
     }
@@ -98,17 +102,21 @@ extension StonksKitCacheStorable {
         "\(ticker)-\(startDate.dayNumberOfWeek)-\(startDate.weekNumber)-\(startDate.yearNumber)"
     }
 
-    private func stonksTickerClosesMainKey(endDate: Date) -> Date {
-        endDate.beginningOfDay
+    private func rootKey(date: Date) -> Date {
+        date.beginningOfDay
     }
 }
 
 struct StonksKitCacheStorage: StonksKitCacheStorable {
-    @UserDefaultsObject(key: "io.kamaal.StonksKit.get_cache")
-    var stonksAPIGetCache: [URL: Data]?
+    @UserDefaultsObject(key: makeKey("info_cache"))
+    var infoCache: [Date: [String: StonksTickersInfoResponse]]?
 
-    @UserDefaultsObject(key: "io.kamaal.StonksKit.ticker_closes")
+    @UserDefaultsObject(key: makeKey("ticker_closes"))
     var closesCache: [Date: [String: StonksTickersClosesResponse]]?
+
+    private static func makeKey(_ key: String) -> String {
+        "io.kamaal.StonksKit.\(key)"
+    }
 }
 
 extension Date {

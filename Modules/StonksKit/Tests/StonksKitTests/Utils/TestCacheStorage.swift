@@ -10,5 +10,5 @@ import Foundation
 
 final class TestCacheStorage: StonksKitCacheStorable {
     var closesCache: [Date: [String: StonksTickersClosesResponse]]?
-    var stonksAPIGetCache: [URL: Data]?
+    var infoCache: [Date: [String: StonksTickersInfoResponse]]?
 }

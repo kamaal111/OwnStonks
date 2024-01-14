@@ -25,13 +25,14 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             it("should fetch price per unit and convert price") {
                 // Given
                 let expectedTicker = "MSFT"
-                let infoResponse = StonksTickersInfoResponse(
-                    name: "MicroShaft",
-                    close: 200,
-                    currency: Currencies.USD.rawValue,
-                    symbol: expectedTicker,
-                    closeDate: nil
-                )
+                let infoResponse = [
+                    expectedTicker: StonksTickersInfoResponse(
+                        name: "MicroShaft",
+                        close: 200,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
                 try MockURLProtocol.makeRequests(with: [
                     .init(data: JSONEncoder().encode(testExchangeRates), statusCode: 200, url: url),
                     .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
@@ -66,13 +67,14 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             it("should fetch price per unit but fail to convert price") {
                 // Given
                 let expectedTicker = "GHRD"
-                let infoResponse = StonksTickersInfoResponse(
-                    name: "GigaHard",
-                    close: 200,
-                    currency: Currencies.USD.rawValue,
-                    symbol: expectedTicker,
-                    closeDate: nil
-                )
+                let infoResponse = [
+                    expectedTicker: StonksTickersInfoResponse(
+                        name: "GigaHard",
+                        close: 200,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
                 try MockURLProtocol.makeRequests(with: [
                     .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
                 ])
@@ -144,13 +146,14 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             it("should validate ticker correctly when in edit context") {
                 // Given
                 let expectedTicker = "GOOG"
-                let response = StonksTickersInfoResponse(
-                    name: testTransaction.name,
-                    close: 300,
-                    currency: Currencies.USD.rawValue,
-                    symbol: expectedTicker,
-                    closeDate: nil
-                )
+                let response = [
+                    expectedTicker: StonksTickersInfoResponse(
+                        name: testTransaction.name,
+                        close: 300,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
                 try MockURLProtocol
                     .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
                 let cacheStorage = TestTransactionsQuickStorage()
@@ -179,13 +182,14 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             it("should validate ticker correctly when in details context") {
                 // Given
                 let expectedTicker = "AAPL"
-                let response = StonksTickersInfoResponse(
-                    name: testTransaction.name,
-                    close: 500,
-                    currency: Currencies.USD.rawValue,
-                    symbol: expectedTicker,
-                    closeDate: nil
-                )
+                let response = [
+                    expectedTicker: StonksTickersInfoResponse(
+                        name: testTransaction.name,
+                        close: 500,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
                 try MockURLProtocol
                     .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
                 let cacheStorage = TestTransactionsQuickStorage()
