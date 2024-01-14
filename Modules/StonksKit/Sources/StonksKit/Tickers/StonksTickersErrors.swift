@@ -9,7 +9,7 @@ import Foundation
 import KamaalNetworker
 
 public enum StonksTickersErrors: Error {
-    case notFound(context: Error)
+    case notFound(context: Error?)
     case badRequest(context: Error)
     case general(context: Error)
 

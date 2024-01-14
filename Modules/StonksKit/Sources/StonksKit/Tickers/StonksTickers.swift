@@ -26,41 +26,42 @@ public final class StonksTickers: StonksKitClient {
     }
 
     public func closes(
-        for ticker: String,
+        for tickers: [String],
         startDate: Date
-    ) async -> Result<StonksTickersClosesResponse, StonksTickersErrors> {
+    ) async -> Result<[String: StonksTickersClosesResponse], StonksTickersErrors> {
         let endDate = Date()
-        if let cachedValue = cacheStorage.getStonksTickerClosesCache(
-            ticker: ticker,
+        return await cacheStorage.withStonksClosesCache(
+            tickers: tickers,
             startDate: startDate,
             endDate: endDate
-        ) {
-            return .success(cachedValue)
+        ) { remainingTickers in
+            let url = clientURL
+                .appending(path: "closes")
+                .appending(queryItems: [
+                    .init(name: "symbols", value: remainingTickers.joined(separator: ",")),
+                    .init(name: "start_date", value: formatDate(startDate)),
+                    .init(name: "end_date", value: formatDate(endDate)),
+                ])
+            return await get(
+                url: url,
+                enableCaching: false,
+                ofType: [String: StonksTickersClosesResponse].self
+            )
+            .mapError { error in StonksTickersErrors.fromNetworker(error) }
         }
-        let url = clientURL
-            .appending(path: "closes")
-            .appending(path: ticker)
-            .appending(queryItems: [
-                .init(name: "start_date", value: formatDate(startDate)),
-                .init(name: "end_date", value: formatDate(endDate)),
-            ])
-        let result: Result<StonksTickersClosesResponse, KamaalNetworker.Errors> = await get(
-            url: url,
-            enableCaching: false
-        )
-        let closes: StonksTickersClosesResponse
+    }
+
+    public func closes(for ticker: String,
+                       startDate: Date) async -> Result<StonksTickersClosesResponse, StonksTickersErrors> {
+        let result = await closes(for: [ticker], startDate: startDate)
+        let closes: [String: StonksTickersClosesResponse]
         switch result {
-        case let .failure(failure): return .failure(.fromNetworker(failure))
+        case let .failure(failure): return .failure(failure)
         case let .success(success): closes = success
         }
-        cacheStorage.setStonksTickerClosesCache(
-            ticker: ticker,
-            startDate: startDate,
-            endDate: endDate,
-            closes: closes
-        )
+        guard let tickerResponse = closes[ticker] else { return .failure(.notFound(context: nil)) }
 
-        return .success(closes)
+        return .success(tickerResponse)
     }
 
     public func tickerIsValid(_ ticker: String) async -> Result<Bool, StonksTickersErrors> {
