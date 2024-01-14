@@ -30,13 +30,52 @@ extension StonksKitCacheStorable {
         }
     }
 
-    func getStonksTickerClosesCache(ticker: String, startDate: Date, endDate: Date) -> StonksTickersClosesResponse? {
+    mutating func withStonksClosesCache(
+        tickers: [String],
+        startDate: Date,
+        endDate: Date,
+        apiCall: (
+            _ remainingTickers: [String]
+        ) async -> Result<[String: StonksTickersClosesResponse], StonksTickersErrors>
+    ) async -> Result<[String: StonksTickersClosesResponse], StonksTickersErrors> {
+        let cachedValues = tickers
+            .reduce([String: StonksTickersClosesResponse]()) { result, ticker in
+                guard let cachedValue = getStonksTickerClosesCache(
+                    ticker: ticker,
+                    startDate: startDate,
+                    endDate: endDate
+                ) else { return result }
+                return result.merged(with: [ticker: cachedValue])
+            }
+        let cachedValuesTickers = cachedValues.keys
+        let remainingTickers = tickers.filter { ticker in !cachedValuesTickers.contains(ticker) }
+        guard !remainingTickers.isEmpty else { return .success(cachedValues) }
+
+        return await apiCall(remainingTickers)
+            .map { success in
+                for (ticker, closes) in success {
+                    setStonksTickerClosesCache(
+                        ticker: ticker,
+                        startDate: startDate,
+                        endDate: endDate,
+                        closes: closes
+                    )
+                }
+                return success.merged(with: cachedValues)
+            }
+    }
+
+    private func getStonksTickerClosesCache(
+        ticker: String,
+        startDate: Date,
+        endDate: Date
+    ) -> StonksTickersClosesResponse? {
         guard let closes = closesCache?[stonksTickerClosesMainKey(endDate: endDate)] else { return nil }
 
         return closes[stonksTickerClosesKey(ticker: ticker, startDate: startDate)]
     }
 
-    mutating func setStonksTickerClosesCache(
+    private mutating func setStonksTickerClosesCache(
         ticker: String,
         startDate: Date,
         endDate: Date,

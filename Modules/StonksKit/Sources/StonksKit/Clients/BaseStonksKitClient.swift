@@ -47,6 +47,14 @@ public class BaseStonksKitClient {
         return .success(successfulResponse)
     }
 
+    func get<T: Codable>(
+        url: URL,
+        enableCaching: Bool,
+        ofType _: T.Type
+    ) async -> Result<T, KamaalNetworker.Errors> {
+        await get(url: url, enableCaching: enableCaching)
+    }
+
     private var defaultHeader: [String: String] {
         [:]
     }
