@@ -6,6 +6,8 @@
 //
 
 import CloudKit
+import ForexKit
+import StonksKit
 import Foundation
 import SharedUtils
 import Observation
@@ -27,15 +29,22 @@ final class TransactionsManager {
     private(set) var transactions: [AppTransaction] = []
 
     private var storedTransactions: [StoredTransaction] = []
+    private(set) var closes: [String: ClosesData]?
+    private let stonksKit: StonksKit
 
     convenience init() {
-        self.init(persistentData: PersistentData.shared, quickStorage: TransactionsQuickStorage.shared)
+        self.init(
+            persistentData: PersistentData.shared,
+            quickStorage: TransactionsQuickStorage.shared,
+            urlSession: .shared
+        )
     }
 
-    init(persistentData: PersistentDatable, quickStorage: TransactionsQuickStoragable) {
+    init(persistentData: PersistentDatable, quickStorage: TransactionsQuickStoragable, urlSession: URLSession) {
         self.loading = true
         self.persistentData = persistentData
         self.quickStorage = quickStorage
+        self.stonksKit = .init(urlSession: urlSession, cacheStorage: quickStorage)
 
         LocalNotifications.shared.observe(
             to: events,
@@ -167,6 +176,35 @@ final class TransactionsManager {
         )
         setStoredTransactions(storedTransactions.appended(storedTransaction), sort: true)
         logger.info("Created transaction successfully")
+    }
+
+    func fetchCloses() async {
+        let tickers = transactions.compactMap(\.dataSource?.ticker)
+        guard !tickers.isEmpty else { return }
+
+        let startDate = transactions.map(\.transactionDate).min()!
+        let closesResult = await stonksKit.tickers.closes(for: tickers, startDate: startDate)
+        let closes: [String: StonksTickersClosesResponse]
+        switch closesResult {
+        case .failure:
+            logger.warning("Failed to load transaction closes")
+            return
+        case let .success(success): closes = success
+        }
+        let mappedCloses = closes
+            .reduce([String: ClosesData]()) { result, close in
+                guard let currency = Currencies(rawValue: close.value.currency) else { return result }
+                return result.merged(with: [
+                    close.key: .init(currency: currency, data: close.value.closesMappedByDates),
+                ])
+            }
+        await setCloses(mappedCloses)
+        logger.info("Fetched transactions closes")
+    }
+
+    @MainActor
+    private func setCloses(_ closes: [String: ClosesData]) {
+        self.closes = closes
     }
 
     @MainActor

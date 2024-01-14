@@ -13,6 +13,7 @@ import Foundation
 import SharedUtils
 import SharedModels
 import PersistentData
+import MockURLProtocol
 import KamaalExtensions
 @testable import Transactions
 
@@ -25,7 +26,11 @@ final class TransactionsManagerSpec: AsyncSpec {
         beforeEach {
             persistentData = try TestPersistentData()
             quickStorage = TestTransactionsQuickStorage()
-            manager = TransactionsManager(persistentData: persistentData, quickStorage: quickStorage)
+            manager = TransactionsManager(
+                persistentData: persistentData,
+                quickStorage: quickStorage,
+                urlSession: urlSession
+            )
         }
 
         describe("Handle iCloud changes") {
@@ -202,7 +207,11 @@ final class TransactionsManagerSpec: AsyncSpec {
                 expect(manager.transactions.count) == 1
 
                 // When
-                manager = TransactionsManager(persistentData: persistentData, quickStorage: quickStorage)
+                manager = TransactionsManager(
+                    persistentData: persistentData,
+                    quickStorage: quickStorage,
+                    urlSession: urlSession
+                )
                 try await manager.fetchTransactions()
 
                 // Then
@@ -211,6 +220,12 @@ final class TransactionsManagerSpec: AsyncSpec {
         }
     }
 }
+
+private let urlSession: URLSession = {
+    let configuration = URLSessionConfiguration.default
+    configuration.protocolClasses = [MockURLProtocol.self]
+    return URLSession(configuration: configuration)
+}()
 
 private let testTransaction = AppTransaction(
     name: "Apple",

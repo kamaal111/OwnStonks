@@ -19,6 +19,7 @@ extension StoredTransactionDataSource {
             id: id,
             sourceType: sourceType,
             ticker: ticker,
+            closes: nil,
             updatedDate: updatedDate,
             creationDate: creationDate,
             transactionRecordID: nil,
