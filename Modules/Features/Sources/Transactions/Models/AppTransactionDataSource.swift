@@ -14,6 +14,7 @@ public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
     public let id: UUID?
     let sourceType: AssetDataSources
     let ticker: String
+    let closes: ClosesData?
     let updatedDate: Date?
     let creationDate: Date?
     let transactionRecordID: CKRecord.ID?
@@ -23,6 +24,7 @@ public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
         id: UUID? = nil,
         sourceType: AssetDataSources,
         ticker: String,
+        closes: ClosesData?,
         updatedDate: Date?,
         creationDate: Date?,
         transactionRecordID: CKRecord.ID?,
@@ -31,6 +33,7 @@ public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
         self.id = id
         self.sourceType = sourceType
         self.ticker = ticker
+        self.closes = closes
         self.transactionRecordID = transactionRecordID
         self.updatedDate = updatedDate
         self.creationDate = creationDate
@@ -57,6 +60,19 @@ public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
         }
     }
 
+    func setCloses(_ closes: ClosesData) -> AppTransactionDataSource {
+        .init(
+            id: id,
+            sourceType: sourceType,
+            ticker: ticker,
+            closes: closes,
+            updatedDate: updatedDate,
+            creationDate: creationDate,
+            transactionRecordID: transactionRecordID,
+            recordID: recordID
+        )
+    }
+
     public static var recordName = "CD_StoredTransactionDataSource"
 
     static func fromCKRecord(_ record: CKRecord, transactionRecordID: CKRecord.ID?) -> AppTransactionDataSource? {
@@ -69,6 +85,7 @@ public struct AppTransactionDataSource: Hashable, Identifiable, CloudQueryable {
             id: id,
             sourceType: sourceType,
             ticker: ticker,
+            closes: nil,
             updatedDate: record[.updatedDate] as? Date,
             creationDate: record[.creationDate] as? Date,
             transactionRecordID: transactionRecordID,
