@@ -7,9 +7,11 @@
 
 import SwiftUI
 import KamaalUI
+import SharedModels
 
 struct TransactionsList: View {
     let transactions: [AppTransaction]
+    let previousCloses: [String: Money]
     let transactionAction: (_ transaction: AppTransaction) -> Void
     let transactionDelete: (_ transaction: AppTransaction) -> Void
     let transactionEdit: (_ transaction: AppTransaction) -> Void
@@ -18,6 +20,7 @@ struct TransactionsList: View {
         ForEach(transactions) { transaction in
             TransactionsListItem(
                 transaction: transaction,
+                previousClose: getPreviousCloses(for: transaction),
                 action: { transactionAction(transaction) },
                 onDelete: { transactionDelete(transaction) },
                 onEdit: { transactionEdit(transaction) }
@@ -45,11 +48,17 @@ struct TransactionsList: View {
 
         return .ignored
     }
+
+    private func getPreviousCloses(for transaction: AppTransaction) -> Money? {
+        guard let dataSource = transaction.dataSource else { return nil }
+        return previousCloses[dataSource.ticker]
+    }
 }
 
 #Preview {
     TransactionsList(
         transactions: [],
+        previousCloses: [:],
         transactionAction: { _ in },
         transactionDelete: { _ in },
         transactionEdit: { _ in }

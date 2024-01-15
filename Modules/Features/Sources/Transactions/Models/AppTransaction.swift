@@ -164,7 +164,6 @@ public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
             id: UUID(uuidString: "d8613b54-8a45-4b43-a90c-c068b0f8f077")!,
             sourceType: .stocks,
             ticker: "AAPL",
-            closes: nil,
             updatedDate: Date(timeIntervalSince1970: 1_702_233_813),
             creationDate: Date(timeIntervalSince1970: 1_702_233_813),
             transactionRecordID: nil,

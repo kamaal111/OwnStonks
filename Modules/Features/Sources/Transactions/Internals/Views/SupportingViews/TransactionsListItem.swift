@@ -12,6 +12,7 @@ import SharedModels
 
 struct TransactionsListItem: View {
     let transaction: AppTransaction
+    let previousClose: Money?
     let action: () -> Void
     let onDelete: () -> Void
     let onEdit: () -> Void
@@ -31,6 +32,9 @@ struct TransactionsListItem: View {
                 .padding(.trailing, .medium)
                 VStack(alignment: .leading) {
                     informationLabel("Price", value: totalPrice)
+                    if let profitLoss {
+                        informationLabel("P/L", value: profitLoss, foregroundColor: profitLossColor)
+                    }
                 }
             }
             .ktakeWidthEagerly(alignment: .leading)
@@ -67,6 +71,22 @@ struct TransactionsListItem: View {
         )
     }
 
+    private var profitLossColor: Color {
+        guard let previousClose else {
+            assertionFailure("Should have previous close already")
+            return .gray
+        }
+
+        assert(previousClose.currency == transaction.pricePerUnit.currency)
+        if transaction.pricePerUnit.value < previousClose.value {
+            return .green
+        }
+        if transaction.pricePerUnit.value > previousClose.value {
+            return .red
+        }
+        return .gray
+    }
+
     private var totalPrice: String {
         let totalPriceExcludingFees = transaction.totalPriceExcludingFees
         let fees = transaction.fees
@@ -79,6 +99,14 @@ struct TransactionsListItem: View {
         return "\(totalPriceExcludingFees.localized) + \(fees.localized)"
     }
 
+    private var profitLoss: String? {
+        guard let previousClose else { return nil }
+        guard previousClose.currency == transaction.pricePerUnit.currency else { return nil }
+
+        let profitLoss = ((previousClose.value - transaction.pricePerUnit.value) / previousClose.value) * 100
+        return "\(profitLoss.toFixed(2))%"
+    }
+
     private static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .short
@@ -87,5 +115,5 @@ struct TransactionsListItem: View {
 }
 
 #Preview {
-    TransactionsListItem(transaction: .preview, action: { }, onDelete: { }, onEdit: { })
+    TransactionsListItem(transaction: .preview, previousClose: nil, action: { }, onDelete: { }, onEdit: { })
 }

@@ -56,8 +56,11 @@ struct StonksPerformanceChart: View {
         if firstClose < lastClose {
             return .green
         }
+        if firstClose > lastClose {
+            return .red
+        }
 
-        return .red
+        return .gray
     }
 
     private var profitPercentage: Double? {
