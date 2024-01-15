@@ -37,6 +37,7 @@ public struct TransactionsScreen: View {
                 }
                 TransactionsList(
                     transactions: viewModel.convertedTransactions,
+                    previousCloses: transactionManager.previousCloses,
                     transactionAction: handleTransactionAction,
                     transactionDelete: handleTransactionDelete,
                     transactionEdit: handleTransactionEdit
@@ -74,7 +75,6 @@ public struct TransactionsScreen: View {
             Task { await handleFetchExchangeRate(of: newValue) }
         }
         .onChange(of: transactionManager.transactions, handleTransactionsChange)
-        .onChange(of: transactionManager.closes, handleClosesChanges)
     }
 
     private var toolbarItem: some View {
@@ -153,10 +153,6 @@ public struct TransactionsScreen: View {
         logger.info("transactions changed")
     }
 
-    private func handleClosesChanges(_: [String: ClosesData]?, _: [String: ClosesData]?) {
-        viewModel.setConvertedTransactions(convertTransactions())
-    }
-
     private func handleTransactionAction(_ transaction: AppTransaction) {
         withOriginalTransaction(transaction) { transaction in
             viewModel.handleTransactionPress(transaction)
@@ -224,7 +220,12 @@ public struct TransactionsScreen: View {
     }
 
     private func handleFetchingCloses() {
-        Task { await transactionManager.fetchCloses() }
+        Task {
+            await transactionManager.fetchCloses(
+                valutaConversion: valutaConversion,
+                preferredCurrency: userSettings.preferredForexCurrency
+            )
+        }
     }
 
     private func convertTransactions() -> [AppTransaction] {
@@ -233,26 +234,6 @@ public struct TransactionsScreen: View {
             .map { transaction in
                 let pricePerUnit = valutaConversion.convertMoney(from: transaction.pricePerUnit, to: preferredCurrency)
                 let fees = valutaConversion.convertMoney(from: transaction.fees, to: preferredCurrency)
-                var dataSource = transaction.dataSource
-                let closes: ClosesData? = if let ticker = dataSource?.ticker,
-                                             let closes = transactionManager.closes?[ticker] {
-                    closes
-                } else if let closes = transaction.dataSource?.closes {
-                    closes
-                } else {
-                    nil
-                }
-                if let closes {
-                    let convertedCloses = closes.data
-                        .reduce([Date: Double]()) { result, close in
-                            guard let convertedValue = valutaConversion.convertMoney(
-                                from: .init(value: close.value, currency: closes.currency),
-                                to: preferredCurrency
-                            ) else { return result }
-                            return result.merged(with: [close.key: convertedValue.value])
-                        }
-                    dataSource = dataSource?.setCloses(.init(currency: preferredCurrency, data: convertedCloses))
-                }
 
                 return AppTransaction(
                     id: transaction.id,
@@ -262,7 +243,7 @@ public struct TransactionsScreen: View {
                     amount: transaction.amount,
                     pricePerUnit: pricePerUnit ?? transaction.pricePerUnit,
                     fees: fees ?? transaction.fees,
-                    dataSource: dataSource,
+                    dataSource: transaction.dataSource,
                     updatedDate: transaction.updatedDate,
                     creationDate: transaction.creationDate
                 )

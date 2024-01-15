@@ -14,6 +14,7 @@ import Observation
 import KamaalLogger
 import SharedModels
 import PersistentData
+import ValutaConversion
 import KamaalExtensions
 
 private let logger = KamaalLogger(from: TransactionsManager.self, failOnError: true)
@@ -29,8 +30,8 @@ final class TransactionsManager {
     private(set) var transactions: [AppTransaction] = []
 
     private var storedTransactions: [StoredTransaction] = []
-    private(set) var closes: [String: ClosesData]?
     private let stonksKit: StonksKit
+    private(set) var previousCloses: [String: Money] = [:]
 
     convenience init() {
         self.init(
@@ -178,33 +179,34 @@ final class TransactionsManager {
         logger.info("Created transaction successfully")
     }
 
-    func fetchCloses() async {
+    func fetchCloses(valutaConversion: ValutaConversion, preferredCurrency: Currencies) async {
         let tickers = transactions.compactMap(\.dataSource?.ticker)
         guard !tickers.isEmpty else { return }
 
-        let startDate = transactions.map(\.transactionDate).min()!
-        let closesResult = await stonksKit.tickers.closes(for: tickers, startDate: startDate)
-        let closes: [String: StonksTickersClosesResponse]
-        switch closesResult {
+        let infosResult = await stonksKit.tickers.info(for: tickers, date: Date())
+        let infos: [String: StonksTickersInfoResponse]
+        switch infosResult {
         case .failure:
-            logger.warning("Failed to load transaction closes")
+            logger.warning("Failed to load transaction infos")
             return
-        case let .success(success): closes = success
+        case let .success(success): infos = success
         }
-        let mappedCloses = closes
-            .reduce([String: ClosesData]()) { result, close in
-                guard let currency = Currencies(rawValue: close.value.currency) else { return result }
-                return result.merged(with: [
-                    close.key: .init(currency: currency, data: close.value.closesMappedByDates),
-                ])
+        let previousCloses = infos
+            .reduce([String: Money]()) { result, info in
+                guard let currency = Currencies(rawValue: info.value.currency) else { return result }
+                guard let convertedValue = valutaConversion.convertMoney(
+                    from: .init(value: info.value.close, currency: currency),
+                    to: preferredCurrency
+                ) else { return result }
+                return result.merged(with: [info.key: convertedValue])
             }
-        await setCloses(mappedCloses)
-        logger.info("Fetched transactions closes")
+        await setPreviousCloses(previousCloses)
+        logger.info("Fetched transactions previous closes")
     }
 
     @MainActor
-    private func setCloses(_ closes: [String: ClosesData]) {
-        self.closes = closes
+    private func setPreviousCloses(_ previousCloses: [String: Money]) {
+        self.previousCloses = previousCloses
     }
 
     @MainActor

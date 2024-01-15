@@ -71,7 +71,6 @@ extension TransactionDetailsSheet {
                     autoTrackAsset: false,
                     assetDataSource: .stocks,
                     assetTicker: "",
-                    closes: nil,
                     stonksKit: stonksKit
                 )
             case let .details(transaction):
@@ -88,7 +87,6 @@ extension TransactionDetailsSheet {
                     autoTrackAsset: transaction.dataSource != nil,
                     assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
                     assetTicker: transaction.dataSource?.ticker ?? "",
-                    closes: transaction.dataSource?.closes,
                     stonksKit: stonksKit
                 )
             case let .edit(transaction):
@@ -105,7 +103,6 @@ extension TransactionDetailsSheet {
                     autoTrackAsset: transaction.dataSource != nil,
                     assetDataSource: transaction.dataSource?.sourceType ?? .stocks,
                     assetTicker: transaction.dataSource?.ticker ?? "",
-                    closes: transaction.dataSource?.closes,
                     stonksKit: stonksKit
                 )
             }
@@ -124,7 +121,6 @@ extension TransactionDetailsSheet {
             autoTrackAsset: Bool,
             assetDataSource: AssetDataSources,
             assetTicker: String,
-            closes: ClosesData?,
             stonksKit: StonksKit
         ) {
             self.context = context
@@ -141,7 +137,6 @@ extension TransactionDetailsSheet {
             self.autoTrackAsset = autoTrackAsset
             self.assetDataSource = assetDataSource
             self.assetTicker = assetTicker
-            self.closes = closes
             self.stonksKit = stonksKit
         }
 
@@ -338,7 +333,6 @@ extension TransactionDetailsSheet {
                 id: id,
                 sourceType: assetDataSource,
                 ticker: assetTicker,
-                closes: closes,
                 updatedDate: updatedDate,
                 creationDate: creationDate,
                 transactionRecordID: transactionRecordID,
