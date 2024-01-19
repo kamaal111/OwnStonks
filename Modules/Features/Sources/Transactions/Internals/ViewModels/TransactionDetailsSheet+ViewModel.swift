@@ -268,7 +268,6 @@ extension TransactionDetailsSheet {
                 let closesResult = await stonksKit.tickers.closes(for: assetTicker, startDate: transactionDate)
                     .map { success -> ClosesData? in
                         let closesMappedByDates = success.closesMappedByDates
-
                         guard !closesMappedByDates.isEmpty else { return nil }
 
                         let currency = success.currency
