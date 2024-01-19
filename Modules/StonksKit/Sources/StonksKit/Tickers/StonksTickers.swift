@@ -15,30 +15,16 @@ public final class StonksTickers: StonksKitClient {
         for tickers: [String],
         date: Date
     ) async -> Result<[String: StonksTickersInfoResponse], StonksTickersErrors> {
-        var cachedValues: [String: StonksTickersInfoResponse] = [:]
-        for ticker in tickers {
-            guard let cachedValue = cacheStorage.getStonksInfoCache(ticker: ticker, date: date) else { continue }
-            cachedValues[ticker] = cachedValue
+        await cacheStorage.withStonksInfoCache(tickers: tickers, date: date) { remainingTickers in
+            let url = clientURL
+                .appending(path: "info")
+                .appending(queryItems: [
+                    .init(name: "symbols", value: remainingTickers.joined(separator: ",")),
+                    .init(name: "date", value: formatDate(date)),
+                ])
+            return await get(url: url, ofType: [String: StonksTickersInfoResponse].self)
+                .mapError(StonksTickersErrors.fromNetworker(_:))
         }
-        let cachedValuesTickers = cachedValues.keys
-        let remainingTickers = tickers.filter { ticker in !cachedValuesTickers.contains(ticker) }
-        guard !remainingTickers.isEmpty else { return .success(cachedValues) }
-
-        let url = clientURL
-            .appending(path: "info")
-            .appending(queryItems: [
-                .init(name: "symbols", value: tickers.joined(separator: ",")),
-                .init(name: "date", value: formatDate(date)),
-            ])
-        let result = await get(url: url, ofType: [String: StonksTickersInfoResponse].self)
-            .mapError(StonksTickersErrors.fromNetworker(_:))
-            .map { success in
-                for (ticker, info) in success {
-                    cacheStorage.setStonksInfoCache(ticker: ticker, date: date, info: info)
-                }
-                return success.merged(with: cachedValues)
-            }
-        return result
     }
 
     public func info(for ticker: String, date: Date) async -> Result<StonksTickersInfoResponse, StonksTickersErrors> {

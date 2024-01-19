@@ -50,6 +50,32 @@ extension StonksKitCacheStorable {
             }
     }
 
+    mutating func withStonksInfoCache(
+        tickers: [String],
+        date: Date?,
+        apiCall: (
+            _ remainingTickers: [String]
+        ) async -> Result<[String: StonksTickersInfoResponse], StonksTickersErrors>
+    ) async -> Result<[String: StonksTickersInfoResponse], StonksTickersErrors> {
+        let cachedValues = tickers
+            .reduce([String: StonksTickersInfoResponse]()) { result, ticker in
+                guard let cachedValue = getStonksInfoCache(ticker: ticker, date: date) else { return result }
+                return result.merged(with: [ticker: cachedValue])
+            }
+        let cachedValuesTickers = cachedValues.keys
+        let remainingTickers = tickers.filter { ticker in !cachedValuesTickers.contains(ticker) }
+        guard !remainingTickers.isEmpty else { return .success(cachedValues) }
+
+        let cacheDate = date ?? Date()
+        return await apiCall(remainingTickers)
+            .map { success in
+                for (ticker, info) in success {
+                    setStonksInfoCache(ticker: ticker, date: cacheDate, info: info)
+                }
+                return success.merged(with: cachedValues)
+            }
+    }
+
     func getStonksInfoCache(ticker: String, date: Date?) -> StonksTickersInfoResponse? {
         guard let infoCache else { return nil }
 
@@ -60,7 +86,7 @@ extension StonksKitCacheStorable {
         return infoCache.first(where: { value in (value.value[ticker]) != nil })?.value[ticker]
     }
 
-    mutating func setStonksInfoCache(ticker: String, date: Date, info: StonksTickersInfoResponse) {
+    private mutating func setStonksInfoCache(ticker: String, date: Date, info: StonksTickersInfoResponse) {
         let rootKey = rootKey(date: date)
         if infoCache?[rootKey] == nil {
             infoCache = [rootKey: [ticker: info]]
