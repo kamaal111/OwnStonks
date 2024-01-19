@@ -183,23 +183,28 @@ final class TransactionsManager {
         let tickers = transactions.compactMap(\.dataSource?.ticker)
         guard !tickers.isEmpty else { return }
 
-        let infosResult = await stonksKit.tickers.info(for: tickers, date: Date())
-        let infos: [String: StonksTickersInfoResponse]
-        switch infosResult {
-        case .failure:
+        let previousCloses: [String: Money]
+        do {
+            previousCloses = try await stonksKit.tickers.info(for: tickers, date: Date())
+                .map { success in
+                    success
+                        .reduce([String: Money]()) { result, info in
+                            guard let currency = Currencies(rawValue: info.value.currency) else {
+                                assertionFailure("Should be a valid currency")
+                                return result
+                            }
+                            guard let convertedValue = valutaConversion.convertMoney(
+                                from: .init(value: info.value.close, currency: currency),
+                                to: preferredCurrency
+                            ) else { return result }
+                            return result.merged(with: [info.key: convertedValue])
+                        }
+                }
+                .get()
+        } catch {
             logger.warning("Failed to load transaction infos")
             return
-        case let .success(success): infos = success
         }
-        let previousCloses = infos
-            .reduce([String: Money]()) { result, info in
-                guard let currency = Currencies(rawValue: info.value.currency) else { return result }
-                guard let convertedValue = valutaConversion.convertMoney(
-                    from: .init(value: info.value.close, currency: currency),
-                    to: preferredCurrency
-                ) else { return result }
-                return result.merged(with: [info.key: convertedValue])
-            }
         await setPreviousCloses(previousCloses)
         logger.info("Fetched transactions previous closes")
     }
