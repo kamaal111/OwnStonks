@@ -12,6 +12,11 @@ struct ClosesData: Hashable {
     let currency: Currencies
     let data: [Date: Double]
 
+    var firstClose: Double? {
+        guard let firstCloseDate = data.keys.min() else { return nil }
+        return data[firstCloseDate]
+    }
+
     var lastClose: Double? {
         guard let lastCloseDate = data.keys.max() else { return nil }
         return data[lastCloseDate]

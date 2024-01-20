@@ -48,14 +48,14 @@ struct StonksPerformanceChart: View {
     }
 
     private var chartColor: Color {
-        let sortedCloseDates = sortedCloseDates
-        guard sortedCloseDates.count > 1 else { return .green }
+        let plots = plots
+        guard let firstClose = purchasedPrice ?? plots.first?.value else { return .gray }
+        guard let lastClose = plots.last?.value else { return .gray }
 
-        let lastClose = closes.data[sortedCloseDates.last!]!
-        let firstClose = if let purchasedPrice { purchasedPrice } else { closes.data[sortedCloseDates[0]]! }
         if firstClose < lastClose {
             return .green
         }
+
         if firstClose > lastClose {
             return .red
         }
@@ -74,45 +74,36 @@ struct StonksPerformanceChart: View {
     }
 
     private var maxClose: Double {
-        assert(closes.highestClose != nil)
-        let highestClose = closes.highestClose ?? 0
-        if let purchasedPrice {
-            return max(highestClose, purchasedPrice)
-        }
-        return highestClose
+        let maxValue = plots.map(\.value).max()
+        assert(maxValue != nil)
+        return max(maxValue ?? 0, purchasedPrice ?? 0)
     }
 
     private var minClose: Double {
-        assert(closes.lowestClose != nil)
-        let lowestClose = closes.lowestClose ?? .greatestFiniteMagnitude
-        if let purchasedPrice {
-            return min(lowestClose, purchasedPrice)
-        }
-        return lowestClose
+        let minValue = plots.map(\.value).min()
+        assert(minValue != nil)
+        return min(minValue ?? 0, purchasedPrice ?? .greatestFiniteMagnitude)
     }
 
     private var plots: [PlotItem] {
-        sortedCloseDates
-            .compactMap { date in
-                guard let close = closes.data[date] else { return nil }
-
-                return PlotItem(id: date, value: close)
-            }
-    }
-
-    private var sortedCloseDates: [Date] {
         closes.data
             .keys
             .sorted(by: { date1, date2 in date1.compare(date2) == .orderedAscending })
+            .enumerated()
+            .compactMap { index, date -> PlotItem? in
+                guard let close = closes.data[date] else { return nil }
+                return PlotItem(id: index, date: date, value: close)
+            }
     }
 }
 
 private struct PlotItem: Identifiable {
-    let id: Date
+    let id: Int
+    let date: Date
     let value: Double
 
-    var xValue: PlottableValue<String> {
-        .value(Self.dateFormatter.string(from: id), "\(id.dayNumberOfWeek)")
+    var xValue: PlottableValue<Int> {
+        .value(id.string, id)
     }
 
     var yValue: PlottableValue<Double> {
