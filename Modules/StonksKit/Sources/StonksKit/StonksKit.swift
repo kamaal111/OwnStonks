@@ -11,14 +11,14 @@ import KamaalNetworker
 public struct StonksKit {
     public let tickers: StonksTickers
 
-    public init() {
+    public init(baseURL: URL) {
         let urlSession = URLSession.shared
         let cacheStorage = StonksKitCacheStorage()
-        self.init(urlSession: urlSession, cacheStorage: cacheStorage)
+        self.init(baseURL: baseURL, urlSession: urlSession, cacheStorage: cacheStorage)
     }
 
-    public init(urlSession: URLSession, cacheStorage: StonksKitCacheStorable) {
+    public init(baseURL: URL, urlSession: URLSession, cacheStorage: StonksKitCacheStorable) {
         let networker = KamaalNetworker(urlSession: urlSession)
-        self.tickers = .init(networker: networker, cacheStorage: cacheStorage)
+        self.tickers = .init(baseURL: baseURL, networker: networker, cacheStorage: cacheStorage)
     }
 }

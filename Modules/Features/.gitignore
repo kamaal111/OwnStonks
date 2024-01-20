@@ -8,3 +8,4 @@ DerivedData/
 .netrc
 Sources/UserSettings/Internals/Resources/Secrets.json
 Sources/ValutaConversion/Internals/Resources/Secrets.json
+Sources/Transactions/Internals/Resources/Secrets.json

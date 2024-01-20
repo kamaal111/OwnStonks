@@ -16,10 +16,10 @@ public protocol StonkKitClientable { }
 public class BaseStonksKitClient {
     private let networker: KamaalNetworker
     var cacheStorage: StonksKitCacheStorable
+    let baseURL: URL
 
-    static let BASE_URL = URL(staticString: "http://127.0.0.1:8000")
-
-    init(networker: KamaalNetworker, cacheStorage: StonksKitCacheStorable) {
+    init(baseURL: URL, networker: KamaalNetworker, cacheStorage: StonksKitCacheStorable) {
+        self.baseURL = baseURL
         self.networker = networker
         self.cacheStorage = cacheStorage
     }

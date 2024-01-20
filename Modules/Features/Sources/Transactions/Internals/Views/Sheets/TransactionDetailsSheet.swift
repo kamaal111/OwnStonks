@@ -96,7 +96,7 @@ struct TransactionDetailsSheet: View {
                         label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
                         isEditing: viewModel.isEditing
                     )
-                    if viewModel.autoTrackAsset, viewModel.isEditing, viewModel.transactionIsValid {
+                    if viewModel.shouldShowAutoTrackOptions {
                         Button(action: {
                             Task { await viewModel.fetchPricePerUnit(valutaConversion: valutaConversion) }
                         }, label: {

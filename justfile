@@ -45,6 +45,8 @@ make-secrets:
         --github_token ${GITHUB_TOKEN:-""}
     python3 Scripts/make_secrets.py --output "Modules/Features/Sources/ValutaConversion/Internals/Resources/Secrets.json" \
         --forex_api_url ${FOREX_API_URL:-""}
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/Transactions/Internals/Resources/Secrets.json" \
+        --stonks_kit_url ${STONKS_KIT_URL:-""}
 
 test destination:
     #!/bin/zsh
