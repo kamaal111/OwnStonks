@@ -20,6 +20,24 @@ import ValutaConversion
 final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
     override class func spec() {
         let url = URL(staticString: "https://kamaal.io")
+        var cacheStorage: TestTransactionsQuickStorage!
+        var transaction: AppTransaction!
+
+        beforeEach {
+            cacheStorage = TestTransactionsQuickStorage()
+            transaction = AppTransaction(
+                id: UUID(uuidString: "7d28a378-6c12-4d92-8843-baf2e2a9bcdc")!,
+                name: "Google",
+                transactionDate: Date(timeIntervalSince1970: 1_702_328_316),
+                transactionType: .sell,
+                amount: 100,
+                pricePerUnit: Money(value: 500, currency: .USD),
+                fees: Money(value: 3.2, currency: .EUR),
+                dataSource: nil,
+                updatedDate: Date(timeIntervalSince1970: 1_702_328_316),
+                creationDate: Date(timeIntervalSince1970: 1_702_328_316)
+            )
+        }
 
         describe("Fetch price per unit") {
             it("should fetch price per unit and convert price") {
@@ -37,7 +55,6 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     .init(data: JSONEncoder().encode(testExchangeRates), statusCode: 200, url: url),
                     .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
                 ])
-                let cacheStorage = TestTransactionsQuickStorage()
                 let valutaConversion = ValutaConversion(
                     symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
                     quickStorage: cacheStorage,
@@ -47,7 +64,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 )
                 try await valutaConversion.fetchExchangeRates(of: .EUR)
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .edit(testTransaction),
+                    context: .edit(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -78,7 +95,6 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 try MockURLProtocol.makeRequests(with: [
                     .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
                 ])
-                let cacheStorage = TestTransactionsQuickStorage()
                 let valutaConversion = ValutaConversion(
                     symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
                     quickStorage: cacheStorage,
@@ -87,7 +103,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     skipCaching: true
                 )
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .edit(testTransaction),
+                    context: .edit(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -113,7 +129,6 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                         url: url
                     ),
                 ])
-                let cacheStorage = TestTransactionsQuickStorage()
                 let valutaConversion = ValutaConversion(
                     symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
                     quickStorage: cacheStorage,
@@ -122,7 +137,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     skipCaching: true
                 )
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .edit(testTransaction),
+                    context: .edit(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -148,7 +163,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 let expectedTicker = "GOOG"
                 let response = [
                     expectedTicker: StonksTickersInfoResponse(
-                        name: testTransaction.name,
+                        name: transaction.name,
                         close: 300,
                         currency: Currencies.USD.rawValue,
                         closeDate: nil
@@ -156,9 +171,8 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 ]
                 try MockURLProtocol
                     .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
-                let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .edit(testTransaction),
+                    context: .edit(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -184,17 +198,19 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 let expectedTicker = "AAPL"
                 let response = [
                     expectedTicker: StonksTickersInfoResponse(
-                        name: testTransaction.name,
+                        name: transaction.name,
                         close: 500,
                         currency: Currencies.USD.rawValue,
                         closeDate: nil
                     ),
                 ]
                 try MockURLProtocol
-                    .makeRequest(withResponse: response, statusCode: 200, url: URL(staticString: "https://kamaal.io"))
-                let cacheStorage = TestTransactionsQuickStorage()
+                    .makeRequests(with: [
+                        .init(data: JSONEncoder().encode(response), statusCode: 200, url: url),
+                        .init(data: Data(), statusCode: 200, url: url),
+                    ])
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .details(testTransaction),
+                    context: .details(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -214,6 +230,47 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 expect(viewModel.isEditing) == false
             }
 
+            it("should skip validating ticker due to auto track set being set to false and unsets data source") {
+                // Given
+                let response = [
+                    "SQ": StonksTickersInfoResponse(
+                        name: "Block",
+                        close: 69,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
+                try MockURLProtocol
+                    .makeRequests(with: [
+                        .init(data: JSONEncoder().encode(response), statusCode: 200, url: url),
+                        .init(data: Data(), statusCode: 200, url: url),
+                    ])
+                let viewModel = TransactionDetailsSheet.ViewModel(
+                    context: .details(transaction),
+                    urlSession: urlSession,
+                    cacheStorage: cacheStorage
+                )
+                viewModel.autoTrackAsset = true
+                viewModel.assetTicker = response.keys.first!
+                await viewModel.finalizeEditing(
+                    close: { fail("Should not enter here") },
+                    done: { _ in }
+                )
+                await viewModel.enableEditing()
+
+                // When
+                viewModel.autoTrackAsset = false
+                var _finalTransaction: AppTransaction?
+                await viewModel.finalizeEditing(
+                    close: { fail("Should not enter here") },
+                    done: { transaction in _finalTransaction = transaction }
+                )
+
+                // Then
+                let finalTransaction = try XCTUnwrap(_finalTransaction)
+                expect(finalTransaction.dataSource).to(beNil())
+            }
+
             it("should alert due to ticker not being valid") {
                 // Given
                 MockURLProtocol.makeRequest(
@@ -221,9 +278,8 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     statusCode: 404,
                     url: URL(staticString: "https://kamaal.io")
                 )
-                let cacheStorage = TestTransactionsQuickStorage()
                 let viewModel = TransactionDetailsSheet.ViewModel(
-                    context: .edit(testTransaction),
+                    context: .edit(transaction),
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
@@ -249,7 +305,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
         describe("Transction is valid") {
             it("should not be valid when editing transaction is nil") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction))
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(transaction))
 
                 // When
                 viewModel.name = ""
@@ -261,7 +317,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
             it("should not be valid when auto track asset is enabled but data source is invalid") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction))
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(transaction))
 
                 // When
                 viewModel.autoTrackAsset = true
@@ -273,7 +329,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
             it("should be valid when transaction is valid and auto track asset is disabled") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction))
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(transaction))
 
                 // When
                 viewModel.autoTrackAsset = false
@@ -284,7 +340,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
             it("should be valid when transaction is valid and auto track asset is enabled and data source is valid") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction))
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(transaction))
 
                 // When
                 viewModel.autoTrackAsset = true
@@ -299,7 +355,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             context("Fees and price per unit currency changes") {
                 it("should set fees currency when price per unit changes") {
                     // Given
-                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(testTransaction))
+                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(transaction))
 
                     // When
                     viewModel.pricePerUnitCurrency = .AUD
@@ -311,7 +367,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
 
                 it("should not set price per unit currency when fees currency changes") {
                     // Given
-                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(testTransaction))
+                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(transaction))
 
                     // When
                     viewModel.feesCurrency = .JPY
@@ -326,7 +382,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
         describe("Toggling editing") {
             it("should toggle editing on") {
                 // Given
-                let viewModel = TransactionDetailsSheet.ViewModel(context: .details(testTransaction))
+                let viewModel = TransactionDetailsSheet.ViewModel(context: .details(transaction))
 
                 // When
                 await viewModel.enableEditing()
@@ -351,32 +407,32 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
             context("Details context") {
                 it("should set all the right default values") {
                     // Given
-                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(testTransaction))
+                    let viewModel = TransactionDetailsSheet.ViewModel(context: .details(transaction))
 
                     // Then
                     expect(viewModel.transactionIsValid) == true
-                    expect(viewModel.transaction) == testTransaction
-                    expect(viewModel.context) == .details(testTransaction)
-                    expect(viewModel.title) == testTransaction.name
+                    expect(viewModel.transaction) == transaction
+                    expect(viewModel.context) == .details(transaction)
+                    expect(viewModel.title) == transaction.name
                     expect(viewModel.isEditing) == false
-                    expect(viewModel.feesCurrency) == testTransaction.fees.currency
-                    expect(viewModel.pricePerUnitCurrency) == testTransaction.pricePerUnit.currency
+                    expect(viewModel.feesCurrency) == transaction.fees.currency
+                    expect(viewModel.pricePerUnitCurrency) == transaction.pricePerUnit.currency
                 }
             }
 
             context("Edit context") {
                 it("should set all the right default values") {
                     // Given
-                    let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(testTransaction))
+                    let viewModel = TransactionDetailsSheet.ViewModel(context: .edit(transaction))
 
                     // Then
                     expect(viewModel.transactionIsValid) == true
-                    expect(viewModel.transaction) == testTransaction
-                    expect(viewModel.context) == .edit(testTransaction)
-                    expect(viewModel.title) == testTransaction.name
+                    expect(viewModel.transaction) == transaction
+                    expect(viewModel.context) == .edit(transaction)
+                    expect(viewModel.title) == transaction.name
                     expect(viewModel.isEditing) == true
-                    expect(viewModel.feesCurrency) == testTransaction.fees.currency
-                    expect(viewModel.pricePerUnitCurrency) == testTransaction.pricePerUnit.currency
+                    expect(viewModel.feesCurrency) == transaction.fees.currency
+                    expect(viewModel.pricePerUnitCurrency) == transaction.pricePerUnit.currency
                 }
             }
 
@@ -416,17 +472,4 @@ private let testExchangeRates = ExchangeRates(
         .TRY: 19.9649,
         .USD: 1.0666,
     ]
-)
-
-private let testTransaction = AppTransaction(
-    id: UUID(uuidString: "7d28a378-6c12-4d92-8843-baf2e2a9bcdc")!,
-    name: "Google",
-    transactionDate: Date(timeIntervalSince1970: 1_702_328_316),
-    transactionType: .sell,
-    amount: 100,
-    pricePerUnit: Money(value: 500, currency: .USD),
-    fees: Money(value: 3.2, currency: .EUR),
-    dataSource: nil,
-    updatedDate: Date(timeIntervalSince1970: 1_702_328_316),
-    creationDate: Date(timeIntervalSince1970: 1_702_328_316)
 )
