@@ -368,6 +368,7 @@ extension TransactionDetailsSheet {
         }
 
         private func validateTicker() async -> Bool {
+            guard autoTrackAsset else { return true }
             guard let stonksKit else { return false }
             guard let validAssetDataSource else {
                 assertionFailure("Expected data source to be valid")
