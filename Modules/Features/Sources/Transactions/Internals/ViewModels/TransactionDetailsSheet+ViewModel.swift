@@ -43,7 +43,7 @@ extension TransactionDetailsSheet {
 
         let context: TransactionDetailsSheetContext
         let isNew: Bool
-        private let stonksKit: StonksKit
+        private var stonksKit: StonksKit?
         private let logger = KamaalLogger(from: TransactionDetailsSheet.self, failOnError: true)
 
         convenience init(context: TransactionDetailsSheetContext) {
@@ -55,7 +55,10 @@ extension TransactionDetailsSheet {
             urlSession: URLSession,
             cacheStorage: TransactionsQuickStoragable
         ) {
-            let stonksKit = StonksKit(urlSession: urlSession, cacheStorage: cacheStorage)
+            var stonksKit: StonksKit?
+            if let stonksKitURL = SecretsJSON.shared.content?.stonksKitURL {
+                stonksKit = StonksKit(baseURL: stonksKitURL, urlSession: urlSession, cacheStorage: cacheStorage)
+            }
             switch context {
             case let .new(preferredCurrency):
                 self.init(
@@ -121,7 +124,7 @@ extension TransactionDetailsSheet {
             autoTrackAsset: Bool,
             assetDataSource: AssetDataSources,
             assetTicker: String,
-            stonksKit: StonksKit
+            stonksKit: StonksKit?
         ) {
             self.context = context
             self.name = name
@@ -142,6 +145,10 @@ extension TransactionDetailsSheet {
 
         var transactionIsValid: Bool {
             transaction != nil && ((autoTrackAsset && validAssetDataSource != nil) || !autoTrackAsset)
+        }
+
+        var shouldShowAutoTrackOptions: Bool {
+            isEditing && transactionIsValid && autoTrackAsset && stonksKit != nil
         }
 
         var title: String {
@@ -188,6 +195,8 @@ extension TransactionDetailsSheet {
         }
 
         func fetchPricePerUnit(valutaConversion: ValutaConversion) async {
+            guard let stonksKit else { return }
+
             await withLoading { [weak self] in
                 guard let self else { return }
 
@@ -255,6 +264,7 @@ extension TransactionDetailsSheet {
         }
 
         func fetchCloses() async {
+            guard let stonksKit else { return }
             guard !isEditing else { return }
             guard case .details = context else { return }
             guard validAssetDataSource != nil else { return }
@@ -358,6 +368,7 @@ extension TransactionDetailsSheet {
         }
 
         private func validateTicker() async -> Bool {
+            guard let stonksKit else { return false }
             guard let validAssetDataSource else {
                 assertionFailure("Expected data source to be valid")
                 return false

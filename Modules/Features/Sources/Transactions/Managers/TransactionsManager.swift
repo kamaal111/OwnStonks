@@ -30,7 +30,7 @@ final class TransactionsManager {
     private(set) var transactions: [AppTransaction] = []
 
     private var storedTransactions: [StoredTransaction] = []
-    private let stonksKit: StonksKit
+    private var stonksKit: StonksKit?
     private(set) var previousCloses: [String: Money] = [:]
 
     convenience init() {
@@ -45,7 +45,9 @@ final class TransactionsManager {
         self.loading = true
         self.persistentData = persistentData
         self.quickStorage = quickStorage
-        self.stonksKit = .init(urlSession: urlSession, cacheStorage: quickStorage)
+        if let stonksKitURL = SecretsJSON.shared.content?.stonksKitURL {
+            self.stonksKit = .init(baseURL: stonksKitURL, urlSession: urlSession, cacheStorage: quickStorage)
+        }
 
         LocalNotifications.shared.observe(
             to: events,
@@ -180,6 +182,8 @@ final class TransactionsManager {
     }
 
     func fetchCloses(valutaConversion: ValutaConversion, preferredCurrency: Currencies) async {
+        guard let stonksKit else { return }
+
         let tickers = transactions.compactMap(\.dataSource?.ticker)
         guard !tickers.isEmpty else { return }
 

@@ -29,7 +29,7 @@ def parse_opts(longopts: list[str] = []) -> dict[str, str]:
 
 
 def main():
-    output_keys = ["github_token", "forex_api_url"]
+    output_keys = ["github_token", "forex_api_url", "stonks_kit_url"]
     opts = parse_opts(longopts=["output"] + output_keys)
     output = opts.get("output")
     if not output:

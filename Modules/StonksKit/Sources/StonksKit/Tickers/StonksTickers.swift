@@ -99,7 +99,7 @@ public final class StonksTickers: StonksKitClient {
     }
 
     private var clientURL: URL {
-        Self.BASE_URL
+        baseURL
             .appending(path: "tickers")
     }
 
