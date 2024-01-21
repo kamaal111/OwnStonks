@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "Performances" : {
+      "extractionState" : "manual"
+    },
     "Scenes" : {
       "extractionState" : "manual"
     },

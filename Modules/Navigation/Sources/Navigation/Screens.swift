@@ -13,6 +13,7 @@ import Playground
 #endif
 
 enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue {
+    case performances
     case transactions
     case settings
     #if DEBUG
@@ -23,7 +24,7 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
 
     var isTabItem: Bool {
         switch self {
-        case .transactions, .settings: true
+        case .transactions, .settings, .performances: true
         #if DEBUG
         case .playground: true
         #endif
@@ -32,7 +33,7 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
 
     var isSidebarItem: Bool {
         switch self {
-        case .transactions, .settings: true
+        case .transactions, .settings, .performances: true
         #if DEBUG
         case .playground: true
         #endif
@@ -41,6 +42,7 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
 
     var imageSystemName: String {
         switch self {
+        case .performances: "chart.pie.fill"
         case .transactions: "house.fill"
         case .settings: "gear"
         #if DEBUG
@@ -51,6 +53,7 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
 
     var title: String {
         switch self {
+        case .performances: NSLocalizedString("Performances", bundle: .module, comment: "")
         case .transactions: NSLocalizedString("Transactions", bundle: .module, comment: "")
         case .settings: NSLocalizedString("Settings", bundle: .module, comment: "")
         #if DEBUG
@@ -59,5 +62,5 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
         }
     }
 
-    static var root: Screens = .transactions
+    static var root: Screens = .performances
 }
