@@ -21,6 +21,8 @@ public final class UserSettings {
         color: Color("AccentColor")
     )
     private(set) var preferredCurrency: Preference.Option
+    /// Whether to show money or not.
+    public private(set) var showMoney: Bool
 
     private let showLogs = true
     private let logger = KamaalLogger(from: UserSettings.self, failOnError: true)
@@ -33,6 +35,7 @@ public final class UserSettings {
 
     init(quickStorage: UserSettingsQuickStoragable) {
         self.preferredCurrency = quickStorage.preferredCurrency ?? Self.preferredCurrencies[0]
+        self.showMoney = quickStorage.showMoney ?? true
         self.quickStorage = quickStorage
     }
 
@@ -45,6 +48,7 @@ public final class UserSettings {
         SettingsConfiguration(
             feedback: feedbackConfiguration,
             color: colorConfiguration,
+            features: features,
             acknowledgements: AcknowledgementsJSON.shared.content,
             preferences: preferences,
             showLogs: showLogs
@@ -59,7 +63,29 @@ public final class UserSettings {
         }
     }
 
+    @MainActor
+    func onFeaturesChange(_ feature: Feature) {
+        switch feature.id {
+        case showMoneyFeature.id: setShowMoneyFeature(feature.isEnabled)
+        default: logger.error("Failed to find feature by id")
+        }
+    }
+
     static let currencyPreferenceID = UUID(uuidString: "bb2062c5-0227-442a-a47f-5679f3fbe36f")!
+
+    private var features: [Feature] {
+        [
+            showMoneyFeature,
+        ]
+    }
+
+    private var showMoneyFeature: Feature {
+        .init(
+            id: UUID(uuidString: "1ce3d891-0e71-4702-aa69-2195e93b1dba")!,
+            label: NSLocalizedString("Show money", bundle: .module, comment: ""),
+            isEnabled: showMoney
+        )
+    }
 
     private var colorConfiguration: SettingsConfiguration.ColorsConfiguration {
         .init(colors: [appColor], currentColor: appColor)
@@ -94,6 +120,12 @@ public final class UserSettings {
             selectedOption: preferredCurrency,
             options: Self.preferredCurrencies
         )
+    }
+
+    @MainActor
+    private func setShowMoneyFeature(_ showMoneyState: Bool) {
+        showMoney = showMoneyState
+        quickStorage.showMoney = showMoneyState
     }
 
     @MainActor

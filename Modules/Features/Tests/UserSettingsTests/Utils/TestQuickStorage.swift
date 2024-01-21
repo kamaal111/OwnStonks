@@ -10,8 +10,10 @@ import KamaalSettings
 
 class TestQuickStorage: UserSettingsQuickStoragable {
     var preferredCurrency: Preference.Option?
+    var showMoney: Bool?
 
-    init(preferredCurrency: Preference.Option?) {
+    init(preferredCurrency: Preference.Option? = nil, showMoney: Bool? = nil) {
         self.preferredCurrency = preferredCurrency
+        self.showMoney = showMoney
     }
 }
