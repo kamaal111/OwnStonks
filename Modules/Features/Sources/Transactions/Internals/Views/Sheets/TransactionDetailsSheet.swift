@@ -9,6 +9,7 @@ import SwiftUI
 import SharedUI
 import KamaalUI
 import ForexKit
+import UserSettings
 import SharedModels
 import ValutaConversion
 
@@ -19,6 +20,7 @@ enum TransactionDetailsSheetContext: Equatable {
 }
 
 struct TransactionDetailsSheet: View {
+    @Environment(UserSettings.self) private var userSettings
     @Environment(ValutaConversion.self) private var valutaConversion
 
     @State private var viewModel: ViewModel
@@ -47,18 +49,7 @@ struct TransactionDetailsSheet: View {
         KSheetStack(
             title: viewModel.title,
             leadingNavigationButton: { navigationButton(label: "Close", action: close) },
-            trailingNavigationButton: {
-                KJustStack {
-                    if !isNotPendingInTheCloud {
-                        Text("")
-                    } else if viewModel.isEditing {
-                        navigationButton(label: "Done", action: handleDone)
-                            .disabled(!viewModel.transactionIsValid)
-                    } else {
-                        navigationButton(label: "Edit", action: { viewModel.enableEditing() })
-                    }
-                }
-            }
+            trailingNavigationButton: { trailingNavigationButton }
         ) {
             VStack(alignment: .leading) {
                 EditableText(
@@ -94,7 +85,8 @@ struct TransactionDetailsSheet: View {
                         currency: $viewModel.pricePerUnitCurrency,
                         value: $viewModel.pricePerUnit,
                         label: NSLocalizedString("Price per unit", bundle: .module, comment: ""),
-                        isEditing: viewModel.isEditing
+                        isEditing: viewModel.isEditing,
+                        show: userSettings.showMoney
                     )
                     if viewModel.shouldShowAutoTrackOptions {
                         Button(action: {
@@ -115,7 +107,8 @@ struct TransactionDetailsSheet: View {
                     currency: $viewModel.feesCurrency,
                     value: $viewModel.fees,
                     label: NSLocalizedString("Fees", bundle: .module, comment: ""),
-                    isEditing: viewModel.isEditing
+                    isEditing: viewModel.isEditing,
+                    show: userSettings.showMoney
                 )
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
                 CollapsableSection(title: NSLocalizedString("Auto tracking", bundle: .module, comment: "")) {
@@ -177,6 +170,18 @@ struct TransactionDetailsSheet: View {
         #if os(macOS)
             .frame(minWidth: 320, minHeight: viewModel.isEditing ? 412 : 260)
         #endif
+    }
+
+    @ViewBuilder
+    private var trailingNavigationButton: some View {
+        if !isNotPendingInTheCloud {
+            Text("")
+        } else if viewModel.isEditing {
+            navigationButton(label: "Done", action: handleDone)
+                .disabled(!viewModel.transactionIsValid)
+        } else {
+            navigationButton(label: "Edit", action: { Task { await viewModel.enableEditing() } })
+        }
     }
 
     private func navigationButton(label: LocalizedStringKey, action: @escaping () -> Void) -> some View {
