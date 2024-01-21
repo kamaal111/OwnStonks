@@ -41,6 +41,7 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
         return AssetDataSources(rawValue: sourceType)
     }
 
+    @MainActor
     public func update(payload: Payload) throws -> StoredTransactionDataSource {
         sourceType = payload.sourceType.rawValue
         ticker = payload.ticker
@@ -74,6 +75,7 @@ public final class StoredTransactionDataSource: Identifiable, Buildable, Persist
         )
     }
 
+    @MainActor
     public static func create(payload: Payload, context: ModelContext?) throws -> StoredTransactionDataSource {
         let dataSource = try Builder()
             .setId(UUID())
