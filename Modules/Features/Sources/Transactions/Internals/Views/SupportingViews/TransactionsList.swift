@@ -12,6 +12,7 @@ import SharedModels
 struct TransactionsList: View {
     let transactions: [AppTransaction]
     let previousCloses: [String: Money]
+    let showMoney: Bool
     let transactionAction: (_ transaction: AppTransaction) -> Void
     let transactionDelete: (_ transaction: AppTransaction) -> Void
     let transactionEdit: (_ transaction: AppTransaction) -> Void
@@ -21,6 +22,7 @@ struct TransactionsList: View {
             TransactionsListItem(
                 transaction: transaction,
                 previousClose: getPreviousCloses(for: transaction),
+                showMoney: showMoney,
                 action: { transactionAction(transaction) },
                 onDelete: { transactionDelete(transaction) },
                 onEdit: { transactionEdit(transaction) }
@@ -59,6 +61,7 @@ struct TransactionsList: View {
     TransactionsList(
         transactions: [],
         previousCloses: [:],
+        showMoney: true,
         transactionAction: { _ in },
         transactionDelete: { _ in },
         transactionEdit: { _ in }

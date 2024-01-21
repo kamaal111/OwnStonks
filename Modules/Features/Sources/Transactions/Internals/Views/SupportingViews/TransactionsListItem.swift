@@ -13,6 +13,7 @@ import SharedModels
 struct TransactionsListItem: View {
     let transaction: AppTransaction
     let previousClose: Money?
+    let showMoney: Bool
     let action: () -> Void
     let onDelete: () -> Void
     let onEdit: () -> Void
@@ -31,7 +32,11 @@ struct TransactionsListItem: View {
                 }
                 .padding(.trailing, .medium)
                 VStack(alignment: .leading) {
-                    informationLabel("Price", value: totalPrice)
+                    if showMoney {
+                        informationLabel("Price", value: totalPrice)
+                    } else {
+                        informationLabel("Price", value: "***", foregroundColor: .secondary)
+                    }
                     if let profitLoss {
                         informationLabel("P/L", value: profitLoss, foregroundColor: profitLossColor)
                     }
@@ -88,6 +93,7 @@ struct TransactionsListItem: View {
     }
 
     private var totalPrice: String {
+        assert(showMoney)
         let totalPriceExcludingFees = transaction.totalPriceExcludingFees
         let fees = transaction.fees
         if totalPriceExcludingFees.currency == fees.currency {
@@ -115,5 +121,12 @@ struct TransactionsListItem: View {
 }
 
 #Preview {
-    TransactionsListItem(transaction: .preview, previousClose: nil, action: { }, onDelete: { }, onEdit: { })
+    TransactionsListItem(
+        transaction: .preview,
+        previousClose: nil,
+        showMoney: true,
+        action: { },
+        onDelete: { },
+        onEdit: { }
+    )
 }
