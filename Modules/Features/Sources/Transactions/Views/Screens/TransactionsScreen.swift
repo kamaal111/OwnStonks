@@ -38,6 +38,7 @@ public struct TransactionsScreen: View {
                 TransactionsList(
                     transactions: viewModel.convertedTransactions,
                     previousCloses: transactionManager.previousCloses,
+                    showMoney: userSettings.showMoney,
                     transactionAction: handleTransactionAction,
                     transactionDelete: handleTransactionDelete,
                     transactionEdit: handleTransactionEdit
