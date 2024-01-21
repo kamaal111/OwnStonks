@@ -12,11 +12,15 @@ import KamaalSettings
 
 protocol UserSettingsQuickStoragable {
     var preferredCurrency: Preference.Option? { get set }
+    var showMoney: Bool? { get set }
 }
 
 class UserSettingsQuickStorage: UserSettingsQuickStoragable {
     @UserDefaultsObject(key: makeKey("preferred_currency"), container: UserDefaultsSuite.shared)
     var preferredCurrency: Preference.Option?
+
+    @UserDefaultsValue(key: makeKey("show_money"), container: UserDefaultsSuite.shared)
+    var showMoney: Bool?
 
     private init() { }
 

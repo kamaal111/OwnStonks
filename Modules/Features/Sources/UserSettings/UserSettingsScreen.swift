@@ -18,5 +18,6 @@ public struct UserSettingsScreen: View {
     public var body: some View {
         SettingsScreen(configuration: userSettings.configuration)
             .onSettingsPreferenceChange { preference in userSettings.onPreferenceChange(preference) }
+            .onFeatureChange { feature in userSettings.onFeaturesChange(feature) }
     }
 }
