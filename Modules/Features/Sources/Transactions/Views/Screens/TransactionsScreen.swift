@@ -18,7 +18,7 @@ import KamaalExtensions
 private let logger = KamaalLogger(from: TransactionsScreen.self, failOnError: true)
 
 public struct TransactionsScreen: View {
-    @Environment(TransactionsManager.self) private var transactionManager
+    @Environment(TransactionsManager.self) private var transactionsManager
     @Environment(UserSettings.self) private var userSettings
     @Environment(ValutaConversion.self) private var valutaConversion
     @EnvironmentObject private var popUpManager: KPopUpManager
@@ -30,14 +30,14 @@ public struct TransactionsScreen: View {
     public var body: some View {
         KScrollableForm {
             KSection(header: NSLocalizedString("Transactions", bundle: .module, comment: "")) {
-                if transactionManager.loading {
+                if transactionsManager.loading {
                     KLoading()
-                } else if transactionManager.transactionsAreEmpty {
+                } else if transactionsManager.transactionsAreEmpty {
                     AddFirstTransactionButton(action: { viewModel.showAddTransactionSheet() })
                 }
                 TransactionsList(
                     transactions: viewModel.convertedTransactions,
-                    previousCloses: transactionManager.previousCloses,
+                    previousCloses: transactionsManager.previousCloses,
                     showMoney: userSettings.showMoney,
                     transactionAction: handleTransactionAction,
                     transactionDelete: handleTransactionDelete,
@@ -75,7 +75,7 @@ public struct TransactionsScreen: View {
         .onChange(of: userSettings.preferredForexCurrency) { _, newValue in
             Task { await handleFetchExchangeRate(of: newValue) }
         }
-        .onChange(of: transactionManager.transactions, handleTransactionsChange)
+        .onChange(of: transactionsManager.transactions, handleTransactionsChange)
     }
 
     private var toolbarItem: some View {
@@ -101,13 +101,13 @@ public struct TransactionsScreen: View {
                 makeTransactionDetailsSheet(
                     context: .details(transaction),
                     transaction: transaction,
-                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction)
+                    isNotPendingInTheCloud: transactionsManager.transactionIsNotPendingInTheCloud(transaction)
                 )
             case let .transactionEdit(transaction):
                 makeTransactionDetailsSheet(
                     context: .edit(transaction),
                     transaction: transaction,
-                    isNotPendingInTheCloud: transactionManager.transactionIsNotPendingInTheCloud(transaction)
+                    isNotPendingInTheCloud: transactionsManager.transactionIsNotPendingInTheCloud(transaction)
                 )
             case .none: EmptyView()
             }
@@ -139,7 +139,7 @@ public struct TransactionsScreen: View {
         _ transaction: AppTransaction,
         _ completion: (_ transaction: AppTransaction) -> Void
     ) {
-        guard let transaction = transactionManager.transactions.find(by: \.id, is: transaction.id)
+        guard let transaction = transactionsManager.transactions.find(by: \.id, is: transaction.id)
         else {
             assertionFailure("Expected transaction to be present")
             return
@@ -161,7 +161,7 @@ public struct TransactionsScreen: View {
     }
 
     private func handleTransactionDelete(_ transaction: AppTransaction) {
-        guard transactionManager.transactionIsNotPendingInTheCloud(transaction) else {
+        guard transactionsManager.transactionIsNotPendingInTheCloud(transaction) else {
             assertionFailure("Should not be able to delete pending iCloud transaction")
             return
         }
@@ -183,7 +183,7 @@ public struct TransactionsScreen: View {
             return
         }
 
-        transactionManager.deleteTransaction(transactionToDelete)
+        transactionsManager.deleteTransaction(transactionToDelete)
         viewModel.onDefiniteTransactionDelete()
     }
 
@@ -191,7 +191,7 @@ public struct TransactionsScreen: View {
         switch viewModel.shownSheet {
         case .addTransction:
             do {
-                try transactionManager.createTransaction(transaction)
+                try transactionsManager.createTransaction(transaction)
             } catch {
                 showError(
                     with: NSLocalizedString("Failed to create transaction", bundle: .module, comment: ""),
@@ -200,7 +200,7 @@ public struct TransactionsScreen: View {
             }
         case .transactionDetails, .transactionEdit:
             do {
-                try transactionManager.editTransaction(transaction)
+                try transactionsManager.editTransaction(transaction)
             } catch {
                 showError(
                     with: NSLocalizedString("Failed to update transaction", bundle: .module, comment: ""),
@@ -222,7 +222,7 @@ public struct TransactionsScreen: View {
 
     private func handleFetchingCloses() {
         Task {
-            await transactionManager.fetchCloses(
+            await transactionsManager.fetchCloses(
                 valutaConversion: valutaConversion,
                 preferredCurrency: userSettings.preferredForexCurrency
             )
@@ -231,7 +231,7 @@ public struct TransactionsScreen: View {
 
     private func convertTransactions() -> [AppTransaction] {
         let preferredCurrency = userSettings.preferredForexCurrency
-        return transactionManager.transactions
+        return transactionsManager.transactions
             .map { transaction in
                 let pricePerUnit = valutaConversion.convertMoney(from: transaction.pricePerUnit, to: preferredCurrency)
                 let fees = valutaConversion.convertMoney(from: transaction.fees, to: preferredCurrency)
@@ -266,7 +266,7 @@ public struct TransactionsScreen: View {
 
     private func handleFetchingTransactions() async {
         do {
-            try await transactionManager.fetchTransactions()
+            try await transactionsManager.fetchTransactions()
         } catch {
             showError(
                 with: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),

@@ -14,7 +14,7 @@ import KamaalExtensions
 
 public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     public let id: UUID?
-    let name: String
+    public let name: String
     let transactionDate: Date
     let transactionType: TransactionTypes
     let amount: Double

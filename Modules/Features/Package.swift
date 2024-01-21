@@ -139,6 +139,17 @@ let package = Package(
                 .process("Resources"),
             ]
         ),
-        .target(name: "Performances", dependencies: []),
+        .target(
+            name: "Performances",
+            dependencies: [
+                .product(name: "KamaalPopUp", package: "KamaalSwift"),
+                .product(name: "KamaalLogger", package: "KamaalSwift"),
+                .product(name: "KamaalUI", package: "KamaalSwift"),
+                "Transactions",
+            ],
+            resources: [
+                .process("Internals/Resources"),
+            ]
+        ),
     ]
 )

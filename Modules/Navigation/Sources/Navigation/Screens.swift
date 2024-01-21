@@ -43,7 +43,7 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
     var imageSystemName: String {
         switch self {
         case .performances: "chart.pie.fill"
-        case .transactions: "house.fill"
+        case .transactions: "dollarsign"
         case .settings: "gear"
         #if DEBUG
         case .playground: "theatermasks.fill"
