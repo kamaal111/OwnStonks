@@ -184,9 +184,12 @@ final class TransactionsManager {
     func fetchCloses(valutaConversion: ValutaConversion, preferredCurrency: Currencies) async {
         guard let stonksKit else { return }
 
-        let tickers = transactions.compactMap(\.dataSource?.ticker)
+        let tickers = transactions
+            .filter { transaction in transaction.transactionType == .buy }
+            .compactMap(\.dataSource?.ticker)
         guard !tickers.isEmpty else { return }
 
+        logger.info("Fetching closes for \(tickers.joined(separator: ", "))")
         let previousCloses: [String: Money]
         do {
             previousCloses = try await stonksKit.tickers.info(for: tickers, date: Date())

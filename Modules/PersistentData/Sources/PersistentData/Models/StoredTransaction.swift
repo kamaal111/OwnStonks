@@ -124,6 +124,7 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
         )
     }
 
+    @MainActor
     public func update(payload: Payload) throws -> StoredTransaction {
         guard let context = modelContext else {
             assertionFailure("Expected context to exist at this point")
@@ -143,6 +144,7 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
         return self
     }
 
+    @MainActor
     public static func create(payload: Payload, context: ModelContext?) throws -> StoredTransaction {
         guard let context else {
             assertionFailure("Context should be present")
@@ -171,6 +173,7 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
         return transaction
     }
 
+    @MainActor
     private static func updatedDataSource(
         _ transaction: StoredTransaction?,
         with dataSource: StoredTransactionDataSource.Payload?,
