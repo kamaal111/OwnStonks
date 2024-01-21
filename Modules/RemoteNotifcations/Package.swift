@@ -13,7 +13,7 @@ let package = Package(
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.8.1")),
+        .package(url: "https://github.com/Kamaalio/KamaalSwift.git", .upToNextMajor(from: "1.9.1")),
         .package(path: "../SharedStuff"),
     ],
     targets: [
@@ -22,6 +22,7 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalCloud", package: "KamaalSwift"),
                 .product(name: "KamaalLogger", package: "KamaalSwift"),
+                .product(name: "KamaalUtils", package: "KamaalSwift"),
                 .product(name: "SharedUtils", package: "SharedStuff"),
             ]
         ),
