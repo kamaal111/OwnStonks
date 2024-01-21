@@ -32,11 +32,7 @@ struct TransactionsListItem: View {
                 }
                 .padding(.trailing, .medium)
                 VStack(alignment: .leading) {
-                    if showMoney {
-                        informationLabel("Price", value: totalPrice)
-                    } else {
-                        informationLabel("Price", value: "***", foregroundColor: .secondary)
-                    }
+                    informationLabel("Price", value: totalPriceLabel, foregroundColor: totalPriceColor)
                     if let profitLoss {
                         informationLabel("P/L", value: profitLoss, foregroundColor: profitLossColor)
                     }
@@ -62,6 +58,28 @@ struct TransactionsListItem: View {
                 }
             }
         }
+    }
+
+    private var totalPriceColor: Color {
+        if !showMoney {
+            return .secondary
+        }
+
+        return .primary
+    }
+
+    private var totalPriceLabel: String {
+        guard showMoney else { return "***" }
+
+        let totalPriceExcludingFees = transaction.totalPriceExcludingFees
+        let fees = transaction.fees
+        if totalPriceExcludingFees.currency == fees.currency {
+            let totalPriceValue = totalPriceExcludingFees.value + fees.value
+            let totalPriceMoney = Money(value: totalPriceValue, currency: totalPriceExcludingFees.currency)
+            return totalPriceMoney.localized
+        }
+
+        return "\(totalPriceExcludingFees.localized) + \(fees.localized)"
     }
 
     private func informationLabel(
@@ -90,19 +108,6 @@ struct TransactionsListItem: View {
             return .red
         }
         return .gray
-    }
-
-    private var totalPrice: String {
-        assert(showMoney)
-        let totalPriceExcludingFees = transaction.totalPriceExcludingFees
-        let fees = transaction.fees
-        if totalPriceExcludingFees.currency == fees.currency {
-            let totalPriceValue = totalPriceExcludingFees.value + fees.value
-            let totalPriceMoney = Money(value: totalPriceValue, currency: totalPriceExcludingFees.currency)
-            return totalPriceMoney.localized
-        }
-
-        return "\(totalPriceExcludingFees.localized) + \(fees.localized)"
     }
 
     private var profitLoss: String? {
