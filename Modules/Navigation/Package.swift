@@ -26,6 +26,7 @@ let package = Package(
                 .product(name: "UserSettings", package: "Features"),
                 .product(name: "Transactions", package: "Features"),
                 .product(name: "Playground", package: "Features"),
+                .product(name: "Performances", package: "Features"),
             ],
             resources: [
                 .process("Resources"),

@@ -14,6 +14,7 @@ let package = Package(
         .library(name: "UserSettings", targets: ["UserSettings"]),
         .library(name: "ValutaConversion", targets: ["ValutaConversion"]),
         .library(name: "Playground", targets: ["Playground"]),
+        .library(name: "Performances", targets: ["Performances"]),
     ],
     dependencies: [
         .package(url: "https://github.com/Quick/Quick", .upToNextMajor(from: "7.0.0")),
@@ -138,5 +139,6 @@ let package = Package(
                 .process("Resources"),
             ]
         ),
+        .target(name: "Performances", dependencies: []),
     ]
 )

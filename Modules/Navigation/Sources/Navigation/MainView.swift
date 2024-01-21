@@ -8,6 +8,7 @@
 import SwiftUI
 import KamaalUI
 import KamaalPopUp
+import Performances
 import UserSettings
 import Transactions
 import KamaalNavigation
@@ -31,6 +32,7 @@ struct MainView: View {
             switch screen {
             case .transactions: TransactionsScreen()
             case .settings: UserSettingsScreen()
+            case .performances: PerformancesScreen()
             #if DEBUG
             case .playground: PlaygroundScreen()
             #endif
