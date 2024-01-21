@@ -7,9 +7,9 @@
 
 import CloudKit
 import SwiftData
+import SharedUtils
 import KamaalCloud
 import KamaalLogger
-import SharedUtils
 
 final class ICloudNotifications {
     private let cloud = KamaalCloud(
@@ -24,8 +24,8 @@ final class ICloudNotifications {
 
     private var subscriptions: [CKSubscription] = []
 
-    func subscripeToAll() async {
-        let fetchedSubscriptions = await fetchAllSubcriptions()
+    func subscripeToAll() async throws {
+        let fetchedSubscriptions = try await fetchAllSubcriptions()
         let fetchedSubscriptionsAsRecordTypes: [CKRecord.RecordType] = fetchedSubscriptions
             .compactMap { query in (query as? CKQuerySubscription)?.recordType }
         let subscriptionsToSubscribeTo = subscriptionsWanted
@@ -48,12 +48,7 @@ final class ICloudNotifications {
         }
     }
 
-    private func fetchAllSubcriptions() async -> [CKSubscription] {
-        do {
-            return try await cloud.subscriptions.fetchAllSubscriptions().get()
-        } catch {
-            logger.error(label: "Failed to fetch all subscriptions", error: error)
-            return []
-        }
+    private func fetchAllSubcriptions() async throws -> [CKSubscription] {
+        try await cloud.subscriptions.fetchAllSubscriptions().get()
     }
 }
