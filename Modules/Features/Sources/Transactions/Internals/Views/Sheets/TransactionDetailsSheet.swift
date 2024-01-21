@@ -105,6 +105,9 @@ struct TransactionDetailsSheet: View {
                                 .foregroundColor(.accentColor)
                         })
                         .buttonStyle(.plain)
+                        #if os(macOS)
+                            .padding(.top, 20)
+                        #endif
                     }
                 }
                 .padding(.top, viewModel.isEditing ? .nada : .extraExtraSmall)
