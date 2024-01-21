@@ -19,15 +19,17 @@ import KamaalExtensions
 
 private let logger = KamaalLogger(from: TransactionsManager.self, failOnError: true)
 
+/// Transacion manager class that manages transactions.
 @Observable
-final class TransactionsManager {
+public final class TransactionsManager {
     private(set) var loading: Bool
     private let persistentData: PersistentDatable
     private var quickStorage: TransactionsQuickStoragable
     private let events: [LocalNotificationEvents] = [
         .iCloudChanges,
     ]
-    private(set) var transactions: [AppTransaction] = []
+    /// Transactions.
+    public private(set) var transactions: [AppTransaction] = []
 
     private var storedTransactions: [StoredTransaction] = []
     private var stonksKit: StonksKit?
@@ -75,7 +77,7 @@ final class TransactionsManager {
         return storedTransactionsIDs.contains(transactionID)
     }
 
-    func fetchTransactions() async throws {
+    public func fetchTransactions() async throws {
         try await withLoading {
             let storedTransactions: [StoredTransaction] = try await persistentData
                 .list(sorts: [SortDescriptor(\.updatedDate, order: .reverse)])
