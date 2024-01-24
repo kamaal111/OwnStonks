@@ -12,7 +12,6 @@ import SharedUI
 import KamaalPopUp
 import UserSettings
 import KamaalLogger
-import ValutaConversion
 import KamaalExtensions
 
 private let logger = KamaalLogger(from: TransactionsScreen.self, failOnError: true)
@@ -20,7 +19,6 @@ private let logger = KamaalLogger(from: TransactionsScreen.self, failOnError: tr
 public struct TransactionsScreen: View {
     @Environment(TransactionsManager.self) private var transactionsManager
     @Environment(UserSettings.self) private var userSettings
-    @Environment(ValutaConversion.self) private var valutaConversion
     @EnvironmentObject private var popUpManager: KPopUpManager
 
     @State private var viewModel = ViewModel()
@@ -71,11 +69,7 @@ public struct TransactionsScreen: View {
                 Text("Are you sure you want to delete this transaction?", bundle: .module)
             }
         )
-        .onAppear(perform: handleOnAppear)
-        .onChange(of: userSettings.preferredForexCurrency) { _, newValue in
-            Task { await handleFetchExchangeRate(of: newValue) }
-        }
-        .onChange(of: transactionsManager.transactions, handleTransactionsChange)
+        .fetchAndConvertTransactions($viewModel.convertedTransactions)
     }
 
     private var toolbarItem: some View {
@@ -148,12 +142,6 @@ public struct TransactionsScreen: View {
         completion(transaction)
     }
 
-    private func handleTransactionsChange(_: [AppTransaction], _: [AppTransaction]) {
-        viewModel.setConvertedTransactions(convertTransactions())
-        handleFetchingCloses()
-        logger.info("transactions changed")
-    }
-
     private func handleTransactionAction(_ transaction: AppTransaction) {
         withOriginalTransaction(transaction) { transaction in
             viewModel.handleTransactionPress(transaction)
@@ -211,70 +199,6 @@ public struct TransactionsScreen: View {
         }
     }
 
-    private func handleOnAppear() {
-        Task {
-            async let fetchTransactionWait: () = handleFetchingTransactions()
-            async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
-            _ = await [fetchTransactionWait, fetchExchangeRateWait]
-            viewModel.setConvertedTransactions(convertTransactions())
-        }
-    }
-
-    private func handleFetchingCloses() {
-        Task {
-            await transactionsManager.fetchCloses(
-                valutaConversion: valutaConversion,
-                preferredCurrency: userSettings.preferredForexCurrency
-            )
-        }
-    }
-
-    private func convertTransactions() -> [AppTransaction] {
-        let preferredCurrency = userSettings.preferredForexCurrency
-        return transactionsManager.transactions
-            .map { transaction in
-                let pricePerUnit = valutaConversion.convertMoney(from: transaction.pricePerUnit, to: preferredCurrency)
-                let fees = valutaConversion.convertMoney(from: transaction.fees, to: preferredCurrency)
-
-                return AppTransaction(
-                    id: transaction.id,
-                    name: transaction.name,
-                    transactionDate: transaction.transactionDate,
-                    transactionType: transaction.transactionType,
-                    amount: transaction.amount,
-                    pricePerUnit: pricePerUnit ?? transaction.pricePerUnit,
-                    fees: fees ?? transaction.fees,
-                    dataSource: transaction.dataSource,
-                    updatedDate: transaction.updatedDate,
-                    creationDate: transaction.creationDate
-                )
-            }
-    }
-
-    private func handleFetchExchangeRate(of currency: Currencies) async {
-        do {
-            try await valutaConversion.fetchExchangeRates(of: currency)
-        } catch {
-            showError(
-                with: NSLocalizedString("Failed to get exchange rates", bundle: .module, comment: ""),
-                from: error
-            )
-            return
-        }
-        viewModel.setConvertedTransactions(convertTransactions())
-    }
-
-    private func handleFetchingTransactions() async {
-        do {
-            try await transactionsManager.fetchTransactions()
-        } catch {
-            showError(
-                with: NSLocalizedString("Failed to get transactions", bundle: .module, comment: ""),
-                from: error
-            )
-        }
-    }
-
     private func showError(with title: String, from error: Error) {
         logger.error(label: title, error: error)
         popUpManager.showPopUp(style: .bottom(title: title, type: .error, description: nil), timeout: 5)
@@ -284,7 +208,7 @@ public struct TransactionsScreen: View {
 extension TransactionsScreen {
     @Observable
     final class ViewModel {
-        private(set) var convertedTransactions: [AppTransaction] = []
+        var convertedTransactions: [AppTransaction] = []
         var showSheet = false {
             didSet { showSheetDidSet() }
         }
