@@ -1,7 +1,7 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "Failed to get transactions" : {
+    "Holdings" : {
       "extractionState" : "manual"
     }
   },

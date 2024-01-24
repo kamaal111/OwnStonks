@@ -137,9 +137,10 @@ struct TransactionDetailsSheet: View {
                 }
                 .padding(.top, .small)
                 if !viewModel.isEditing, let closes = viewModel.closes, !closes.data.isEmpty {
-                    StonksPerformanceChart(
-                        closes: closes,
-                        purchasedPrice: closes.currency == viewModel.pricePerUnitCurrency
+                    PerformanceLineChart(
+                        data: closes.data,
+                        currency: closes.currency,
+                        initialPrice: closes.currency == viewModel.pricePerUnitCurrency
                             ? Double(viewModel.pricePerUnit)
                             : nil
                     )

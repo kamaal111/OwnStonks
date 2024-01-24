@@ -16,7 +16,7 @@ public struct PerformancesScreen: View {
 
     public var body: some View {
         KScrollableForm {
-            KSection(header: "Stuff") {
+            KSection(header: NSLocalizedString("Holdings", bundle: .module, comment: "")) {
                 ForEach(transactions) { transaction in
                     Text(transaction.name)
                 }

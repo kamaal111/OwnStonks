@@ -1,24 +1,31 @@
 //
-//  StonksPerformanceChart.swift
+//  PerformanceLineChart.swift
 //
 //
-//  Created by Kamaal M Farah on 07/01/2024.
+//  Created by Kamaal M Farah on 24/01/2024.
 //
 
 import Charts
 import SwiftUI
+import ForexKit
 import KamaalUI
 import SharedModels
-import KamaalExtensions
 
-struct StonksPerformanceChart: View {
-    let closes: ClosesData
-    let purchasedPrice: Double?
+public struct PerformanceLineChart: View {
+    public let data: [Date: Double]
+    public let currency: Currencies
+    public let initialPrice: Double?
 
-    var body: some View {
+    public init(data: [Date: Double], currency: Currencies, initialPrice: Double?) {
+        self.data = data
+        self.currency = currency
+        self.initialPrice = initialPrice
+    }
+
+    public var body: some View {
         VStack {
-            if let lastClose = closes.lastClose {
-                profitView(lastClose: lastClose)
+            if let lastPrice {
+                profitView(lastPrice: lastPrice)
             }
             chartsView
         }
@@ -31,12 +38,12 @@ struct StonksPerformanceChart: View {
         }
         .foregroundColor(chartColor)
         .chartXAxis(.hidden)
-        .chartYScale(domain: [minClose, maxClose])
+        .chartYScale(domain: [minPrice, maxPrice])
     }
 
-    private func profitView(lastClose: Double) -> some View {
+    private func profitView(lastPrice: Double) -> some View {
         HStack {
-            Text(Money(value: lastClose, currency: closes.currency).localized)
+            Text(Money(value: lastPrice, currency: currency).localized)
                 .foregroundColor(chartColor)
             if let profitPercentage {
                 Text("\(profitPercentage.toFixed(2))%")
@@ -49,7 +56,7 @@ struct StonksPerformanceChart: View {
 
     private var chartColor: Color {
         let plots = plots
-        guard let firstClose = purchasedPrice ?? plots.first?.value else { return .gray }
+        guard let firstClose = initialPrice ?? plots.first?.value else { return .gray }
         guard let lastClose = plots.last?.value else { return .gray }
 
         if firstClose < lastClose {
@@ -63,35 +70,40 @@ struct StonksPerformanceChart: View {
         return .gray
     }
 
+    private var maxPrice: Double {
+        let maxValue = plots.map(\.value).max()
+        assert(maxValue != nil)
+        return max(maxValue ?? 0, initialPrice ?? 0)
+    }
+
+    private var minPrice: Double {
+        let minValue = plots.map(\.value).min()
+        assert(minValue != nil)
+        return min(minValue ?? 0, initialPrice ?? .greatestFiniteMagnitude)
+    }
+
     private var profitPercentage: Double? {
-        guard let purchasedPrice else { return nil }
-        guard let lastClose = closes.lastClose else {
-            assertionFailure("Should have last close at this point")
+        guard let initialPrice else { return nil }
+        guard let lastPrice else {
+            assertionFailure("Should have last price at this point")
             return nil
         }
 
-        return ((lastClose - purchasedPrice) / lastClose) * 100
+        return ((lastPrice - initialPrice) / lastPrice) * 100
     }
 
-    private var maxClose: Double {
-        let maxValue = plots.map(\.value).max()
-        assert(maxValue != nil)
-        return max(maxValue ?? 0, purchasedPrice ?? 0)
-    }
-
-    private var minClose: Double {
-        let minValue = plots.map(\.value).min()
-        assert(minValue != nil)
-        return min(minValue ?? 0, purchasedPrice ?? .greatestFiniteMagnitude)
+    private var lastPrice: Double? {
+        guard let lastPriceDate = data.keys.max() else { return nil }
+        return data[lastPriceDate]
     }
 
     private var plots: [PlotItem] {
-        closes.data
+        data
             .keys
             .sorted(by: { date1, date2 in date1.compare(date2) == .orderedAscending })
             .enumerated()
             .compactMap { index, date -> PlotItem? in
-                guard let close = closes.data[date] else { return nil }
+                guard let close = data[date] else { return nil }
                 return PlotItem(id: index, date: date, value: close)
             }
     }
@@ -118,5 +130,5 @@ private struct PlotItem: Identifiable {
 }
 
 #Preview {
-    StonksPerformanceChart(closes: ClosesData(currency: .AUD, data: [:]), purchasedPrice: 22)
+    PerformanceLineChart(data: [:], currency: .AUD, initialPrice: nil)
 }
