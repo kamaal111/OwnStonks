@@ -142,8 +142,6 @@ let package = Package(
         .target(
             name: "Performances",
             dependencies: [
-                .product(name: "KamaalPopUp", package: "KamaalSwift"),
-                .product(name: "KamaalLogger", package: "KamaalSwift"),
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 "Transactions",
             ],
