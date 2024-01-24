@@ -28,8 +28,7 @@ final class TransactionsManager {
     private let events: [LocalNotificationEvents] = [
         .iCloudChanges,
     ]
-    /// Transactions.
-    public private(set) var transactions: [AppTransaction] = []
+    private(set) var transactions: [AppTransaction] = []
 
     private var storedTransactions: [StoredTransaction] = []
     private var stonksKit: StonksKit?
