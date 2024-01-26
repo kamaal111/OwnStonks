@@ -15,8 +15,11 @@ import ValutaConversion
 private let logger = KamaalLogger(from: FetchAndConvertTransactionsModifier.self, failOnError: true)
 
 extension View {
-    public func fetchAndConvertTransactions(_ transactions: Binding<[AppTransaction]>) -> some View {
-        modifier(FetchAndConvertTransactionsModifier(transactions: transactions))
+    public func fetchAndConvertTransactions(
+        transactions: Binding<[AppTransaction]>,
+        loading: Binding<Bool>
+    ) -> some View {
+        modifier(FetchAndConvertTransactionsModifier(transactions: transactions, loading: loading))
     }
 }
 
@@ -28,6 +31,7 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
     @EnvironmentObject private var popUpManager: KPopUpManager
 
     @Binding var transactions: [AppTransaction]
+    @Binding var loading: Bool
 
     func body(content: Content) -> some View {
         content
@@ -38,12 +42,20 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
             .onChange(of: transactionsManager.transactions, handleTransactionsChange)
     }
 
+    private func withLoading(completion: () async -> Void) async {
+        loading = true
+        await completion()
+        loading = false
+    }
+
     private func handleOnAppear() {
         Task {
-            async let fetchTransactionWait: () = handleFetchingTransactions()
-            async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
-            _ = await [fetchTransactionWait, fetchExchangeRateWait]
-            transactions = convertTransactions()
+            await withLoading {
+                async let fetchTransactionWait: () = handleFetchingTransactions()
+                async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
+                _ = await [fetchTransactionWait, fetchExchangeRateWait]
+                transactions = convertTransactions()
+            }
         }
     }
 
@@ -55,10 +67,12 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
 
     private func handleFetchingCloses() {
         Task {
-            await transactionsManager.fetchCloses(
-                valutaConversion: valutaConversion,
-                preferredCurrency: userSettings.preferredForexCurrency
-            )
+            await withLoading {
+                await transactionsManager.fetchCloses(
+                    valutaConversion: valutaConversion,
+                    preferredCurrency: userSettings.preferredForexCurrency
+                )
+            }
         }
     }
 
