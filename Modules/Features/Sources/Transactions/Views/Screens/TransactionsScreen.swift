@@ -69,7 +69,10 @@ public struct TransactionsScreen: View {
                 Text("Are you sure you want to delete this transaction?", bundle: .module)
             }
         )
-        .fetchAndConvertTransactions($viewModel.convertedTransactions)
+        .fetchAndConvertTransactions(
+            transactions: $viewModel.convertedTransactions,
+            loading: $viewModel.loadingConvertedTransactions
+        )
     }
 
     private var toolbarItem: some View {
@@ -219,6 +222,8 @@ extension TransactionsScreen {
         private(set) var shownSheet: Sheets? {
             didSet { shownSheetDidSet() }
         }
+
+        var loadingConvertedTransactions = false
 
         @MainActor
         func onTransactionDelete(_ transaction: AppTransaction) {

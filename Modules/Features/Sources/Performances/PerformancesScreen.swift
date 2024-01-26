@@ -11,6 +11,7 @@ import Transactions
 
 public struct PerformancesScreen: View {
     @State private var transactions: [AppTransaction] = []
+    @State private var loadingTransactions = false
 
     public init() { }
 
@@ -22,7 +23,7 @@ public struct PerformancesScreen: View {
                 }
             }
         }
-        .fetchAndConvertTransactions($transactions)
+        .fetchAndConvertTransactions(transactions: $transactions, loading: $loadingTransactions)
     }
 }
 
