@@ -144,6 +144,7 @@ let package = Package(
             dependencies: [
                 .product(name: "KamaalUI", package: "KamaalSwift"),
                 .product(name: "SharedUI", package: "SharedStuff"),
+                .product(name: "SharedModels", package: "SharedStuff"),
                 "Transactions",
                 "ForexKit",
                 "UserSettings",

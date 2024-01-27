@@ -19,7 +19,7 @@ import KamaalExtensions
 
 private let logger = KamaalLogger(from: TransactionsManager.self, failOnError: true)
 
-/// Transacion manager class that manages transactions.
+/// Transactions manager class that manages transactions.
 @Observable
 final class TransactionsManager {
     private(set) var loading: Bool

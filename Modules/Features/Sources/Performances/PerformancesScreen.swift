@@ -10,6 +10,7 @@ import SwiftUI
 import KamaalUI
 import SharedUI
 import ForexKit
+import SharedModels
 import UserSettings
 import Transactions
 
@@ -21,19 +22,30 @@ public struct PerformancesScreen: View {
     public init() { }
 
     public var body: some View {
-        KScrollableForm {
-            KSection(header: NSLocalizedString("Holdings", bundle: .module, comment: "")) {
-                Chart(viewModel.holdingsPieChartPlots) { plot in
-                    SectorMark(angle: plot.angle, angularInset: 1)
-                        .foregroundStyle(by: plot.style)
-                        .cornerRadius(2)
-                }
+        KJustStack {
+            if viewModel.loadingTransactions {
+                KLoading()
             }
-            #if os(macOS)
-            .padding(.horizontal, .medium)
-            #endif
+            KScrollableForm {
+                KSection(header: NSLocalizedString("Holdings", bundle: .module, comment: "")) {
+                    if let totalHoldingsMoney = viewModel.totalHoldingsMoney {
+                        Text(String(
+                            format: NSLocalizedString("Total %@", bundle: .module, comment: ""),
+                            totalHoldingsMoney.localized
+                        ))
+                    }
+                    Chart(viewModel.holdingsPieChartPlots) { plot in
+                        SectorMark(angle: plot.angle, angularInset: 1)
+                            .foregroundStyle(by: plot.style)
+                            .cornerRadius(2)
+                    }
+                }
+                #if os(macOS)
+                .padding(.horizontal, .medium)
+                #endif
+            }
+            .padding(.vertical, .medium)
         }
-        .padding(.vertical, .medium)
         .fetchAndConvertTransactions(transactions: $viewModel.transactions, loading: $viewModel.loadingTransactions)
         .onAppear(perform: handleOnAppear)
         .onChange(of: userSettings.preferredForexCurrency, handlePreferredForexCurrencyChange)
@@ -57,13 +69,7 @@ extension PerformancesScreen {
         var preferredCurrency: Currencies?
 
         var holdingsPieChartPlots: [HoldingsPieChartPlotItem] {
-            guard let preferredCurrency else { return [] }
-
-            let boughtTransactions = transactions
-                .filter { transaction in
-                    transaction.transactionType == .buy && transaction.pricePerUnit.currency == preferredCurrency
-                }
-            let boughtTransactionsMappedByName = Dictionary(grouping: boughtTransactions, by: \.name)
+            let boughtTransactionsMappedByName = boughtTransactionsMappedByName
             return boughtTransactionsMappedByName
                 .keys
                 .sorted()
@@ -78,13 +84,35 @@ extension PerformancesScreen {
                 }
         }
 
+        var totalHoldingsMoney: Money? {
+            guard let preferredCurrency else { return nil }
+
+            let value = boughtTransactionsMappedByName
+                .values
+                .reduce(0.0) { result, transactions in
+                    result + transactions
+                        .reduce(0.0) { result, transaction in result + transaction.totalPriceExcludingFees.value }
+                }
+            return Money(value: value, currency: preferredCurrency)
+        }
+
         @MainActor
         func setPreferredCurrency(_ currency: Currencies) {
             preferredCurrency = currency
         }
+
+        private var boughtTransactionsMappedByName: [String: [AppTransaction]] {
+            guard let preferredCurrency else { return [:] }
+
+            let boughtTransactions = transactions
+                .filter { transaction in
+                    transaction.transactionType == .buy && transaction.pricePerUnit.currency == preferredCurrency
+                }
+            return Dictionary(grouping: boughtTransactions, by: \.name)
+        }
     }
 
-    struct HoldingsPieChartPlotItem: Identifiable {
+    struct HoldingsPieChartPlotItem: Identifiable, Equatable {
         let name: String
         let value: Double
 
