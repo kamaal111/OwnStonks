@@ -5,12 +5,15 @@
 //  Created by Kamaal M Farah on 01/01/2024.
 //
 
+import Combine
 import Foundation
 import KamaalUtils
 import KamaalNetworker
 import KamaalExtensions
 
 public final class StonksTickers: StonksKitClient {
+    private var cancellables: Set<AnyCancellable> = []
+
     public func info(
         for tickers: [String],
         date: Date
@@ -22,8 +25,32 @@ public final class StonksTickers: StonksKitClient {
                     .init(name: "symbols", value: remainingTickers.joined(separator: ",")),
                     .init(name: "date", value: formatDate(date)),
                 ])
-            return await get(url: url, ofType: [String: StonksTickersInfoResponse].self)
-                .mapError(StonksTickersErrors.fromNetworker(_:))
+            let result = await withCheckedContinuation { (continuation: CheckedContinuation<
+                Result<[String: StonksTickersInfoResponse], StonksTickersErrors>,
+                Never
+            >) in
+                getPublisher(url: url, ofType: [String: StonksTickersInfoResponse].self)
+                    .sink(receiveCompletion: { completion in
+                        switch completion {
+                        case .finished: break
+                        case let .failure(failure):
+                            continuation.resume(returning: .failure(StonksTickersErrors.fromNetworker(failure)))
+                        }
+                    }, receiveValue: { value in
+                        let response: [String: StonksTickersInfoResponse]
+                        do {
+                            response = try JSONDecoder().decode([String: StonksTickersInfoResponse].self, from: value)
+                        } catch {
+                            assertionFailure("Should not fail here as it was encoded from this type")
+                            continuation.resume(returning: .failure(.general(context: error)))
+                            return
+                        }
+                        continuation.resume(returning: .success(response))
+                    })
+                    .store(in: &cancellables)
+            }
+            completeGetPublisher(for: url)
+            return result
         }
     }
 

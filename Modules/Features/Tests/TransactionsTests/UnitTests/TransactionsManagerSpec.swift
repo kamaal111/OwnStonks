@@ -9,12 +9,15 @@ import Quick
 import Nimble
 import XCTest
 import CloudKit
+import ForexKit
+import StonksKit
 import Foundation
 import SharedUtils
 import SharedModels
 import PersistentData
 import MockURLProtocol
 import KamaalExtensions
+import ValutaConversion
 @testable import Transactions
 
 final class TransactionsManagerSpec: AsyncSpec {
@@ -22,6 +25,8 @@ final class TransactionsManagerSpec: AsyncSpec {
         var persistentData: TestPersistentData!
         var quickStorage: TestTransactionsQuickStorage!
         var manager: TransactionsManager!
+        var valutaConversion: ValutaConversion!
+        let url = URL(staticString: "https://kamaal.io")
 
         beforeEach {
             persistentData = try TestPersistentData()
@@ -31,6 +36,45 @@ final class TransactionsManagerSpec: AsyncSpec {
                 quickStorage: quickStorage,
                 urlSession: urlSession
             )
+            valutaConversion = ValutaConversion(
+                symbols: testExchangeRates.ratesMappedByCurrency.keys.asArray(),
+                quickStorage: quickStorage,
+                urlSession: urlSession,
+                failOnError: true,
+                skipCaching: true
+            )
+        }
+
+        describe("Fetch closes") {
+            it("should fetch closes successfully") {
+                // Given
+                let infoResponse = [
+                    testTransactionWithDataSource.dataSource!.ticker: StonksTickersInfoResponse(
+                        name: testTransactionWithDataSource.name,
+                        close: 222,
+                        currency: Currencies.USD.rawValue,
+                        closeDate: nil
+                    ),
+                ]
+                try MockURLProtocol
+                    .makeRequests(with: [
+                        .init(data: JSONEncoder().encode(testExchangeRates), statusCode: 200, url: url),
+                        .init(data: JSONEncoder().encode(infoResponse), statusCode: 200, url: url),
+                    ])
+                try await valutaConversion.fetchExchangeRates(of: .EUR)
+                try await manager.createTransaction(testTransactionWithDataSource)
+
+                // When
+                await manager.fetchCloses(valutaConversion: valutaConversion, preferredCurrency: .EUR)
+
+                // Then
+                expect(manager.previousCloses.count) == 1
+                let previousClose = try XCTUnwrap(
+                    manager.previousCloses[testTransactionWithDataSource.dataSource!.ticker]
+                )
+                expect(previousClose.currency) == .EUR
+                expect(previousClose.value.toFixed(2)) == "208.14"
+            }
         }
 
         describe("Handle iCloud changes") {
@@ -237,6 +281,37 @@ private let testTransaction = AppTransaction(
     dataSource: nil,
     updatedDate: Date(),
     creationDate: Date()
+)
+
+let testTransactionWithDataSource = AppTransaction(
+    name: "Apple",
+    transactionDate: Date(),
+    transactionType: .buy,
+    amount: 25,
+    pricePerUnit: Money(value: 100, currency: .USD),
+    fees: Money(value: 1, currency: .EUR),
+    dataSource: .init(
+        sourceType: .stocks,
+        ticker: "AAPL",
+        updatedDate: Date(),
+        creationDate: Date(),
+        transactionRecordID: nil,
+        recordID: nil
+    ),
+    updatedDate: Date(),
+    creationDate: Date()
+)
+
+private let testExchangeRates = ExchangeRates(
+    base: .EUR,
+    date: Date(timeIntervalSince1970: 1_672_358_400),
+    rates: [
+        .CAD: 1.444,
+        .GBP: 0.88693,
+        .JPY: 140.66,
+        .TRY: 19.9649,
+        .USD: 1.0666,
+    ]
 )
 
 extension AppTransaction {
