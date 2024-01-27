@@ -16,9 +16,9 @@ public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
     public let id: UUID?
     public let name: String
     let transactionDate: Date
-    let transactionType: TransactionTypes
+    public let transactionType: TransactionTypes
     let amount: Double
-    let pricePerUnit: Money
+    public let pricePerUnit: Money
     let fees: Money
     var recordID: CKRecord.ID?
     let dataSource: AppTransactionDataSource?
@@ -51,7 +51,7 @@ public struct AppTransaction: Hashable, Identifiable, CloudQueryable {
         self.dataSource = dataSource
     }
 
-    var totalPriceExcludingFees: Money {
+    public var totalPriceExcludingFees: Money {
         Money(value: pricePerUnit.value * amount, currency: pricePerUnit.currency)
     }
 
