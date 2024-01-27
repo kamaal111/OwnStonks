@@ -143,7 +143,10 @@ let package = Package(
             name: "Performances",
             dependencies: [
                 .product(name: "KamaalUI", package: "KamaalSwift"),
+                .product(name: "SharedUI", package: "SharedStuff"),
                 "Transactions",
+                "ForexKit",
+                "UserSettings",
             ],
             resources: [
                 .process("Internals/Resources"),

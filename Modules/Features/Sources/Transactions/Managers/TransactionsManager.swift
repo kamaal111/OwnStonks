@@ -186,7 +186,7 @@ final class TransactionsManager {
         guard let stonksKit else { return }
 
         let tickers = transactions
-            .filter { transaction in transaction.transactionType == .buy }
+            .filter { transaction in transaction.transactionType == .buy && transaction.amount > 0 }
             .compactMap(\.dataSource?.ticker)
         guard !tickers.isEmpty else { return }
 
