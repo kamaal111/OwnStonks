@@ -6,6 +6,9 @@
     },
     "Holdings" : {
       "extractionState" : "manual"
+    },
+    "Total %@" : {
+      "extractionState" : "manual"
     }
   },
   "version" : "1.0"
