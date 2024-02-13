@@ -139,7 +139,7 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
         fees = payload.fees.value
         feesCurrency = payload.fees.currency.rawValue
         updatedDate = Date()
-        dataSource = try Self.updatedDataSource(self, with: payload.dataSource, context: context)
+        try Self.updatedDataSource(self, with: payload.dataSource, context: context)
         try context.save()
         return self
     }
@@ -174,6 +174,7 @@ public final class StoredTransaction: Identifiable, Buildable, PersistentStorabl
     }
 
     @MainActor
+    @discardableResult
     private static func updatedDataSource(
         _ transaction: StoredTransaction?,
         with dataSource: StoredTransactionDataSource.Payload?,
