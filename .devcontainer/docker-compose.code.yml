@@ -1,9 +1,0 @@
-services:
-  code:
-    build:
-      context: ..
-      dockerfile: .devcontainer/Dockerfile
-    container_name: stonks-api-code
-    volumes:
-      - ../..:/workspaces:cached
-    command: sleep infinity
