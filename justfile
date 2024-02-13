@@ -1,6 +1,8 @@
 set export
 
 APPLE_PLATFORMS_PATH := "apps/ApplePlatforms"
+API_PATH := "apps/API"
+VIRTUAL_ENVIRONMENT := ".venv"
 
 # List available commands
 default:
@@ -9,12 +11,12 @@ default:
     just --list --unsorted --list-heading $'Available commands\n'
 
 # Format code
-format: format-swift-code
+format: format-swift format-python
 
 # Format staged code
-format-staged: format-staged-swift-code
+format-staged: format-staged-swift-code format-python
 
-# Test app on Apple platforms 
+# Test app on Apple platforms
 test-apple-platforms:
     just $APPLE_PLATFORMS_PATH/test-all
 
@@ -38,15 +40,28 @@ deploy-ios:
 deploy-macos:
     just $APPLE_PLATFORMS_PATH/deploy-macos
 
+# Build and run API
+build-run-api:
+    just $API_PATH/build-run
+
+# Run API in DEV mode
+run-dev-api:
+    just $API_PATH/run-dev
+
+# Bump Apple platforms app version
 bump-apple-platforms-version number:
     just $APPLE_PLATFORMS_PATH/bump-version {{number}}
 
 # Bootstrap the essential tools to develop in this codebase
-bootstrap: bootstrap-for-apple-platforms
+bootstrap: bootstrap-apple-platforms bootstrap-api
 
 # Bootstrap the essential tools to develop for Apple platforms
-bootstrap-for-apple-platforms: shared-bootstrap-script
+bootstrap-apple-platforms: shared-bootstrap-script
     just $APPLE_PLATFORMS_PATH/bootstrap
+
+# Bootstrap the essential tools to develop the API
+bootstrap-api:
+    just $API_PATH/bootstrap
 
 # Install node modules
 install-node-modules:
@@ -65,8 +80,20 @@ assert-has-no-diffs:
     DIFFS=$(git diff --name-only origin/main | sed '/^$/d' | awk '{print NR}'| sort -nr | sed -n '1p')
     just assert-empty "$DIFFS"
 
-[private]
-format-swift-code:
+# Initialize Python environment
+init-python-environment:
+    zsh scripts/initialize-python-environment.zsh
+
+# Format Python code
+format-python:
+    #!/bin/zsh
+
+    . $VIRTUAL_ENVIRONMENT/bin/activate
+
+    ruff check --fix
+
+# Format Swift code
+format-swift:
     swiftformat .
 
 [private]
@@ -74,7 +101,7 @@ format-staged-swift-code:
     bun run format-staged
 
 [private]
-shared-bootstrap-script: install-bun install-node-modules
+shared-bootstrap-script: install-bun install-node-modules init-python-environment
 
 [private]
 assert-empty value:
