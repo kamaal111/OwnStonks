@@ -1,0 +1,1 @@
+# OwnStonks for Apple platforms

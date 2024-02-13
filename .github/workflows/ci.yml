@@ -11,17 +11,17 @@ env:
   XCODE_APP_NAME: Xcode_15.1.app
 
 jobs:
-  test:
-    name: Test
+  test-apple-platforms:
+    name: Test Apple platforms
     timeout-minutes: 20
     runs-on: macos-13
     if: github.ref != 'refs/heads/main'
     strategy:
       matrix:
-        destination: [
-            "platform=iOS Simulator,name=iPhone 15 Pro Max",
+        test-commands: [
+            "test-ios",
             # Can't use platform macOS yet, because macOS 14 is not supported yet on  GitHub actions
-            # "platform=macOS"
+            # "test-macos"
           ]
     steps:
       - name: Git - Checkout
@@ -43,24 +43,23 @@ jobs:
         run: just bootstrap
 
       - name: Test
-        run: just test "${{ matrix.destination }}"
+        run: just "${{ matrix.test-commands }}"
 
       - name: Check diff
         run: just assert-has-no-diffs
 
-  deploy:
-    name: Deploy
+  deploy-apple-platforms:
+    name: Deploy Apple platforms
     timeout-minutes: 20
     runs-on: macos-13
     if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
-        include:
-          - archive-command: archive-ios
-            upload-command: upload-ios
-          # Can't deploy macOS yet, because macOS 14 is not supported yet on  GitHub actions
-          # - archive-command: archive-macos
-          #   upload-command: upload-macos
+        deploy-commands: [
+            "deploy-ios",
+            # Can't use platform macOS yet, because macOS 14 is not supported yet on  GitHub actions
+            # "deploy-macos"
+          ]
     steps:
       - name: Checkout certificates
         uses: actions/checkout@v3
@@ -105,10 +104,7 @@ jobs:
       - name: Bump version
         run: just bump-version ${{ github.run_number }}
 
-      - name: Archive
-        run: just ${{ matrix.archive-command }}
-
       - name: Upload
         env:
           APP_STORE_CONNECT_PASSWORD: ${{ secrets.APP_STORE_CONNECT_PASSWORD }}
-        run: just ${{ matrix.upload-command }}
+        run: just ${{ matrix.deploy-commands }}
