@@ -4,6 +4,7 @@ set dotenv-load
 WORKSPACE := "OwnStonks.xcworkspace"
 SCHEME := "OwnStonks"
 APP_NAME := "$SCHEME"
+VIRTUAL_ENVIRONMENT := ".venv"
 
 # List available commands
 default:
@@ -43,7 +44,7 @@ bump-version number:
 make-secrets:
     #!/bin/zsh
 
-    . .venv/bin/activate
+    . $VIRTUAL_ENVIRONMENT/bin/activate
 
     python3 Scripts/make_secrets.py --output "Modules/Features/Sources/UserSettings/Internals/Resources/Secrets.json" \
         --github_token ${GITHUB_TOKEN:-""}
@@ -74,16 +75,7 @@ install-gems:
 
 # Initialize Python environment
 init-python-environment:
-    #!/bin/zsh
-
-    if [ ! -d .venv ]
-    then
-        python3 -m venv .venv
-    fi
-    . .venv/bin/activate
-    pip install --upgrade pip
-    pip install poetry
-    poetry install -n
+    zsh ../../scripts/initialize-python-environment.zsh
 
 [private]
 archive-macos:
