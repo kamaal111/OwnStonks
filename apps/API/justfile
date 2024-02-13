@@ -1,41 +1,63 @@
 set export
+set dotenv-load
 
 VIRTUAL_ENVIRONMENT := ".venv"
 CONTAINER_NAME := "stonks-api"
 PORT := "8000"
 
+# Build and run container
 build-run: build run
 
+# Run container
 run: stop-and-remove-container
     docker run -dp $PORT:$PORT --name $CONTAINER_NAME -e PORT=$PORT $CONTAINER_NAME
 
+# Build container
 build:
     docker build -t $CONTAINER_NAME .
 
+# Run in DEV mode
 run-dev: install-python-packages
     #!/bin/zsh
 
     . $VIRTUAL_ENVIRONMENT/bin/activate
     uvicorn app.main:app --reload
 
+# Deploy app
+deploy-image tag: build
+    just tag-image {{tag}}
+    just push-image {{tag}}
+
+# Tag Docker image
+tag-image tag:
+    docker tag $CONTAINER_NAME {{tag}}
+
+# Push image
+push-image tag:
+    docker push {{tag}}
+
+# Make API key
 make-api-key: install-python-packages
     #!/bin/zsh
 
     . $VIRTUAL_ENVIRONMENT/bin/activate
     python scripts/make_api_key.py
 
+# Copy API keys to .env file
 copy-api-keys: install-python-packages
     #!/bin/zsh
 
     . $VIRTUAL_ENVIRONMENT/bin/activate
     python scripts/copy_api_keys.py
 
+# Bootstrap app for development
 bootstrap: init-python-environment
 
 # Initialize Python environment
 init-python-environment:
     zsh ../../scripts/initialize-python-environment.zsh
 
+# Install Python packages
 install-python-packages:
     #!/bin/zsh
 

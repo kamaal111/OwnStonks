@@ -1,7 +1,9 @@
-name: CI
+name: Apple platforms CI
 
 on:
   push:
+    paths:
+      - apps/ApplePlatforms/**
 
 concurrency:
   group: ${{ github.ref }}
@@ -11,18 +13,14 @@ env:
   XCODE_APP_NAME: Xcode_15.1.app
 
 jobs:
-  test-apple-platforms:
-    name: Test Apple platforms
+  test:
+    name: Test
     timeout-minutes: 20
-    runs-on: macos-13
+    runs-on: macos-14
     if: github.ref != 'refs/heads/main'
     strategy:
       matrix:
-        test-commands: [
-            "test-ios",
-            # Can't use platform macOS yet, because macOS 14 is not supported yet on  GitHub actions
-            # "test-macos"
-          ]
+        test-commands: ["test-ios", "test-macos"]
     steps:
       - name: Git - Checkout
         uses: actions/checkout@v3
@@ -46,18 +44,14 @@ jobs:
       - name: Check diff
         run: just assert-has-no-diffs
 
-  deploy-apple-platforms:
-    name: Deploy Apple platforms
+  deploy:
+    name: Deploy
     timeout-minutes: 20
-    runs-on: macos-13
+    runs-on: macos-14
     if: github.ref == 'refs/heads/main'
     strategy:
       matrix:
-        deploy-commands: [
-            "deploy-ios",
-            # Can't use platform macOS yet, because macOS 14 is not supported yet on  GitHub actions
-            # "deploy-macos"
-          ]
+        deploy-commands: ["deploy-ios", "deploy-macos"]
     steps:
       - name: Checkout certificates
         uses: actions/checkout@v3

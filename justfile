@@ -6,8 +6,6 @@ VIRTUAL_ENVIRONMENT := ".venv"
 
 # List available commands
 default:
-    #!/bin/zsh
-
     just --list --unsorted --list-heading $'Available commands\n'
 
 # Format code
@@ -40,6 +38,10 @@ deploy-ios:
 deploy-macos:
     just $APPLE_PLATFORMS_PATH/deploy-macos
 
+# Deploy API
+deploy-api-image tag:
+    just $API_PATH/deploy-image {{tag}}
+
 # Build and run API
 build-run-api:
     just $API_PATH/build-run
@@ -47,6 +49,10 @@ build-run-api:
 # Run API in DEV mode
 run-dev-api:
     just $API_PATH/run-dev
+
+# Build API
+build-api:
+    just $API_PATH/build
 
 # Bump Apple platforms app version
 bump-apple-platforms-version number:
@@ -98,7 +104,7 @@ format-swift:
 
 [private]
 format-staged-swift-code:
-    bun run format-staged
+    npx git-format-staged --formatter "swiftformat stdin --stdinpath '{}'" "*.swift"
 
 [private]
 shared-bootstrap-script: install-bun install-node-modules init-python-environment

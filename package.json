@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "format-staged": "git-format-staged --formatter \"swiftformat stdin --stdinpath '{}'\" \"*.swift\""
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",

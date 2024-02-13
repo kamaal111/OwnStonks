@@ -1,0 +1,70 @@
+name: API CI
+
+on:
+  push:
+    paths:
+      - apps/API/**
+
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  REGISTORY_REPOSITORY: europe-west1-docker.pkg.dev
+  APP_NAME: stonksapi
+  CONTAINER_SUBFOLDER: cloud-run-source-deploy
+
+jobs:
+  build:
+    name: Build
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    if: github.ref != 'refs/heads/main'
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v4
+
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Install zsh
+        run: sudo apt update && sudo apt install -y zsh
+
+      - name: Build image
+        run: just build-api
+
+  deploy:
+    name: Deploy
+    timeout-minutes: 10
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Git - Checkout
+        uses: actions/checkout@v4
+
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Install zsh
+        run: sudo apt update && sudo apt install -y zsh
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+
+      - name: Configure Docker
+        run: gcloud auth configure-docker $REGISTORY_REPOSITORY --quiet
+
+      - name: Deploy image
+        env:
+          TAG: ${{ env.REGISTORY_REPOSITORY }}/${{ secrets.GCP_PROJECT_ID }}/${{ env.CONTAINER_SUBFOLDER }}/${{ env.APP_NAME }}/${{ env.APP_NAME }}:${{ github.sha }}
+        run: just deploy-api-image $TAG
+
+      - uses: "google-github-actions/deploy-cloudrun@v2"
+        env:
+          TAG: ${{ env.REGISTORY_REPOSITORY }}/${{ secrets.GCP_PROJECT_ID }}/${{ env.CONTAINER_SUBFOLDER }}/${{ env.APP_NAME }}/${{ env.APP_NAME }}:${{ github.sha }}
+        with:
+          image: ${{ env.TAG }}
+          service: ${{ env.APP_NAME }}
+          region: europe-west1
