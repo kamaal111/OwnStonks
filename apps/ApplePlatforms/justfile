@@ -1,0 +1,148 @@
+set export
+set dotenv-load
+
+WORKSPACE := "OwnStonks.xcworkspace"
+SCHEME := "OwnStonks"
+APP_NAME := "$SCHEME"
+
+# List available commands
+default:
+    just --list --unsorted --list-heading $'Available commands\n'
+
+# Generate code
+generate: make-secrets make-acknowledgments
+
+# Bootstrap app for development
+bootstrap: brew-install-bundle install-gems init-python-environment generate
+
+# Deploy on all platforms
+deploy-all: deploy-macos deploy-ios
+
+# Deploy macOS app
+deploy-macos: archive-macos upload-macos
+
+# Deploy iOS app
+deploy-ios: archive-ios upload-ios
+
+# Test app on all platforms
+test-all: test-ios test-macos
+
+# Test app on iOS
+test-ios:
+    just test "platform=iOS Simulator,name=iPhone 15 Pro Max"
+
+# Test app on macOS
+test-macos:
+    just test "platform=macOS"
+
+# Bump version of app
+bump-version number:
+    xctools bump-version --build-number {{number}}
+
+# Make secrets based on environment
+make-secrets:
+    #!/bin/zsh
+
+    . .venv/bin/activate
+
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/UserSettings/Internals/Resources/Secrets.json" \
+        --github_token ${GITHUB_TOKEN:-""}
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/ValutaConversion/Internals/Resources/Secrets.json" \
+        --forex_api_url ${FOREX_API_URL:-""}
+    python3 Scripts/make_secrets.py --output "Modules/Features/Sources/Transactions/Internals/Resources/Secrets.json" \
+        --stonks_kit_url ${STONKS_KIT_URL:-""}
+
+# Update acknowledgements file
+make-acknowledgments:
+    #!/bin/zsh
+
+    xctools acknowledgments --scheme $SCHEME --output Modules/Features/Sources/UserSettings/Internals/Resources
+
+# Install brew packages
+brew-install-bundle:
+    #!/bin/zsh
+
+    brew update
+    brew tap homebrew/bundle
+    brew bundle
+
+# Install gems
+install-gems:
+    #!/bin/zsh
+
+    bundle install
+
+# Initialize Python environment
+init-python-environment:
+    #!/bin/zsh
+
+    if [ ! -d .venv ]
+    then
+        python3 -m venv .venv
+    fi
+    . .venv/bin/activate
+    pip install --upgrade pip
+    pip install poetry
+    poetry install -n
+
+[private]
+archive-macos:
+    #!/bin/zsh
+
+    ARCHIVE_PATH="$APP_NAME.xcarchive"
+    rm -rf $ARCHIVE_PATH
+
+    just archive "macosx" "platform=macOS" "$ARCHIVE_PATH"
+    just export-archive "ExportOptions/MacOS.plist" "$ARCHIVE_PATH"
+
+[private]
+archive-ios:
+    #!/bin/zsh
+
+    ARCHIVE_PATH="$APP_NAME.xcarchive"
+    rm -rf $ARCHIVE_PATH
+
+    just archive "iphoneos" "generic/platform=iOS" "$ARCHIVE_PATH"
+    just export-archive "ExportOptions/IOS.plist" "$ARCHIVE_PATH"
+
+[private]
+upload-macos:
+    #!/bin/zsh
+
+    just upload-app macos $APP_NAME.pkg
+
+[private]
+upload-ios:
+    #!/bin/zsh
+
+    just upload-app ios $APP_NAME.ipa
+
+[private]
+test destination:
+    #!/bin/zsh
+
+    CONFIGURATION="Debug"
+
+    set -o pipefail && xctools test --configuration $CONFIGURATION --scheme $SCHEME \
+        --destination "{{ destination }}" --workspace $WORKSPACE | xcpretty
+
+[private]
+export-archive export-options archive:
+    #!/bin/zsh
+
+    xctools export-archive --archive-path "{{ archive }}" --export-options "{{ export-options }}"
+
+[private]
+archive sdk destination archive-path:
+    #!/bin/zsh
+
+    CONFIGURATION="Release"
+
+    set -o pipefail && xctools archive --configuration $CONFIGURATION --scheme $SCHEME \
+        --destination "{{ destination }}" --sdk {{ sdk }} --archive-path "{{ archive-path }}" \
+        --workspace $WORKSPACE | xcpretty
+
+[private]
+upload-app target binary-name:
+    xctools upload --file {{ binary-name }} --target {{ target }} --username kamaal.f1@gmail.com \
+        --password $APP_STORE_CONNECT_PASSWORD

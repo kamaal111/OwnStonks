@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "format-staged": "git-format-staged --formatter \"swiftformat stdin --stdinpath '{}'\" \"*.swift\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "git-format-staged": "^3.0.0",
     "husky": "^8.0.0"
   }
 }
