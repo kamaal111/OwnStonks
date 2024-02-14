@@ -264,7 +264,7 @@ extension TransactionDetailsSheet {
         }
 
         func fetchCloses() async {
-            guard let stonksKit else { return }
+            guard FeatureFlags.previousCloseInTransactionDetailsSheet, let stonksKit else { return }
             guard !isEditing else { return }
             guard case .details = context else { return }
             guard validAssetDataSource != nil else { return }
@@ -347,6 +347,10 @@ extension TransactionDetailsSheet {
                 transactionRecordID: transactionRecordID,
                 recordID: recordID
             )
+        }
+
+        func setStonksKit(_ stonksKit: StonksKit) {
+            self.stonksKit = stonksKit
         }
 
         @MainActor

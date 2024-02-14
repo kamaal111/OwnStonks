@@ -54,6 +54,10 @@ run-dev-api:
 build-api:
     just $API_PATH/build
 
+# Trust Swift macros
+trust-swift-macro:
+    just $APPLE_PLATFORMS_PATH/trust-swift-macro
+
 # Bump Apple platforms app version
 bump-apple-platforms-version number:
     just $APPLE_PLATFORMS_PATH/bump-version {{number}}

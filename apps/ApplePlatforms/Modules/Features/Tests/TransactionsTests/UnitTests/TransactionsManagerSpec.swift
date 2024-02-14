@@ -43,6 +43,8 @@ final class TransactionsManagerSpec: AsyncSpec {
                 failOnError: true,
                 skipCaching: true
             )
+            let stonksKit = StonksKit(baseURL: url, urlSession: urlSession, cacheStorage: quickStorage)
+            manager.setStonksKit(stonksKit)
         }
 
         describe("Fetch closes") {

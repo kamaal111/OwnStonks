@@ -12,12 +12,12 @@ import KamaalNavigation
 import Playground
 #endif
 
-enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue {
-    case performances
-    case transactions
-    case settings
+enum Screens: Int, Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue {
+    case transactions = 0
+    case performances = 1
+    case settings = 2
     #if DEBUG
-    case playground
+    case playground = 69
     #endif
 
     var id: Screens { self }
@@ -62,5 +62,5 @@ enum Screens: Hashable, Codable, Identifiable, CaseIterable, NavigatorStackValue
         }
     }
 
-    static var root: Screens = .performances
+    static var root: Screens = .transactions
 }

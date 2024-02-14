@@ -71,7 +71,8 @@ public struct TransactionsScreen: View {
         )
         .fetchAndConvertTransactions(
             transactions: $viewModel.convertedTransactions,
-            loading: $viewModel.loadingConvertedTransactions
+            loading: $viewModel.loadingConvertedTransactions,
+            fetchCloses: FeatureFlags.previousClosesInTransactionsScreen
         )
     }
 
