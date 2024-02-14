@@ -38,6 +38,10 @@
 		2C1AC2E22B3725C40092BFB5 /* AppDelegate_macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_macOS.swift; sourceTree = "<group>"; };
 		2C1AC2E52B3725D40092BFB5 /* AppDelegate_iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate_iOS.swift; sourceTree = "<group>"; };
 		2C2704542B3783970091F85A /* InfoDev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoDev.plist; sourceTree = "<group>"; };
+		2C3545C42B7D61020070E3C2 /* MacOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = MacOS.plist; sourceTree = "<group>"; };
+		2C3545C52B7D61020070E3C2 /* IOS.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = IOS.plist; sourceTree = "<group>"; };
+		2C3545C62B7D61150070E3C2 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		2C3545C82B7D612D0070E3C2 /* swift-plugin-trust.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "swift-plugin-trust.json"; sourceTree = "<group>"; };
 		2C5266532B112C24000CD2D5 /* OwnStonks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OwnStonks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C5266562B112C24000CD2D5 /* OwnStonksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnStonksApp.swift; sourceTree = "<group>"; };
 		2C5266582B112C24000CD2D5 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -92,17 +96,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C3545C32B7D61020070E3C2 /* ExportOptions */ = {
+			isa = PBXGroup;
+			children = (
+				2C3545C42B7D61020070E3C2 /* MacOS.plist */,
+				2C3545C52B7D61020070E3C2 /* IOS.plist */,
+			);
+			path = ExportOptions;
+			sourceTree = "<group>";
+		};
+		2C3545C72B7D612D0070E3C2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C3545C82B7D612D0070E3C2 /* swift-plugin-trust.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		2C52664A2B112C24000CD2D5 = {
 			isa = PBXGroup;
 			children = (
 				2CC33C9F2B2A57540035ED02 /* Brewfile */,
+				2C3545C62B7D61150070E3C2 /* Gemfile */,
 				2CC33C9E2B2A57400035ED02 /* justfile */,
 				2CC33CA22B2A576F0035ED02 /* README.md */,
 				2CC33CA12B2A57690035ED02 /* pyproject.toml */,
+				2C3545C32B7D61020070E3C2 /* ExportOptions */,
 				2C5266702B113EE3000CD2D5 /* Frameworks */,
 				2C52666E2B113DE6000CD2D5 /* Modules */,
 				2C5266552B112C24000CD2D5 /* OwnStonks */,
 				2C5266542B112C24000CD2D5 /* Products */,
+				2C3545C72B7D612D0070E3C2 /* Resources */,
 				2C52666C2B113019000CD2D5 /* Scripts */,
 				2C5266692B112E4B000CD2D5 /* Tests */,
 			);

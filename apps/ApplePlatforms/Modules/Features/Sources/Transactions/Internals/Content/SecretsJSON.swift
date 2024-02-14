@@ -38,7 +38,7 @@ class SecretsJSON {
         do {
             self.content = try JSONFileUnpacker<Secrets>(filename: "Secrets", bundle: .module).content
         } catch {
-            logger.error(label: "Failed to unpack json file", error: error)
+            logger.warning("Failed to unpack json file; error=\(error)")
         }
     }
 

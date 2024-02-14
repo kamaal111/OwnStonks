@@ -217,6 +217,10 @@ final class TransactionsManager {
         logger.info("Fetched transactions previous closes")
     }
 
+    func setStonksKit(_ stonksKit: StonksKit) {
+        self.stonksKit = stonksKit
+    }
+
     @MainActor
     private func setPreviousCloses(_ previousCloses: [String: Money]) {
         self.previousCloses = previousCloses

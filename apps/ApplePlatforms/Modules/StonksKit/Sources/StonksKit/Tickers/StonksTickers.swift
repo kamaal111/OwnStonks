@@ -19,10 +19,11 @@ public final class StonksTickers: StonksKitClient {
         date: Date
     ) async -> Result<[String: StonksTickersInfoResponse], StonksTickersErrors> {
         await cacheStorage.withStonksInfoCache(tickers: tickers, date: date) { remainingTickers in
+            let symbols = remainingTickers.joined(separator: ",")
             let url = clientURL
                 .appending(path: "info")
                 .appending(queryItems: [
-                    .init(name: "symbols", value: remainingTickers.joined(separator: ",")),
+                    .init(name: "symbols", value: symbols),
                     .init(name: "date", value: formatDate(date)),
                 ])
             let result = await withCheckedContinuation { (continuation: CheckedContinuation<

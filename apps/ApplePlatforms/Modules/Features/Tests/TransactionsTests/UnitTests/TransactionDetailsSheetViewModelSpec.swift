@@ -22,6 +22,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
         let url = URL(staticString: "https://kamaal.io")
         var cacheStorage: TestTransactionsQuickStorage!
         var transaction: AppTransaction!
+        var stonksKit: StonksKit!
 
         beforeEach {
             cacheStorage = TestTransactionsQuickStorage()
@@ -37,6 +38,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                 updatedDate: Date(timeIntervalSince1970: 1_702_328_316),
                 creationDate: Date(timeIntervalSince1970: 1_702_328_316)
             )
+            stonksKit = StonksKit(baseURL: url, urlSession: urlSession, cacheStorage: cacheStorage)
         }
 
         describe("Fetch price per unit") {
@@ -68,6 +70,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
+                viewModel.setStonksKit(stonksKit)
                 viewModel.pricePerUnitCurrency = .EUR
                 viewModel.pricePerUnit = String(0.0)
                 viewModel.autoTrackAsset = true
@@ -107,6 +110,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
+                viewModel.setStonksKit(stonksKit)
                 viewModel.pricePerUnitCurrency = .EUR
                 viewModel.pricePerUnit = String(0.0)
                 viewModel.autoTrackAsset = true
@@ -141,6 +145,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
+                viewModel.setStonksKit(stonksKit)
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = "YES"
 
@@ -176,6 +181,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
+                viewModel.setStonksKit(stonksKit)
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = expectedTicker
 
@@ -214,6 +220,7 @@ final class TransactionDetailsSheetViewModelSpec: AsyncSpec {
                     urlSession: urlSession,
                     cacheStorage: cacheStorage
                 )
+                viewModel.setStonksKit(stonksKit)
                 viewModel.autoTrackAsset = true
                 viewModel.assetTicker = expectedTicker
 

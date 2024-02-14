@@ -46,7 +46,11 @@ public struct PerformancesScreen: View {
             }
             .padding(.vertical, .medium)
         }
-        .fetchAndConvertTransactions(transactions: $viewModel.transactions, loading: $viewModel.loadingTransactions)
+        .fetchAndConvertTransactions(
+            transactions: $viewModel.transactions,
+            loading: $viewModel.loadingTransactions,
+            fetchCloses: true
+        )
         .onAppear(perform: handleOnAppear)
         .onChange(of: userSettings.preferredForexCurrency, handlePreferredForexCurrencyChange)
     }

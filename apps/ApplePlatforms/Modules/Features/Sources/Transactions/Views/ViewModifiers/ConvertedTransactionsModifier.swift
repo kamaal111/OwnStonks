@@ -17,9 +17,14 @@ private let logger = KamaalLogger(from: FetchAndConvertTransactionsModifier.self
 extension View {
     public func fetchAndConvertTransactions(
         transactions: Binding<[AppTransaction]>,
-        loading: Binding<Bool>
+        loading: Binding<Bool>,
+        fetchCloses: Bool
     ) -> some View {
-        modifier(FetchAndConvertTransactionsModifier(transactions: transactions, loading: loading))
+        modifier(FetchAndConvertTransactionsModifier(
+            transactions: transactions,
+            loading: loading,
+            fetchCloses: fetchCloses
+        ))
     }
 }
 
@@ -32,6 +37,7 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
 
     @Binding var transactions: [AppTransaction]
     @Binding var loading: Bool
+    let fetchCloses: Bool
 
     func body(content: Content) -> some View {
         content
@@ -54,7 +60,11 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
                 async let fetchTransactionWait: () = handleFetchingTransactions()
                 async let fetchExchangeRateWait: () = handleFetchExchangeRate(of: userSettings.preferredForexCurrency)
                 _ = await [fetchTransactionWait, fetchExchangeRateWait]
+                let previousTransactionsCount = transactions.count
                 transactions = convertTransactions()
+                guard previousTransactionsCount != 0 else { return }
+
+                handleFetchingCloses()
             }
         }
     }
@@ -66,6 +76,8 @@ private struct FetchAndConvertTransactionsModifier: ViewModifier {
     }
 
     private func handleFetchingCloses() {
+        guard fetchCloses else { return }
+
         Task {
             await withLoading {
                 await transactionsManager.fetchCloses(

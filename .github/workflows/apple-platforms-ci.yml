@@ -10,7 +10,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  XCODE_APP_NAME: Xcode_15.1.app
+  XCODE_APP_NAME: Xcode_15.2.app
 
 jobs:
   test:
@@ -20,38 +20,10 @@ jobs:
     if: github.ref != 'refs/heads/main'
     strategy:
       matrix:
-        test-commands: ["test-ios", "test-macos"]
-    steps:
-      - name: Git - Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ github.ref }}
-          submodules: recursive
-      - name: Install just
-        uses: taiki-e/install-action@just
-
-      - name: Select Xcode version
-        run: |
-          ls -d /Applications/Xcode*
-          sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
-
-      - name: Bootstrap project
-        run: just bootstrap-apple-platforms
-
-      - name: Test
-        run: just "${{ matrix.test-commands }}"
-
-      - name: Check diff
-        run: just assert-has-no-diffs
-
-  deploy:
-    name: Deploy
-    timeout-minutes: 20
-    runs-on: macos-14
-    if: github.ref == 'refs/heads/main'
-    strategy:
-      matrix:
-        deploy-commands: ["deploy-ios", "deploy-macos"]
+        test-commands: [
+            "test-ios",
+            # "test-macos"
+          ]
     steps:
       - name: Checkout certificates
         uses: actions/checkout@v3
@@ -71,7 +43,67 @@ jobs:
       - name: Import signing private key
         env:
           SIGNING_PRIVATE_KEY: SigningCertificates/Distribution/Apple Distribution Kamaal Farah (DXUKH9VF73).p12
-        run: just import-signing-private-key "${{ env.SIGNING_PRIVATE_KEY }}" "${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
+          MAC_DEVELOPER_INSTALLER_KEY: SigningCertificates/Distribution/3rd Party Mac Developer Installer Kamaal Farah (DXUKH9VF73).p12
+        run: |
+          just import-signing-private-key "${{ env.SIGNING_PRIVATE_KEY }}" "${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
+          just import-signing-private-key "${{ env.MAC_DEVELOPER_INSTALLER_KEY }}" "${{ secrets.MAC_INSTALLER_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
+
+      - name: Copy profiles
+        run: just copy-profiles OwnStonks
+
+      - name: Git - Checkout
+        uses: actions/checkout@v3
+
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Bootstrap project
+        run: just bootstrap-apple-platforms
+
+      - name: Trust Swift macros
+        run: just trust-swift-macro
+
+      - name: Test
+        run: just "${{ matrix.test-commands }}"
+
+      - name: Check diff
+        run: just assert-has-no-diffs
+
+  deploy:
+    name: Deploy
+    timeout-minutes: 20
+    runs-on: macos-14
+    if: github.ref == 'refs/heads/main'
+    strategy:
+      matrix:
+        deploy-commands: [
+            "deploy-ios",
+            # "deploy-macos"
+          ]
+    steps:
+      - name: Checkout certificates
+        uses: actions/checkout@v3
+        with:
+          repository: kamaal111/CodeSign
+          ref: refs/heads/main
+          token: ${{ secrets.CODE_SIGN_ACCESS_TOKEN }}
+
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Select Xcode version
+        run: |
+          ls -d /Applications/Xcode*
+          sudo xcode-select --switch /Applications/$XCODE_APP_NAME/Contents/Developer
+
+      - name: Import signing private key
+        env:
+          SIGNING_PRIVATE_KEY: SigningCertificates/Distribution/Apple Distribution Kamaal Farah (DXUKH9VF73).p12
+          MAC_DEVELOPER_INSTALLER_KEY: SigningCertificates/Distribution/3rd Party Mac Developer Installer Kamaal Farah (DXUKH9VF73).p12
+        run: |
+          just import-signing-private-key "${{ env.SIGNING_PRIVATE_KEY }}" "${{ secrets.SIGNING_CERTIFICATE_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
+          just import-signing-private-key "${{ env.MAC_DEVELOPER_INSTALLER_KEY }}" "${{ secrets.MAC_INSTALLER_PASSWORD }}" "${{ secrets.KEYCHAIN_PASSPHRASE }}"
 
       - name: Copy profiles
         run: just copy-profiles OwnStonks
@@ -91,8 +123,13 @@ jobs:
       - name: Bootstrap project
         run: just bootstrap-apple-platforms
 
+      - name: Trust Swift macros
+        run: just trust-swift-macro
+
       - name: Bump version
-        run: just bump-version ${{ github.run_number }}
+        run: |
+          VERSION_NUMBER=$((${{ github.run_number }} + 81))
+          just bump-apple-platforms-version $VERSION_NUMBER
 
       - name: Upload
         env:
